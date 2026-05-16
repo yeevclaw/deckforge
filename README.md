@@ -2,9 +2,8 @@
 
 [English](README.en.md) · **繁體中文**
 
-> 一個 Claude skill,專門用來產出**高品質、可在 PowerPoint 編輯的簡報**。不是把你的主題丟進範本套版,而是模擬頂級 PPT 設計團隊的工作流程——先研究、再規劃、再設計(5 個階段)。
+> 一個 Claude skill,專門用來產出**高品質、可在 PowerPoint 編輯的簡報**。不是把你的主題丟進範本套版,而是模擬頂級 PPT 設計團隊的工作流程——先研究、再規劃、再設計最後才是產出簡報。
 
-靈感來自 linux.do 上 *sandun* 的文章《应该是目前最强的PPT Agent,附上完整思路分享》。輸出格式採用 **SVG**——這是該文作者強調的關鍵選擇,因為 SVG 可以直接被 PowerPoint 2016+ 識別為向量圖,使用者只要右鍵「轉換成圖形 (Convert to Shape)」就能編輯每一段文字與每一個元件。
 
 ## Demo
 
@@ -124,9 +123,10 @@ Claude 會自動觸發 DeckForge,跑完整流程:
 ## 設計理念出處
 
 - **方法論**:linux.do 上 *sandun* 寫的「应该是目前最强的PPT Agent」一文。`prompts/02_outline_architect.md` 的「頂級 PPT 結構架構師」與 `references/bento_grid.md` 的便當網格,皆改寫自原文提示詞並加以延伸。
-- **SVG 作為最終格式**:同樣出自該文,作者選 SVG 是為了在 PowerPoint 端保留可編輯性,而不是只能輸出靜態圖片。
-- **Bento Grid 設計語言**:Apple 產品頁帶起的便當網格排版。
 - **金字塔原理**:Barbara Minto 的經典結構。
+- **SVG 作為最終格式**:SVG 是為了在 PowerPoint 端保留可編輯性,而不是只能輸出靜態圖片。
+- **Bento Grid 設計語言**:Apple 產品頁帶起的便當網格排版。
+
 
 ## 開發者 / 想 fork 的人
 

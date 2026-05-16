@@ -63,15 +63,21 @@ DeckForge/
 curl -L -o ~/Downloads/deckforge.zip \
   https://github.com/yeevclaw/deckforge/releases/latest/download/deckforge.zip
 
-# 裝 Phase 5 用的兩個 Python 套件(macOS / Linux / Windows 都直接這行)
-pip install python-pptx resvg-py --break-system-packages
+# 裝 Phase 5 用的三個 Python 套件(macOS / Linux / Windows 都直接這行)
+pip install python-pptx resvg-py img2pdf --break-system-packages
 ```
 
 > 不會用命令列?直接到 [releases 頁面](https://github.com/yeevclaw/deckforge/releases/latest)點 `deckforge.zip` 下載,然後在終端機跑那一行 `pip install`。
 
-兩個套件就好,**完全沒有系統依賴**——`resvg-py` 把 Rust SVG renderer 打包成 pip wheel,不用 Homebrew、不用 apt-get、不用 sudo。
+三個套件就好,**完全沒有系統依賴**——`resvg-py` 把 Rust SVG renderer 打包成 pip wheel,不用 Homebrew、不用 apt-get、不用 sudo。
 
-階段 1–4(研究 / 大綱 / 策劃 / 設計)是純 Markdown,Claude 直接讀,不需要任何套件。只有 Phase 5(組 .pptx)會用到上面那兩個。
+- `python-pptx` → 組 .pptx
+- `resvg-py` → SVG 渲成 PNG(Keynote / Preview / 舊版 PowerPoint 看的圖)
+- `img2pdf` → 同一批 PNG 組成 .pdf
+
+階段 1–4(研究 / 大綱 / 策劃 / 設計)是純 Markdown,Claude 直接讀,不需要任何套件。只有 Phase 5 才會用上面三個。
+
+> Phase 5 預設會**同時產出 `.pptx` 跟 `.pdf` 兩個檔案**——PPTX 給 PowerPoint 編輯用,PDF 給直接分享 / 客戶看 / 沒有 PowerPoint 的人。
 
 ### 2. 在 Claude Desktop 匯入 zip
 

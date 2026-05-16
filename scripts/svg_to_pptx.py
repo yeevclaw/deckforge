@@ -29,6 +29,8 @@ macOS Preview) and a warning is printed.
 
 Required dependency:    python-pptx       (pip install python-pptx)
 Strongly recommended:   resvg-py          (pip install resvg-py)
+                        img2pdf           (pip install img2pdf)
+                                          enables the companion .pdf alongside the .pptx
 Alternatives:           cairosvg          pip install cairosvg + libcairo
                         rsvg-convert      brew install librsvg / apt librsvg2-bin
                         inkscape          brew install inkscape
@@ -72,6 +74,13 @@ except ImportError as e:
         "(python-pptx pulls in lxml + Pillow automatically.)\n"
     )
     sys.exit(1)
+
+# img2pdf is optional — used to also emit a .pdf alongside the .pptx.
+try:
+    import img2pdf  # type: ignore
+    _HAS_IMG2PDF = True
+except ImportError:
+    _HAS_IMG2PDF = False
 
 SVG_EXT_URI = "{96DAC541-7B7A-43D3-8B79-37D633B846F1}"
 SVG_NS = "http://schemas.microsoft.com/office/drawing/2016/SVG/main"
@@ -244,7 +253,8 @@ def add_svg_slide(prs, svg_path: Path, png_path: Path, embed_svg: bool):
 
 def build(pages: list[Path], out_path: Path, planning: dict,
           workdir: Path, png_width: int,
-          placeholder_only: bool, embed_svg: bool):
+          placeholder_only: bool, embed_svg: bool,
+          also_pdf: bool, pdf_path: Path | None):
     workdir.mkdir(parents=True, exist_ok=True)
     prs = Presentation()
     prs.slide_width = SLIDE_W_EMU
@@ -254,6 +264,7 @@ def build(pages: list[Path], out_path: Path, planning: dict,
     if not placeholder_path.exists():
         placeholder_path.write_bytes(_PLACEHOLDER_PNG_BYTES)
 
+    real_pngs = []   # ordered list of per-slide PNG paths used for the optional PDF
     engine_reported = False
     used_placeholder_anywhere = False
     for i, svg_path in enumerate(pages):
@@ -282,6 +293,7 @@ def build(pages: list[Path], out_path: Path, planning: dict,
                 print(f"PNG fallback engine: {engine} ({png_width}px wide)")
                 engine_reported = True
 
+        real_pngs.append(png_path)
         print(f"[{i+1}/{len(pages)}] {svg_path.name} → slide", flush=True)
         slide = add_svg_slide(prs, svg_path, png_path, embed_svg=embed_svg)
 
@@ -297,6 +309,38 @@ def build(pages: list[Path], out_path: Path, planning: dict,
     if used_placeholder_anywhere and not placeholder_only:
         print("⚠️  Some slides used the 1×1 placeholder because no SVG renderer was "
               "available. Re-run after installing one for proper Keynote / Preview display.")
+
+    # Emit the companion PDF if requested.
+    if also_pdf:
+        if not _HAS_IMG2PDF:
+            print("⚠️  Skipping PDF: img2pdf not installed. To enable, run:",
+                  file=sys.stderr)
+            print("      pip install img2pdf --break-system-packages",
+                  file=sys.stderr)
+            return
+        if used_placeholder_anywhere and not placeholder_only:
+            # All-placeholder PDF would be blank; better to skip than to mislead.
+            print("⚠️  Skipping PDF: no real PNG renders are available "
+                  "(no SVG renderer installed).", file=sys.stderr)
+            return
+        pdf_out = pdf_path or out_path.with_suffix(".pdf")
+        write_pdf(real_pngs, pdf_out)
+        print(f"Wrote {pdf_out}")
+
+
+def write_pdf(png_paths: list[Path], pdf_path: Path) -> None:
+    """Assemble per-slide PNGs into a single multi-page PDF via img2pdf."""
+    pdf_path.parent.mkdir(parents=True, exist_ok=True)
+    # img2pdf accepts a list of file paths or bytes; paths is simpler.
+    paths_str = [str(p) for p in png_paths]
+    # Set page size to match a standard 16:9 slide so the PDF previews at the
+    # right aspect on any reader. img2pdf computes from image DPI by default;
+    # we override via layout_fun for an exact 13.333" × 7.5" page.
+    layout = img2pdf.get_layout_fun(
+        pagesize=(img2pdf.in_to_pt(13.333), img2pdf.in_to_pt(7.5)),
+    )
+    with open(pdf_path, "wb") as f:
+        f.write(img2pdf.convert(paths_str, layout_fun=layout))
 
 
 def main():
@@ -314,6 +358,12 @@ def main():
                         "displays correctly in PowerPoint 2016+.")
     p.add_argument("--png-width", type=int, default=2560,
                    help="Width (px) of the PNG fallback. Default 2560 (2× DPI).")
+    p.add_argument("--no-pdf", action="store_true",
+                   help="Skip the companion .pdf (by default, a PDF with the same "
+                        "stem as --output is written alongside the .pptx).")
+    p.add_argument("--pdf-output", default=None,
+                   help="Explicit PDF path. If omitted, derived from --output by "
+                        "swapping .pptx → .pdf.")
     p.add_argument("--workdir", default=None,
                    help="Directory for intermediate files (default: <pages-dir>/_renders)")
     args = p.parse_args()
@@ -323,12 +373,15 @@ def main():
     out_path.parent.mkdir(parents=True, exist_ok=True)
     planning_path = Path(args.planning).resolve() if args.planning else None
     workdir = Path(args.workdir).resolve() if args.workdir else pages_dir / "_renders"
+    pdf_path = Path(args.pdf_output).resolve() if args.pdf_output else None
 
     pages = collect_pages(pages_dir)
     planning = load_planning(planning_path, pages_dir)
     build(pages, out_path, planning, workdir, args.png_width,
           placeholder_only=args.placeholder_only,
-          embed_svg=not args.no_svg)
+          embed_svg=not args.no_svg,
+          also_pdf=not args.no_pdf,
+          pdf_path=pdf_path)
 
 
 if __name__ == "__main__":

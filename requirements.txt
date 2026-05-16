@@ -1,12 +1,15 @@
-# DeckForge — Phase 5 (.pptx assembly) dependencies.
+# DeckForge — Phase 5 (.pptx + .pdf assembly) dependencies.
 # Phases 1–4 of the skill are pure Markdown — no Python install needed.
 
 python-pptx>=0.6.21
 # python-pptx transitively installs lxml and Pillow.
 
-# SVG → PNG renderer. Strongly recommended — without it, slides render
-# blank in Keynote / macOS Preview / older PowerPoint (PowerPoint 2016+
-# is fine via the embedded SVG, but other viewers can't read svgBlip).
-# resvg-py ships a self-contained Rust binary as a pip wheel — zero
-# system dependencies, supports macOS / Linux / Windows / PyPy.
+# SVG → PNG renderer. Without it, slides render blank in Keynote /
+# macOS Preview / older PowerPoint. resvg-py ships a self-contained
+# Rust binary as a pip wheel — zero system deps; wheels for
+# macOS / Linux / Windows / PyPy.
 resvg-py>=0.3.0
+
+# PNG → PDF assembler for the companion .pdf produced alongside .pptx.
+# Pure pip, no system deps.
+img2pdf>=0.5

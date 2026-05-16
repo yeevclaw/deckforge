@@ -63,15 +63,21 @@ Two steps:
 curl -L -o ~/Downloads/deckforge.zip \
   https://github.com/yeevclaw/deckforge/releases/latest/download/deckforge.zip
 
-# Install the two Phase 5 dependencies (same line on macOS / Linux / Windows)
-pip install python-pptx resvg-py --break-system-packages
+# Install the three Phase 5 dependencies (same line on macOS / Linux / Windows)
+pip install python-pptx resvg-py img2pdf --break-system-packages
 ```
 
 > Don't use a terminal? Visit the [releases page](https://github.com/yeevclaw/deckforge/releases/latest), download `deckforge.zip` directly, and run only the `pip install` line in a terminal.
 
-Just those two packages — **zero system dependencies**. `resvg-py` bundles a Rust SVG renderer as a pip wheel; no Homebrew, no apt-get, no sudo needed.
+Just three packages — **zero system dependencies**. `resvg-py` bundles a Rust SVG renderer as a pip wheel; no Homebrew, no apt-get, no sudo needed.
 
-Phases 1–4 (research / outline / planning / design) are pure Markdown and need no packages. Only Phase 5 (assembling the `.pptx`) uses the two packages above.
+- `python-pptx` → assembles the `.pptx`
+- `resvg-py` → rasterizes SVGs to PNG (the fallback Keynote / Preview / older PowerPoint reads)
+- `img2pdf` → assembles the same PNGs into a companion `.pdf`
+
+Phases 1–4 (research / outline / planning / design) are pure Markdown and need no packages. Only Phase 5 uses the above three.
+
+> Phase 5 produces **both `.pptx` and `.pdf` by default** — PPTX is the editable artifact for PowerPoint users; PDF is the universal "send to anyone" artifact.
 
 ### 2. Import the zip in Claude Desktop
 

@@ -58,6 +58,7 @@ echo "DeckForge setup — about to install:"
 echo "  • python-pptx                              ← required (.pptx assembly)"
 if [ "$WITH_RENDERER" = "1" ]; then
   echo "  • resvg-py                                 ← SVG → PNG renderer"
+  echo "  • img2pdf                                  ← PNG → PDF (companion .pdf)"
 fi
 echo "Using:  $($PY --version) ($PY -m pip ${EXTRA:-no-flag})"
 echo ""
@@ -85,6 +86,10 @@ if [ "$WITH_RENDERER" = "1" ]; then
     echo "      apt-get install librsvg2-bin  (Linux)" >&2
     echo "    or install Inkscape: https://inkscape.org/release/" >&2
   fi
+
+  echo "→ Installing img2pdf ..."
+  "$PY" -m pip install $EXTRA img2pdf || \
+    echo "⚠️  img2pdf install failed — companion .pdf will be skipped." >&2
 fi
 
 echo ""

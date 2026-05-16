@@ -30,13 +30,18 @@ Write-Host "→ Using $(& $py --version)"
 Write-Host "→ Installing python-pptx ..."
 & $py -m pip install python-pptx
 
-if ($WithRaster) {
-    Write-Host "→ Installing cairosvg (for high-DPI PNG fallback) ..."
-    try {
-        & $py -m pip install cairosvg
-    } catch {
-        Write-Warning "cairosvg install failed. You can also install Inkscape (https://inkscape.org/release/) -- svg_to_pptx.py will detect it."
-    }
+Write-Host "→ Installing resvg-py (SVG → PNG renderer) ..."
+try {
+    & $py -m pip install resvg-py
+} catch {
+    Write-Warning "resvg-py install failed. As a fallback install Inkscape (https://inkscape.org/release/) -- svg_to_pptx.py will detect it."
+}
+
+Write-Host "→ Installing img2pdf (companion .pdf assembler) ..."
+try {
+    & $py -m pip install img2pdf
+} catch {
+    Write-Warning "img2pdf install failed -- the companion .pdf will be skipped."
 }
 
 Write-Host "✅ Done. Try:  $py scripts\svg_to_pptx.py --help"

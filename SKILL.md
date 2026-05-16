@@ -65,7 +65,7 @@ The base workflow is 5 phases. Add a **Phase 0** when the user supplies a source
 | 2 | **Outline architecture** (大綱規劃) | `outline.json` with cover / TOC / parts / pages | Always |
 | 3 | **Planning draft** (策劃稿) | `planning.json` with per-page layout, cards, charts | Always — this is the secret sauce |
 | 4 | **Design** (設計稿) | One `.svg` per page (`viewBox="0 0 1280 720"`) | Always |
-| 5 | **Produce** (產出) | Final `.pptx` (each slide = vector SVG + PNG fallback) | Always |
+| 5 | **Produce** (產出) | Final `.pptx` (vector SVG + PNG fallback) **and** companion `.pdf` (PNG pages) | Always |
 
 ### Phase 1 — Needs research
 
@@ -180,9 +180,12 @@ python scripts/svg_to_pptx.py \
 ```
 
 This script:
-1. Creates a 16:9 PPTX with one slide per page.
-2. Embeds each slide's picture with the original SVG via the PowerPoint 2016+ `svgBlip` extension, plus a tiny 1×1 transparent placeholder PNG (required by the OOXML spec). Modern PowerPoint renders the SVG vector directly.
-3. Attaches speaker notes from `planning.json` if it's in the same directory.
+1. Renders each SVG to a high-DPI PNG via `resvg-py` (zero system deps).
+2. Creates a 16:9 PPTX with one slide per page; each slide embeds the original SVG via the PowerPoint 2016+ `svgBlip` extension plus the PNG fallback.
+3. Assembles the same PNGs into a companion `.pdf` (named after `--output` with the `.pdf` extension) via `img2pdf`.
+4. Attaches speaker notes from `planning.json` if it's in the same directory.
+
+**The default produces TWO files**: `deck.pptx` AND `deck.pdf`. The PPTX is the editable artifact for PowerPoint users; the PDF is the universal share-anywhere artifact. Use `--no-pdf` to skip the PDF.
 
 **Editing the result**: in PowerPoint 2016 or newer, right-click any slide's picture → **Convert to Shape**. The SVG decomposes into native PowerPoint shapes and text boxes — every card, title, and icon becomes editable.
 
@@ -288,12 +291,12 @@ deckforge/                            ← (or whatever you name the skill folder
 
 ## Dependencies
 
-**Phases 1–4 are pure Markdown — no dependencies at all.** Only the Phase 5 converter (`svg_to_pptx.py`) needs two small pip packages:
+**Phases 1–4 are pure Markdown — no dependencies at all.** Only the Phase 5 converter (`svg_to_pptx.py`) needs three small pip packages:
 
 ```bash
 bash scripts/setup.sh
 # or
-pip install python-pptx resvg-py --break-system-packages
+pip install python-pptx resvg-py img2pdf --break-system-packages
 ```
 
-That's it. Both packages are pip wheels with zero system dependencies — works on macOS / Linux / Windows / PyPy without Homebrew, apt, or sudo. If `cairosvg`, `inkscape`, or `rsvg-convert` is already on the system, the script auto-detects and uses whichever it finds first.
+All three are pip wheels with zero system dependencies — works on macOS / Linux / Windows / PyPy without Homebrew, apt, or sudo. (`cairosvg`, `inkscape`, or `rsvg-convert` are also auto-detected if you happen to have them, but resvg-py covers the case.)

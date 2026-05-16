@@ -8,14 +8,14 @@
 
 ## Demo
 
-一份 6 頁的 **Claude 企業版導入提案**(TPIsoftware 內部會議用),由 DeckForge 端到端產出:
+一份 3 頁 **DeckForge 自介** mini-deck,由本 skill 的 SVG pipeline 直接產出:
 
 | | | |
 |---|---|---|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |
-| ![](examples/slide-4.jpg) | ![](examples/slide-5.jpg) | ![](examples/slide-6.jpg) |
 
-成品 PDF 在 [`examples/Claude-Enterprise-Pitch.pdf`](examples/Claude-Enterprise-Pitch.pdf)。
+- 合併 PDF: [`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
+- 原始 SVG(直接看 Bento Grid 的座標寫法): [`examples/sample-deck/`](examples/sample-deck/)
 
 ## 資料夾內容
 
@@ -45,9 +45,10 @@ DeckForge/
 │   ├── svg_to_pptx.py      ← SVG → PPTX 組裝器(含 svgBlip 擴充,保留向量)
 │   ├── setup.sh            ← 一鍵安裝依賴(mac / linux)
 │   └── setup.ps1           ← Windows PowerShell 版安裝腳本
-└── examples/               ← Claude 企業版導入提案範例 deck(6 頁完整產出)
-    ├── Claude-Enterprise-Pitch.pdf  ← 成品 PDF
-    └── slide-1.jpg ... 6            ← 各頁預覽圖
+└── examples/               ← DeckForge 自介 mini-deck(3 頁完整產出)
+    ├── DeckForge-demo.pdf   ← 合併後的成品 PDF
+    ├── slide-1.jpg ... 3    ← 各頁預覽縮圖
+    └── sample-deck/         ← 原始 SVG 檔(可直接拖進 PowerPoint)
 ```
 
 ## 安裝(讓 Claude 用得到)

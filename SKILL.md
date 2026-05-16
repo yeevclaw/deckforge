@@ -233,8 +233,9 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── setup.sh                      ← one-line dependency installer (mac/linux)
 │   └── setup.ps1                     ← same, for Windows PowerShell
 └── examples/
-    ├── Claude-Enterprise-Pitch.pdf   ← rendered demo (6 pages)
-    └── slide-1.jpg ... 6             ← preview thumbnails
+    ├── DeckForge-demo.pdf            ← rendered demo (3 pages)
+    ├── slide-1.jpg ... 3             ← preview thumbnails
+    └── sample-deck/                  ← source SVG pages of the demo
 ```
 
 ---

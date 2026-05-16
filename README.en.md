@@ -8,14 +8,14 @@ Inspired by the methodology shared by *sandun* on linux.do ("应该是目前最�
 
 ## Demo
 
-A 6-page **Claude Enterprise rollout pitch** (TPIsoftware internal proposal), produced end-to-end by this skill:
+A 3-page **DeckForge self-intro** mini-deck, produced directly through this skill's SVG pipeline:
 
 | | | |
 |---|---|---|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |
-| ![](examples/slide-4.jpg) | ![](examples/slide-5.jpg) | ![](examples/slide-6.jpg) |
 
-The rendered PDF lives at [`examples/Claude-Enterprise-Pitch.pdf`](examples/Claude-Enterprise-Pitch.pdf).
+- Combined PDF: [`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
+- Source SVGs (peek at the Bento Grid coordinates): [`examples/sample-deck/`](examples/sample-deck/)
 
 ## What's inside
 
@@ -45,9 +45,10 @@ DeckForge/
 │   ├── svg_to_pptx.py      ← SVG → PPTX (embeds svgBlip ext, vectors preserved)
 │   ├── setup.sh            ← one-line dependency installer (mac / linux)
 │   └── setup.ps1           ← same, for Windows PowerShell
-└── examples/               ← live demo (Claude Enterprise rollout pitch, 6 pages)
-    ├── Claude-Enterprise-Pitch.pdf ← the rendered output
-    └── slide-1.jpg ... 6   ← preview of each page
+└── examples/               ← DeckForge self-intro mini-deck (3 pages)
+    ├── DeckForge-demo.pdf  ← combined rendered PDF
+    ├── slide-1.jpg ... 3   ← preview thumbnails
+    └── sample-deck/        ← source SVG pages (drag into PowerPoint to inspect)
 ```
 
 ## Install as a Claude skill

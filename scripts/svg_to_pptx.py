@@ -263,10 +263,75 @@ def add_svg_slide(prs, svg_path: Path, png_path: Path, embed_svg: bool):
     return slide
 
 
+def strip_notes_infrastructure(pptx_path: Path) -> None:
+    """python-pptx's notes_text_frame mechanism leaves Content_Types overrides
+    and slide rels that Keynote refuses to parse — it shows "invalid file
+    format" and won't open the file at all.
+
+    We strip ALL notes-related parts and references after python-pptx saves,
+    leaving a clean image-based PPTX that opens in Keynote / PowerPoint /
+    Preview / Quick Look uniformly. Notes content is preserved in a sibling
+    `<stem>.notes.md` file by save_notes_sidecar() — not in the .pptx itself.
+
+    Skipped when --keep-notes is set (PowerPoint-only workflows).
+    """
+    import re
+    import tempfile
+    import shutil
+    import zipfile
+
+    tmp_path = pptx_path.with_suffix(".tmp.pptx")
+    with zipfile.ZipFile(pptx_path) as zin, \
+         zipfile.ZipFile(tmp_path, "w", zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.namelist():
+            # Drop notes-related parts entirely
+            if ("notesSlide" in item or
+                "notesMaster" in item or
+                item.endswith("theme2.xml")):
+                continue
+            data = zin.read(item)
+            if item == "[Content_Types].xml":
+                text = data.decode("utf-8")
+                text = re.sub(r"<Override[^>]*notesSlide[^>]*/>", "", text)
+                text = re.sub(r"<Override[^>]*notesMaster[^>]*/>", "", text)
+                # Also drop the theme2 override since we drop the file
+                text = re.sub(r'<Override[^>]*PartName="/ppt/theme/theme2\.xml"[^>]*/>',
+                              "", text)
+                data = text.encode("utf-8")
+            if item.endswith(".rels"):
+                text = data.decode("utf-8")
+                text = re.sub(r"<Relationship[^>]*notesSlide[^>]*/>", "", text)
+                text = re.sub(r"<Relationship[^>]*notesMaster[^>]*/>", "", text)
+                data = text.encode("utf-8")
+            zout.writestr(item, data)
+    shutil.move(tmp_path, pptx_path)
+
+
+def save_notes_sidecar(pptx_path: Path, planning: dict) -> Path | None:
+    """Write speaker notes as a sibling `.notes.md` file so the planner's
+    speaker_notes aren't lost when we strip notes from the .pptx for Keynote
+    compatibility. Returns the sidecar path, or None if there were no notes."""
+    pages = planning.get("pages") or []
+    notes = [(i + 1, p.get("speaker_notes", "")) for i, p in enumerate(pages)
+             if p.get("speaker_notes")]
+    if not notes:
+        return None
+    out = pptx_path.with_suffix(".notes.md")
+    lines = [f"# Speaker notes — {pptx_path.stem}", ""]
+    for idx, note in notes:
+        lines.append(f"## Slide {idx}")
+        lines.append("")
+        lines.append(note.strip())
+        lines.append("")
+    out.write_text("\n".join(lines), encoding="utf-8")
+    return out
+
+
 def build(pages: list[Path], out_path: Path, planning: dict,
           workdir: Path, png_width: int,
           placeholder_only: bool, embed_svg: bool,
-          also_pdf: bool, pdf_path: Path | None):
+          also_pdf: bool, pdf_path: Path | None,
+          keep_notes: bool):
     workdir.mkdir(parents=True, exist_ok=True)
     prs = Presentation()
     prs.slide_width = SLIDE_W_EMU
@@ -277,6 +342,7 @@ def build(pages: list[Path], out_path: Path, planning: dict,
         placeholder_path.write_bytes(_PLACEHOLDER_PNG_BYTES)
 
     real_pngs = []   # ordered list of per-slide PNG paths used for the optional PDF
+    slide_objs = []  # ordered list of slide objects, for the notes second-pass
     engine_reported = False
     used_placeholder_anywhere = False
     for i, svg_path in enumerate(pages):
@@ -308,15 +374,33 @@ def build(pages: list[Path], out_path: Path, planning: dict,
         real_pngs.append(png_path)
         print(f"[{i+1}/{len(pages)}] {svg_path.name} → slide", flush=True)
         slide = add_svg_slide(prs, svg_path, png_path, embed_svg=embed_svg)
+        slide_objs.append(slide)
 
-        notes = speaker_notes_for(i, planning)
-        if notes:
-            slide.notes_slide.notes_text_frame.text = notes
+    # Speaker notes — only if --keep-notes is set. By default we strip notes
+    # entirely from the .pptx and save them to a sibling .notes.md, because
+    # python-pptx's notes infrastructure makes Keynote reject the file.
+    if keep_notes:
+        for i, slide in enumerate(slide_objs):
+            notes = speaker_notes_for(i, planning)
+            if notes:
+                slide.notes_slide.notes_text_frame.text = notes
 
     prs.save(str(out_path))
+
+    if not keep_notes:
+        # Always strip after save — python-pptx may have added stray notes
+        # infrastructure (notesMaster, theme2) even when no notes were set.
+        strip_notes_infrastructure(out_path)
+
     print(f"✅ Wrote PPTX: {out_path}")
     if embed_svg:
         print("   (In PowerPoint 2016+: right-click a slide → Convert to Shape to edit.)")
+
+    # Save sidecar notes file (regardless of --keep-notes, so notes are always
+    # recoverable from a human-readable source).
+    notes_md = save_notes_sidecar(out_path, planning)
+    if notes_md:
+        print(f"📝 Wrote notes: {notes_md}")
     if used_placeholder_anywhere and not placeholder_only:
         print("⚠️  Some slides used the 1×1 placeholder because no SVG renderer was "
               "available. Re-run after installing one for proper Keynote / Preview display.")
@@ -345,9 +429,16 @@ def build(pages: list[Path], out_path: Path, planning: dict,
         write_pdf(real_pngs, pdf_out)
         print(f"✅ Wrote PDF:  {pdf_out}")
         print()
-        print("⚠️  IMPORTANT: TWO files were produced — both should be delivered.")
-        print(f"    • {out_path}")
-        print(f"    • {pdf_out}")
+        # Aggregate the deliverables — exact count depends on whether speaker
+        # notes were extracted. Notes sidecar is reported separately above.
+        notes_sidecar = out_path.with_suffix(".notes.md")
+        deliverables = [out_path, pdf_out]
+        if notes_sidecar.exists():
+            deliverables.append(notes_sidecar)
+        print(f"⚠️  IMPORTANT: {len(deliverables)} files were produced — "
+              f"ALL should be delivered to the user.")
+        for p in deliverables:
+            print(f"    • {p}")
 
 
 def write_pdf(png_paths: list[Path], pdf_path: Path) -> None:
@@ -386,6 +477,11 @@ def main():
     p.add_argument("--pdf-output", default=None,
                    help="Explicit PDF path. If omitted, derived from --output by "
                         "swapping .pptx → .pdf.")
+    p.add_argument("--keep-notes", action="store_true",
+                   help="Embed speaker notes inside the .pptx via python-pptx. "
+                        "Default is OFF because python-pptx's notes infrastructure "
+                        "makes Keynote refuse the file. Notes are always written "
+                        "to a sibling <stem>.notes.md regardless of this flag.")
     p.add_argument("--workdir", default=None,
                    help="Directory for intermediate files (default: <pages-dir>/_renders)")
     args = p.parse_args()
@@ -424,7 +520,8 @@ def main():
           placeholder_only=args.placeholder_only,
           embed_svg=not args.no_svg,
           also_pdf=not args.no_pdf,
-          pdf_path=pdf_path)
+          pdf_path=pdf_path,
+          keep_notes=args.keep_notes)
 
 
 if __name__ == "__main__":

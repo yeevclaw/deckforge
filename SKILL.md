@@ -185,22 +185,33 @@ This script:
 3. Assembles the same PNGs into a companion `.pdf` (named after `--output` with the `.pdf` extension) via `img2pdf`.
 4. Attaches speaker notes from `planning.json` if it's in the same directory.
 
-### Phase 5 produces TWO artifacts — deliver BOTH
+### Phase 5 produces UP TO THREE artifacts — deliver ALL of them
 
-Every successful Phase 5 run emits **two files side by side**:
+Every successful Phase 5 run emits two or three files side by side:
 
-- `<output>.pptx` — editable artifact for PowerPoint users
-- `<output>.pdf` — universal share-anywhere artifact (clients without PowerPoint, mobile preview, web sharing)
+- `<output>.pptx` — editable artifact for PowerPoint users. Opens cleanly in Keynote / Preview / Quick Look too.
+- `<output>.pdf` — universal share-anywhere artifact (clients without PowerPoint, mobile preview, web sharing).
+- `<output>.notes.md` — Markdown file with all speaker notes, one section per slide. **Only emitted when `planning.json` actually has `speaker_notes`** on any page. Skipped silently when no notes exist.
 
-**You MUST deliver both files to the user's target location**, not just the .pptx. Common failure mode: the script writes both files into a session-temporary directory, you copy only `.pptx` to the user's Downloads / chat, and the `.pdf` gets discarded when the session ends.
+**You MUST deliver all files that were produced to the user's target location.** Don't drop the `.pdf` or `.notes.md` "because it's just supplementary" — they're part of the deliverable set. Common failure mode: the script writes all three into a session-temporary directory, you copy only `.pptx` to the user's Downloads / chat, and the rest get discarded when the session ends.
 
 After running `svg_to_pptx.py`, do this check explicitly:
 
-1. Confirm BOTH `deck.pptx` and `deck.pdf` exist at the output path (use `ls` / `Read`).
-2. Copy BOTH to the user-visible destination (Downloads, the chat upload, wherever the user expects the result).
-3. Tell the user about both files in your reply: "I produced *deck.pptx* (editable in PowerPoint) and *deck.pdf* (universal). Both attached."
+1. Confirm each file the stdout reported actually exists at the output path (use `ls` / `Read`).
+2. Copy EACH ONE to the user-visible destination (Downloads, the chat upload, wherever the user expects the result).
+3. Tell the user about every file in your reply: "I produced *deck.pptx* (editable in PowerPoint), *deck.pdf* (universal share), and *deck.notes.md* (speaker notes). All three attached."
 
-If `--no-pdf` was explicitly passed (rare), only `.pptx` exists — say so. If `--placeholder-only` was passed, the script automatically skips `.pdf` — also say so. Otherwise, **PDF is never optional**; if it's missing the script failed and you should investigate before declaring done.
+The script's stdout ends with a `⚠️  IMPORTANT: N files were produced — ALL should be delivered to the user.` block listing every file. Use that as the source of truth — if you only see one file in the list, deliver one. If you see three, deliver three.
+
+If `--no-pdf` was explicitly passed, only `.pptx` (+ optional `.notes.md`) exists — say so. If `--placeholder-only` was passed, the script automatically skips `.pdf` — also say so.
+
+### Speaker notes — why they go to .notes.md, not into the .pptx
+
+python-pptx's `slide.notes_slide.notes_text_frame.text = ...` mechanism injects `notesSlide` parts, a `notesMaster` part, a `theme2.xml`, and several Content_Types overrides into the PPTX. Keynote 14+ rejects the file outright with "檔案格式無效 / Invalid file format" when it encounters this combination — even though the file is valid OOXML and opens fine in PowerPoint.
+
+Rather than ship a deck that's broken in Keynote, DeckForge **always writes speaker notes to a sibling `<stem>.notes.md` file** and post-processes the `.pptx` to strip the offending parts. The PPTX is then clean and opens in Keynote, PowerPoint, Preview, Quick Look, and Google Slides uniformly.
+
+If the user truly needs in-PPTX notes for PowerPoint Presenter View (and accepts that Keynote will refuse the file), pass `--keep-notes` to `svg_to_pptx.py`. The default is the safe path.
 
 ### Heads-up: macOS may quarantine the .pptx
 

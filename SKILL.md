@@ -26,19 +26,21 @@ If the user already has a topic and just wants slides fast, you can compress pha
 
 ## Before starting — heads-up about Phase 5 dependencies
 
-Phases 1–4 produce SVG files and need **zero Python packages**. Phase 5 (assembling the `.pptx`) needs:
+Phases 1–4 produce SVG files and need **zero Python packages**. Phase 5 (assembling the `.pptx`) needs **two Python packages, both pip-installable with zero system deps**:
 
 1. **`python-pptx`** (required, ~1 MB) — builds the .pptx file.
-2. **An SVG → PNG renderer** (strongly recommended) — produces a raster fallback for each slide so the deck displays correctly in **Keynote, macOS Preview, Quick Look, and PowerPoint pre-2016**. Without one, those viewers show blank slides (only PowerPoint 2016+ renders correctly via the embedded SVG). Acceptable renderers: `cairosvg`, `inkscape`, `rsvg-convert` — any one is enough.
+2. **`resvg-py`** (strongly recommended, ~1 MB) — rasterizes each slide's SVG into a PNG fallback so the deck displays correctly in **Keynote, macOS Preview, Quick Look, and PowerPoint pre-2016**. Without it, those viewers show blank slides (only PowerPoint 2016+ renders correctly via the embedded SVG).
+
+resvg-py is a pip wheel that ships a self-contained Rust binary — no Homebrew, no apt-get, no sudo needed. `cairosvg`, `inkscape`, and `rsvg-convert` also work if any of them is already on the user's system.
 
 If this is the user's first time running the skill, mention this at the start of Phase 1 so they can install in parallel:
 
-> *"This skill runs 5 phases. The first 4 don't need anything installed. The final .pptx assembly needs two things on your system Python / OS: `python-pptx` (required), and an SVG renderer (recommended — without it the deck looks blank in Keynote and macOS Preview, only PowerPoint 2016+ works). Easiest: `bash scripts/setup.sh` from inside the deckforge folder — it installs both. While that runs, I'll start Phase 1."*
+> *"This skill runs 5 phases. The first 4 don't need anything installed. The final .pptx assembly needs two pip packages: `python-pptx` and `resvg-py`. Easiest: `bash scripts/setup.sh` from inside the deckforge folder. Or run `pip install python-pptx resvg-py --break-system-packages` directly. While that runs, I'll start Phase 1."*
 
 ### Common errors and how to recover
 
 - **`ModuleNotFoundError: No module named 'pptx'`** — user hasn't installed `python-pptx`. Have them run `pip install python-pptx --break-system-packages` and re-run Phase 5.
-- **Slides display blank in Keynote / macOS Preview, fine in PowerPoint** — the user has python-pptx but no SVG renderer. The script will print a warning during Phase 5. Have them install a renderer: `brew install librsvg` (mac), `apt-get install librsvg2-bin` (linux), or `pip install cairosvg`. Then re-run Phase 5.
+- **Slides display blank in Keynote / macOS Preview, fine in PowerPoint** — no SVG renderer installed. The script prints a clear warning during Phase 5. Easiest fix: `pip install resvg-py --break-system-packages`. Then re-run Phase 5.
 - **Keynote refuses to open the .pptx entirely** — try re-running Phase 5 with `--no-svg` to skip the svgBlip extension. Slides become image-only but Keynote will open them. The trade-off: Convert-to-Shape editability in PowerPoint goes away.
 
 ### Where the deckforge folder lives
@@ -269,18 +271,12 @@ deckforge/                            ← (or whatever you name the skill folder
 
 ## Dependencies
 
-**Phases 1–4 are pure Markdown — no dependencies at all.** Only the Phase 5 converter (`svg_to_pptx.py`) needs anything.
+**Phases 1–4 are pure Markdown — no dependencies at all.** Only the Phase 5 converter (`svg_to_pptx.py`) needs two small pip packages:
 
 ```bash
-# Recommended: installs both python-pptx AND an SVG renderer.
 bash scripts/setup.sh
-
-# Or manually:
-pip install python-pptx --break-system-packages
-# Plus one of these for the SVG → PNG renderer (so Keynote / Preview work):
-pip install cairosvg --break-system-packages
-brew install librsvg          # macOS — installs rsvg-convert
-apt-get install librsvg2-bin  # Linux
+# or
+pip install python-pptx resvg-py --break-system-packages
 ```
 
-Without the renderer the deck only displays correctly in PowerPoint 2016+ (Keynote and macOS Preview show blank slides). The converter prints a clear warning when this happens and tells the user exactly what to install.
+That's it. Both packages are pip wheels with zero system dependencies — works on macOS / Linux / Windows / PyPy without Homebrew, apt, or sudo. If `cairosvg`, `inkscape`, or `rsvg-convert` is already on the system, the script auto-detects and uses whichever it finds first.

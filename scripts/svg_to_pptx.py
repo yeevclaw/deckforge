@@ -15,14 +15,22 @@ Each slide's picture is embedded as:
      (so PowerPoint 2016+ renders the vector and the user can
      right-click → "Convert to Shape" to edit every text run).
 
-The PNG fallback is rendered using whichever SVG renderer is available:
-cairosvg → inkscape → rsvg-convert. If none is installed, a 1×1
-transparent placeholder PNG is used (sufficient for PowerPoint 2016+ but
-will look blank in Keynote / macOS Preview) and a warning is printed.
+The PNG fallback is rendered using whichever SVG renderer is available,
+in this preference order:
+  resvg-py → cairosvg → inkscape → rsvg-convert
+
+resvg-py is the only one with **zero system dependencies** — it ships a
+pure Rust binary inside a pip wheel, available for Python 3.9+ on
+macOS / Linux / Windows. That's why setup.sh installs it by default.
+
+If none of these is installed, a 1×1 transparent placeholder PNG is used
+(sufficient for PowerPoint 2016+ but will look blank in Keynote /
+macOS Preview) and a warning is printed.
 
 Required dependency:    python-pptx       (pip install python-pptx)
-Strongly recommended:   cairosvg (or)     pip install cairosvg
-                        rsvg-convert      brew install librsvg
+Strongly recommended:   resvg-py          (pip install resvg-py)
+Alternatives:           cairosvg          pip install cairosvg + libcairo
+                        rsvg-convert      brew install librsvg / apt librsvg2-bin
                         inkscape          brew install inkscape
 
 Flags:
@@ -82,14 +90,34 @@ _PLACEHOLDER_PNG_BYTES = base64.b64decode(
 )
 
 
-# ---------- Optional SVG → PNG rendering (only when --with-raster) ----------
+# ---------- SVG → PNG rendering ----------
+
+def _render_with_resvg_py(svg_path: Path, png_path: Path, width: int) -> bool:
+    try:
+        import resvg_py
+    except ImportError:
+        return False
+    svg_data = svg_path.read_text(encoding="utf-8")
+    try:
+        png_bytes = resvg_py.svg_to_bytes(svg_string=svg_data, width=width)
+    except Exception as e:
+        print(f"[svg_to_pptx] resvg-py failed on {svg_path.name}: {e}", file=sys.stderr)
+        return False
+    png_path.write_bytes(bytes(png_bytes))
+    return True
+
 
 def _render_with_cairosvg(svg_path: Path, png_path: Path, width: int) -> bool:
     try:
         import cairosvg
     except ImportError:
         return False
-    cairosvg.svg2png(url=str(svg_path), write_to=str(png_path), output_width=width)
+    try:
+        cairosvg.svg2png(url=str(svg_path), write_to=str(png_path), output_width=width)
+    except Exception as e:
+        # cairosvg installs cleanly but fails at runtime if libcairo C lib is missing.
+        print(f"[svg_to_pptx] cairosvg failed on {svg_path.name}: {e}", file=sys.stderr)
+        return False
     return True
 
 
@@ -128,9 +156,10 @@ def render_real_png(svg_path: Path, png_path: Path, width: int = 2560):
     """Render a high-DPI PNG fallback. Returns engine name, or None if no renderer."""
     png_path.parent.mkdir(parents=True, exist_ok=True)
     for name, fn in (
-        ("cairosvg", _render_with_cairosvg),
-        ("inkscape", _render_with_inkscape),
-        ("rsvg-convert", _render_with_rsvg),
+        ("resvg-py", _render_with_resvg_py),     # pure-pip, no system deps
+        ("cairosvg", _render_with_cairosvg),     # needs libcairo
+        ("inkscape", _render_with_inkscape),     # separate binary
+        ("rsvg-convert", _render_with_rsvg),     # native lib
     ):
         if fn(svg_path, png_path, width):
             return name
@@ -236,15 +265,16 @@ def build(pages: list[Path], out_path: Path, planning: dict,
             engine = render_real_png(svg_path, png_path, width=png_width)
             if engine is None:
                 if not engine_reported:
-                    print("⚠️  No SVG renderer found (cairosvg / inkscape / rsvg-convert). "
+                    print("⚠️  No SVG renderer found. "
                           "Falling back to a 1×1 transparent placeholder PNG.",
                           file=sys.stderr)
                     print("    The .pptx will look BLANK in Keynote / macOS Preview / "
-                          "older PowerPoint. To fix, install one of:",
+                          "older PowerPoint. Easiest fix:",
                           file=sys.stderr)
-                    print("      pip install cairosvg --break-system-packages", file=sys.stderr)
-                    print("      brew install librsvg                          (mac)", file=sys.stderr)
-                    print("      apt-get install librsvg2-bin                  (linux)", file=sys.stderr)
+                    print("      pip install resvg-py --break-system-packages",
+                          file=sys.stderr)
+                    print("    (zero system deps; prebuilt wheels for all major platforms.)",
+                          file=sys.stderr)
                     engine_reported = True
                 png_path = placeholder_path
                 used_placeholder_anywhere = True

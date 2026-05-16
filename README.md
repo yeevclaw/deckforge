@@ -89,24 +89,17 @@ cd ~/deckforge && bash scripts/package.sh
 
 ### 4. 安裝 Phase 5 用的依賴
 
-Phase 5 組 `.pptx` 用,需要:
-- **`python-pptx`**(必裝)——組 .pptx 檔
-- **SVG → PNG 渲染器**(強烈建議)——讓投影片在 **Keynote、macOS Preview、Quick Look 跟 PowerPoint 2016 之前的版本**都正常顯示。沒裝的話這些檢視器看到的會是空白(只有 PowerPoint 2016+ 認得內嵌 SVG)。
-
 ```bash
-# 一鍵裝齊
 bash ~/deckforge/scripts/setup.sh
-
-# 或手動
-pip install python-pptx --break-system-packages
-brew install librsvg                                  # mac
-# 或
-pip install cairosvg --break-system-packages          # 跨平台 (需 libcairo 系統庫)
-# 或
-apt-get install librsvg2-bin                          # linux
+# 或: pip install python-pptx resvg-py --break-system-packages
 ```
 
-階段 1–4(需求調研 / 大綱 / 策劃 / 設計)完全純 Markdown,不需要任何套件,Claude 自己讀提示詞跑。只有最後組 `.pptx` 那一步會用到上面的東西。
+只有兩個 Python 套件,**完全沒有系統依賴**——`resvg-py` 把 Rust 寫的 SVG renderer 打包成 pip wheel,macOS / Linux / Windows 都直接 `pip install` 就好,不用 Homebrew、不用 apt-get、不用 sudo。
+
+- `python-pptx`(~1 MB)——組 .pptx 檔
+- `resvg-py`(~1 MB)——把每張投影片的 SVG 渲成 PNG fallback,讓 Keynote、macOS Preview、Quick Look 跟舊版 PowerPoint 都能正常顯示
+
+階段 1–4(需求調研 / 大綱 / 策劃 / 設計)完全純 Markdown,不需要任何套件,Claude 自己讀提示詞跑。只有最後組 `.pptx` 那一步會用到上面的兩個套件。
 
 ### Claude Code CLI(替代安裝)
 

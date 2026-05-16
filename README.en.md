@@ -89,22 +89,15 @@ cd ~/deckforge && bash scripts/package.sh
 
 ### 4. Install Phase 5 dependencies
 
-Phase 5 (assembling the .pptx) needs:
-- **`python-pptx`** (required) — builds the .pptx file.
-- **An SVG → PNG renderer** (strongly recommended) — produces a raster fallback for each slide so the deck displays correctly in **Keynote, macOS Preview, Quick Look, and PowerPoint pre-2016**. Without one, those viewers show blank slides (only PowerPoint 2016+ renders correctly via the embedded SVG).
-
 ```bash
-# One command, both at once
 bash ~/deckforge/scripts/setup.sh
-
-# Or manually
-pip install python-pptx --break-system-packages
-brew install librsvg                                  # macOS
-# or
-pip install cairosvg --break-system-packages          # cross-platform (needs libcairo)
-# or
-apt-get install librsvg2-bin                          # Linux
+# or: pip install python-pptx resvg-py --break-system-packages
 ```
+
+Just two Python packages, **zero system dependencies**. `resvg-py` bundles a Rust SVG renderer as a pip wheel, so a single `pip install` works on macOS / Linux / Windows — no Homebrew, no apt-get, no sudo.
+
+- `python-pptx` (~1 MB) — builds the .pptx file.
+- `resvg-py` (~1 MB) — rasterizes each slide's SVG into a PNG fallback, so the deck displays correctly in Keynote, macOS Preview, Quick Look, and older PowerPoint.
 
 Phases 1–4 (research / outline / planning / design) are pure Markdown — Claude reads the prompts and runs them with no dependencies. Only the final .pptx assembly uses the above.
 

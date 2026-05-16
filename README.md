@@ -1,5 +1,7 @@
 # DeckForge
 
+**English** · [繁體中文](README.zh-TW.md)
+
 > A Claude skill that produces **professional-grade PowerPoint decks** by following a 5-phase expert workflow (research → outline → planning → design → produce), rather than stuffing your topic into a generic template.
 
 Inspired by the methodology shared by *sandun* on linux.do ("应该是目前最强的PPT Agent，附上完整思路分享"). Adapted to an HTML → PPTX pipeline for native Claude file output.

@@ -1,0 +1,9 @@
+# DeckForge — Phase 5 (.pptx assembly) dependencies.
+# Phases 1–4 of the skill are pure Markdown — no Python install needed.
+
+python-pptx>=0.6.21
+# python-pptx transitively installs lxml and Pillow.
+
+# Optional — only needed if you pass --with-raster for a high-DPI PNG fallback.
+# Uncomment OR install Inkscape / librsvg2-bin via your OS package manager.
+# cairosvg>=2.7

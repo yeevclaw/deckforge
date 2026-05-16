@@ -24,6 +24,14 @@ Use whenever the user wants a presentation, deck, slides, or a `.pptx` file prod
 
 If the user already has a topic and just wants slides fast, you can compress phases 1–2, but **never skip the Planning Draft (phase 3)** — that's where AI-generated decks usually fall apart.
 
+## Before starting — heads-up about Phase 5 dependencies
+
+Phases 1–4 produce SVG files and need **zero Python packages**. Phase 5 (assembling the `.pptx`) needs **one package: `python-pptx`**. If this is the user's first time running the skill, mention this at the start of Phase 1 so they can install in parallel while you work:
+
+> *"This skill will run 5 phases. The first 4 don't need anything installed. The last phase (assembling the .pptx) needs `python-pptx` — you can install it now by running `bash ~/.claude/skills/deckforge/scripts/setup.sh` (or `pip install python-pptx --break-system-packages`). It'll prompt for confirmation. While that runs, I'll start Phase 1."*
+
+If Phase 5 fails with `ModuleNotFoundError: No module named 'pptx'`, that's the user not having run setup yet — point them at the setup script and re-run only Phase 5.
+
 ---
 
 ## The 5-phase workflow

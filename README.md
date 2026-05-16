@@ -53,25 +53,31 @@ DeckForge/
 
 ## 安裝(讓 Claude 用得到)
 
-把整個資料夾複製到 Claude 的 skill 資料夾,讓路徑長這樣:
+**兩個步驟**——clone 進 skill 資料夾,然後跑安裝腳本裝那個唯一需要的 Python 套件(`python-pptx`,Phase 5 組 .pptx 用)。
 
-```
-~/.claude/skills/deckforge/
-```
-
-### Mac
+### macOS / Linux
 
 ```bash
+# 1. clone 到 Claude 的 skills 資料夾
 git clone https://github.com/yeevclaw/deckforge.git ~/.claude/skills/deckforge
+
+# 2. 一鍵安裝依賴(會跳一次確認)
+cd ~/.claude/skills/deckforge && bash scripts/setup.sh
 ```
 
 ### Windows(PowerShell)
 
 ```powershell
+# 1. clone
 git clone https://github.com/yeevclaw/deckforge.git "$env:USERPROFILE\.claude\skills\deckforge"
+
+# 2. 安裝依賴
+cd "$env:USERPROFILE\.claude\skills\deckforge"; .\scripts\setup.ps1
 ```
 
 > `~/.claude/` 是隱藏資料夾。如果不存在,直接建立即可。
+> 不喜歡跑 shell 腳本的人,可以直接 `pip install -r requirements.txt`(內容只有一行 `python-pptx`)。
+> 階段 1–4(讓 Claude 跑研究/大綱/策劃/設計)完全不需要任何套件,只有最後組 `.pptx` 那一步用得到。
 
 ## 怎麼用
 

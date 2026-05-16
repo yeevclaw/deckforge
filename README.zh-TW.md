@@ -2,7 +2,7 @@
 
 [English](README.md) · **繁體中文**
 
-> 一份 Claude skill,專門用來產出**高品質的 PowerPoint 簡報**。不是把你的主題丟進範本套版,而是模擬頂級 PPT 設計團隊的工作流程——先研究、再規劃、再設計(5 個階段)。
+> 一個 Claude skill,專門用來產出**高品質的 PowerPoint 簡報**。不僅是把你的主題丟進範本套版,而是模擬頂級 PPT 設計團隊的工作流程——先研究、再規劃、再設計(5 個階段)。
 
 靈感來自 linux.do 上 *sandun* 的文章《应该是目前最强的PPT Agent,附上完整思路分享》,改寫成 HTML → PPTX 流程,以便 Claude 直接輸出檔案。
 

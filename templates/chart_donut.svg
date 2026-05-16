@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  chart_donut.svg — 3-segment donut chart on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Segments: 60% / 25% / 15% of total.
+  Donut: center (640, 400), radius 165, stroke-width 70.
+  Circumference = 2 × π × 165 ≈ 1037.
+  Segments: 622 / 259 / 155 dash lengths.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">營收構成,智慧家居佔六成</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Revenue Composition · Smart Home Dominates
+  </text>
+
+  <!-- Donut chart -->
+  <g transform="translate(420, 400)">
+    <!-- Background ring (very subtle) -->
+    <circle cx="0" cy="0" r="165" fill="none" stroke="#222222" stroke-width="70"/>
+
+    <!-- Segment 1: 60% (smart home), full opacity -->
+    <circle cx="0" cy="0" r="165" fill="none"
+            stroke="#FF6900" stroke-width="70"
+            stroke-dasharray="622 415"
+            stroke-dashoffset="0"
+            transform="rotate(-90)"/>
+
+    <!-- Segment 2: 25% (wearables), 55% alpha -->
+    <circle cx="0" cy="0" r="165" fill="none"
+            stroke="#FF6900" stroke-width="70" stroke-opacity="0.55"
+            stroke-dasharray="259 778"
+            stroke-dashoffset="-622"
+            transform="rotate(-90)"/>
+
+    <!-- Segment 3: 15% (other), 25% alpha -->
+    <circle cx="0" cy="0" r="165" fill="none"
+            stroke="#FF6900" stroke-width="70" stroke-opacity="0.25"
+            stroke-dasharray="155 882"
+            stroke-dashoffset="-881"
+            transform="rotate(-90)"/>
+
+    <!-- Center text -->
+    <text x="0" y="-6" font-size="64" font-weight="900" fill="#FFFFFF" text-anchor="middle">60%</text>
+    <text x="0" y="32" font-size="14" fill="#A0A0A0" text-anchor="middle">智慧家居佔比</text>
+    <text x="0" y="54" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">Smart Home Share</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(800, 320)" font-size="15" fill="#FFFFFF">
+    <rect x="0" y="0" width="16" height="16" fill="#FF6900" rx="2"/>
+    <text x="28" y="13">智慧家居</text>
+    <text x="28" y="33" font-size="12" fill="#666666" letter-spacing="1">SMART HOME · 60%</text>
+
+    <rect x="0" y="56" width="16" height="16" fill="#FF6900" fill-opacity="0.55" rx="2"/>
+    <text x="28" y="69">智慧穿戴</text>
+    <text x="28" y="89" font-size="12" fill="#666666" letter-spacing="1">WEARABLES · 25%</text>
+
+    <rect x="0" y="112" width="16" height="16" fill="#FF6900" fill-opacity="0.25" rx="2"/>
+    <text x="28" y="125">其他</text>
+    <text x="28" y="145" font-size="12" fill="#666666" letter-spacing="1">OTHER · 15%</text>
+  </g>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

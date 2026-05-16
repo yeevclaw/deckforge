@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  chart_line.svg — 5-point line chart on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Plot area inside translate(152, 200), 1000×400 logical.
+  Time points evenly distributed at x = 0, 250, 500, 750, 1000.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">服務收入佔比五季度趨勢</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Service Revenue Mix · Quarterly Trend
+  </text>
+
+  <!-- Plot area -->
+  <g transform="translate(152, 200)">
+    <!-- Y-axis labels -->
+    <text x="-12" y="6"   font-size="12" fill="#A0A0A0" text-anchor="end">100%</text>
+    <text x="-12" y="106" font-size="12" fill="#A0A0A0" text-anchor="end">75%</text>
+    <text x="-12" y="206" font-size="12" fill="#A0A0A0" text-anchor="end">50%</text>
+    <text x="-12" y="306" font-size="12" fill="#A0A0A0" text-anchor="end">25%</text>
+    <text x="-12" y="406" font-size="12" fill="#A0A0A0" text-anchor="end">0%</text>
+
+    <!-- Gridlines -->
+    <line x1="0" y1="0"   x2="1000" y2="0"   stroke="#333333" stroke-width="1"/>
+    <line x1="0" y1="100" x2="1000" y2="100" stroke="#333333" stroke-width="1"/>
+    <line x1="0" y1="200" x2="1000" y2="200" stroke="#333333" stroke-width="1"/>
+    <line x1="0" y1="300" x2="1000" y2="300" stroke="#333333" stroke-width="1"/>
+    <line x1="0" y1="400" x2="1000" y2="400" stroke="#333333" stroke-width="1"/>
+
+    <!-- Area fill below the line -->
+    <path d="M0,280 L250,200 L500,160 L750,100 L1000,40 L1000,400 L0,400 Z"
+          fill="#FF6900" fill-opacity="0.12"/>
+
+    <!-- The line -->
+    <polyline
+      points="0,280  250,200  500,160  750,100  1000,40"
+      fill="none" stroke="#FF6900" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Data dots -->
+    <circle cx="0"    cy="280" r="7" fill="#FF6900"/>
+    <circle cx="250"  cy="200" r="7" fill="#FF6900"/>
+    <circle cx="500"  cy="160" r="7" fill="#FF6900"/>
+    <circle cx="750"  cy="100" r="7" fill="#FF6900"/>
+    <circle cx="1000" cy="40"  r="7" fill="#FF6900"/>
+
+    <!-- Value labels -->
+    <text x="0"    y="260" font-size="14" font-weight="700" fill="#FF6900" text-anchor="middle">30%</text>
+    <text x="250"  y="180" font-size="14" font-weight="700" fill="#FF6900" text-anchor="middle">50%</text>
+    <text x="500"  y="140" font-size="14" font-weight="700" fill="#FF6900" text-anchor="middle">60%</text>
+    <text x="750"  y="80"  font-size="14" font-weight="700" fill="#FF6900" text-anchor="middle">75%</text>
+    <text x="1000" y="20"  font-size="14" font-weight="700" fill="#FF6900" text-anchor="middle">90%</text>
+
+    <!-- X-axis labels -->
+    <text x="0"    y="436" font-size="13" fill="#FFFFFF" text-anchor="middle">Q1 2024</text>
+    <text x="250"  y="436" font-size="13" fill="#FFFFFF" text-anchor="middle">Q2 2024</text>
+    <text x="500"  y="436" font-size="13" fill="#FFFFFF" text-anchor="middle">Q3 2024</text>
+    <text x="750"  y="436" font-size="13" fill="#FFFFFF" text-anchor="middle">Q4 2024</text>
+    <text x="1000" y="436" font-size="13" fill="#FFFFFF" text-anchor="middle">Q1 2025</text>
+  </g>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

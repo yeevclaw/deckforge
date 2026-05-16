@@ -156,6 +156,30 @@ Vertical layout inside a 360-tall mini-card: big number around y=350, CN caption
 
 Use 24×24 Lucide path data. Place inside a 48-radius circle filled in highlight color at 15% alpha. Never use emoji here.
 
+**Icon library** — pick from this allow-list. The icons are pre-defined in `templates/_base.svg` as `<symbol>` elements; reference them via `<use href="#icon-<name>"/>` or inline the path data:
+
+- **Trends/data**: `trending-up`, `trending-down`, `bar-chart`, `pie-chart`, `activity`
+- **Money/business**: `dollar-sign`, `credit-card`, `briefcase`, `building`, `shopping-cart`
+- **Tech/product**: `cpu`, `cloud`, `database`, `smartphone`, `zap`, `rocket`
+- **People/social**: `users`, `user`, `heart`, `award`
+- **Strategy/analysis**: `target`, `shield`, `lightbulb`, `compass`, `key`
+- **Status**: `check-circle`, `x-circle`, `alert-triangle`, `info`
+- **Time/location**: `clock`, `calendar`, `globe`, `map-pin`
+- **Files/content**: `file-text`, `book-open`, `mail`, `link`
+- **UI/actions**: `settings`, `search`, `filter`, `download`, `arrow-right`
+
+**Do not invent icons outside this list.** If none of the above fits the card's meaning, omit the icon entirely. Inventing custom paths produces visually inconsistent icons that break the deck's coherence.
+
+### Step 5.5: charts when the data has shape
+
+If `planning.json` specifies a chart layout (`chart_bar`, `chart_line`, `chart_donut`), follow [references/chart_anatomy.md](../references/chart_anatomy.md) precisely:
+
+- **`chart_bar`** — vertical bars for category comparisons (4–10 items). Single highlight color, gridlines `#333333`, value labels above bars, CN + EN x-axis labels. Starter: `templates/chart_bar.svg`.
+- **`chart_line`** — line + area fill for trends (4+ time points). 3px stroke, 7px dots, value labels above each dot. Starter: `templates/chart_line.svg`.
+- **`chart_donut`** — donut chart for composition (2–5 segments). One segment full opacity, others at 0.55 / 0.25 / 0.12 alpha of the same hue. Center: big highlight-color percentage + caption. Legend on the right. Starter: `templates/chart_donut.svg`.
+
+**Single-highlight-color discipline applies to charts too** — never paint each segment a different color. Use alpha variations of the deck's highlight color.
+
 ### Step 6: page-type-specific tweaks
 
 - **cover**: CN title huge (96–120px, font-weight 900) anchored left (`x=80, y=340`). EN title_en below (22–28px, gray-400). Subtle highlight-color radial-gradient glow at one corner of canvas.

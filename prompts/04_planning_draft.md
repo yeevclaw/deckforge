@@ -141,6 +141,148 @@ Symptoms of bad extraction:
 
 When you spot these, **split that card into multiple mini-cards** and use the `mini_grid` layout.
 
+## AI Task — semantic extraction (this is the job)
+
+> **Read the source content and identify the logically independent, parallel core points inside each paragraph or claim.** Do not split sentences by punctuation. Do not preserve the source's prose structure. Restructure the *meaning* into discrete cards.
+
+Each extracted core point becomes one mini-card. A mini-card carries one big element (number or 3–5 char phrase) and one short caption. That's the unit. Nothing more.
+
+The mistake to actively avoid: producing one big card per paragraph because the paragraph "feels like one thing". A paragraph almost always contains 3–5 parallel points. Find them. Split them.
+
+### Concrete extraction examples
+
+These show the same source content extracted badly vs correctly. **Use these patterns as your standard.**
+
+#### Example 1: Annual report paragraph
+
+**Source content** (real-shape annual report sentence):
+> 「2024 年公司營收達 NT$365 億，年增 28%；其中智慧型手機營收貢獻 62%，AIoT 業務佔 27%、年增 45%，互聯網服務佔 11%、毛利率達 76%。」
+
+**❌ Bad extraction — 1 big card, multi-point body**
+```json
+{
+  "layout": "single_focus",
+  "cards": [{
+    "is_number_first": false,
+    "heading": "2024 業績表現",
+    "body": "營收 NT$365 億年增 28%,手機 62%、AIoT 27% 年增 45%、互聯網 11% 毛利 76%"
+  }]
+}
+```
+Why bad: 5 distinct facts crammed into one body. Viewer can't process. Numbers don't get their visual moment.
+
+**✅ Good extraction — `mini_grid` with 4 mini-cards, one stat each**
+```json
+{
+  "layout": "mini_grid",
+  "title": "2024 營收結構與成長動能",
+  "title_en": "FY2024 Revenue Composition & Growth",
+  "cards": [
+    { "is_number_first": true, "stat_value": "NT$365億", "stat_caption": "2024 年總營收", "stat_caption_en": "Total Revenue" },
+    { "is_number_first": true, "stat_value": "+28%", "stat_caption": "年增率", "stat_caption_en": "YoY Growth" },
+    { "is_number_first": true, "stat_value": "+45%", "stat_caption": "AIoT 業務年增", "stat_caption_en": "AIoT Segment Growth" },
+    { "is_number_first": true, "stat_value": "76%", "stat_caption": "互聯網服務毛利率", "stat_caption_en": "Internet Services Margin" }
+  ]
+}
+```
+Why good: 4 numbers, each on its own card, each with its own caption. Each gets a visual moment at 64–72px in highlight color. Viewer scans the whole grid in 3 seconds.
+
+#### Example 2: Strategy paragraph (concept-heavy, fewer numbers)
+
+**Source content**:
+> 「核心策略圍繞三大支柱:其一,以使用者體驗為先,所有產品決策由 UX 倒推;其二,生態系思維,把每個產品都當成平台的入口;其三,長期主義,寧可慢也要做對。」
+
+**❌ Bad extraction — single card with mixed heading and 3 points**
+```json
+{
+  "layout": "single_focus",
+  "cards": [{
+    "is_number_first": false,
+    "heading": "三大策略",
+    "body": "使用者體驗為先、生態系思維、長期主義"
+  }]
+}
+```
+Why bad: heading is generic. The three pillars are reduced to comma-glued labels. No mini-card structure, no visual rhythm.
+
+**✅ Good extraction — `mini_grid` or `three_col`, one pillar per card**
+```json
+{
+  "layout": "three_col",
+  "title": "三大策略支柱",
+  "title_en": "Three Strategic Pillars",
+  "cards": [
+    {
+      "is_number_first": false,
+      "heading": "體驗為先",
+      "body": "所有產品決策由 UX 倒推",
+      "stat_caption_en": "UX-First",
+      "icon_hint": "heart"
+    },
+    {
+      "is_number_first": false,
+      "heading": "生態系思維",
+      "body": "每個產品都是平台的入口",
+      "stat_caption_en": "Ecosystem-Native",
+      "icon_hint": "globe"
+    },
+    {
+      "is_number_first": false,
+      "heading": "長期主義",
+      "body": "寧可慢也要做對",
+      "stat_caption_en": "Long-Termism",
+      "icon_hint": "target"
+    }
+  ]
+}
+```
+Why good: each pillar gets a 3-character punchy heading, a short body (≤15 chars), and its own visual presence. The deck reads like a designed brief, not a bullet list.
+
+#### Example 3: Single headline insight (use `stat_hero`)
+
+**Source content**:
+> 「在過去三年,公司服務收入累計成長 237%,首次超越硬體收入,標誌轉型完成。」
+
+**❌ Bad extraction — multiple cards diluting the message**
+```json
+{
+  "layout": "two_col_50_50",
+  "cards": [
+    { "heading": "服務收入", "body": "三年累計成長 237%" },
+    { "heading": "硬體收入", "body": "首次被服務反超" }
+  ]
+}
+```
+Why bad: the actual headline is "237% growth, transformation done". Splitting weakens the impact.
+
+**✅ Good extraction — `stat_hero` for the single dominant number**
+```json
+{
+  "layout": "stat_hero",
+  "title": "服務收入成為新引擎",
+  "title_en": "Services Become the New Engine",
+  "cards": [{
+    "is_number_first": true,
+    "stat_value": "+237%",
+    "stat_caption": "三年累計成長,首次超越硬體",
+    "stat_caption_en": "3-Year Growth · Now Exceeds Hardware"
+  }]
+}
+```
+Why good: one number takes the page. 80–120px in highlight color. Caption gives the context. This is the article's "数字优先" rule in action.
+
+### Rule of thumb for the extraction step
+
+Before emitting a page's `cards` array, silently run this check:
+
+1. **If the source paragraph has 3+ specific numbers** → it's a `mini_grid` candidate. Build 3–5 mini-cards with `is_number_first: true`.
+2. **If the source paragraph has 1 dominant number** that captures the whole point → it's a `stat_hero` candidate.
+3. **If the source paragraph has 3+ parallel concepts** (no big numbers) → it's `three_col` or `mini_grid` with `is_number_first: false`.
+4. **If the source paragraph has 2 contrasting ideas** → `two_col_50_50` with 1 card each.
+5. **Otherwise** → use `single_focus` only if literally one idea takes the page.
+
+If you find yourself wanting to put multiple ideas in one card, **go back to the source and re-extract**. There are almost always more parallel points than the first read suggests.
+
 ### Card schema (use the fields that apply)
 
 For **number-first** cards (`is_number_first: true`) — the dominant pattern for data-dense decks:

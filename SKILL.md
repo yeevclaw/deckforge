@@ -54,13 +54,16 @@ Don't assume a path. Refer to "the deckforge folder" or run scripts via relative
 
 ---
 
-## The 5-phase workflow
+## The workflow
 
-| Phase | Name | Output | Don't skip when… |
+The base workflow is 5 phases. Add a **Phase 0** when the user supplies a source document (PDF, annual report, transcript, whitepaper, etc.) — extract a structured analysis first, then run the rest.
+
+| Phase | Name | Output | When to run |
 |---|---|---|---|
-| 1 | **Needs research** (需求調研) | Audience, purpose, tone, length, constraints | Always — but compress to one round of questions if user is in a hurry |
+| 0 | **Source analysis** (文件分析) | `analysis.md` — key metrics, claims, parallel sets, anomalies | Only when user gives a source document. See [prompts/00_source_analysis.md](prompts/00_source_analysis.md) |
+| 1 | **Needs research** (需求調研) | Audience, purpose, tone, length, constraints | Always — compress to one round if user is in a hurry |
 | 2 | **Outline architecture** (大綱規劃) | `outline.json` with cover / TOC / parts / pages | Always |
-| 3 | **Planning draft** (策劃稿) | `planning.json` with layout intent per page | Always — this is the secret sauce |
+| 3 | **Planning draft** (策劃稿) | `planning.json` with per-page layout, cards, charts | Always — this is the secret sauce |
 | 4 | **Design** (設計稿) | One `.svg` per page (`viewBox="0 0 1280 720"`) | Always |
 | 5 | **Produce** (產出) | Final `.pptx` (each slide = vector SVG + PNG fallback) | Always |
 
@@ -246,25 +249,30 @@ User: "I have this Word doc, turn it into slides."
 deckforge/                            ← (or whatever you name the skill folder)
 ├── SKILL.md                          ← you are here
 ├── prompts/
+│   ├── 00_source_analysis.md         ← phase 0 (when user supplies a document)
 │   ├── 01_needs_research.md          ← phase 1 question template
 │   ├── 02_outline_architect.md       ← phase 2 master prompt
 │   ├── 03_content_research.md        ← phase 2.5 (optional web research)
-│   ├── 04_planning_draft.md          ← phase 3 master prompt
+│   ├── 04_planning_draft.md          ← phase 3 master prompt (with extraction examples)
 │   └── 05_designer_svg.md            ← phase 4 master prompt (SVG output)
 ├── references/
-│   ├── bento_grid.md                 ← Bento Grid layout system
+│   ├── bento_grid.md                 ← Bento Grid layout system (8 layouts)
+│   ├── chart_anatomy.md              ← SVG bar / line / donut charts
 │   ├── design_system.md              ← palettes, typography, motifs
 │   ├── pyramid_principle.md          ← 金字塔原理 quick guide
 │   └── editable_mode.md              ← how Convert-to-Shape works in PowerPoint
 ├── templates/                         ← SVG starting points (viewBox 0 0 1280 720)
-│   ├── _base.svg                     ← shared filters / icon paths / gradients
+│   ├── _base.svg                     ← shared filters / gradients / 35 Lucide icons
 │   ├── cover.svg
 │   ├── toc.svg
 │   ├── bento_2col.svg                ← 50/50 or 2:1 (switch widths)
 │   ├── bento_3col.svg
 │   ├── bento_hero.svg
 │   ├── bento_mini_grid.svg           ← main card with 3–6 mini-cards (dark_apple)
-│   └── bento_mixed.svg
+│   ├── bento_mixed.svg
+│   ├── chart_bar.svg                 ← vertical bar chart (single highlight color)
+│   ├── chart_line.svg                ← line + area chart for trends
+│   └── chart_donut.svg               ← donut chart with center label + legend
 ├── scripts/
 │   ├── svg_to_pptx.py                ← SVG → PPTX assembler (with svgBlip ext)
 │   ├── package.sh                    ← build deckforge.zip for Claude Desktop upload

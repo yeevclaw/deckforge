@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  chart_bar.svg — 5-bar vertical bar chart on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Bars positioned at x=0, 200, 400, 600, 800 (width 100, gap 100).
+  Plot area: 1000 wide × 400 tall, scaled inside translate(152, 200).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">各業務板塊毛利率</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Gross Margin by Business Segment
+  </text>
+
+  <!-- Plot area -->
+  <g transform="translate(152, 200)">
+    <!-- Y-axis labels -->
+    <text x="-12" y="6"   font-size="12" fill="#A0A0A0" text-anchor="end">100%</text>
+    <text x="-12" y="106" font-size="12" fill="#A0A0A0" text-anchor="end">75%</text>
+    <text x="-12" y="206" font-size="12" fill="#A0A0A0" text-anchor="end">50%</text>
+    <text x="-12" y="306" font-size="12" fill="#A0A0A0" text-anchor="end">25%</text>
+    <text x="-12" y="406" font-size="12" fill="#A0A0A0" text-anchor="end">0%</text>
+
+    <!-- Gridlines -->
+    <line x1="0" y1="0"   x2="1000" y2="0"   stroke="#333333" stroke-width="1"/>
+    <line x1="0" y1="100" x2="1000" y2="100" stroke="#333333" stroke-width="1"/>
+    <line x1="0" y1="200" x2="1000" y2="200" stroke="#333333" stroke-width="1"/>
+    <line x1="0" y1="300" x2="1000" y2="300" stroke="#333333" stroke-width="1"/>
+    <line x1="0" y1="400" x2="1000" y2="400" stroke="#333333" stroke-width="1"/>
+
+    <!-- Bars (42%, 60%, 75%, 30%, 50%) -->
+    <rect x="0"   y="232" width="100" height="168" fill="#FF6900" rx="6"/>
+    <rect x="200" y="160" width="100" height="240" fill="#FF6900" rx="6"/>
+    <rect x="400" y="100" width="100" height="300" fill="#FF6900" rx="6"/>
+    <rect x="600" y="280" width="100" height="120" fill="#FF6900" rx="6"/>
+    <rect x="800" y="200" width="100" height="200" fill="#FF6900" rx="6"/>
+
+    <!-- Value labels above bars -->
+    <text x="50"  y="220" font-size="15" font-weight="700" fill="#FF6900" text-anchor="middle">42%</text>
+    <text x="250" y="148" font-size="15" font-weight="700" fill="#FF6900" text-anchor="middle">60%</text>
+    <text x="450" y="88"  font-size="15" font-weight="700" fill="#FF6900" text-anchor="middle">75%</text>
+    <text x="650" y="268" font-size="15" font-weight="700" fill="#FF6900" text-anchor="middle">30%</text>
+    <text x="850" y="188" font-size="15" font-weight="700" fill="#FF6900" text-anchor="middle">50%</text>
+
+    <!-- Category labels -->
+    <text x="50"  y="436" font-size="13" fill="#FFFFFF" text-anchor="middle">智慧家居</text>
+    <text x="250" y="436" font-size="13" fill="#FFFFFF" text-anchor="middle">智慧穿戴</text>
+    <text x="450" y="436" font-size="13" fill="#FFFFFF" text-anchor="middle">電動車</text>
+    <text x="650" y="436" font-size="13" fill="#FFFFFF" text-anchor="middle">配件</text>
+    <text x="850" y="436" font-size="13" fill="#FFFFFF" text-anchor="middle">服務</text>
+
+    <!-- EN sub-labels -->
+    <text x="50"  y="456" font-size="10" fill="#666666" text-anchor="middle" letter-spacing="1">SMART HOME</text>
+    <text x="250" y="456" font-size="10" fill="#666666" text-anchor="middle" letter-spacing="1">WEARABLES</text>
+    <text x="450" y="456" font-size="10" fill="#666666" text-anchor="middle" letter-spacing="1">EV</text>
+    <text x="650" y="456" font-size="10" fill="#666666" text-anchor="middle" letter-spacing="1">ACCESSORIES</text>
+    <text x="850" y="456" font-size="10" fill="#666666" text-anchor="middle" letter-spacing="1">SERVICES</text>
+  </g>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

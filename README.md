@@ -51,37 +51,57 @@ DeckForge/
     └── sample-deck/         ← 原始 SVG 檔(可直接拖進 PowerPoint)
 ```
 
-## 安裝(讓 Claude 用得到)
+## 安裝
 
-**兩個步驟**——clone 進 skill 資料夾,然後跑安裝腳本裝那個唯一需要的 Python 套件(`python-pptx`,Phase 5 組 .pptx 用)。
+本 skill 主要設計給 **Claude Desktop** 使用者(Claude Code CLI 也行,作法在下方)。三步:
 
-### macOS / Linux
+### 1. 把 deckforge 抓到本機
 
 ```bash
-# 1. clone 到 Claude 的 skills 資料夾
-git clone https://github.com/yeevclaw/deckforge.git ~/.claude/skills/deckforge
+git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
+# 或下載 zip 解壓也行
+```
 
-# 2. 一鍵安裝依賴(會跳一次確認)
+### 2. 在 Claude Desktop 匯入 skill
+
+1. 開 Claude Desktop → 點右上 **Customize**
+2. 左欄 **Skills** → 標題列右邊的 **`+`**
+3. 選擇剛剛 clone 下來的 `~/deckforge` 整個資料夾匯入
+4. 匯入完成後 deckforge 會出現在 *Personal skills* 清單裡
+
+> 若 `+` 按鈕沒提供「選資料夾」選項,改成手動複製:
+> ```bash
+> # 找到 Desktop 的 skill 目錄(裡面已有 canvas-design / pptx 等)
+> SKILLS_DIR=$(find ~/Library/Application\ Support/Claude/local-agent-mode-sessions/skills-plugin -type d -name skills 2>/dev/null | head -1)
+> rsync -av --exclude='.git' --exclude='.DS_Store' ~/deckforge/ "$SKILLS_DIR/deckforge/"
+> # 然後 Cmd+Q 完整退出 Claude Desktop 再重開
+> ```
+
+### 3. 安裝那一個 Python 套件(Phase 5 組 .pptx 用)
+
+```bash
+pip install python-pptx --break-system-packages
+
+# 或在 clone 出來的資料夾下跑:
+bash ~/deckforge/scripts/setup.sh
+```
+
+只要這一個套件。階段 1–4(需求調研 / 大綱 / 策劃 / 設計)完全純 Markdown,不需要任何套件,Claude 自己讀提示詞跑。只有最後組 `.pptx` 那一步會用到 `python-pptx`。
+
+### Claude Code CLI(替代安裝)
+
+如果你用的是 Claude Code 命令列版本,clone 到 CLI 的 skills 目錄就好:
+
+```bash
+git clone https://github.com/yeevclaw/deckforge.git ~/.claude/skills/deckforge
 cd ~/.claude/skills/deckforge && bash scripts/setup.sh
 ```
 
-### Windows(PowerShell)
-
-```powershell
-# 1. clone
-git clone https://github.com/yeevclaw/deckforge.git "$env:USERPROFILE\.claude\skills\deckforge"
-
-# 2. 安裝依賴
-cd "$env:USERPROFILE\.claude\skills\deckforge"; .\scripts\setup.ps1
-```
-
-> `~/.claude/` 是隱藏資料夾。如果不存在,直接建立即可。
-> 不喜歡跑 shell 腳本的人,可以直接 `pip install -r requirements.txt`(內容只有一行 `python-pptx`)。
-> 階段 1–4(讓 Claude 跑研究/大綱/策劃/設計)完全不需要任何套件,只有最後組 `.pptx` 那一步用得到。
+Windows 用 `.\scripts\setup.ps1` 取代 `bash scripts/setup.sh`。
 
 ## 怎麼用
 
-在 Claude / Cowork 跟它說:
+在 Claude Desktop 跟 Claude 說:
 
 - 「**幫我做一份簡報,主題是 XXX**」
 - 「Build me a deck about XXX」

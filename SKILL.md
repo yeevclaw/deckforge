@@ -28,9 +28,16 @@ If the user already has a topic and just wants slides fast, you can compress pha
 
 Phases 1–4 produce SVG files and need **zero Python packages**. Phase 5 (assembling the `.pptx`) needs **one package: `python-pptx`**. If this is the user's first time running the skill, mention this at the start of Phase 1 so they can install in parallel while you work:
 
-> *"This skill will run 5 phases. The first 4 don't need anything installed. The last phase (assembling the .pptx) needs `python-pptx` — you can install it now by running `bash ~/.claude/skills/deckforge/scripts/setup.sh` (or `pip install python-pptx --break-system-packages`). It'll prompt for confirmation. While that runs, I'll start Phase 1."*
+> *"This skill will run 5 phases. The first 4 don't need anything installed. The last phase (assembling the .pptx) needs `python-pptx` on your system Python — you can install it now in a terminal: `pip install python-pptx --break-system-packages`. (Or run `bash scripts/setup.sh` from the deckforge folder if you have one.) It's a small one-time install. While that runs, I'll start Phase 1."*
 
-If Phase 5 fails with `ModuleNotFoundError: No module named 'pptx'`, that's the user not having run setup yet — point them at the setup script and re-run only Phase 5.
+If Phase 5 fails with `ModuleNotFoundError: No module named 'pptx'`, the user hasn't installed `python-pptx` on their system Python yet — point them at the `pip install` command above and re-run only Phase 5.
+
+The deckforge folder may live in different places depending on how the user installed:
+- **Claude Desktop**: `~/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/<UUID>/<UUID>/skills/deckforge/` (Desktop manages this; users shouldn't need to touch it)
+- **Claude Code CLI**: `~/.claude/skills/deckforge/`
+- **Source clone**: wherever the user ran `git clone` (often `~/deckforge`)
+
+Don't assume a path. Just refer to "the deckforge folder" or run scripts via relative path from the skill folder.
 
 ---
 

@@ -53,37 +53,57 @@ DeckForge/
 
 ## Install
 
-**Two steps** — clone into the skill folder, then run the setup script to install the one Python package needed by Phase 5 (`python-pptx`, the .pptx assembler).
+This skill is primarily built for **Claude Desktop** users. (Claude Code CLI also works — see the alternative at the bottom.) Three steps:
 
-### macOS / Linux
+### 1. Get deckforge onto your machine
 
 ```bash
-# 1. clone into Claude Code's skills folder
-git clone https://github.com/yeevclaw/deckforge.git ~/.claude/skills/deckforge
-
-# 2. install dependencies (will prompt for confirmation once)
-cd ~/.claude/skills/deckforge && bash scripts/setup.sh
+git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
+# Or download the GitHub zip and unzip it
 ```
 
-### Windows (PowerShell)
+### 2. Import the skill into Claude Desktop
 
-```powershell
-# 1. clone
-git clone https://github.com/yeevclaw/deckforge.git "$env:USERPROFILE\.claude\skills\deckforge"
+1. Open Claude Desktop → click **Customize** (top-right).
+2. In the left nav: **Skills** → click the **`+`** button next to the section header.
+3. Point it at the `~/deckforge` folder you just cloned.
+4. `deckforge` appears under *Personal skills*.
 
-# 2. install
-cd "$env:USERPROFILE\.claude\skills\deckforge"; .\scripts\setup.ps1
+> If the `+` button doesn't offer a folder picker, copy manually:
+> ```bash
+> SKILLS_DIR=$(find ~/Library/Application\ Support/Claude/local-agent-mode-sessions/skills-plugin -type d -name skills 2>/dev/null | head -1)
+> rsync -av --exclude='.git' --exclude='.DS_Store' ~/deckforge/ "$SKILLS_DIR/deckforge/"
+> # Then Cmd+Q to fully quit Claude Desktop and relaunch.
+> ```
+
+### 3. Install the one Python package Phase 5 needs
+
+```bash
+pip install python-pptx --break-system-packages
+
+# Or from inside the cloned folder:
+bash ~/deckforge/scripts/setup.sh
 ```
 
-Then in Claude Code, just ask:
+That's the only package. Phases 1–4 (research / outline / planning / design) are pure Markdown — Claude reads the prompts and runs them with no dependencies. Only the final .pptx assembly uses `python-pptx`.
+
+Then in Claude Desktop, ask:
 
 > *Build me a deck about XYZ*
 > *幫我做一份簡報，主題是 XYZ*
 
-Claude reads `SKILL.md`, follows the 5-phase workflow, and produces a `.pptx`.
+Claude triggers DeckForge, runs the 5-phase workflow, and produces a `.pptx`.
 
-> If you'd rather not run the shell script, `pip install -r requirements.txt` works too (one line, only `python-pptx`).
-> Phases 1–4 (research / outline / planning / design) need no dependencies at all — only the final .pptx assembly does.
+### Claude Code CLI (alternative install)
+
+If you're using Claude Code's command-line version, clone into the CLI skills folder instead:
+
+```bash
+git clone https://github.com/yeevclaw/deckforge.git ~/.claude/skills/deckforge
+cd ~/.claude/skills/deckforge && bash scripts/setup.sh
+```
+
+On Windows replace `bash scripts/setup.sh` with `.\scripts\setup.ps1`.
 
 ## The 5 phases (overview)
 

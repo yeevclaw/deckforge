@@ -1,15 +1,14 @@
-# DeckForge setup — install the minimum dependency needed to run svg_to_pptx.py.
+# DeckForge setup — install the three Phase 5 dependencies for svg_to_pptx.py.
 #
 # Usage (PowerShell):
 #   .\scripts\setup.ps1
-#   .\scripts\setup.ps1 -WithRaster   # also install cairosvg for PNG fallback
 #
-# Phases 1–4 of the skill are pure Markdown and need no install.
-# Only Phase 5 (the .pptx assembler) needs python-pptx.
-
-param(
-    [switch]$WithRaster
-)
+# What gets installed:
+#   - python-pptx           ← required, builds the .pptx file
+#   - resvg-py              ← SVG → PNG renderer (zero system deps)
+#   - img2pdf               ← PNG → PDF (companion .pdf alongside .pptx)
+#
+# Phases 1–4 of the skill are pure Markdown and need none of these.
 
 $ErrorActionPreference = "Stop"
 

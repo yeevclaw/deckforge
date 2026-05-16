@@ -189,7 +189,11 @@ This script:
 
 **Editing the result**: in PowerPoint 2016 or newer, right-click any slide's picture → **Convert to Shape**. The SVG decomposes into native PowerPoint shapes and text boxes — every card, title, and icon becomes editable.
 
-**Optional `--with-raster`**: if the user needs the deck to open correctly in pre-2016 Office or in PDF preview tools that can't render SVG, pass `--with-raster` to render a high-DPI PNG fallback for each slide. This requires `cairosvg`, `inkscape`, or `rsvg-convert` on the machine. Without `--with-raster`, the placeholder PNG keeps the file tiny and modern PowerPoint handles everything from the SVG.
+**Flags worth knowing**:
+- `--no-pdf` — skip the companion PDF (PPTX-only)
+- `--pdf-output PATH` — explicit PDF path (defaults to `<pptx-stem>.pdf`)
+- `--no-svg` — skip the svgBlip extension; PPTX becomes image-only. Use as escape hatch for viewers that choke on the SVG ext. Requires a working SVG renderer or the script aborts.
+- `--placeholder-only` — force the 1×1 transparent placeholder PNG even if a real renderer is available. Smaller PPTX file but it only displays correctly in PowerPoint 2016+; the companion PDF is automatically skipped.
 
 ---
 

@@ -27,4 +27,8 @@ Thumbs.db
 work/
 out/
 *.log
-examples/pages/_renders/
+# svg_to_pptx.py intermediate PNG renders — can appear anywhere a deck is built
+**/_renders/
+
+# Reviewer / scratch docs left in the working tree
+DeckForge_改善建議與理由.md

@@ -175,6 +175,18 @@ def render_real_png(svg_path: Path, png_path: Path, width: int = 2560):
     return None
 
 
+def verify_renderer_works(test_svg: Path) -> str | None:
+    """Do one real render to confirm at least one renderer actually works
+    (catches cairosvg-installed-but-libcairo-missing-style failures up front)."""
+    import tempfile
+    with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tmp:
+        tmp_path = Path(tmp.name)
+    try:
+        return render_real_png(test_svg, tmp_path, width=64)
+    finally:
+        tmp_path.unlink(missing_ok=True)
+
+
 # ---------- PPTX assembly ----------
 
 def collect_pages(pages_dir: Path) -> list[Path]:
@@ -318,8 +330,15 @@ def build(pages: list[Path], out_path: Path, planning: dict,
             print("      pip install img2pdf --break-system-packages",
                   file=sys.stderr)
             return
-        if used_placeholder_anywhere and not placeholder_only:
-            # All-placeholder PDF would be blank; better to skip than to mislead.
+        if placeholder_only:
+            # User explicitly chose 1×1 transparent placeholders — a PDF built
+            # from those would be entirely blank, so skip rather than mislead.
+            print("⚠️  Skipping PDF: --placeholder-only mode produces no real "
+                  "PNG renders, so the PDF would be blank.", file=sys.stderr)
+            return
+        if used_placeholder_anywhere:
+            # Some slides fell back to placeholder because the renderer failed
+            # mid-stream — PDF would be partly blank, skip it.
             print("⚠️  Skipping PDF: no real PNG renders are available "
                   "(no SVG renderer installed).", file=sys.stderr)
             return
@@ -377,6 +396,27 @@ def main():
 
     pages = collect_pages(pages_dir)
     planning = load_planning(planning_path, pages_dir)
+
+    # Fail fast: --no-svg requires a working SVG renderer. Without one, every
+    # slide would be just the 1×1 transparent placeholder PNG → an all-blank
+    # PPTX in every viewer. That's the worst kind of silent failure.
+    if args.no_svg and not args.placeholder_only:
+        engine = verify_renderer_works(pages[0])
+        if engine is None:
+            print("❌ --no-svg requires an SVG renderer, but none is available.",
+                  file=sys.stderr)
+            print("   Without one, every slide will be a 1×1 transparent PNG "
+                  "(blank everywhere).", file=sys.stderr)
+            print("   Pick one of these fixes:", file=sys.stderr)
+            print("     pip install resvg-py --break-system-packages",
+                  file=sys.stderr)
+            print("     brew install librsvg          (macOS)", file=sys.stderr)
+            print("     apt-get install librsvg2-bin  (Linux)", file=sys.stderr)
+            print("   Or remove --no-svg — the default svgBlip mode embeds "
+                  "the SVG so modern PowerPoint can render it directly.",
+                  file=sys.stderr)
+            sys.exit(2)
+
     build(pages, out_path, planning, workdir, args.png_width,
           placeholder_only=args.placeholder_only,
           embed_svg=not args.no_svg,

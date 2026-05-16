@@ -110,13 +110,13 @@ Output **only** the JSON block, wrapped in `[PPT_PLANNING]` and `[/PPT_PLANNING]
 [/PPT_PLANNING]
 ```
 
-## Layout choices (Bento Grid)
+## Layout choices (Bento Grid + Charts)
 
 Pick the *minimum* layout that fits the content. Don't over-engineer.
 
 | Layout | When to use | Card slots |
 |---|---|---|
-| `single_focus` | One headline element (chart, quote, image) | 1 |
+| `single_focus` | One headline element (quote, image) | 1 |
 | `stat_hero` | **One huge number is the message.** Quarter growth, market share, ARR | 1 stat |
 | `mini_grid` | **3–6 parallel stats / features.** Annual-report KPI page. | 3–6 mini-cards in 1 main card |
 | `two_col_50_50` | Two parallel ideas, before/after, pros/cons | 2 |
@@ -124,8 +124,45 @@ Pick the *minimum* layout that fits the content. Don't over-engineer.
 | `three_col` | Three parallel pillars / steps / values | 3 |
 | `hero_top` | One key claim + 3–4 supporting details | 1 wide + 3–4 small |
 | `mixed_grid` | Asymmetric — let content dictate | 4–6 mixed |
+| `chart_bar` | **Compare 4–10 categories** on one metric (revenue by segment, etc.) | 1 chart, see `chart_data` |
+| `chart_line` | **Trend over 4+ time points** (quarterly growth, monthly users) | 1 chart, see `chart_data` |
+| `chart_donut` | **Composition** — 2–5 segments of a whole | 1 chart, see `chart_data` |
 
-**Prefer `stat_hero` and `mini_grid` for data-dense content.** They are the patterns that produce the visual-quality jump. See [references/bento_grid.md](../references/bento_grid.md).
+**Prefer `stat_hero` and `mini_grid` for data-dense content.** Reach for `chart_*` when the data has actual shape (curve / distribution / ranking) — don't force a chart when 3 cards would read faster. See [references/bento_grid.md](../references/bento_grid.md) and [references/chart_anatomy.md](../references/chart_anatomy.md).
+
+### Chart pages — required `chart_data` field
+
+Chart pages use a different schema than card pages. Instead of `cards`, they carry a `chart_data` object that the designer reads directly:
+
+```json
+{
+  "page_id": 8,
+  "page_type": "content",
+  "layout": "chart_bar",
+  "title": "各業務板塊毛利率",
+  "title_en": "Gross Margin by Business Segment",
+  "chart_data": {
+    "unit": "%",
+    "items": [
+      { "label": "智慧家居", "label_en": "SMART HOME",   "value": 42 },
+      { "label": "智慧穿戴", "label_en": "WEARABLES",    "value": 60 },
+      { "label": "電動車",   "label_en": "EV",           "value": 75 },
+      { "label": "配件",     "label_en": "ACCESSORIES",  "value": 30 },
+      { "label": "服務",     "label_en": "SERVICES",     "value": 50 }
+    ]
+  },
+  "visual_notes": "Single highlight color, no per-bar palette.",
+  "speaker_notes": "..."
+}
+```
+
+For `chart_line`, `items[].label` represents time points ("Q1 2024", "Q2 2024", …). For `chart_donut`, the items are composition segments (the first item is the dominant one rendered at full saturation, others fade with alpha 0.55, 0.25, 0.12 of the same hue).
+
+**Chart layout rules**:
+1. Always set `unit` (`"%"`, `"NT$億"`, `"M users"`, …) — used as the y-axis suffix or center caption.
+2. `value` must be a real number. No placeholders. No commas/units inside the value.
+3. `label` short (≤6 Chinese chars), `label_en` short ALL-CAPS English (decorative). Both optional but recommended.
+4. Don't mix layout types inside one chart. Two metrics on the same page → two charts (use `two_col_50_50` with each side as `chart_bar` is not currently supported; create two pages instead).
 
 ## Card content rules — **one card, one core point**
 

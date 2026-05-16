@@ -112,32 +112,6 @@ The skill is **NOT** a one-shot generator. It deliberately includes review check
 - Per-deck palette + motif consistency (the skill enforces this).
 - See [`references/editable_mode.md`](references/editable_mode.md) for the editing details.
 
-## Dependencies
-
-**Phases 1–4 are pure Markdown — no install at all.** Only Phase 5 (producing the `.pptx`) needs a Python package:
-
-```bash
-# One line. python-pptx pulls in lxml + Pillow automatically.
-pip install python-pptx --break-system-packages
-
-# Or use the bundled setup script:
-bash scripts/setup.sh                   # macOS / Linux
-.\scripts\setup.ps1                     # Windows (PowerShell)
-```
-
-**Optional** — only if you need a high-DPI PNG fallback (for pre-2016 Office or PDF preview tools):
-
-```bash
-pip install cairosvg --break-system-packages
-# or: brew install inkscape         (macOS)
-# or: apt-get install librsvg2-bin  (Linux)
-
-# Usage
-python scripts/svg_to_pptx.py --pages-dir pages/ --output deck.pptx --with-raster
-```
-
-Without `--with-raster`, the script embeds a 1×1 transparent placeholder PNG as the OOXML-required fallback and lets PowerPoint 2016+ render the SVG vector directly — which is the right path for 90% of use cases.
-
 ## Credits
 
 - Methodology: *sandun* @ linux.do — original article ("应该是目前最强的PPT Agent，附上完整思路分享")

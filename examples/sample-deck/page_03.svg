@@ -2,70 +2,47 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
      font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
   <defs>
-    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="12"/>
-      <feOffset dx="0" dy="8"/>
-      <feComponentTransfer><feFuncA type="linear" slope="0.08"/></feComponentTransfer>
-      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <radialGradient id="heroBg" cx="50%" cy="55%" r="50%">
+      <stop offset="0%" stop-color="#FF6900" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#FF6900" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
-  <rect width="1280" height="720" fill="#F7F9FC"/>
+  <rect width="1280" height="720" fill="#000000"/>
+  <rect width="1280" height="720" fill="url(#heroBg)"/>
 
-  <!-- Header -->
-  <text x="48" y="92" font-size="40" font-weight="800" fill="#1E2761">為什麼用 SVG,而不是圖片?</text>
-  <text x="48" y="124" font-size="18" fill="#5A5A72">同樣是 AI 出的簡報,使用者拿到的東西完全不一樣</text>
+  <!-- Page title bilingual -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">為什麼用 SVG,而不是圖片?</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Why SVG, not raster?
+  </text>
 
-  <!-- Two columns -->
-  <!-- LEFT: Other AI PPT tools (problem) -->
-  <rect x="48" y="160" width="582" height="500" rx="16" ry="16"
-        fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <!-- One stat hero card: 100% editable -->
+  <text x="640" y="420" font-size="180" font-weight="900" fill="#FF6900"
+        text-anchor="middle" letter-spacing="-4">100%</text>
+  <text x="640" y="480" font-size="22" fill="#FFFFFF" text-anchor="middle">投影片內容完整可編輯</text>
+  <text x="640" y="510" font-size="13" fill="#666666" text-anchor="middle" letter-spacing="2">
+    Convert to Shape · Every Text, Color, Icon Editable in PowerPoint
+  </text>
 
-  <!-- Cross icon -->
-  <circle cx="100" cy="216" r="22" fill="#FCE4E4"/>
-  <g transform="translate(86 202)" stroke="#C44545" stroke-width="2.5" stroke-linecap="round" fill="none">
-    <line x1="6" y1="6" x2="22" y2="22"/>
-    <line x1="22" y1="6" x2="6" y2="22"/>
+  <!-- Three quiet support points at bottom -->
+  <g font-size="11" letter-spacing="1">
+    <rect x="80" y="588" width="360" height="68" rx="8" ry="8"
+          fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+    <text x="100" y="616" fill="#666666">VECTOR</text>
+    <text x="100" y="642" font-size="14" fill="#A0A0A0">無限放大,印刷可用</text>
+
+    <rect x="460" y="588" width="360" height="68" rx="8" ry="8"
+          fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+    <text x="480" y="616" fill="#666666">EDITABLE</text>
+    <text x="480" y="642" font-size="14" fill="#A0A0A0">改字、換色,不用重跑</text>
+
+    <rect x="840" y="588" width="360" height="68" rx="8" ry="8"
+          fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+    <text x="860" y="616" fill="#666666">PORTABLE</text>
+    <text x="860" y="642" font-size="14" fill="#A0A0A0">跨機器一致,system font</text>
   </g>
 
-  <text x="138" y="222" font-size="22" font-weight="700" fill="#1E2761">其他 AI PPT 工具</text>
-  <text x="138" y="248" font-size="13" fill="#5A5A72" letter-spacing="2">RASTER OUTPUT</text>
-
-  <g font-size="15" fill="#1A1A2E">
-    <text x="80" y="320">• 套版,內容硬塞進固定排版</text>
-    <text x="80" y="360">• 輸出 PNG/JPG 嵌入投影片</text>
-    <text x="80" y="400">• 文字在 PowerPoint 裡<tspan font-weight="700" fill="#C44545">無法編輯</tspan></text>
-    <text x="80" y="440">• 改一個錯字要回去重跑整個流程</text>
-    <text x="80" y="480">• 字體在他人電腦會 fallback,排版跑掉</text>
-  </g>
-
-  <!-- Tagline at bottom -->
-  <rect x="80" y="560" width="518" height="68" rx="10" ry="10" fill="#FCE4E4"/>
-  <text x="100" y="590" font-size="14" font-weight="600" fill="#C44545" letter-spacing="2">RESULT</text>
-  <text x="100" y="616" font-size="15" fill="#1E2761">看起來像 AI 做的、改不了、客戶要重畫。</text>
-
-  <!-- RIGHT: DeckForge (solution) -->
-  <rect x="650" y="160" width="582" height="500" rx="16" ry="16"
-        fill="#1E2761" filter="url(#cardShadow)"/>
-
-  <!-- Check icon -->
-  <circle cx="702" cy="216" r="22" fill="#CADCFC"/>
-  <g transform="translate(688 202)" stroke="#1E2761" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <polyline points="6 14 12 20 22 8"/>
-  </g>
-
-  <text x="740" y="222" font-size="22" font-weight="700" fill="#FFFFFF">DeckForge</text>
-  <text x="740" y="248" font-size="13" fill="#CADCFC" letter-spacing="2">SVG-NATIVE</text>
-
-  <g font-size="15" fill="#FFFFFF" opacity="0.95">
-    <text x="682" y="320">• 內容驅動版面,Bento Grid 自由組合</text>
-    <text x="682" y="360">• 每頁是一個 SVG,嵌入 .pptx 時保留向量</text>
-    <text x="682" y="400">• 右鍵 Convert to Shape →<tspan font-weight="700" fill="#CADCFC"> 全部可編輯</tspan></text>
-    <text x="682" y="440">• 改文字、換配色、調版型,都不用重跑</text>
-    <text x="682" y="480">• 字體用 system fallback stack,跨機器一致</text>
-  </g>
-
-  <rect x="682" y="560" width="518" height="68" rx="10" ry="10" fill="#FFFFFF" opacity="0.1"/>
-  <text x="702" y="590" font-size="14" font-weight="600" fill="#CADCFC" letter-spacing="2">RESULT</text>
-  <text x="702" y="616" font-size="15" fill="#FFFFFF">看起來像專業設計師做的,客戶可以直接編輯。</text>
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">03 / 03</text>
 </svg>

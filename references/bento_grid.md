@@ -20,7 +20,16 @@ Why Bento Grid?
 
 ---
 
-## The six layouts
+## The eight layouts
+
+In addition to the six base layouts, there are two patterns designed specifically for the dark_apple aesthetic that come from the linux.do "Xiaomi annual report" methodology:
+
+- `stat_hero` — a single huge number dominates the slide.
+- `mini_grid` — a main card containing a 3–5-column grid of mini-cards. Each mini-card holds **one core point only**.
+
+These two patterns are where the visual quality jump comes from. Use them whenever the content is data-dense (annual reports, financials, product specs, comparisons).
+
+
 
 ### 1. `single_focus` — one big card
 
@@ -123,6 +132,100 @@ Combine sizes freely. Most flexibility, most design judgment required.
 **Caution**: easiest layout to overdo. If you have to think hard about it, use one of the simpler layouts.
 
 ---
+
+### 7. `stat_hero` — one giant number takes the page
+
+```
++------------------------------------------+
+|  Page title                              |
+|                                          |
+|                                          |
+|             142.5%                       |
+|                                          |
+|             同比增長 · YoY Growth          |
+|                                          |
+|                                          |
++------------------------------------------+
+```
+
+A single statistic dominates. The number is rendered at **80–120px font-size, font-weight 900**, in the highlight color. Below, a short caption (Chinese 14–16px + optional English subtitle 11–13px) explains what the number means.
+
+**Use when**: a single number is the headline. Quarterly growth, market share, ARR, downloads, customers — anywhere "the number is the message".
+
+**Don't use when**: 2+ stats compete for attention (use `mini_grid` instead).
+
+**SVG geometry**:
+- Page title: standard header band (y=48..120)
+- Big number: centered around `(640, 380)`, font-size 100, anchored mid
+- Caption (CN): centered at `(640, 450)`, font-size 16
+- Caption (EN, optional): centered at `(640, 475)`, font-size 12, gray-500
+
+---
+
+### 8. `mini_grid` — main card containing a grid of mini-cards
+
+```
++------------------------------------------+
+|  Page title                              |
+|                                          |
+|  +--------------------------------------+|
+|  |  Main card                           ||
+|  |                                      ||
+|  |  +-----+ +-----+ +-----+ +-----+    ||
+|  |  | 42% | | 15M | | #1  | | 3.2 |    ||
+|  |  | 增長  | | 用戶  | | 排名  | | 億   |    ||
+|  |  +-----+ +-----+ +-----+ +-----+    ||
+|  |                                      ||
+|  +--------------------------------------+|
+|                                          |
++------------------------------------------+
+```
+
+A main card holds 3–6 mini-cards in a horizontal grid. Each mini-card carries **exactly one core point** (one number + one caption, or one short text-title + one caption). Each mini-card is its own discrete visual unit. This is the linux.do "Xiaomi report" pattern — and where data-dense content really sings.
+
+**Use when**:
+- 3–6 parallel stats / features / risks / steps that you want to feel like a coherent set
+- An annual-report-style "key metrics" page
+- Side-by-side comparison where each comparison item is short
+
+**Don't use when**:
+- 1–2 items (waste of structure — use single_focus or two_col)
+- 7+ items (too dense — split into two slides)
+- Items are unequal in importance (the grid implies equality — use mixed_grid for unequal weight)
+
+**SVG geometry**:
+- Page title: standard header band (y=48..120)
+- Main card: `x=48, y=140, w=1184, h=532, rx=20`, fill `#1A1A1A`, stroke `#333333`
+- Mini-cards: arranged in a row inside the main card, with 24px gap. For 4 mini-cards:
+  - Each `w = (1184 - 80 main-card padding - 3×24 gap) / 4 ≈ 257`
+  - `h ≈ 360` (centered vertically inside main card)
+  - Positions: x = 88, 369, 650, 931 (= 48 + 40 main-pad + i × (257 + 24))
+  - `rx=12` (smaller than main card's 20)
+- See `templates/bento_mini_grid.svg` for the ready-made starter.
+
+**Mini-card content rules** (this is the secret):
+- Each mini-card: ONE big element on top, ONE supporting caption below.
+- Big element = either a huge number (80–96px, highlight color) OR a 3–5 character Chinese phrase (32–40px, white or highlight).
+- Caption = 14px gray-400, 1–2 short lines, no commas-breaking-sentences.
+- Optional bilingual subtitle: 11–13px gray-500 English phrase ("YoY Growth", "Total Revenue"). Apply selectively, not on every card.
+- **Never two long sentences on one mini-card.** If you can't fit it short, the content isn't extracted enough — go back to the planner.
+
+---
+
+## Bento Grid 1-card-1-point discipline
+
+This rule applies to ALL layouts, but mini-cards in particular:
+
+> **One card, one core point.**
+> If the content can't fit in 1 short caption under a big element, the planner hasn't extracted it correctly. Don't cram. Split.
+
+Symptoms of bad extraction:
+- Card has 3+ bullets inside.
+- Card has 2 paragraphs.
+- Card heading and body talk about different things.
+- Card has commas like ", "、" or "、" breaking what should have been separate cards.
+
+When you see these symptoms, **rewrite the planning** to split that one card into multiple mini-cards.
 
 ## SVG card coordinates
 

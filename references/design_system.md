@@ -4,6 +4,33 @@ This is the lookup table the Designer prompt uses to resolve `palette_hint`, `mo
 
 ## Palettes
 
+DeckForge ships two **palette families**: dark Apple-style (single highlight color on black, our recommended default for data-dense decks) and traditional light themes.
+
+### Dark Apple family (recommended default)
+
+Pure black background, dark gray cards, one bold highlight color drawn from the brand or topic. Single-color discipline: that highlight carries 100% of the emphasis (no secondary or accent colors). Inspired by Apple keynote slides and the linux.do "Xiaomi annual report" visualization methodology.
+
+| Hint key | Highlight | Best for |
+|---|---|---|
+| `dark_apple` | auto — pick brand color from content (e.g. Xiaomi `#FF6900`, Tesla `#E31937`, Anthropic `#D97757`); fallback `#FFA500` bright orange | Default for any data-/stat-heavy deck, annual reports, product launches, financial summaries |
+| `dark_apple_blue` | `#00AEEF` tech blue | Tech / SaaS / enterprise software |
+| `dark_apple_orange` | `#FFA500` bright orange | Energy, launch, consumer-tech |
+| `dark_apple_green` | `#00C277` Spotify-green | Health-tech, growth narratives, sustainability with edge |
+| `dark_apple_red` | `#FF3B30` Apple-red | Bold, urgent, statement decks |
+
+All `dark_apple_*` variants share the same neutrals:
+- Page background: `#000000` (pure black)
+- Main card background: `#1A1A1A`
+- Mini card background: `#222222`
+- Subtle border: `#333333` (1px)
+- Primary text on dark: `#FFFFFF` 100%
+- Secondary text on dark: `#A0A0A0` (gray-400 equivalent)
+- Tertiary / English subtitle text: `#666666` (gray-500/600)
+
+### Light traditional family
+
+For decks that need to match brand decks, print, or where dark mode is wrong (academic, healthcare patient-facing, conservative finance).
+
 | Hint key | Primary | Secondary | Accent | Best for |
 |---|---|---|---|---|
 | `midnight_executive` | `#1E2761` navy | `#CADCFC` ice blue | `#FFFFFF` white | Enterprise, finance, B2B SaaS |
@@ -17,24 +44,61 @@ This is the lookup table the Designer prompt uses to resolve `palette_hint`, `mo
 | `sage_calm` | `#84B59F` sage | `#69A297` eucalyptus | `#50808E` slate | Wellness, mindfulness, ed-tech |
 | `cherry_bold` | `#990011` cherry | `#FCF6F5` off-white | `#2F3C7E` navy | Bold proposals, anniversary, statement decks |
 
-### Dominance rule
+### Single highlight color discipline (dark_apple family)
 
-One color carries **60–70% visual weight**, 1–2 supporting tones, one sharp accent. Most decks should use the primary as either the slide background (dark deck) or as card headers / titles (light deck).
+This is non-negotiable for the dark Apple style and is what separates "AI deck" from "designed deck":
 
-### Sandwich structure
+- Pick **one** highlight color at the start of phase 4. Apply it everywhere emphasis is needed: hero numbers, section titles, key icons, chart accents, chart fills, gradient tints. **No second accent color.** No "complementary" warm-cool pairing.
+- The only other colors on the slide are the dark-mode neutrals listed above (black bg, dark gray cards, white text, gray subtitles).
+- Tech gradient: allowed only as `rgba(highlight, 0.7) → rgba(highlight, 0.3)` — single hue alpha gradient. **No multi-color gradients ever.**
+- When in doubt, more black + more highlight ≠ multiple colors.
 
-For decks of 10+ pages, alternate intensity:
+### Dominance rule (light family)
+
+For light palettes, one color carries **60–70% visual weight**, 1–2 supporting tones, one sharp accent. Most decks should use the primary as card headers / titles (light deck) or background (dark variant).
+
+### Sandwich structure (light family only)
+
+For light decks of 10+ pages, alternate intensity:
 - **Cover** & **End**: dark background (primary)
 - **Section breaks**: dark background (primary)
 - **Content pages**: light background (secondary or neutral white)
 
-This creates a rhythm that prevents 20 same-feeling slides in a row.
+For `dark_apple` decks, the entire deck is on the same pure-black background — visual rhythm comes from **card density and highlight color saturation**, not background swaps.
 
 ---
 
 ## Motifs
 
 Pick one motif. Apply on every page. All examples below are SVG (since the Designer outputs SVG).
+
+### `apple_dark_cards` (default for dark_apple palettes)
+
+Dark gray cards on pure black, subtle 1px borders. The highlight color appears only on text, numbers, icons, and a small accent rect — never as a card background.
+
+```xml
+<!-- Main card -->
+<rect x="48" y="140" width="582" height="532" rx="20" ry="20"
+      fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+
+<!-- Mini card (smaller radius) -->
+<rect x="80" y="200" width="160" height="120" rx="12" ry="12"
+      fill="#222222" stroke="#333333" stroke-width="1"/>
+
+<!-- Optional: faint highlight-color glow on important cards -->
+<defs>
+  <linearGradient id="heroGlow" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#FF6900" stop-opacity="0.18"/>
+    <stop offset="100%" stop-color="#FF6900" stop-opacity="0.04"/>
+  </linearGradient>
+</defs>
+<rect x="48" y="140" width="582" height="532" rx="20" ry="20"
+      fill="url(#heroGlow)"/>
+<rect x="48" y="140" width="582" height="532" rx="20" ry="20"
+      fill="#1A1A1A" fill-opacity="0.85" stroke="#333333" stroke-width="1"/>
+```
+
+The look: minimal, modern, premium. Card boundaries do the work; shadow is replaced by border + slight value separation (`#1A1A1A` cards on `#000000` page).
 
 ### `rounded_cards_soft_shadow`
 
@@ -120,15 +184,29 @@ This stack picks the best available CJK + Latin pair on macOS, Windows, and Linu
 
 ### Sizes (1280×720 canvas)
 
-| Element | Size | Weight |
-|---|---|---|
-| Cover title | 80–120px | 800–900 |
-| Cover subtitle | 24–32px | 400 |
-| Page title | 36–48px | 700 |
-| Page subtitle | 18–22px | 400, opacity 0.7 |
-| Card heading | 20–28px | 700 |
-| Card body | 14–18px | 400, line-height 1.55 |
-| Captions / footnotes | 11–13px | 400, opacity 0.6 |
+Use **dramatic** size contrast. The point of the design system is to create a clear visual hierarchy from "this matters" to "this is supporting." Soft, similar sizes flatten the deck.
+
+| Element | Size | Weight | Color (dark_apple) | Color (light) |
+|---|---|---|---|---|
+| Cover title (CN) | 96–120px | 900 | white | primary |
+| Cover subtitle (EN) | 22–28px | 500 | gray-400 / `#A0A0A0` | text-muted |
+| Page title (CN) | 40–52px | 800 | white | primary |
+| Page title (EN, optional) | 16–20px | 500 | gray-500 / `#666666` | text-muted |
+| Page subtitle | 18–22px | 400 | gray-400 | text-muted |
+| **Hero stat number** | **80–120px** | **900** | **highlight color** | **highlight color** |
+| Hero stat caption | 14–16px | 400 | gray-400 | text-muted |
+| Card heading (text-first) | 32–48px | 700–800 | white or highlight | primary |
+| Mini-card heading | 24–32px | 700 | white | primary |
+| Card body | 14–16px | 400, line-height 1.55 | gray-400 | text |
+| English subtitle on mini-card | 11–13px | 400 | gray-500 | text-muted |
+| Captions / footnotes | 11–13px | 400, opacity 0.6 | gray-600 | text-muted |
+
+### Visual hierarchy rules
+
+1. **Numbers dominate.** Whenever a card carries a key statistic, the number itself is the largest element on the card (`80–120px` for hero stats; `48–64px` for secondary stats). The caption explaining the number sits beneath it at `14–16px gray-400`.
+2. **One hero element per card.** Either the big number OR the big text-title, never both at the same size.
+3. **English is decorative.** Bilingual subtitles use one tier smaller and gray-500/600 — they add design polish without competing with the Chinese core.
+4. **Body text is small and quiet.** `14–16px gray-400` for support copy. Don't make body text fight with headings.
 
 ---
 

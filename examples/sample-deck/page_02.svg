@@ -1,91 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
      font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
-  <defs>
-    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="12"/>
-      <feOffset dx="0" dy="8"/>
-      <feComponentTransfer><feFuncA type="linear" slope="0.08"/></feComponentTransfer>
-      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
 
-  <rect width="1280" height="720" fill="#F7F9FC"/>
+  <rect width="1280" height="720" fill="#000000"/>
 
-  <!-- Header -->
-  <text x="48" y="92" font-size="40" font-weight="800" fill="#1E2761">五個階段,像專家團隊一樣協作</text>
-  <text x="48" y="124" font-size="18" fill="#5A5A72">每階段都有 review checkpoint,改方向只要 30 秒</text>
+  <!-- Page title bilingual -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">五個階段,專家團隊的工作流</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    A Five-Phase Expert Workflow
+  </text>
 
-  <!-- 5 columns of phase cards. Inner width 1184, gaps 4*20=80, card width (1184-80)/5 = 220.8 → use 221 -->
-  <!-- Phase 1 -->
-  <g>
-    <rect x="48"  y="160" width="221" height="500" rx="16" ry="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
-    <text x="80" y="222" font-size="56" font-weight="900" fill="#CADCFC">01</text>
-    <text x="80" y="284" font-size="20" font-weight="700" fill="#1E2761">需求調研</text>
-    <text x="80" y="318" font-size="13" fill="#5A5A72" letter-spacing="2">RESEARCH</text>
-    <text x="80" y="380" font-size="14" fill="#1A1A2E">
-      <tspan x="80" dy="0">釐清觀眾、目的</tspan>
-      <tspan x="80" dy="1.6em">語氣、長度、品牌</tspan>
-      <tspan x="80" dy="1.6em">限制。</tspan>
-    </text>
-    <text x="80" y="610" font-size="12" fill="#5A5A72" opacity="0.7">→ brief.md</text>
-  </g>
+  <!-- Main card containing 5 mini-cards (mini_grid layout) -->
+  <rect x="48" y="140" width="1184" height="532" rx="20" ry="20"
+        fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
 
-  <!-- Phase 2 -->
-  <g>
-    <rect x="289" y="160" width="221" height="500" rx="16" ry="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
-    <text x="321" y="222" font-size="56" font-weight="900" fill="#CADCFC">02</text>
-    <text x="321" y="284" font-size="20" font-weight="700" fill="#1E2761">大綱架構</text>
-    <text x="321" y="318" font-size="13" fill="#5A5A72" letter-spacing="2">OUTLINE</text>
-    <text x="321" y="380" font-size="14" fill="#1A1A2E">
-      <tspan x="321" dy="0">金字塔原理,每</tspan>
-      <tspan x="321" dy="1.6em">頁標題都是一個</tspan>
-      <tspan x="321" dy="1.6em">完整 claim。</tspan>
-    </text>
-    <text x="321" y="610" font-size="12" fill="#5A5A72" opacity="0.7">→ outline.json</text>
-  </g>
+  <!-- Mini cards — 5 columns: w=(1184-80-4*24)/5=201.6 ≈ 202 -->
+  <!-- Positions: 88, 314, 540, 766, 992 -->
 
-  <!-- Phase 3 (highlighted as "secret sauce") -->
-  <g>
-    <rect x="530" y="160" width="221" height="500" rx="16" ry="16" fill="#1E2761" filter="url(#cardShadow)"/>
-    <text x="562" y="222" font-size="56" font-weight="900" fill="#FFFFFF" opacity="0.5">03</text>
-    <text x="562" y="284" font-size="20" font-weight="700" fill="#FFFFFF">策劃稿</text>
-    <text x="562" y="318" font-size="13" fill="#CADCFC" letter-spacing="2">PLANNING</text>
-    <text x="562" y="380" font-size="14" fill="#FFFFFF" opacity="0.9">
-      <tspan x="562" dy="0">每頁實際內容 +</tspan>
-      <tspan x="562" dy="1.6em">Bento Grid 版型。</tspan>
-      <tspan x="562" dy="1.6em">大多數 AI 跳過的</tspan>
-      <tspan x="562" dy="1.6em">關鍵步驟。</tspan>
-    </text>
-    <text x="562" y="610" font-size="12" fill="#CADCFC" opacity="0.85">★ 別跳過</text>
-  </g>
+  <!-- Mini 1 — number-first 01 -->
+  <rect x="88" y="226" width="202" height="360" rx="12" ry="12"
+        fill="#222222" stroke="#333333" stroke-width="1"/>
+  <text x="189" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">01</text>
+  <text x="189" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">需求調研</text>
+  <text x="189" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">RESEARCH</text>
+  <text x="189" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
+    <tspan x="189" dy="0">釐清觀眾、目的</tspan>
+    <tspan x="189" dy="1.5em">語氣、品牌限制</tspan>
+  </text>
 
-  <!-- Phase 4 -->
-  <g>
-    <rect x="771" y="160" width="221" height="500" rx="16" ry="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
-    <text x="803" y="222" font-size="56" font-weight="900" fill="#CADCFC">04</text>
-    <text x="803" y="284" font-size="20" font-weight="700" fill="#1E2761">設計稿</text>
-    <text x="803" y="318" font-size="13" fill="#5A5A72" letter-spacing="2">DESIGN</text>
-    <text x="803" y="380" font-size="14" fill="#1A1A2E">
-      <tspan x="803" dy="0">產出每頁 SVG,</tspan>
-      <tspan x="803" dy="1.6em">viewBox 1280×720,</tspan>
-      <tspan x="803" dy="1.6em">完整 Bento Grid。</tspan>
-    </text>
-    <text x="803" y="610" font-size="12" fill="#5A5A72" opacity="0.7">→ pages/*.svg</text>
-  </g>
+  <!-- Mini 2 — 02 -->
+  <rect x="314" y="226" width="202" height="360" rx="12" ry="12"
+        fill="#222222" stroke="#333333" stroke-width="1"/>
+  <text x="415" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">02</text>
+  <text x="415" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">大綱架構</text>
+  <text x="415" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">OUTLINE</text>
+  <text x="415" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
+    <tspan x="415" dy="0">金字塔原理</tspan>
+    <tspan x="415" dy="1.5em">每頁標題都是 claim</tspan>
+  </text>
 
-  <!-- Phase 5 -->
-  <g>
-    <rect x="1012" y="160" width="220" height="500" rx="16" ry="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
-    <text x="1044" y="222" font-size="56" font-weight="900" fill="#CADCFC">05</text>
-    <text x="1044" y="284" font-size="20" font-weight="700" fill="#1E2761">產出</text>
-    <text x="1044" y="318" font-size="13" fill="#5A5A72" letter-spacing="2">PRODUCE</text>
-    <text x="1044" y="380" font-size="14" fill="#1A1A2E">
-      <tspan x="1044" dy="0">組成 .pptx,</tspan>
-      <tspan x="1044" dy="1.6em">內嵌 SVG,</tspan>
-      <tspan x="1044" dy="1.6em">PowerPoint 可</tspan>
-      <tspan x="1044" dy="1.6em">編輯每一字元。</tspan>
-    </text>
-    <text x="1044" y="610" font-size="12" fill="#5A5A72" opacity="0.7">→ deck.pptx</text>
-  </g>
+  <!-- Mini 3 — 03 (highlighted as "secret sauce") -->
+  <rect x="540" y="226" width="202" height="360" rx="12" ry="12"
+        fill="#FF6900" fill-opacity="0.15" stroke="#FF6900" stroke-width="1"/>
+  <text x="641" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">03</text>
+  <text x="641" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">策劃稿</text>
+  <text x="641" y="432" font-size="11" fill="#FF6900" text-anchor="middle" letter-spacing="1">PLANNING ★</text>
+  <text x="641" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
+    <tspan x="641" dy="0">內容 + 版型</tspan>
+    <tspan x="641" dy="1.5em">大多 AI 跳過的關鍵</tspan>
+  </text>
+
+  <!-- Mini 4 — 04 -->
+  <rect x="766" y="226" width="202" height="360" rx="12" ry="12"
+        fill="#222222" stroke="#333333" stroke-width="1"/>
+  <text x="867" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">04</text>
+  <text x="867" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">設計稿</text>
+  <text x="867" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">DESIGN</text>
+  <text x="867" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
+    <tspan x="867" dy="0">每頁 SVG 向量</tspan>
+    <tspan x="867" dy="1.5em">viewBox 1280×720</tspan>
+  </text>
+
+  <!-- Mini 5 — 05 -->
+  <rect x="992" y="226" width="202" height="360" rx="12" ry="12"
+        fill="#222222" stroke="#333333" stroke-width="1"/>
+  <text x="1093" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">05</text>
+  <text x="1093" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">產出</text>
+  <text x="1093" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">PRODUCE</text>
+  <text x="1093" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
+    <tspan x="1093" dy="0">組成 .pptx</tspan>
+    <tspan x="1093" dy="1.5em">PowerPoint 可編輯</tspan>
+  </text>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">02 / 03</text>
 </svg>

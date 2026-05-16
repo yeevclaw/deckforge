@@ -124,9 +124,10 @@ Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). 
       "page_type": "cover" | "toc" | "content" | "section_break" | "end",
       "title": "...",
       "subtitle": "...",
-      "layout": "single_focus" | "two_col_50_50" | "two_col_2_1" | "three_col" | "hero_top" | "mixed_grid",
+      "layout": "single_focus" | "stat_hero" | "mini_grid" | "two_col_50_50" | "two_col_2_1" | "three_col" | "hero_top" | "mixed_grid",
       "cards": [
-        { "heading": "...", "body": "...", "icon_hint": "lightbulb", "size_hint": "large" }
+        { "is_number_first": true, "stat_value": "42%", "stat_caption": "三年複合成長率", "stat_caption_en": "CAGR", "size_hint": "small" },
+        { "is_number_first": false, "heading": "服務優先", "body": "服務收入占比由 8% 升至 27%", "icon_hint": "trending-up", "size_hint": "small" }
       ],
       "visual_notes": "Use abstract gradient background, no stock photos",
       "speaker_notes": "..."
@@ -149,11 +150,18 @@ For each page in `planning.json`, generate **one self-contained SVG file** with 
 - SVG templates to start from: [templates/](templates/) — `cover.svg`, `toc.svg`, `bento_2col.svg`, `bento_3col.svg`, `bento_hero.svg`, `bento_mixed.svg` (and `_base.svg` for shared filters/icons)
 
 Key rules:
-- **Pick a content-informed color palette ONCE** at the start of phase 4, then reuse it on every page. Don't re-pick per page.
-- **Pick one visual motif** (rounded card corners + soft shadow, thick left accent bar, icon-in-circle, gradient mesh background) and repeat it everywhere.
-- **Cards must have ≥20px gaps**, and use **size to express importance** (big card = important info).
+- **Default to the `dark_apple` palette family** unless the user explicitly asks for a light/brand look. Pure black bg + one highlight color is what produces the visual-quality jump (see [references/design_system.md](references/design_system.md)).
+- **Pick the palette AND the single highlight color ONCE** at the start of phase 4 (auto-detect from brand if possible: Xiaomi `#FF6900`, Tesla `#E31937`, etc.). Reuse on every page. **Never use a second accent color.**
+- **Pick one visual motif** (default `apple_dark_cards`) and repeat it everywhere.
+- **Prefer `stat_hero` and `mini_grid` for data-dense pages.** A page that fits 4 KPI numbers should be a `mini_grid`, not 4 sentences in `two_col_50_50`.
+- **One card, one core point.** If a card body has multiple sentences or a heading + 3 bullets, split it into a mini_grid.
+- **Number-first cards beat text-first cards.** Whenever a key number captures the message, render it at 80–120px in the highlight color.
+- **Bilingual title pattern.** Page titles render as Chinese (big, white) + small English subtitle (gray, decorative).
+- **Dramatic typography contrast.** Hero number 80px / body 14px is correct. Title 32px / body 24px is not — too flat.
+- **Cards must have ≥20px (main) or ≥24px (mini) gaps.** Use size to express importance.
 - **Never** add accent underlines beneath page titles — it's the #1 AI-deck tell.
-- **Avoid stock photos** unless the user provides them. Use SVG gradients, inline icon `<path>`s, or abstract shapes instead.
+- **Never use emoji as functional icons.** Inline Lucide `<path>` or no icon.
+- **Avoid stock photos.** Use SVG gradients, inline icon `<path>`s, or abstract shapes.
 - **Every text run lives in a real `<text>` element** (not converted to path) — that's what keeps slides editable after Convert to Shape.
 
 Save each page as `pages/page_01.svg`, `pages/page_02.svg`, …
@@ -255,6 +263,7 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── bento_2col.svg                ← 50/50 or 2:1 (switch widths)
 │   ├── bento_3col.svg
 │   ├── bento_hero.svg
+│   ├── bento_mini_grid.svg           ← main card with 3–6 mini-cards (dark_apple)
 │   └── bento_mixed.svg
 ├── scripts/
 │   ├── svg_to_pptx.py                ← SVG → PPTX assembler (with svgBlip ext)

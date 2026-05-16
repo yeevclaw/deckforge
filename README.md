@@ -22,34 +22,34 @@
 ```
 DeckForge/
 ├── SKILL.md                ← Claude 讀的入口
-├── prompts/                ← 5 個專家提示詞(每階段一個)
-│   ├── 01_needs_research.md
-│   ├── 02_outline_architect.md
-│   ├── 03_content_research.md
-│   ├── 04_planning_draft.md
-│   └── 05_designer_svg.md
+├── prompts/                ← 6 階段提示詞
+│   ├── 00_source_analysis.md  ← Phase 0:文件分析(可選)
+│   ├── 01_needs_research.md   ← Phase 1:需求調研
+│   ├── 02_outline_architect.md ← Phase 2:大綱
+│   ├── 03_content_research.md ← Phase 2.5:web research(可選)
+│   ├── 04_planning_draft.md   ← Phase 3:策劃稿(含內容拆解例子)
+│   └── 05_designer_svg.md     ← Phase 4:SVG 設計
 ├── references/             ← 詳細知識庫
-│   ├── bento_grid.md       ← Bento Grid 便當網格(設計語言核心)
-│   ├── design_system.md    ← 10 種配色 + 視覺主題 + 字體
+│   ├── bento_grid.md       ← Bento Grid 8 種版型(含 stat_hero / mini_grid)
+│   ├── chart_anatomy.md    ← SVG bar / line / donut 圖表
+│   ├── design_system.md    ← dark_apple palette + 11 種傳統 palette
 │   ├── pyramid_principle.md
-│   └── editable_mode.md    ← 在 PowerPoint 怎麼編輯 SVG slide
-├── templates/              ← 7 個 viewBox 1280×720 SVG 起始檔
-│   ├── _base.svg           ← 共用 filter / 漸層 / Lucide icon
-│   ├── cover.svg
-│   ├── toc.svg
-│   ├── bento_2col.svg
-│   ├── bento_3col.svg
-│   ├── bento_hero.svg
-│   └── bento_mixed.svg
+│   └── editable_mode.md    ← PowerPoint Convert to Shape 編輯
+├── templates/              ← 11 個 viewBox 1280×720 SVG 起始檔
+│   ├── _base.svg           ← 共用 filter / 漸層 / 35 個 Lucide icon
+│   ├── cover.svg / toc.svg
+│   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
+│   ├── bento_mini_grid.svg ← 主卡內含 3–6 張 mini-card(dark_apple 風格)
+│   └── chart_bar.svg / chart_line.svg / chart_donut.svg
 ├── scripts/
-│   ├── svg_to_pptx.py      ← SVG → PPTX 組裝器(含 svgBlip 擴充,保留向量)
+│   ├── svg_to_pptx.py      ← Phase 5 組裝器(同時產出 .pptx + .pdf)
 │   ├── package.sh          ← 打包 deckforge.zip 供 Claude Desktop 上傳
 │   ├── setup.sh            ← 一鍵安裝依賴(mac / linux)
 │   └── setup.ps1           ← Windows PowerShell 版安裝腳本
 └── examples/               ← DeckForge 自介 mini-deck(3 頁完整產出)
-    ├── DeckForge-demo.pdf   ← 合併後的成品 PDF
-    ├── slide-1.jpg ... 3    ← 各頁預覽縮圖
-    └── sample-deck/         ← 原始 SVG 檔(可直接拖進 PowerPoint)
+    ├── DeckForge-demo.pdf  ← 成品 PDF
+    ├── slide-1.jpg ... 3   ← 各頁預覽縮圖
+    └── sample-deck/        ← 原始 SVG 檔
 ```
 
 ## 安裝(Claude Desktop)
@@ -101,15 +101,16 @@ pip install python-pptx resvg-py img2pdf --break-system-packages
 - 「做一份 Series B 募資 pitch」
 - 「幫我做客戶提案,要 10 頁」
 
-Claude 會自動觸發 DeckForge,跑完整 5 階段流程:
+Claude 會自動觸發 DeckForge,跑完整流程:
 
 | 階段 | 產出 | 你做什麼 |
 |---|---|---|
+| 0. 文件分析(可選) | `analysis.md` | 丟文件就自動跑,沒丟就跳過 |
 | 1. 需求調研 | `brief.md` | 回答幾個問題(觀眾、目的、長度、語氣) |
 | 2. 大綱架構 | `outline.json` | **檢視大綱**,改方向只要 30 秒 |
 | 3. 策劃稿 | `planning.json` | **檢視每頁內容**,改文案只要 1 分鐘 |
 | 4. SVG 設計 | `pages/*.svg` | 自動產出每頁向量設計 |
-| 5. 產出 PPTX | `presentation.pptx` | 自動組裝成可編輯 .pptx |
+| 5. 產出 | `presentation.pptx` + `presentation.pdf` | 自動組裝,兩個檔同時出 |
 
 重點是中間有兩個 review checkpoint(階段 2 跟 3),讓你可以**便宜地修正方向**,不會浪費後面的設計工。
 
@@ -119,35 +120,6 @@ Claude 會自動觸發 DeckForge,跑完整 5 階段流程:
 - 同時可以根據**內容自由設計版面**,不用把內容塞進固定範本。
 - 每份 deck 都有專屬配色 + 視覺主題,且整份一致(skill 會強制執行)。
 - 編輯細節見 [`references/editable_mode.md`](references/editable_mode.md)。
-
-## 依賴
-
-**階段 1–4 完全純 Markdown,不需要安裝任何套件**——這部分就是 Claude 讀提示詞跑流程。
-只有階段 5(產出 .pptx)需要一個 Python 套件:
-
-```bash
-# 一行裝完
-pip install python-pptx --break-system-packages
-
-# 或跑內建的安裝腳本:
-bash scripts/setup.sh                   # macOS / Linux
-.\scripts\setup.ps1                     # Windows (PowerShell)
-```
-
-`python-pptx` 會自動帶入 `lxml` 和 `Pillow`,所以只裝這一個就夠。
-
-**選用**——如果要產高解析度 PNG 備援(給 PowerPoint 2013 以前的版本、或 PDF 預覽工具),才需要安裝 SVG 渲染器:
-
-```bash
-pip install cairosvg --break-system-packages
-# 或: brew install inkscape         (macOS)
-# 或: apt-get install librsvg2-bin  (Linux)
-
-# 用法
-python scripts/svg_to_pptx.py --pages-dir pages/ --output deck.pptx --with-raster
-```
-
-不傳 `--with-raster` 的話,腳本會嵌入一個 1×1 透明 PNG 當 OOXML 必填欄位,PowerPoint 2016+ 會直接渲染 SVG 向量——這已經是 90% 使用情境的最佳路徑。
 
 ## 設計理念出處
 

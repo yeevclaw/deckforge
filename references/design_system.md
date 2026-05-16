@@ -34,66 +34,66 @@ This creates a rhythm that prevents 20 same-feeling slides in a row.
 
 ## Motifs
 
-Pick one motif. Apply on every page.
+Pick one motif. Apply on every page. All examples below are SVG (since the Designer outputs SVG).
 
 ### `rounded_cards_soft_shadow`
 
-```css
-.card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-  padding: 24px;
-}
+```xml
+<defs>
+  <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="12"/>
+    <feOffset dx="0" dy="8"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.06"/></feComponentTransfer>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+<rect x="48" y="140" width="582" height="532" rx="16" ry="16"
+      fill="#FFFFFF" filter="url(#cardShadow)"/>
 ```
 
 Safe default. Works with any palette. Light, modern, magazine-y.
 
 ### `left_accent_bar`
 
-```css
-.card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 24px 24px 24px 30px;
-  position: relative;
-  overflow: hidden;
-}
-.card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 6px;
-  background: var(--primary);
-}
+```xml
+<!-- Card body with extra left padding (text starts at x = card_x + 30) -->
+<rect x="48" y="140" width="582" height="532" rx="8" ry="8" fill="#FFFFFF"/>
+<!-- 6×card-height accent bar pinned to the card's left edge -->
+<rect x="48" y="140" width="6" height="532" fill="#1E2761"/>
 ```
 
-Editorial, structured feel. Pairs well with serif headers.
+Editorial, structured feel. Pairs well with serif headers. Remember to shift card text to `x = card_x + 30` so the bar doesn't eat into it.
 
 ### `icon_in_circle`
 
-```css
-.card .icon-wrap {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  background: var(--secondary);
-  display: grid;
-  place-items: center;
-}
-.card .icon-wrap svg { stroke: var(--primary); width: 24px; height: 24px; }
+```xml
+<!-- 48×48 circle filled with secondary color, icon centered inside -->
+<circle cx="104" cy="196" r="24" fill="#CADCFC"/>
+<g transform="translate(80 172)" color="#1E2761">
+  <!-- 24×24 Lucide icon path, stroke=currentColor (= primary), stroke-width=2 -->
+  <path d="…" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</g>
 ```
 
-Friendly, approachable. Good for consumer / education decks.
+Friendly, approachable. Good for consumer / education decks. The 24×24 icon viewport sits at `(card_x + 32, card_y + 32)` so the circle is centered around `(card_x + 56, card_y + 56)`.
 
 ### `gradient_mesh_bg`
 
-```css
-body {
-  background:
-    radial-gradient(circle at 20% 20%, color-mix(in oklab, var(--primary) 30%, transparent), transparent 50%),
-    radial-gradient(circle at 80% 80%, color-mix(in oklab, var(--accent) 25%, transparent), transparent 50%),
-    var(--bg);
-}
+```xml
+<defs>
+  <radialGradient id="meshA" cx="20%" cy="20%" r="55%">
+    <stop offset="0%" stop-color="#1E2761" stop-opacity="0.28"/>
+    <stop offset="100%" stop-color="#1E2761" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="meshB" cx="85%" cy="80%" r="55%">
+    <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.22"/>
+    <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="1280" height="720" fill="#F7F9FC"/>
+<rect width="1280" height="720" fill="url(#meshA)"/>
+<rect width="1280" height="720" fill="url(#meshB)"/>
 ```
 
 Atmospheric. Best on dark backgrounds for cover/section pages, paired with white card bodies on content pages.
@@ -110,18 +110,13 @@ Atmospheric. Best on dark backgrounds for cover/section pages, paired with white
 | `sans_only_bold` | Noto Sans TC 900, Inter 800 | Noto Sans TC 400, Inter 400 | Modern, tech |
 | `mono_accent` | JetBrains Mono 700, Inter 800 | Inter 400 | Tech-forward, dev-tools |
 
-Web fonts: load via `<style>@import url('https://fonts.googleapis.com/css2?family=…')</style>` — but only inside `_base.html` template. The page-level designer prompt should NOT add new font imports; it inherits from the base.
+Web fonts are **not** loaded. To keep SVG pages fully self-contained, portable, and editable in PowerPoint, the designer uses a system-font stack via the SVG `font-family` attribute:
 
-Actually — to keep pages fully self-contained and avoid network requests during rendering, the base template uses **system font stacks** by default:
-
-```css
-:root {
-  --font-header: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Hiragino Sans", Inter, system-ui, -apple-system, sans-serif;
-  --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Inter, system-ui, -apple-system, sans-serif;
-}
+```xml
+<svg … font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', Inter, system-ui, sans-serif">
 ```
 
-System fonts are sufficient — the Chromium renderer used by `html_to_pptx.py` has Noto fonts installed.
+This stack picks the best available CJK + Latin pair on macOS, Windows, and Linux. The PNG fallback rendered by `svg_to_pptx.py` will resolve the same stack via the renderer's font config (cairosvg → fontconfig, Inkscape → system fonts, rsvg-convert → fontconfig).
 
 ### Sizes (1280×720 canvas)
 

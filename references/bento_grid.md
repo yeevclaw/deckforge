@@ -124,68 +124,59 @@ Combine sizes freely. Most flexibility, most design judgment required.
 
 ---
 
-## CSS grid templates
+## SVG card coordinates
 
-All templates assume a 1280×720 viewport with 48px outer padding.
+All templates assume a `viewBox="0 0 1280 720"` canvas with **48px outer margin** and **20px gaps** between cards. Inner working area is therefore `1184 × 624` (or smaller after a header band).
 
-```css
-:root {
-  --slide-w: 1280px;
-  --slide-h: 720px;
-  --pad: 48px;
-  --gap: 20px;
-}
+Standard header band: title at `y=92` (font-size 40), subtitle at `y=124` (font-size 18). Bento area starts at `y=140` and ends at `y=672` (height = 532).
 
-.slide {
-  width: var(--slide-w);
-  height: var(--slide-h);
-  padding: var(--pad);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
+| Layout | Card rects (`x, y, w, h`) |
+|---|---|
+| `single_focus` | A: `48, 140, 1184, 532` |
+| `two_col_50_50` | A: `48, 140, 582, 532` · B: `650, 140, 582, 532` |
+| `two_col_2_1` | A: `48, 140, 775, 532` · B: `843, 140, 389, 532` |
+| `three_col` | A: `48, 140, 381, 532` · B: `449, 140, 381, 532` · C: `850, 140, 381, 532` |
+| `hero_top` | Hero: `48, 140, 1184, 240` · 4 support: `48 / 349 / 650 / 951, y=400, w=281, h=272` |
+| `mixed_grid` | Free placement; the `bento_mixed.svg` template uses Big-left `48, 140, 582, 532` · Top-right `650, 140, 582, 256` · Bottom-right `650, 416, 582, 256` |
 
-.slide-title { font-size: 40px; font-weight: 700; margin: 0 0 8px; }
-.slide-subtitle { font-size: 18px; opacity: 0.7; margin: 0 0 32px; }
+### Common SVG card pattern
 
-.bento {
-  flex: 1;
-  display: grid;
-  gap: var(--gap);
-}
+```xml
+<defs>
+  <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="12"/>
+    <feOffset dx="0" dy="8"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.06"/></feComponentTransfer>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
 
-.bento.single_focus { grid-template-columns: 1fr; }
-.bento.two_col_50_50 { grid-template-columns: 1fr 1fr; }
-.bento.two_col_2_1 { grid-template-columns: 2fr 1fr; }
-.bento.three_col { grid-template-columns: 1fr 1fr 1fr; }
+<!-- Card body: rounded rect with shadow -->
+<rect x="48" y="140" width="582" height="532" rx="16" ry="16"
+      fill="#FFFFFF" filter="url(#cardShadow)"/>
 
-.bento.hero_top {
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 1fr 1fr;
-}
-.bento.hero_top > .card.hero { grid-column: 1 / -1; }
+<!-- Card heading (in primary color) -->
+<text x="80" y="200" font-size="22" font-weight="700" fill="#1E2761">卡片標題</text>
 
-.bento.mixed_grid {
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-}
-/* Card placement is content-specific in mixed_grid */
-
-.card {
-  background: var(--card-bg, #fff);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.card .icon { width: 48px; height: 48px; }
-.card h3 { font-size: 22px; margin: 0; }
-.card p { font-size: 15px; margin: 0; line-height: 1.55; }
+<!-- Card body text — manually wrap with <tspan> rows -->
+<text x="80" y="240" font-size="15" fill="#1A1A2E">
+  <tspan x="80" dy="0">第一行說明文字。</tspan>
+  <tspan x="80" dy="1.55em">第二行繼續說明。</tspan>
+</text>
 ```
 
-The starter templates in `templates/` already include this base CSS plus motif variants.
+The starter templates in `templates/` already include this skeleton plus the motif variants below.
+
+### Typography sizes on the 1280×720 canvas
+
+| Element | Size | Weight |
+|---|---|---|
+| Slide title | 36–48 | 700–800 |
+| Subtitle | 18–22 | 400, opacity 0.7 |
+| Card heading | 20–28 | 700 |
+| Card body | 14–18 | 400, dy 1.55em between lines |
+| Big stat (single number) | 56–96 | 800–900 |
+| Caption | 11–13 | 400, opacity 0.6 |
 
 ---
 

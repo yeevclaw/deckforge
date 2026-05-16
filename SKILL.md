@@ -1,10 +1,10 @@
 ---
-name: ppt-agent
-description: "Build professional-grade PowerPoint presentations using a 5-phase expert workflow (research → outline → planning → design → produce) — not by stuffing content into templates. Use this skill whenever the user asks for a PPT, deck, slides, presentation, pitch deck, sales deck, business proposal, product introduction, company intro, kick-off deck, or anything similar — even if they don't say 'PowerPoint' explicitly. Especially preferred for any presentation that needs to actually look good (business proposals, sales pitches, executive briefings, product launches). Trigger on phrases like 'make me a deck about X', 'build a presentation', '幫我做一份簡報', '做個PPT', 'put together slides', or any request that ends in a .pptx file."
+name: deckforge
+description: "Build professional-grade PowerPoint presentations using a 5-phase expert workflow (research → outline → planning → design → produce) — not by stuffing content into templates. Output is editable SVG slides assembled into a .pptx that PowerPoint 2016+ can Convert-to-Shape for full editing. Use this skill whenever the user asks for a PPT, deck, slides, presentation, pitch deck, sales deck, business proposal, product introduction, company intro, kick-off deck, or anything similar — even if they don't say 'PowerPoint' explicitly. Especially preferred for any presentation that needs to actually look good (business proposals, sales pitches, executive briefings, product launches). Trigger on phrases like 'make me a deck about X', 'build a presentation', '幫我做一份簡報', '做個PPT', 'put together slides', or any request that ends in a .pptx file."
 license: MIT
 ---
 
-# PPT Agent — Expert PowerPoint Workflow
+# PPT Agent — Expert PowerPoint Workflow (SVG pipeline)
 
 This skill turns Claude into a **PPT planning team + designer**, not a template-filler. It mirrors how top-tier PPT design agencies actually work: research the audience, plan content first, then design.
 
@@ -12,9 +12,9 @@ This skill turns Claude into a **PPT planning team + designer**, not a template-
 
 > **PPT 的靈魂是內容,不是皮囊。** (A PPT's soul is content, not its skin.)
 
-Most AI PPT tools fail because they jump straight from "topic" to "designed slides" — same recycled template, generic bullets, no thought. This skill enforces a **5-phase workflow** that human experts use, then turns each finished page into a high-fidelity slide via HTML rendering.
+Most AI PPT tools fail because they jump straight from "topic" to "designed slides" — same recycled template, generic bullets, no thought. This skill enforces a **5-phase workflow** that human experts use, then renders each finished page to **SVG** and assembles them into an editable `.pptx`.
 
-The methodology is adapted from the "Strongest PPT Agent" essay shared on linux.do by author *sandun* (a 7-year PPT instructor + 3-year AI product builder). Credit where due.
+The methodology is adapted from the "Strongest PPT Agent" essay shared on linux.do by author *sandun* (a 7-year PPT instructor + 3-year AI product builder). The choice of SVG as the final design format also comes from that essay: SVG is the only format that gives both Figma-level design control *and* native editability in PowerPoint 2016+.
 
 ---
 
@@ -33,8 +33,8 @@ If the user already has a topic and just wants slides fast, you can compress pha
 | 1 | **Needs research** (需求調研) | Audience, purpose, tone, length, constraints | Always — but compress to one round of questions if user is in a hurry |
 | 2 | **Outline architecture** (大綱規劃) | `outline.json` with cover / TOC / parts / pages | Always |
 | 3 | **Planning draft** (策劃稿) | `planning.json` with layout intent per page | Always — this is the secret sauce |
-| 4 | **Design** (設計稿) | One styled `.html` per page (1280×720) | Always |
-| 5 | **Produce** (產出) | Final `.pptx` | Always |
+| 4 | **Design** (設計稿) | One `.svg` per page (`viewBox="0 0 1280 720"`) | Always |
+| 5 | **Produce** (產出) | Final `.pptx` (each slide = vector SVG + PNG fallback) | Always |
 
 ### Phase 1 — Needs research
 
@@ -113,41 +113,41 @@ If the deck is important, **let the user review `planning.json` before designing
 
 ### Phase 4 — Design (設計稿)
 
-For each page in `planning.json`, generate **one self-contained HTML file** at 1280×720, styled with the Bento Grid system.
+For each page in `planning.json`, generate **one self-contained SVG file** with `viewBox="0 0 1280 720"`, styled with the Bento Grid system.
 
-- Master prompt: [prompts/05_designer_html.md](prompts/05_designer_html.md)
+- Master prompt: [prompts/05_designer_svg.md](prompts/05_designer_svg.md)
 - Bento Grid spec: [references/bento_grid.md](references/bento_grid.md)
 - Color + typography system: [references/design_system.md](references/design_system.md)
-- HTML templates to start from: [templates/](templates/) — `cover.html`, `toc.html`, `bento_2col.html`, `bento_3col.html`, `bento_hero.html`, `bento_mixed.html`
+- SVG templates to start from: [templates/](templates/) — `cover.svg`, `toc.svg`, `bento_2col.svg`, `bento_3col.svg`, `bento_hero.svg`, `bento_mixed.svg` (and `_base.svg` for shared filters/icons)
 
 Key rules:
 - **Pick a content-informed color palette ONCE** at the start of phase 4, then reuse it on every page. Don't re-pick per page.
 - **Pick one visual motif** (rounded card corners + soft shadow, thick left accent bar, icon-in-circle, gradient mesh background) and repeat it everywhere.
 - **Cards must have ≥20px gaps**, and use **size to express importance** (big card = important info).
 - **Never** add accent underlines beneath page titles — it's the #1 AI-deck tell.
-- **Avoid stock photos** unless the user provides them. Use CSS gradients, icon glyphs (inline SVG), or abstract shapes instead.
+- **Avoid stock photos** unless the user provides them. Use SVG gradients, inline icon `<path>`s, or abstract shapes instead.
+- **Every text run lives in a real `<text>` element** (not converted to path) — that's what keeps slides editable after Convert to Shape.
 
-Save each page as `pages/page_01.html`, `pages/page_02.html`, …
+Save each page as `pages/page_01.svg`, `pages/page_02.svg`, …
 
 ### Phase 5 — Produce (產出)
 
 Run the bundled converter:
 
 ```bash
-python scripts/html_to_pptx.py \
+python scripts/svg_to_pptx.py \
   --pages-dir pages/ \
-  --output presentation.pptx \
-  --width 1280 --height 720
+  --output presentation.pptx
 ```
 
 This script:
-1. Renders each HTML to a 1920×1080 PNG via headless Chromium (Playwright).
-2. Creates a 16:9 PPTX with one slide per page, full-bleed image at slide background.
+1. Creates a 16:9 PPTX with one slide per page.
+2. Embeds each slide's picture with the original SVG via the PowerPoint 2016+ `svgBlip` extension, plus a tiny 1×1 transparent placeholder PNG (required by the OOXML spec). Modern PowerPoint renders the SVG vector directly.
 3. Attaches speaker notes from `planning.json` if it's in the same directory.
 
-If Playwright isn't installed, the script falls back to `weasyprint` (HTML → PDF → PNG). Either path produces the same final PPTX.
+**Editing the result**: in PowerPoint 2016 or newer, right-click any slide's picture → **Convert to Shape**. The SVG decomposes into native PowerPoint shapes and text boxes — every card, title, and icon becomes editable.
 
-For users who need **editable** slides (text remains as PowerPoint text boxes, not pixels), pass `--mode editable` — see [references/editable_mode.md](references/editable_mode.md). The default `--mode image` gives perfect design fidelity; `--mode editable` trades fidelity for editability.
+**Optional `--with-raster`**: if the user needs the deck to open correctly in pre-2016 Office or in PDF preview tools that can't render SVG, pass `--with-raster` to render a high-DPI PNG fallback for each slide. This requires `cairosvg`, `inkscape`, or `rsvg-convert` on the machine. Without `--with-raster`, the placeholder PNG keeps the file tiny and modern PowerPoint handles everything from the SVG.
 
 ---
 
@@ -162,7 +162,7 @@ ls -1 "$PWD"/slide-*.jpg
 ```
 
 Then look at the slides yourself (or use a subagent if available) and check for:
-- Text overflow / cutoff
+- Text overflow / cutoff (especially: SVG doesn't auto-wrap, so missing `<tspan>` rows = clipped sentences)
 - Card overlap or near-touching gaps
 - Low-contrast text
 - Inconsistent palette across slides
@@ -214,23 +214,24 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── 02_outline_architect.md       ← phase 2 master prompt
 │   ├── 03_content_research.md        ← phase 2.5 (optional web research)
 │   ├── 04_planning_draft.md          ← phase 3 master prompt
-│   └── 05_designer_html.md           ← phase 4 master prompt
+│   └── 05_designer_svg.md            ← phase 4 master prompt (SVG output)
 ├── references/
 │   ├── bento_grid.md                 ← Bento Grid layout system
 │   ├── design_system.md              ← palettes, typography, motifs
 │   ├── pyramid_principle.md          ← 金字塔原理 quick guide
-│   └── editable_mode.md              ← --mode editable details
-├── templates/                         ← HTML starting points (1280×720)
-│   ├── _base.html
-│   ├── cover.html
-│   ├── toc.html
-│   ├── bento_2col.html
-│   ├── bento_3col.html
-│   ├── bento_hero.html
-│   └── bento_mixed.html
+│   └── editable_mode.md              ← how Convert-to-Shape works in PowerPoint
+├── templates/                         ← SVG starting points (viewBox 0 0 1280 720)
+│   ├── _base.svg                     ← shared filters / icon paths / gradients
+│   ├── cover.svg
+│   ├── toc.svg
+│   ├── bento_2col.svg                ← 50/50 or 2:1 (switch widths)
+│   ├── bento_3col.svg
+│   ├── bento_hero.svg
+│   └── bento_mixed.svg
 ├── scripts/
-│   ├── html_to_pptx.py               ← the converter
-│   └── render_html.py                ← HTML→PNG helper
+│   ├── svg_to_pptx.py                ← SVG → PPTX assembler (with svgBlip ext)
+│   ├── setup.sh                      ← one-line dependency installer (mac/linux)
+│   └── setup.ps1                     ← same, for Windows PowerShell
 └── examples/
     ├── Claude-Enterprise-Pitch.pdf   ← rendered demo (6 pages)
     └── slide-1.jpg ... 6             ← preview thumbnails
@@ -240,11 +241,22 @@ deckforge/                            ← (or whatever you name the skill folder
 
 ## Dependencies
 
+**Phases 1–4 are pure Markdown — no dependencies at all.** Only the Phase 5 converter (`svg_to_pptx.py`) needs Python packages.
+
 ```bash
-pip install python-pptx Pillow --break-system-packages
-pip install playwright --break-system-packages && playwright install chromium
-# Fallback if Playwright isn't available:
-pip install weasyprint --break-system-packages
+# One package. lxml + Pillow come along automatically.
+pip install python-pptx --break-system-packages
+
+# Or run the bundled setup script:
+bash scripts/setup.sh
 ```
 
-The converter handles missing dependencies gracefully — it'll tell you what to install.
+**Optional** — only if the user passes `--with-raster` for high-DPI PNG fallback:
+
+```bash
+pip install cairosvg --break-system-packages
+# or:  brew install inkscape         (macOS)
+# or:  apt-get install librsvg2-bin  (Linux)
+```
+
+The converter handles missing dependencies gracefully — it'll tell you what to install or fall back to the placeholder PNG silently.

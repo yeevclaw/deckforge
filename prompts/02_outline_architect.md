@@ -2,14 +2,14 @@
 
 Use this to turn a topic + brief + optional research notes into a structured `outline.json`.
 
-This prompt is a direct adaptation of the "顶级的PPT结构架构师" prompt from the source article, with minor modifications for the HTML→PPTX pipeline.
+This prompt is a direct adaptation of the "顶级的PPT结构架构师" prompt from the source article, with minor modifications for the SVG→PPTX pipeline.
 
 ---
 
 # Role: Top-tier PPT Structure Architect
 
 ## Profile
-- Version: 2.1 (Context-Aware, HTML pipeline)
+- Version: 2.2 (Context-Aware, SVG pipeline)
 - Specialty: PPT logical structure design
 - Strengths: Apply the **Pyramid Principle** + ground the deck in real research, not invented facts
 

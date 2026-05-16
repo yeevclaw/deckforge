@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  bento_2col.svg — two-column Bento Grid (1280×720). Default 50/50; switch widths
+  to 775 / 389 for the asymmetric 2:1 variant. Header row y=48..120; cards y=140..672.
+  Inner working width = 1184 (1280 - 2*48 outer pad). Gap = 20.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="12"/>
+      <feOffset dx="0" dy="8" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.06"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F7F9FC"/>
+
+  <!-- Header: title + subtitle -->
+  <text x="48" y="92"  font-size="40" font-weight="800" fill="#1E2761">頁面標題,結論先行</text>
+  <text x="48" y="124" font-size="18" fill="#5A5A72">副標補充說明,一行內</text>
+
+  <!-- Card A (left) — 50/50: x=48,  w=582    |    2/1: x=48,  w=775 -->
+  <rect x="48" y="140" width="582" height="532" rx="16" ry="16"
+        fill="#FFFFFF" filter="url(#cardShadow)"/>
+
+  <!-- Icon-in-circle -->
+  <circle cx="104" cy="196" r="24" fill="#CADCFC"/>
+  <g transform="translate(80 172)" color="#1E2761">
+    <polyline points="3 17 9 11 13 15 21 7" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="14 7 21 7 21 14" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="80" y="280" font-size="24" font-weight="700" fill="#1E2761">第一張卡片標題</text>
+  <text x="80" y="320" font-size="16" fill="#1A1A2E">
+    <tspan x="80" dy="0">第一行說明文字。</tspan>
+    <tspan x="80" dy="1.55em">第二行繼續說明,讓內容自然分行。</tspan>
+  </text>
+  <!-- Big stat example -->
+  <text x="80" y="500" font-size="64" font-weight="900" fill="#1E2761">42%</text>
+  <text x="80" y="540" font-size="13" fill="#5A5A72" letter-spacing="2">CAGR · 2023–2025</text>
+
+  <!-- Card B (right) — 50/50: x=650, w=582    |    2/1: x=843, w=389 -->
+  <rect x="650" y="140" width="582" height="532" rx="16" ry="16"
+        fill="#FFFFFF" filter="url(#cardShadow)"/>
+
+  <circle cx="706" cy="196" r="24" fill="#CADCFC"/>
+  <g transform="translate(682 172)" color="#1E2761">
+    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="12" cy="12" r="2" fill="none" stroke="currentColor" stroke-width="2"/>
+  </g>
+
+  <text x="682" y="280" font-size="24" font-weight="700" fill="#1E2761">第二張卡片標題</text>
+  <text x="682" y="320" font-size="16" fill="#1A1A2E">
+    <tspan x="682" dy="0">說明文字第一行。</tspan>
+    <tspan x="682" dy="1.55em">第二行接續。</tspan>
+  </text>
+</svg>

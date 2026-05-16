@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  cover.svg — hero cover template (1280×720). Designer fills in title + subtitle.
+  Default palette: midnight_executive. Replace fill colors with the resolved palette.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+  <defs>
+    <radialGradient id="bgA" cx="18%" cy="22%" r="55%">
+      <stop offset="0%" stop-color="#3955A6" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#1E2761" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgB" cx="82%" cy="78%" r="50%">
+      <stop offset="0%" stop-color="#CADCFC" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#CADCFC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background (primary palette color) -->
+  <rect width="1280" height="720" fill="#1E2761"/>
+  <rect width="1280" height="720" fill="url(#bgA)"/>
+  <rect width="1280" height="720" fill="url(#bgB)"/>
+
+  <!-- Eyebrow / category tag -->
+  <text x="80" y="220" font-size="16" font-weight="500" letter-spacing="4"
+        fill="#CADCFC" opacity="0.85">PRESENTATION</text>
+
+  <!-- Hero title (replace) -->
+  <text x="80" y="340" font-size="96" font-weight="900" fill="#FFFFFF"
+        letter-spacing="-1">主標題在這裡</text>
+
+  <!-- Subtitle (replace) -->
+  <text x="80" y="400" font-size="26" font-weight="400" fill="#CADCFC" opacity="0.92">
+    一句話的副標,說明這份簡報的範圍
+  </text>
+
+  <!-- Footer -->
+  <text x="80" y="660" font-size="14" fill="#CADCFC" opacity="0.65">presenter · date</text>
+  <text x="1200" y="660" font-size="14" fill="#CADCFC" opacity="0.65" text-anchor="end">01</text>
+</svg>

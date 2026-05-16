@@ -1,48 +1,49 @@
-# Editable Mode — when you need text to stay text
+# Editable Mode — how editing works in PowerPoint
 
-By default, `html_to_pptx.py` runs in `--mode image`: each HTML page is rendered to a high-DPI PNG and embedded full-bleed in the PPTX. Pros: perfect visual fidelity. Cons: text can't be edited in PowerPoint (it's a pixel).
+This skill produces SVG-based slides on purpose: **PowerPoint 2016+ natively supports inserting SVGs as editable vector graphics.** When `svg_to_pptx.py` builds the deck, each slide's picture carries both a rasterized PNG fallback *and* the original SVG (via the `svgBlip` OOXML extension). PowerPoint renders the vector by default and lets the user decompose it into native shapes for editing.
 
-For users who need to edit text after handoff (typo fixes, translation, brand-team review), use `--mode editable`.
+## How to edit a slide in PowerPoint
 
-## How editable mode works
+1. Open the produced `presentation.pptx` in **PowerPoint 2016 or newer** (Microsoft 365 also works; older 2013 and earlier will fall back to the PNG raster — no editing in those versions).
+2. Click on a slide so its picture is selected.
+3. **Right-click → Convert to Shape**, or use the Graphics Format ribbon's *Convert to Shape* button.
+4. PowerPoint decomposes the SVG into:
+   - One native shape per `<rect>`, `<circle>`, `<path>` (fill, stroke, rounded corners preserved)
+   - One native text box per `<text>` (with each `<tspan>` becoming a paragraph)
+5. From here every text run, color, and shape is editable using PowerPoint's normal tools.
 
-Editable mode runs a small parser over each page's HTML and reconstructs the layout as native PPTX shapes via `python-pptx`:
+After Convert to Shape the slide is a regular collection of grouped objects; you can `Ungroup` it (Ctrl+Shift+G) to edit individual shapes.
 
-1. Parse the HTML → DOM tree.
-2. For each text node, create a PowerPoint text box at the matching position.
-3. For each card (`.card` div), create a rounded-rectangle shape with fill/border matching the CSS.
-4. For inline SVG icons, embed as a small picture (rasterized to PNG at 4× DPI for crispness).
-5. Background gradients are flattened to a single PNG background.
+## What stays editable
 
-## Trade-offs
+| Element in the SVG | After Convert to Shape |
+|---|---|
+| `<text>` + `<tspan>` rows | Native PowerPoint text box, each `<tspan>` becomes a paragraph |
+| `<rect rx="…">` | Rounded rectangle shape (fill/border editable) |
+| `<circle>` | Oval shape |
+| `<path>` | Freeform shape |
+| `<filter>` drop shadow | Approximated as shape effect (sometimes flattened to raster — minor visual drift) |
+| `<radialGradient>` / `<linearGradient>` | Native gradient fill |
+| Lucide icon `<path>` | Editable freeform shape (you can recolor by selecting and changing fill/line) |
 
-| Aspect | `--mode image` (default) | `--mode editable` |
-|---|---|---|
-| Visual fidelity | Pixel-perfect | ~90% — small layout drift possible |
-| Text editing | No | Yes |
-| File size | Larger (each slide is a PNG) | Smaller |
-| Speed | Faster | Slower (parsing overhead) |
-| Complex layouts (mixed_grid, gradient mesh) | Always works | May approximate |
+## What may not survive perfectly
 
-Recommendation: use `image` for client deliverables and demos; use `editable` when the brand or marketing team needs to make text changes after handoff.
+- **Complex `<filter>` chains** (multi-stage shadow + blur + colormatrix) may be rasterized inside the converted shape. Visual result is preserved, but you can't tweak filter parameters.
+- **`<symbol>` / `<use>` references** that span multiple definitions: PowerPoint usually inlines them, but rarely you'll need to ungroup twice.
+- **Fonts not installed on the viewer's machine**: PowerPoint substitutes the closest available system font, same as any other PPT.
 
-## Limitations
+## When NOT to Convert to Shape
 
-Editable mode does not handle:
-- CSS animations or transitions (no animation in slides anyway).
-- `mix-blend-mode`, `backdrop-filter`, `clip-path` — these are flattened to image.
-- Complex SVG illustrations — embedded as rasterized PNG.
-- Custom web fonts not installed in PowerPoint — falls back to nearest system font.
+If the user only wants to *view* or *print* the deck, leave it as a picture. The PNG fallback + vector embedding both work fine without conversion — Convert to Shape is only needed when someone wants to edit the slide contents.
 
-## Usage
+## Verifying the SVG embed worked
+
+Open the `.pptx` as a zip and inspect `ppt/slides/_rels/slide1.xml.rels`. You should see two image relationships — one to `media/image1.png` (the fallback) and one to `media/image1.svg` (the source). If only the PNG appears, the converter ran in `--mode raster`. Re-run with the default `--mode svg`.
 
 ```bash
-python scripts/html_to_pptx.py \
-  --pages-dir pages/ \
-  --output presentation.pptx \
-  --mode editable
+unzip -p presentation.pptx ppt/slides/_rels/slide1.xml.rels | grep -E 'image.*\.(png|svg)'
 ```
 
-## Hybrid: best of both
+## Working backwards: editing in the SVG instead
 
-If you want fidelity *and* editable titles, run `image` mode then **add a transparent text-box overlay** on the slide title region. Most editors only need to edit titles, not body cards. This is a manual step but takes ~30 seconds per slide.
+For complex edits (multi-page restyling, palette swap), it's often easier to edit `pages/page_*.svg` in a text editor or Inkscape, then re-run `svg_to_pptx.py`. The script is fast — full re-render of a 15-page deck is ~10 seconds with `cairosvg`.

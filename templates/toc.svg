@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  toc.svg — table of contents (1280×720). Two-column grid of numbered parts.
+  Replace card text with actual part titles.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="12"/>
+      <feOffset dx="0" dy="8" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.06"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F7F9FC"/>
+
+  <!-- Header -->
+  <text x="48" y="92" font-size="40" font-weight="800" fill="#1E2761">目錄</text>
+  <text x="48" y="124" font-size="16" fill="#5A5A72">Table of contents</text>
+
+  <!-- 2 × 2 grid of part entries.
+       Card geometry: width 582, height 252; positions:
+       row1: y=170; row2: y=442
+       col1: x=48;  col2: x=650 -->
+
+  <!-- Part 01 -->
+  <rect x="48"  y="170" width="582" height="252" rx="16" ry="16"
+        fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <text x="80" y="240" font-size="80" font-weight="900" fill="#CADCFC">01</text>
+  <text x="80" y="320" font-size="24" font-weight="700" fill="#1E2761">第一部分標題</text>
+  <text x="80" y="360" font-size="15" fill="#5A5A72">這一章節的簡短說明,不超過兩行。</text>
+
+  <!-- Part 02 -->
+  <rect x="650" y="170" width="582" height="252" rx="16" ry="16"
+        fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <text x="682" y="240" font-size="80" font-weight="900" fill="#CADCFC">02</text>
+  <text x="682" y="320" font-size="24" font-weight="700" fill="#1E2761">第二部分標題</text>
+  <text x="682" y="360" font-size="15" fill="#5A5A72">說明文字。</text>
+
+  <!-- Part 03 -->
+  <rect x="48"  y="442" width="582" height="252" rx="16" ry="16"
+        fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <text x="80" y="512" font-size="80" font-weight="900" fill="#CADCFC">03</text>
+  <text x="80" y="592" font-size="24" font-weight="700" fill="#1E2761">第三部分標題</text>
+  <text x="80" y="632" font-size="15" fill="#5A5A72">說明文字。</text>
+
+  <!-- Part 04 -->
+  <rect x="650" y="442" width="582" height="252" rx="16" ry="16"
+        fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <text x="682" y="512" font-size="80" font-weight="900" fill="#CADCFC">04</text>
+  <text x="682" y="592" font-size="24" font-weight="700" fill="#1E2761">第四部分標題</text>
+  <text x="682" y="632" font-size="15" fill="#5A5A72">說明文字。</text>
+</svg>

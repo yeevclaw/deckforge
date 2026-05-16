@@ -245,6 +245,7 @@ deckforge/                            ← (or whatever you name the skill folder
 │   └── bento_mixed.svg
 ├── scripts/
 │   ├── svg_to_pptx.py                ← SVG → PPTX assembler (with svgBlip ext)
+│   ├── package.sh                    ← build deckforge.zip for Claude Desktop upload
 │   ├── setup.sh                      ← one-line dependency installer (mac/linux)
 │   └── setup.ps1                     ← same, for Windows PowerShell
 └── examples/

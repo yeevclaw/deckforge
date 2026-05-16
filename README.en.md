@@ -43,6 +43,7 @@ DeckForge/
 │   └── bento_mixed.svg
 ├── scripts/
 │   ├── svg_to_pptx.py      ← SVG → PPTX (embeds svgBlip ext, vectors preserved)
+│   ├── package.sh          ← build deckforge.zip for Claude Desktop upload
 │   ├── setup.sh            ← one-line dependency installer (mac / linux)
 │   └── setup.ps1           ← same, for Windows PowerShell
 └── examples/               ← DeckForge self-intro mini-deck (3 pages)
@@ -53,7 +54,7 @@ DeckForge/
 
 ## Install
 
-This skill is primarily built for **Claude Desktop** users. (Claude Code CLI also works — see the alternative at the bottom.) Three steps:
+This skill is primarily built for **Claude Desktop** users. (Claude Code CLI also works — see the alternative at the bottom.) Four steps:
 
 ### 1. Get deckforge onto your machine
 
@@ -62,16 +63,21 @@ git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
 # Or download the GitHub zip and unzip it
 ```
 
-### 2. Import the skill into Claude Desktop
+### 2. Package as a zip
+
+Claude Desktop's *Upload a skill* dialog accepts a **.zip file only**. There's a bundled packaging script:
+
+```bash
+cd ~/deckforge && bash scripts/package.sh
+# Output: ~/deckforge.zip (excludes .git, .DS_Store, __pycache__, etc.)
+```
+
+### 3. Import the skill into Claude Desktop
 
 1. Open Claude Desktop → **Customize** (top-right).
-2. Left nav **Skills** → click **`+`** next to the section header → **Create skill** → **Upload a skill**.
-3. In the file picker, select the `~/deckforge` folder (or zip it first if the upload dialog asks for a zip):
-   ```bash
-   # Only needed if Upload a skill wants a zip
-   cd ~ && zip -r deckforge.zip deckforge -x 'deckforge/.git/*' 'deckforge/.DS_Store'
-   ```
-4. After upload, `deckforge` appears in *Personal skills*.
+2. Left nav **Skills** → click **`+`** → **Create skill** → **Upload a skill**.
+3. Pick `~/deckforge.zip` in the file picker.
+4. After upload, `deckforge` appears under *Personal skills*.
 
 > **Manual-copy fallback**: if the Upload a skill flow doesn't work for you, rsync directly into Desktop's internal directory:
 > ```bash
@@ -81,7 +87,7 @@ git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
 > ```
 > Caveat: Desktop's internal path contains a session UUID and may change. Upload a skill is the more durable route.
 
-### 3. Install the one Python package Phase 5 needs
+### 4. Install the one Python package Phase 5 needs
 
 ```bash
 pip install python-pptx --break-system-packages

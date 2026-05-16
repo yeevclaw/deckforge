@@ -43,6 +43,7 @@ DeckForge/
 │   └── bento_mixed.svg
 ├── scripts/
 │   ├── svg_to_pptx.py      ← SVG → PPTX 組裝器(含 svgBlip 擴充,保留向量)
+│   ├── package.sh          ← 打包 deckforge.zip 供 Claude Desktop 上傳
 │   ├── setup.sh            ← 一鍵安裝依賴(mac / linux)
 │   └── setup.ps1           ← Windows PowerShell 版安裝腳本
 └── examples/               ← DeckForge 自介 mini-deck(3 頁完整產出)
@@ -53,7 +54,7 @@ DeckForge/
 
 ## 安裝
 
-本 skill 主要設計給 **Claude Desktop** 使用者(Claude Code CLI 也行,作法在下方)。三步:
+本 skill 主要設計給 **Claude Desktop** 使用者(Claude Code CLI 也行,作法在下方)。四步:
 
 ### 1. 把 deckforge 抓到本機
 
@@ -62,16 +63,21 @@ git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
 # 或下載 zip 解壓也行
 ```
 
-### 2. 在 Claude Desktop 匯入 skill
+### 2. 打包成 zip
+
+Claude Desktop 的 *Upload a skill* 只收 **.zip 檔**。專案附了一個打包腳本:
+
+```bash
+cd ~/deckforge && bash scripts/package.sh
+# 產出: ~/deckforge.zip(會自動排除 .git、.DS_Store、__pycache__ 等)
+```
+
+### 3. 在 Claude Desktop 匯入
 
 1. 開 Claude Desktop → 右上 **Customize**
 2. 左欄 **Skills** → 標題列右邊的 **`+`** → **Create skill** → **Upload a skill**
-3. 在彈出的檔案選擇器選 `~/deckforge` 資料夾(或先把它打包成 zip,看 UI 要哪一種):
-   ```bash
-   # 如果 Upload a skill 要 zip 檔
-   cd ~ && zip -r deckforge.zip deckforge -x 'deckforge/.git/*' 'deckforge/.DS_Store'
-   ```
-4. 匯入後 `deckforge` 會出現在 *Personal skills* 清單裡。
+3. 在檔案選擇器選 `~/deckforge.zip`
+4. 完成後 `deckforge` 會出現在 *Personal skills* 清單裡
 
 > **手動複製備案**:如果 Upload a skill 介面跑不順,可以直接 rsync 到 Desktop 的內部目錄:
 > ```bash
@@ -81,7 +87,7 @@ git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
 > ```
 > 注意:Desktop 的內部目錄路徑包含 session UUID,可能會週期性變動。長期穩定還是建議走 Upload a skill。
 
-### 3. 安裝那一個 Python 套件(Phase 5 組 .pptx 用)
+### 4. 安裝那一個 Python 套件(Phase 5 組 .pptx 用)
 
 ```bash
 pip install python-pptx --break-system-packages

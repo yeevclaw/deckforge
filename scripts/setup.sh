@@ -1,31 +1,37 @@
 #!/usr/bin/env bash
-# DeckForge setup — install the minimum dependency for the Phase 5 .pptx assembler.
+# DeckForge setup — install the dependencies needed by Phase 5 (.pptx assembly).
 #
 # Usage:
-#   bash scripts/setup.sh                 # install python-pptx (minimum)
-#   bash scripts/setup.sh --with-raster   # also install cairosvg (for PNG fallback)
+#   bash scripts/setup.sh                 # install everything recommended
+#   bash scripts/setup.sh --minimal       # only python-pptx (smaller, but
+#                                         #  Keynote / macOS Preview will see
+#                                         #  blank slides; only PowerPoint
+#                                         #  2016+ will display correctly)
 #   bash scripts/setup.sh --yes           # skip the confirmation prompt
 #
 # What gets installed:
-#   - python-pptx (~1 MB)      — required. Builds the .pptx file in Phase 5.
+#   - python-pptx (~1 MB)      — required. Builds the .pptx file.
 #                                Transitively pulls in lxml and Pillow.
-#   - cairosvg    (~600 KB)    — optional. Only with --with-raster.
-#                                Renders a high-DPI PNG fallback for older
-#                                PowerPoint versions / PDF preview tools.
+#   - An SVG → PNG renderer    — strongly recommended. The script tries
+#                                cairosvg first (pip), then suggests
+#                                librsvg / Inkscape via OS package manager
+#                                if cairosvg can't be installed.
+#                                Without one of these, the PPTX renders
+#                                blank in Keynote / macOS Preview / older
+#                                PowerPoint (only PowerPoint 2016+ works).
 #
-# Nothing else is needed. Phases 1–4 of the skill are pure Markdown.
+# Phases 1–4 of the skill are pure Markdown and need none of the above.
 
 set -e
 
-# Parse args
-WITH_RASTER=0
+WITH_RASTER=1   # default ON now (renderer is needed for cross-app compatibility)
 AUTO_YES=0
 for arg in "$@"; do
   case "$arg" in
-    --with-raster) WITH_RASTER=1 ;;
-    --yes|-y)      AUTO_YES=1 ;;
+    --minimal|--no-raster) WITH_RASTER=0 ;;
+    --yes|-y)              AUTO_YES=1 ;;
     -h|--help)
-      head -n 15 "$0" | tail -n 14 | sed 's/^# \{0,1\}//'
+      head -n 22 "$0" | tail -n 21 | sed 's/^# \{0,1\}//'
       exit 0
       ;;
   esac
@@ -50,11 +56,22 @@ if "$PY" -m pip install --help 2>&1 | grep -q "break-system-packages"; then
   EXTRA="--break-system-packages"
 fi
 
+# Detect existing renderers
+EXISTING_RENDERER=""
+if command -v rsvg-convert >/dev/null 2>&1; then EXISTING_RENDERER="rsvg-convert"; fi
+if command -v inkscape    >/dev/null 2>&1 && [ -z "$EXISTING_RENDERER" ]; then EXISTING_RENDERER="inkscape"; fi
+if "$PY" -c "import cairosvg" 2>/dev/null && [ -z "$EXISTING_RENDERER" ]; then EXISTING_RENDERER="cairosvg"; fi
+
 # Tell the user what we're about to do
 echo "DeckForge setup — about to install:"
-echo "  • python-pptx                              ← required for Phase 5 (.pptx assembly)"
+echo "  • python-pptx                              ← required (Phase 5)"
 if [ "$WITH_RASTER" = "1" ]; then
-  echo "  • cairosvg                                 ← optional --with-raster path"
+  if [ -n "$EXISTING_RENDERER" ]; then
+    echo "  • (SVG renderer already present: $EXISTING_RENDERER — skipping)"
+  else
+    echo "  • cairosvg                                 ← SVG → PNG renderer"
+    echo "    (fallback: librsvg via brew/apt if cairosvg's system libs are missing)"
+  fi
 fi
 echo "Using:  $($PY --version) ($PY -m pip ${EXTRA:-no-flag})"
 echo ""
@@ -71,14 +88,33 @@ fi
 echo "→ Installing python-pptx ..."
 "$PY" -m pip install $EXTRA python-pptx
 
-if [ "$WITH_RASTER" = "1" ]; then
+if [ "$WITH_RASTER" = "1" ] && [ -z "$EXISTING_RENDERER" ]; then
   echo "→ Installing cairosvg ..."
-  "$PY" -m pip install $EXTRA cairosvg || {
-    echo "⚠️  cairosvg install failed. As a system-package alternative:"
-    echo "    macOS:  brew install librsvg     (provides rsvg-convert)"
-    echo "    Linux:  apt-get install librsvg2-bin"
-    echo "    svg_to_pptx.py auto-detects whichever is available." >&2
-  }
+  if "$PY" -m pip install $EXTRA cairosvg; then
+    # Test cairosvg actually works (libcairo C lib must be present)
+    if "$PY" -c "import cairosvg; cairosvg.svg2png(bytestring=b'<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1\" height=\"1\"/>')" 2>/dev/null; then
+      echo "   cairosvg OK."
+    else
+      echo "⚠️  cairosvg installed but libcairo C library is missing. Installing librsvg via OS package manager instead..."
+      if command -v brew >/dev/null 2>&1; then
+        brew install librsvg
+      elif command -v apt-get >/dev/null 2>&1; then
+        sudo apt-get install -y librsvg2-bin
+      else
+        echo "❌ Could not auto-install a renderer. Please install one of:"
+        echo "     macOS:  brew install librsvg"
+        echo "     Linux:  apt-get install librsvg2-bin"
+        echo "     Or install Inkscape: https://inkscape.org/release/"
+      fi
+    fi
+  else
+    echo "⚠️  cairosvg pip install failed. Trying OS package manager for librsvg..."
+    if command -v brew >/dev/null 2>&1; then
+      brew install librsvg
+    elif command -v apt-get >/dev/null 2>&1; then
+      sudo apt-get install -y librsvg2-bin
+    fi
+  fi
 fi
 
 echo ""

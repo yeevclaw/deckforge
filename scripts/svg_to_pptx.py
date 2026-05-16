@@ -7,20 +7,36 @@ Pages are ordered by filename (so name them page_01.svg, page_02.svg, ...).
 If a planning.json sits next to the pages dir (or is passed via --planning),
 speaker_notes are attached to each slide.
 
-Default behavior embeds each picture with the PowerPoint 2016+ SVG extension
-(svgBlip) plus a tiny placeholder PNG as the OOXML-required fallback. Modern
-PowerPoint renders the SVG vector; the user can right-click → "Convert to Shape"
-to edit every text run and shape.
+Each slide's picture is embedded as:
+  1. A rasterized PNG fallback (so Keynote, macOS Preview, Quick Look,
+     PowerPoint <2016, web-mail previewers, etc. all display the slide
+     correctly).
+  2. The original SVG via the PowerPoint 2016+ svgBlip OOXML extension
+     (so PowerPoint 2016+ renders the vector and the user can
+     right-click → "Convert to Shape" to edit every text run).
 
-If cairosvg / inkscape / rsvg-convert is available AND --with-raster is passed,
-the script renders a high-DPI PNG fallback instead of the placeholder — useful
-for pre-2016 PowerPoint or PDF preview tools that can't render SVG.
+The PNG fallback is rendered using whichever SVG renderer is available:
+cairosvg → inkscape → rsvg-convert. If none is installed, a 1×1
+transparent placeholder PNG is used (sufficient for PowerPoint 2016+ but
+will look blank in Keynote / macOS Preview) and a warning is printed.
 
-Only required dependency: python-pptx (which transitively installs lxml + Pillow).
+Required dependency:    python-pptx       (pip install python-pptx)
+Strongly recommended:   cairosvg (or)     pip install cairosvg
+                        rsvg-convert      brew install librsvg
+                        inkscape          brew install inkscape
+
+Flags:
+  --no-svg            Skip the svgBlip extension; PPTX becomes image-only.
+                      Use this if a viewer chokes on the SVG ext (some
+                      older Keynote versions).
+  --placeholder-only  Force the 1×1 transparent placeholder PNG even when
+                      a real renderer is available. Smaller file, but the
+                      slide only displays in PowerPoint 2016+.
+  --png-width N       Width (px) of the PNG fallback. Default 2560 (2× DPI).
 
 Examples:
   python svg_to_pptx.py --pages-dir pages/ --output deck.pptx
-  python svg_to_pptx.py --pages-dir pages/ --output deck.pptx --with-raster
+  python svg_to_pptx.py --pages-dir pages/ --output deck.pptx --no-svg
   python svg_to_pptx.py --pages-dir pages/ --output deck.pptx --planning planning.json
 """
 from __future__ import annotations
@@ -184,20 +200,22 @@ def _inject_svg_ext(pic_elem, svg_rId: str):
     svgBlip.set(f'{{{R_NS}}}embed', svg_rId)
 
 
-def add_svg_slide(prs, svg_path: Path, png_path: Path):
+def add_svg_slide(prs, svg_path: Path, png_path: Path, embed_svg: bool):
     slide = prs.slides.add_slide(prs.slide_layouts[6])  # blank
     pic = slide.shapes.add_picture(
         str(png_path), 0, 0,
         width=prs.slide_width, height=prs.slide_height,
     )
-    svg_bytes = svg_path.read_bytes()
-    svg_rId = _add_svg_part(slide.part, svg_bytes)
-    _inject_svg_ext(pic._element, svg_rId)
+    if embed_svg:
+        svg_bytes = svg_path.read_bytes()
+        svg_rId = _add_svg_part(slide.part, svg_bytes)
+        _inject_svg_ext(pic._element, svg_rId)
     return slide
 
 
 def build(pages: list[Path], out_path: Path, planning: dict,
-          workdir: Path, png_width: int, with_raster: bool):
+          workdir: Path, png_width: int,
+          placeholder_only: bool, embed_svg: bool):
     workdir.mkdir(parents=True, exist_ok=True)
     prs = Presentation()
     prs.slide_width = SLIDE_W_EMU
@@ -207,23 +225,35 @@ def build(pages: list[Path], out_path: Path, planning: dict,
     if not placeholder_path.exists():
         placeholder_path.write_bytes(_PLACEHOLDER_PNG_BYTES)
 
-    raster_engine_reported = False
+    engine_reported = False
+    used_placeholder_anywhere = False
     for i, svg_path in enumerate(pages):
-        if with_raster:
+        if placeholder_only:
+            png_path = placeholder_path
+            used_placeholder_anywhere = True
+        else:
             png_path = workdir / f"{svg_path.stem}.png"
             engine = render_real_png(svg_path, png_path, width=png_width)
             if engine is None:
-                print(f"[svg_to_pptx] No SVG renderer found — falling back to placeholder for {svg_path.name}",
-                      file=sys.stderr)
+                if not engine_reported:
+                    print("⚠️  No SVG renderer found (cairosvg / inkscape / rsvg-convert). "
+                          "Falling back to a 1×1 transparent placeholder PNG.",
+                          file=sys.stderr)
+                    print("    The .pptx will look BLANK in Keynote / macOS Preview / "
+                          "older PowerPoint. To fix, install one of:",
+                          file=sys.stderr)
+                    print("      pip install cairosvg --break-system-packages", file=sys.stderr)
+                    print("      brew install librsvg                          (mac)", file=sys.stderr)
+                    print("      apt-get install librsvg2-bin                  (linux)", file=sys.stderr)
+                    engine_reported = True
                 png_path = placeholder_path
-            elif not raster_engine_reported:
-                print(f"Raster fallback engine: {engine}")
-                raster_engine_reported = True
-        else:
-            png_path = placeholder_path
+                used_placeholder_anywhere = True
+            elif not engine_reported:
+                print(f"PNG fallback engine: {engine} ({png_width}px wide)")
+                engine_reported = True
 
         print(f"[{i+1}/{len(pages)}] {svg_path.name} → slide", flush=True)
-        slide = add_svg_slide(prs, svg_path, png_path)
+        slide = add_svg_slide(prs, svg_path, png_path, embed_svg=embed_svg)
 
         notes = speaker_notes_for(i, planning)
         if notes:
@@ -231,11 +261,12 @@ def build(pages: list[Path], out_path: Path, planning: dict,
 
     prs.save(str(out_path))
     print(f"Wrote {out_path}")
-    print("In PowerPoint 2016+, right-click any slide picture → Convert to Shape "
-          "to edit text and shapes.")
-    if not with_raster:
-        print("(Tip: pass --with-raster + install cairosvg if you need a real PNG "
-              "fallback for pre-2016 Office or PDF previews.)")
+    if embed_svg:
+        print("In PowerPoint 2016+: right-click any slide picture → Convert to Shape "
+              "to edit text and shapes.")
+    if used_placeholder_anywhere and not placeholder_only:
+        print("⚠️  Some slides used the 1×1 placeholder because no SVG renderer was "
+              "available. Re-run after installing one for proper Keynote / Preview display.")
 
 
 def main():
@@ -244,14 +275,15 @@ def main():
     p.add_argument("--pages-dir", required=True, help="Directory containing page_*.svg files")
     p.add_argument("--output", required=True, help="Output .pptx path")
     p.add_argument("--planning", default=None, help="planning.json path (auto-detected if omitted)")
-    p.add_argument("--with-raster", action="store_true",
-                   help="Render a real high-DPI PNG fallback for each slide. "
-                        "Requires cairosvg, inkscape, or rsvg-convert. "
-                        "Without this flag, a tiny placeholder PNG is used and "
-                        "modern PowerPoint renders the SVG vector directly.")
+    p.add_argument("--no-svg", action="store_true",
+                   help="Skip the svgBlip extension; slides become image-only. "
+                        "Use this for viewers that choke on the SVG ext.")
+    p.add_argument("--placeholder-only", action="store_true",
+                   help="Force the 1×1 transparent placeholder PNG fallback even "
+                        "when a real renderer is available. Smaller file but only "
+                        "displays correctly in PowerPoint 2016+.")
     p.add_argument("--png-width", type=int, default=2560,
-                   help="Width (px) of the PNG fallback when --with-raster is set. "
-                        "Default 2560 (2× DPI).")
+                   help="Width (px) of the PNG fallback. Default 2560 (2× DPI).")
     p.add_argument("--workdir", default=None,
                    help="Directory for intermediate files (default: <pages-dir>/_renders)")
     args = p.parse_args()
@@ -264,7 +296,9 @@ def main():
 
     pages = collect_pages(pages_dir)
     planning = load_planning(planning_path, pages_dir)
-    build(pages, out_path, planning, workdir, args.png_width, args.with_raster)
+    build(pages, out_path, planning, workdir, args.png_width,
+          placeholder_only=args.placeholder_only,
+          embed_svg=not args.no_svg)
 
 
 if __name__ == "__main__":

@@ -26,18 +26,29 @@ If the user already has a topic and just wants slides fast, you can compress pha
 
 ## Before starting — heads-up about Phase 5 dependencies
 
-Phases 1–4 produce SVG files and need **zero Python packages**. Phase 5 (assembling the `.pptx`) needs **one package: `python-pptx`**. If this is the user's first time running the skill, mention this at the start of Phase 1 so they can install in parallel while you work:
+Phases 1–4 produce SVG files and need **zero Python packages**. Phase 5 (assembling the `.pptx`) needs:
 
-> *"This skill will run 5 phases. The first 4 don't need anything installed. The last phase (assembling the .pptx) needs `python-pptx` on your system Python — you can install it now in a terminal: `pip install python-pptx --break-system-packages`. (Or run `bash scripts/setup.sh` from the deckforge folder if you have one.) It's a small one-time install. While that runs, I'll start Phase 1."*
+1. **`python-pptx`** (required, ~1 MB) — builds the .pptx file.
+2. **An SVG → PNG renderer** (strongly recommended) — produces a raster fallback for each slide so the deck displays correctly in **Keynote, macOS Preview, Quick Look, and PowerPoint pre-2016**. Without one, those viewers show blank slides (only PowerPoint 2016+ renders correctly via the embedded SVG). Acceptable renderers: `cairosvg`, `inkscape`, `rsvg-convert` — any one is enough.
 
-If Phase 5 fails with `ModuleNotFoundError: No module named 'pptx'`, the user hasn't installed `python-pptx` on their system Python yet — point them at the `pip install` command above and re-run only Phase 5.
+If this is the user's first time running the skill, mention this at the start of Phase 1 so they can install in parallel:
 
-The deckforge folder may live in different places depending on how the user installed:
-- **Claude Desktop**: `~/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/<UUID>/<UUID>/skills/deckforge/` (Desktop manages this; users shouldn't need to touch it)
+> *"This skill runs 5 phases. The first 4 don't need anything installed. The final .pptx assembly needs two things on your system Python / OS: `python-pptx` (required), and an SVG renderer (recommended — without it the deck looks blank in Keynote and macOS Preview, only PowerPoint 2016+ works). Easiest: `bash scripts/setup.sh` from inside the deckforge folder — it installs both. While that runs, I'll start Phase 1."*
+
+### Common errors and how to recover
+
+- **`ModuleNotFoundError: No module named 'pptx'`** — user hasn't installed `python-pptx`. Have them run `pip install python-pptx --break-system-packages` and re-run Phase 5.
+- **Slides display blank in Keynote / macOS Preview, fine in PowerPoint** — the user has python-pptx but no SVG renderer. The script will print a warning during Phase 5. Have them install a renderer: `brew install librsvg` (mac), `apt-get install librsvg2-bin` (linux), or `pip install cairosvg`. Then re-run Phase 5.
+- **Keynote refuses to open the .pptx entirely** — try re-running Phase 5 with `--no-svg` to skip the svgBlip extension. Slides become image-only but Keynote will open them. The trade-off: Convert-to-Shape editability in PowerPoint goes away.
+
+### Where the deckforge folder lives
+
+It may be in different places depending on install:
+- **Claude Desktop**: `~/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/<UUID>/<UUID>/skills/deckforge/` (Desktop manages this; don't write to it manually)
 - **Claude Code CLI**: `~/.claude/skills/deckforge/`
 - **Source clone**: wherever the user ran `git clone` (often `~/deckforge`)
 
-Don't assume a path. Just refer to "the deckforge folder" or run scripts via relative path from the skill folder.
+Don't assume a path. Refer to "the deckforge folder" or run scripts via relative path from the skill folder.
 
 ---
 
@@ -258,22 +269,18 @@ deckforge/                            ← (or whatever you name the skill folder
 
 ## Dependencies
 
-**Phases 1–4 are pure Markdown — no dependencies at all.** Only the Phase 5 converter (`svg_to_pptx.py`) needs Python packages.
+**Phases 1–4 are pure Markdown — no dependencies at all.** Only the Phase 5 converter (`svg_to_pptx.py`) needs anything.
 
 ```bash
-# One package. lxml + Pillow come along automatically.
-pip install python-pptx --break-system-packages
-
-# Or run the bundled setup script:
+# Recommended: installs both python-pptx AND an SVG renderer.
 bash scripts/setup.sh
-```
 
-**Optional** — only if the user passes `--with-raster` for high-DPI PNG fallback:
-
-```bash
+# Or manually:
+pip install python-pptx --break-system-packages
+# Plus one of these for the SVG → PNG renderer (so Keynote / Preview work):
 pip install cairosvg --break-system-packages
-# or:  brew install inkscape         (macOS)
-# or:  apt-get install librsvg2-bin  (Linux)
+brew install librsvg          # macOS — installs rsvg-convert
+apt-get install librsvg2-bin  # Linux
 ```
 
-The converter handles missing dependencies gracefully — it'll tell you what to install or fall back to the placeholder PNG silently.
+Without the renderer the deck only displays correctly in PowerPoint 2016+ (Keynote and macOS Preview show blank slides). The converter prints a clear warning when this happens and tells the user exactly what to install.

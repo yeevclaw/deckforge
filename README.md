@@ -1,4 +1,4 @@
-# DeckForge : PPT 的靈魂是內容,不是皮囊
+# DeckForge : 簡報的靈魂是內容不是皮囊, 願科技之力解放所有人的時間
 
 [English](README.en.md) · **繁體中文**
 

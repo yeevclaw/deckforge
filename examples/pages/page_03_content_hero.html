@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>AcmeCloud — Traction</title>
+<style>
+  :root {
+    --primary: #1E2761;
+    --secondary: #CADCFC;
+    --accent: #6E8FE6;
+    --bg: #F7F9FC;
+    --text: #1A1A2E;
+    --text-muted: #5A5A72;
+    --slide-w: 1280px; --slide-h: 720px; --pad: 48px; --gap: 20px; --card-radius: 16px;
+    --font-header: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Inter, system-ui, sans-serif;
+    --font-body:   "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Inter, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { width: var(--slide-w); height: var(--slide-h); background: var(--bg); color: var(--text); font-family: var(--font-body); overflow: hidden; }
+  .slide { width: 100%; height: 100%; padding: var(--pad); display: flex; flex-direction: column; }
+  .slide-title { font-family: var(--font-header); font-size: 38px; font-weight: 900; color: var(--primary); margin: 0; line-height: 1.18; letter-spacing: -0.01em; }
+  .slide-subtitle { font-size: 17px; color: var(--text-muted); margin: 8px 0 28px; line-height: 1.45; }
+
+  .bento {
+    flex: 1;
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1.55fr 1fr;
+    min-height: 0;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: var(--card-radius);
+    padding: 26px 28px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0; min-height: 0; overflow: hidden;
+  }
+
+  .card.hero {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--primary) 0%, #2A3982 100%);
+    color: #fff;
+    padding: 36px 44px;
+    flex-direction: row;
+    align-items: center;
+    gap: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card.hero::after {
+    content: '';
+    position: absolute;
+    right: -120px; top: -120px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--accent) 30%, transparent);
+    filter: blur(40px);
+  }
+  .hero-stat {
+    font-family: var(--font-header);
+    font-size: 104px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    min-width: 280px;
+    position: relative; z-index: 1;
+  }
+  .hero-stat .unit { font-size: 32px; opacity: 0.7; margin-left: 6px; letter-spacing: 0; }
+  .hero-text { position: relative; z-index: 1; }
+  .hero-text h2 {
+    font-family: var(--font-header);
+    font-size: 30px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    line-height: 1.22;
+  }
+  .hero-text p { font-size: 16px; line-height: 1.55; margin: 0; opacity: 0.86; }
+
+  .small-card { align-items: flex-start; }
+  .small-stat {
+    font-family: var(--font-header);
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .small-stat .unit { font-size: 22px; color: var(--accent); margin-left: 2px; }
+  .small-label {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    font-weight: 500;
+  }
+  .icon-wrap {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--secondary) 75%, #fff);
+    display: grid; place-items: center;
+  }
+  .icon-wrap svg { width: 18px; height: 18px; stroke: var(--primary); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <h1 class="slide-title">24× 年增長,82% 毛利率</h1>
+    <p class="slide-subtitle">我們已驗證 PMF,並進入規模化階段</p>
+    <main class="bento">
+      <article class="card hero">
+        <div class="hero-stat">$4.8M<span class="unit"> ARR</span></div>
+        <div class="hero-text">
+          <h2>從 $200K 到 $4.8M,只花了 12 個月</h2>
+          <p>2025 年 5 月正式上線。CAGR 較同類別 SaaS 新創高出 3.2 倍,我們已通過 PMF 驗證。</p>
+        </div>
+      </article>
+      <article class="card small-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <div class="small-stat">82<span class="unit">%</span></div>
+        <div class="small-label">毛利率<br>純軟體經濟結構</div>
+      </article>
+      <article class="card small-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </div>
+        <div class="small-stat">138<span class="unit">%</span></div>
+        <div class="small-label">NDR 淨收入留存<br>客戶持續加購</div>
+      </article>
+      <article class="card small-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="7" r="3"/><path d="M21 21v-2a3 3 0 0 0-2-2.83"/></svg>
+        </div>
+        <div class="small-stat">47</div>
+        <div class="small-label">付費客戶<br>含 6 家公開上市公司</div>
+      </article>
+    </main>
+  </div>
+</body>
+</html>

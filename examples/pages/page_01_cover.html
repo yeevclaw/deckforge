@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>AcmeCloud — Cover</title>
+<style>
+  :root {
+    --primary: #1E2761;
+    --secondary: #CADCFC;
+    --accent: #6E8FE6;
+    --slide-w: 1280px; --slide-h: 720px; --pad: 80px;
+    --font-header: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Inter, system-ui, -apple-system, sans-serif;
+    --font-body:   "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Inter, system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    width: var(--slide-w); height: var(--slide-h);
+    background: radial-gradient(circle at 18% 22%, color-mix(in oklab, var(--accent) 28%, transparent), transparent 55%),
+                radial-gradient(circle at 88% 82%, color-mix(in oklab, var(--secondary) 16%, transparent), transparent 55%),
+                var(--primary);
+    color: #fff;
+    font-family: var(--font-body);
+    overflow: hidden;
+    position: relative;
+  }
+  .accent-shape {
+    position: absolute;
+    right: -180px; top: -180px;
+    width: 580px; height: 580px;
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--accent) 22%, transparent);
+    filter: blur(50px);
+  }
+  .accent-shape-2 {
+    position: absolute;
+    left: -120px; bottom: -120px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--secondary) 14%, transparent);
+    filter: blur(40px);
+  }
+  .cover {
+    width: 100%; height: 100%;
+    padding: var(--pad);
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .eyebrow {
+    font-size: 14px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin: 0 0 28px;
+    font-weight: 600;
+  }
+  h1 {
+    font-family: var(--font-header);
+    font-size: 88px;
+    font-weight: 900;
+    line-height: 1.06;
+    margin: 0;
+    max-width: 1040px;
+    letter-spacing: -0.02em;
+  }
+  h1 .accent-word { color: var(--accent); }
+  .subtitle {
+    font-size: 24px;
+    color: rgba(255,255,255,0.72);
+    margin: 32px 0 0;
+    line-height: 1.4;
+    max-width: 800px;
+    font-weight: 400;
+  }
+  .meta {
+    position: absolute;
+    bottom: var(--pad);
+    left: var(--pad);
+    right: var(--pad);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+  }
+  .logo {
+    font-family: var(--font-header);
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.18em;
+    color: #fff;
+  }
+  .logo::before {
+    content: '';
+    display: inline-block;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 10px;
+    transform: translateY(-1px);
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+  <div class="accent-shape"></div>
+  <div class="accent-shape-2"></div>
+  <div class="cover">
+    <p class="eyebrow">SERIES B · INVESTOR DECK</p>
+    <h1>讓每家 SaaS 公司<br>都擁有自己的 <span class="accent-word">AI 大腦</span></h1>
+    <p class="subtitle">AcmeCloud 為中型 SaaS 提供 30 分鐘上線、零程式碼的 AI 嵌入層</p>
+    <div class="meta">
+      <span class="logo">ACMECLOUD</span>
+      <span>2026 Q2</span>
+    </div>
+  </div>
+</body>
+</html>

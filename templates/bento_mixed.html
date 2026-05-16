@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>Bento Mixed Grid</title>
+<style>
+  :root {
+    --primary: #1E2761; --secondary: #CADCFC; --accent: #FFFFFF;
+    --bg: #F7F9FC; --text: #1A1A2E; --text-muted: #5A5A72;
+    --slide-w: 1280px; --slide-h: 720px; --pad: 48px; --gap: 20px; --card-radius: 16px;
+    --font-header: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Inter, system-ui, sans-serif;
+    --font-body:   "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Inter, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { width: var(--slide-w); height: var(--slide-h); background: var(--bg); color: var(--text); font-family: var(--font-body); overflow: hidden; }
+  .slide { width: 100%; height: 100%; padding: var(--pad); display: flex; flex-direction: column; }
+  .slide-title { font-family: var(--font-header); font-size: 36px; font-weight: 800; color: var(--primary); margin: 0; line-height: 1.2; }
+  .slide-subtitle { font-size: 16px; color: var(--text-muted); margin: 6px 0 24px; line-height: 1.4; }
+  .bento {
+    flex: 1; display: grid; gap: var(--gap);
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    min-height: 0;
+  }
+  .card { background: #fff; border-radius: var(--card-radius); padding: 22px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); display: flex; flex-direction: column; gap: 10px; min-width: 0; min-height: 0; overflow: hidden; }
+  /* Sample asymmetric placement — designer should adjust per content */
+  .card.big      { grid-column: span 3; grid-row: span 2; }
+  .card.medium-h { grid-column: span 3; grid-row: span 1; }
+  .card.medium-v { grid-column: span 2; grid-row: span 2; }
+  .card.small    { grid-column: span 2; grid-row: span 1; }
+
+  .card.dark { background: var(--primary); color: #fff; }
+  .card.dark h3 { color: #fff; }
+  .card.dark p { color: rgba(255,255,255,0.85); }
+
+  .icon-wrap { width: 40px; height: 40px; border-radius: 50%; background: color-mix(in oklab, var(--secondary) 80%, #fff); display: grid; place-items: center; flex: 0 0 auto; }
+  .icon-wrap svg { width: 20px; height: 20px; stroke: var(--primary); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .card.dark .icon-wrap { background: rgba(255,255,255,0.15); }
+  .card.dark .icon-wrap svg { stroke: #fff; }
+  .card h3 { font-family: var(--font-header); font-size: 20px; font-weight: 700; color: var(--primary); margin: 0; line-height: 1.3; }
+  .card p { font-size: 14px; color: var(--text); margin: 0; line-height: 1.55; }
+  .card.big h3 { font-size: 28px; }
+  .card.big p { font-size: 16px; }
+  .card .stat { font-family: var(--font-header); font-size: 48px; font-weight: 900; line-height: 1; }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <h1 class="slide-title">頁面標題</h1>
+    <p class="slide-subtitle">頁面副標題</p>
+    <main class="bento">
+      <article class="card big dark">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3>核心主張</h3>
+        <p>用具體事實或數字支撐這個核心主張。一段不超過 3 行。</p>
+      </article>
+      <article class="card medium-h">
+        <h3>支撐 A</h3>
+        <p>說明文字。</p>
+      </article>
+      <article class="card small">
+        <span class="stat" style="color: var(--primary);">3×</span>
+        <p>關鍵倍數</p>
+      </article>
+      <article class="card small">
+        <span class="stat" style="color: var(--primary);">98%</span>
+        <p>關鍵比率</p>
+      </article>
+      <article class="card medium-h">
+        <h3>支撐 B</h3>
+        <p>說明文字。</p>
+      </article>
+    </main>
+  </div>
+</body>
+</html>

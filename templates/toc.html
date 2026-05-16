@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>Table of Contents</title>
+<style>
+  :root {
+    --primary: #1E2761;
+    --secondary: #CADCFC;
+    --accent: #FFFFFF;
+    --bg: #F7F9FC;
+    --text: #1A1A2E;
+    --text-muted: #5A5A72;
+    --slide-w: 1280px; --slide-h: 720px; --pad: 80px;
+    --font-header: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Inter, system-ui, -apple-system, sans-serif;
+    --font-body:   "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Inter, system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { width: var(--slide-w); height: var(--slide-h); background: var(--bg); color: var(--text); font-family: var(--font-body); overflow: hidden; }
+  .toc { width: 100%; height: 100%; padding: var(--pad); display: grid; grid-template-columns: 360px 1fr; gap: 60px; }
+  .toc-left h1 {
+    font-family: var(--font-header);
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--primary);
+    margin: 0 0 16px;
+    line-height: 1;
+  }
+  .toc-left .subtitle { font-size: 16px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+  .toc-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 32px;
+    align-content: start;
+  }
+  .toc-item {
+    display: flex;
+    gap: 20px;
+    padding: 20px 24px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    align-items: center;
+    transition: none;
+  }
+  .toc-num {
+    font-family: var(--font-header);
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+    min-width: 56px;
+  }
+  .toc-text {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+  <div class="toc">
+    <div class="toc-left">
+      <h1>目錄</h1>
+      <p class="subtitle">CONTENTS</p>
+    </div>
+    <div class="toc-list">
+      <!-- repeated per part -->
+      <div class="toc-item"><div class="toc-num">01</div><div class="toc-text">第一部分標題</div></div>
+      <div class="toc-item"><div class="toc-num">02</div><div class="toc-text">第二部分標題</div></div>
+      <div class="toc-item"><div class="toc-num">03</div><div class="toc-text">第三部分標題</div></div>
+      <div class="toc-item"><div class="toc-num">04</div><div class="toc-text">第四部分標題</div></div>
+    </div>
+  </div>
+</body>
+</html>

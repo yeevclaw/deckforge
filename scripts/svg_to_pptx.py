@@ -314,10 +314,9 @@ def build(pages: list[Path], out_path: Path, planning: dict,
             slide.notes_slide.notes_text_frame.text = notes
 
     prs.save(str(out_path))
-    print(f"Wrote {out_path}")
+    print(f"✅ Wrote PPTX: {out_path}")
     if embed_svg:
-        print("In PowerPoint 2016+: right-click any slide picture → Convert to Shape "
-              "to edit text and shapes.")
+        print("   (In PowerPoint 2016+: right-click a slide → Convert to Shape to edit.)")
     if used_placeholder_anywhere and not placeholder_only:
         print("⚠️  Some slides used the 1×1 placeholder because no SVG renderer was "
               "available. Re-run after installing one for proper Keynote / Preview display.")
@@ -344,7 +343,11 @@ def build(pages: list[Path], out_path: Path, planning: dict,
             return
         pdf_out = pdf_path or out_path.with_suffix(".pdf")
         write_pdf(real_pngs, pdf_out)
-        print(f"Wrote {pdf_out}")
+        print(f"✅ Wrote PDF:  {pdf_out}")
+        print()
+        print("⚠️  IMPORTANT: TWO files were produced — both should be delivered.")
+        print(f"    • {out_path}")
+        print(f"    • {pdf_out}")
 
 
 def write_pdf(png_paths: list[Path], pdf_path: Path) -> None:

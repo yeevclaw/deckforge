@@ -185,7 +185,32 @@ This script:
 3. Assembles the same PNGs into a companion `.pdf` (named after `--output` with the `.pdf` extension) via `img2pdf`.
 4. Attaches speaker notes from `planning.json` if it's in the same directory.
 
-**The default produces TWO files**: `deck.pptx` AND `deck.pdf`. The PPTX is the editable artifact for PowerPoint users; the PDF is the universal share-anywhere artifact. Use `--no-pdf` to skip the PDF.
+### Phase 5 produces TWO artifacts — deliver BOTH
+
+Every successful Phase 5 run emits **two files side by side**:
+
+- `<output>.pptx` — editable artifact for PowerPoint users
+- `<output>.pdf` — universal share-anywhere artifact (clients without PowerPoint, mobile preview, web sharing)
+
+**You MUST deliver both files to the user's target location**, not just the .pptx. Common failure mode: the script writes both files into a session-temporary directory, you copy only `.pptx` to the user's Downloads / chat, and the `.pdf` gets discarded when the session ends.
+
+After running `svg_to_pptx.py`, do this check explicitly:
+
+1. Confirm BOTH `deck.pptx` and `deck.pdf` exist at the output path (use `ls` / `Read`).
+2. Copy BOTH to the user-visible destination (Downloads, the chat upload, wherever the user expects the result).
+3. Tell the user about both files in your reply: "I produced *deck.pptx* (editable in PowerPoint) and *deck.pdf* (universal). Both attached."
+
+If `--no-pdf` was explicitly passed (rare), only `.pptx` exists — say so. If `--placeholder-only` was passed, the script automatically skips `.pdf` — also say so. Otherwise, **PDF is never optional**; if it's missing the script failed and you should investigate before declaring done.
+
+### Heads-up: macOS may quarantine the .pptx
+
+When Claude Desktop writes the produced PPTX into the user's Downloads (or anywhere outside its sandbox), macOS sometimes attaches the `com.apple.quarantine` extended attribute. Keynote will then **refuse to open the file** entirely. This is a Gatekeeper-related macOS behavior, not a problem with the PPTX itself. If the user reports "Keynote can't open the file", tell them:
+
+```bash
+xattr -d com.apple.quarantine /path/to/deck.pptx
+```
+
+This is a one-liner that strips the quarantine flag. PowerPoint typically handles quarantine more gracefully and isn't affected.
 
 **Editing the result**: in PowerPoint 2016 or newer, right-click any slide's picture → **Convert to Shape**. The SVG decomposes into native PowerPoint shapes and text boxes — every card, title, and icon becomes editable.
 

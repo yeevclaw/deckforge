@@ -52,72 +52,40 @@ DeckForge/
     └── sample-deck/        ← source SVG pages (drag into PowerPoint to inspect)
 ```
 
-## Install
+## Install (Claude Desktop)
 
-This skill is primarily built for **Claude Desktop** users. (Claude Code CLI also works — see the alternative at the bottom.) Four steps:
+Two steps:
 
-### 1. Get deckforge onto your machine
-
-```bash
-git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
-# Or download the GitHub zip and unzip it
-```
-
-### 2. Package as a zip
-
-Claude Desktop's *Upload a skill* dialog accepts a **.zip file only**. There's a bundled packaging script:
+### 1. Download the zip + install two Python packages
 
 ```bash
-cd ~/deckforge && bash scripts/package.sh
-# Output: ~/deckforge.zip (excludes .git, .DS_Store, __pycache__, etc.)
+# Download the latest release zip
+curl -L -o ~/Downloads/deckforge.zip \
+  https://github.com/yeevclaw/deckforge/releases/latest/download/deckforge.zip
+
+# Install the two Phase 5 dependencies (same line on macOS / Linux / Windows)
+pip install python-pptx resvg-py --break-system-packages
 ```
 
-### 3. Import the skill into Claude Desktop
+> Don't use a terminal? Visit the [releases page](https://github.com/yeevclaw/deckforge/releases/latest), download `deckforge.zip` directly, and run only the `pip install` line in a terminal.
+
+Just those two packages — **zero system dependencies**. `resvg-py` bundles a Rust SVG renderer as a pip wheel; no Homebrew, no apt-get, no sudo needed.
+
+Phases 1–4 (research / outline / planning / design) are pure Markdown and need no packages. Only Phase 5 (assembling the `.pptx`) uses the two packages above.
+
+### 2. Import the zip in Claude Desktop
 
 1. Open Claude Desktop → **Customize** (top-right).
 2. Left nav **Skills** → click **`+`** → **Create skill** → **Upload a skill**.
-3. Pick `~/deckforge.zip` in the file picker.
-4. After upload, `deckforge` appears under *Personal skills*.
+3. Pick `~/Downloads/deckforge.zip`.
+4. `deckforge` appears under *Personal skills*.
 
-> **Manual-copy fallback**: if the Upload a skill flow doesn't work for you, rsync directly into Desktop's internal directory:
-> ```bash
-> SKILLS_DIR=$(find ~/Library/Application\ Support/Claude/local-agent-mode-sessions/skills-plugin -type d -name skills 2>/dev/null | head -1)
-> rsync -av --exclude='.git' --exclude='.DS_Store' ~/deckforge/ "$SKILLS_DIR/deckforge/"
-> # Then Cmd+Q to fully quit Claude Desktop and relaunch.
-> ```
-> Caveat: Desktop's internal path contains a session UUID and may change. Upload a skill is the more durable route.
-
-### 4. Install Phase 5 dependencies
-
-```bash
-bash ~/deckforge/scripts/setup.sh
-# or: pip install python-pptx resvg-py --break-system-packages
-```
-
-Just two Python packages, **zero system dependencies**. `resvg-py` bundles a Rust SVG renderer as a pip wheel, so a single `pip install` works on macOS / Linux / Windows — no Homebrew, no apt-get, no sudo.
-
-- `python-pptx` (~1 MB) — builds the .pptx file.
-- `resvg-py` (~1 MB) — rasterizes each slide's SVG into a PNG fallback, so the deck displays correctly in Keynote, macOS Preview, Quick Look, and older PowerPoint.
-
-Phases 1–4 (research / outline / planning / design) are pure Markdown — Claude reads the prompts and runs them with no dependencies. Only the final .pptx assembly uses the above.
-
-Then in Claude Desktop, ask:
+Done. Just ask Claude:
 
 > *Build me a deck about XYZ*
 > *幫我做一份簡報，主題是 XYZ*
 
-Claude triggers DeckForge, runs the 5-phase workflow, and produces a `.pptx`.
-
-### Claude Code CLI (alternative install)
-
-If you're using Claude Code's command-line version, clone into the CLI skills folder instead:
-
-```bash
-git clone https://github.com/yeevclaw/deckforge.git ~/.claude/skills/deckforge
-cd ~/.claude/skills/deckforge && bash scripts/setup.sh
-```
-
-On Windows replace `bash scripts/setup.sh` with `.\scripts\setup.ps1`.
+> **Updating to a new version**: download the new zip from the releases page, delete the old `deckforge` in Customize → Skills, and Upload a skill again.
 
 ## The 5 phases (overview)
 
@@ -171,6 +139,26 @@ Without `--with-raster`, the script embeds a 1×1 transparent placeholder PNG as
 - The "顶级的PPT结构架构师" and "便當網格" prompts in `prompts/02_outline_architect.md` and `references/bento_grid.md` are direct adaptations of his prompts, with extensions.
 - Bento Grid design language: popularized by Apple product pages.
 - Pyramid Principle: Barbara Minto.
+
+## For developers / forks
+
+If you want to modify the skill, contribute upstream, or use Claude Code CLI:
+
+```bash
+# Clone the full source
+git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
+cd ~/deckforge
+
+# After editing, repackage into a zip for Claude Desktop
+bash scripts/package.sh
+# Produces ~/deckforge.zip — import it in Customize → Skills.
+
+# Or: use Claude Code CLI
+git clone https://github.com/yeevclaw/deckforge.git ~/.claude/skills/deckforge
+bash ~/.claude/skills/deckforge/scripts/setup.sh
+```
+
+`scripts/package.sh` reads `name:` from SKILL.md so the zip's wrapper folder matches the skill name; it excludes `.git`, `.DS_Store`, `__pycache__`, and similar noise. On Windows use `scripts/setup.ps1` instead of `setup.sh`.
 
 ## License
 

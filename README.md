@@ -52,69 +52,43 @@ DeckForge/
     └── sample-deck/         ← 原始 SVG 檔(可直接拖進 PowerPoint)
 ```
 
-## 安裝
+## 安裝(Claude Desktop)
 
-本 skill 主要設計給 **Claude Desktop** 使用者(Claude Code CLI 也行,作法在下方)。四步:
+兩步:
 
-### 1. 把 deckforge 抓到本機
-
-```bash
-git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
-# 或下載 zip 解壓也行
-```
-
-### 2. 打包成 zip
-
-Claude Desktop 的 *Upload a skill* 只收 **.zip 檔**。專案附了一個打包腳本:
+### 1. 下載 zip + 裝兩個 Python 套件
 
 ```bash
-cd ~/deckforge && bash scripts/package.sh
-# 產出: ~/deckforge.zip(會自動排除 .git、.DS_Store、__pycache__ 等)
+# 下載最新版 zip
+curl -L -o ~/Downloads/deckforge.zip \
+  https://github.com/yeevclaw/deckforge/releases/latest/download/deckforge.zip
+
+# 裝 Phase 5 用的兩個 Python 套件(macOS / Linux / Windows 都直接這行)
+pip install python-pptx resvg-py --break-system-packages
 ```
 
-### 3. 在 Claude Desktop 匯入
+> 不會用命令列?直接到 [releases 頁面](https://github.com/yeevclaw/deckforge/releases/latest)點 `deckforge.zip` 下載,然後在終端機跑那一行 `pip install`。
+
+兩個套件就好,**完全沒有系統依賴**——`resvg-py` 把 Rust SVG renderer 打包成 pip wheel,不用 Homebrew、不用 apt-get、不用 sudo。
+
+階段 1–4(研究 / 大綱 / 策劃 / 設計)是純 Markdown,Claude 直接讀,不需要任何套件。只有 Phase 5(組 .pptx)會用到上面那兩個。
+
+### 2. 在 Claude Desktop 匯入 zip
 
 1. 開 Claude Desktop → 右上 **Customize**
 2. 左欄 **Skills** → 標題列右邊的 **`+`** → **Create skill** → **Upload a skill**
-3. 在檔案選擇器選 `~/deckforge.zip`
-4. 完成後 `deckforge` 會出現在 *Personal skills* 清單裡
+3. 選剛剛下載的 `~/Downloads/deckforge.zip`
+4. `deckforge` 會出現在 *Personal skills*
 
-> **手動複製備案**:如果 Upload a skill 介面跑不順,可以直接 rsync 到 Desktop 的內部目錄:
-> ```bash
-> SKILLS_DIR=$(find ~/Library/Application\ Support/Claude/local-agent-mode-sessions/skills-plugin -type d -name skills 2>/dev/null | head -1)
-> rsync -av --exclude='.git' --exclude='.DS_Store' ~/deckforge/ "$SKILLS_DIR/deckforge/"
-> # 然後 Cmd+Q 完整退出 Claude Desktop 再重開
-> ```
-> 注意:Desktop 的內部目錄路徑包含 session UUID,可能會週期性變動。長期穩定還是建議走 Upload a skill。
+完成。跟 Claude 講「**幫我做一份簡報,主題是 XXX**」就會自動觸發。
 
-### 4. 安裝 Phase 5 用的依賴
-
-```bash
-bash ~/deckforge/scripts/setup.sh
-# 或: pip install python-pptx resvg-py --break-system-packages
-```
-
-只有兩個 Python 套件,**完全沒有系統依賴**——`resvg-py` 把 Rust 寫的 SVG renderer 打包成 pip wheel,macOS / Linux / Windows 都直接 `pip install` 就好,不用 Homebrew、不用 apt-get、不用 sudo。
-
-- `python-pptx`(~1 MB)——組 .pptx 檔
-- `resvg-py`(~1 MB)——把每張投影片的 SVG 渲成 PNG fallback,讓 Keynote、macOS Preview、Quick Look 跟舊版 PowerPoint 都能正常顯示
-
-階段 1–4(需求調研 / 大綱 / 策劃 / 設計)完全純 Markdown,不需要任何套件,Claude 自己讀提示詞跑。只有最後組 `.pptx` 那一步會用到上面的兩個套件。
-
-### Claude Code CLI(替代安裝)
-
-如果你用的是 Claude Code 命令列版本,clone 到 CLI 的 skills 目錄就好:
-
-```bash
-git clone https://github.com/yeevclaw/deckforge.git ~/.claude/skills/deckforge
-cd ~/.claude/skills/deckforge && bash scripts/setup.sh
-```
-
-Windows 用 `.\scripts\setup.ps1` 取代 `bash scripts/setup.sh`。
+> **更新到新版**:回 releases 頁面重新下載 zip,在 Customize → Skills 把舊的 deckforge 刪掉,再 Upload a skill 上新的就好。
 
 ## 怎麼用
 
 在 Claude Desktop 跟 Claude 說:
+
+> 提示:Claude Desktop 支援拖入檔案。如果要做的簡報是基於現有文件(年報、白皮書、論文、議題報告),把檔案連同主題一起丟給 Claude,skill 會先跑 Phase 0(文件分析)再進大綱階段,效果好很多。
 
 - 「**幫我做一份簡報,主題是 XXX**」
 - 「Build me a deck about XXX」
@@ -175,6 +149,26 @@ python scripts/svg_to_pptx.py --pages-dir pages/ --output deck.pptx --with-raste
 - **SVG 作為最終格式**:同樣出自該文,作者選 SVG 是為了在 PowerPoint 端保留可編輯性,而不是只能輸出靜態圖片。
 - **Bento Grid 設計語言**:Apple 產品頁帶起的便當網格排版。
 - **金字塔原理**:Barbara Minto 的經典結構。
+
+## 開發者 / 想 fork 的人
+
+如果你要修改 skill 內容、貢獻回上游、或在 Claude Code CLI 上用:
+
+```bash
+# Clone 完整 source
+git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
+cd ~/deckforge
+
+# 改完之後重新打包 zip(給 Claude Desktop)
+bash scripts/package.sh
+# 產出 ~/deckforge.zip,匯入 Claude Desktop 測試
+
+# 或: 用 Claude Code CLI
+git clone https://github.com/yeevclaw/deckforge.git ~/.claude/skills/deckforge
+bash ~/.claude/skills/deckforge/scripts/setup.sh
+```
+
+`scripts/package.sh` 會自動讀 SKILL.md 的 `name:`,把資料夾用正確名字包成 zip(排除 .git / .DS_Store 等噪音)。Windows 用 `scripts/setup.ps1` 取代 setup.sh。
 
 ## 授權
 

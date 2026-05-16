@@ -232,9 +232,8 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── html_to_pptx.py               ← the converter
 │   └── render_html.py                ← HTML→PNG helper
 └── examples/
-    ├── example_outline.json
-    ├── example_planning.json
-    └── example_page.html
+    ├── Claude-Enterprise-Pitch.pdf   ← rendered demo (6 pages)
+    └── slide-1.jpg ... 6             ← preview thumbnails
 ```
 
 ---

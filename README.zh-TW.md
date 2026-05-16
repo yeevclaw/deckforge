@@ -8,14 +8,14 @@
 
 ## Demo
 
-完整的 AcmeCloud Series B 募資 deck,由 DeckForge 端到端產出:
+一份 6 頁的 **Claude 企業版導入提案**(TPIsoftware 內部會議用),由 DeckForge 端到端產出:
 
 | | | |
 |---|---|---|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |
-| ![](examples/slide-4.jpg) | ![](examples/slide-5.jpg) | |
+| ![](examples/slide-4.jpg) | ![](examples/slide-5.jpg) | ![](examples/slide-6.jpg) |
 
-成品 `.pptx` 在 [`examples/AcmeCloud_demo.pptx`](examples/AcmeCloud_demo.pptx)。
+成品 PDF 在 [`examples/Claude-Enterprise-Pitch.pdf`](examples/Claude-Enterprise-Pitch.pdf)。
 
 ## 資料夾內容
 
@@ -37,7 +37,9 @@ DeckForge/
 ├── scripts/
 │   ├── html_to_pptx.py     ← HTML → PNG → PPTX 轉檔器
 │   └── render_html.py      ← HTML→PNG(Playwright 為主,LibreOffice 備援)
-└── examples/               ← AcmeCloud Series B 範例 deck(完整產出)
+└── examples/               ← Claude 企業版導入提案範例 deck(6 頁完整產出)
+    ├── Claude-Enterprise-Pitch.pdf  ← 成品 PDF
+    └── slide-1.jpg ... 6            ← 各頁預覽圖
 ```
 
 ## 安裝(讓 Claude 用得到)
@@ -82,21 +84,6 @@ Claude 會自動觸發 DeckForge,跑完整 5 階段流程:
 | 5. 產出 PPTX | `presentation.pptx` | 自動組裝成 .pptx |
 
 重點是中間有兩個 review checkpoint(階段 2 跟 3),讓你可以**便宜地修正方向**,不會浪費後面的設計工。
-
-## 本機跑範例
-
-```bash
-git clone https://github.com/yeevclaw/deckforge.git
-cd deckforge
-pip install python-pptx playwright Pillow --break-system-packages
-playwright install chromium
-
-# 從 HTML 原始檔重新產出範例 deck
-python scripts/html_to_pptx.py \
-  --pages-dir examples/pages \
-  --output examples/AcmeCloud_demo.pptx \
-  --planning examples/example_planning.json
-```
 
 ## 為什麼用 HTML → PPTX(而不是套範本)?
 

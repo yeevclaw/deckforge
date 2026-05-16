@@ -8,14 +8,14 @@ Inspired by the methodology shared by *sandun* on linux.do ("应该是目前最�
 
 ## Demo
 
-A complete AcmeCloud Series B fundraising deck, produced end-to-end by this skill:
+A 6-page **Claude Enterprise rollout pitch** (TPIsoftware internal proposal), produced end-to-end by this skill:
 
 | | | |
 |---|---|---|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |
-| ![](examples/slide-4.jpg) | ![](examples/slide-5.jpg) | |
+| ![](examples/slide-4.jpg) | ![](examples/slide-5.jpg) | ![](examples/slide-6.jpg) |
 
-The rendered `.pptx` lives at [`examples/AcmeCloud_demo.pptx`](examples/AcmeCloud_demo.pptx).
+The rendered PDF lives at [`examples/Claude-Enterprise-Pitch.pdf`](examples/Claude-Enterprise-Pitch.pdf).
 
 ## What's inside
 
@@ -44,12 +44,9 @@ DeckForge/
 ├── scripts/
 │   ├── html_to_pptx.py     ← the converter (HTML → PNG → PPTX)
 │   └── render_html.py      ← HTML→PNG helper (Playwright primary, LibreOffice fallback)
-└── examples/               ← live demo (AcmeCloud Series B deck)
-    ├── example_outline.json
-    ├── example_planning.json
-    ├── pages/              ← 5 fully-styled HTML slides
-    ├── AcmeCloud_demo.pptx ← the rendered output
-    └── slide-1.jpg ... 5   ← preview of each page
+└── examples/               ← live demo (Claude Enterprise rollout pitch, 6 pages)
+    ├── Claude-Enterprise-Pitch.pdf ← the rendered output
+    └── slide-1.jpg ... 6   ← preview of each page
 ```
 
 ## Install as a Claude skill
@@ -68,21 +65,6 @@ Then in Claude/Cowork ask:
 > *Build me a deck about XYZ*
 
 Claude reads `SKILL.md`, follows the 5-phase workflow, and produces a `.pptx`.
-
-## Try the demo locally
-
-```bash
-git clone https://github.com/<your-username>/DeckForge.git
-cd DeckForge
-pip install python-pptx playwright Pillow --break-system-packages
-playwright install chromium
-
-# Re-render the included demo from its HTML sources:
-python scripts/html_to_pptx.py \
-  --pages-dir examples/pages \
-  --output examples/AcmeCloud_demo.pptx \
-  --planning examples/example_planning.json
-```
 
 ## The 5 phases (overview)
 

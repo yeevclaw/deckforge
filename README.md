@@ -64,18 +64,22 @@ git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
 
 ### 2. 在 Claude Desktop 匯入 skill
 
-1. 開 Claude Desktop → 點右上 **Customize**
-2. 左欄 **Skills** → 標題列右邊的 **`+`**
-3. 選擇剛剛 clone 下來的 `~/deckforge` 整個資料夾匯入
-4. 匯入完成後 deckforge 會出現在 *Personal skills* 清單裡
+1. 開 Claude Desktop → 右上 **Customize**
+2. 左欄 **Skills** → 標題列右邊的 **`+`** → **Create skill** → **Upload a skill**
+3. 在彈出的檔案選擇器選 `~/deckforge` 資料夾(或先把它打包成 zip,看 UI 要哪一種):
+   ```bash
+   # 如果 Upload a skill 要 zip 檔
+   cd ~ && zip -r deckforge.zip deckforge -x 'deckforge/.git/*' 'deckforge/.DS_Store'
+   ```
+4. 匯入後 `deckforge` 會出現在 *Personal skills* 清單裡。
 
-> 若 `+` 按鈕沒提供「選資料夾」選項,改成手動複製:
+> **手動複製備案**:如果 Upload a skill 介面跑不順,可以直接 rsync 到 Desktop 的內部目錄:
 > ```bash
-> # 找到 Desktop 的 skill 目錄(裡面已有 canvas-design / pptx 等)
 > SKILLS_DIR=$(find ~/Library/Application\ Support/Claude/local-agent-mode-sessions/skills-plugin -type d -name skills 2>/dev/null | head -1)
 > rsync -av --exclude='.git' --exclude='.DS_Store' ~/deckforge/ "$SKILLS_DIR/deckforge/"
 > # 然後 Cmd+Q 完整退出 Claude Desktop 再重開
 > ```
+> 注意:Desktop 的內部目錄路徑包含 session UUID,可能會週期性變動。長期穩定還是建議走 Upload a skill。
 
 ### 3. 安裝那一個 Python 套件(Phase 5 組 .pptx 用)
 

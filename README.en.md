@@ -64,17 +64,22 @@ git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
 
 ### 2. Import the skill into Claude Desktop
 
-1. Open Claude Desktop → click **Customize** (top-right).
-2. In the left nav: **Skills** → click the **`+`** button next to the section header.
-3. Point it at the `~/deckforge` folder you just cloned.
-4. `deckforge` appears under *Personal skills*.
+1. Open Claude Desktop → **Customize** (top-right).
+2. Left nav **Skills** → click **`+`** next to the section header → **Create skill** → **Upload a skill**.
+3. In the file picker, select the `~/deckforge` folder (or zip it first if the upload dialog asks for a zip):
+   ```bash
+   # Only needed if Upload a skill wants a zip
+   cd ~ && zip -r deckforge.zip deckforge -x 'deckforge/.git/*' 'deckforge/.DS_Store'
+   ```
+4. After upload, `deckforge` appears in *Personal skills*.
 
-> If the `+` button doesn't offer a folder picker, copy manually:
+> **Manual-copy fallback**: if the Upload a skill flow doesn't work for you, rsync directly into Desktop's internal directory:
 > ```bash
 > SKILLS_DIR=$(find ~/Library/Application\ Support/Claude/local-agent-mode-sessions/skills-plugin -type d -name skills 2>/dev/null | head -1)
 > rsync -av --exclude='.git' --exclude='.DS_Store' ~/deckforge/ "$SKILLS_DIR/deckforge/"
 > # Then Cmd+Q to fully quit Claude Desktop and relaunch.
 > ```
+> Caveat: Desktop's internal path contains a session UUID and may change. Upload a skill is the more durable route.
 
 ### 3. Install the one Python package Phase 5 needs
 

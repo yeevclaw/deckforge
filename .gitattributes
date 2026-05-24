@@ -1,0 +1,26 @@
+# Files excluded from `git archive` output (i.e. the deckforge.zip
+# we ship to GitHub Releases via scripts/package.sh, and also the
+# zip GitHub's "Code → Download ZIP" button produces).
+#
+# These files remain in the git tree and on github.com — they are
+# only kept out of the slim skill bundle so users don't upload 800KB
+# of demo assets to Claude Desktop just to install the skill.
+#
+# Anything Claude needs at runtime (SKILL.md, prompts/, references/,
+# templates/, scripts/svg_to_pptx.py, scripts/setup.{sh,ps1},
+# requirements.txt, LICENSE) is NOT listed here and ships normally.
+
+# Demo / showcase assets — visible in the GitHub README, not used at runtime
+examples/ export-ignore
+
+# GitHub-facing docs — Claude Desktop shows the skill description from
+# SKILL.md frontmatter, never from README.
+README.md     export-ignore
+README.en.md  export-ignore
+
+# Maintainer tool, not a user-facing runtime asset
+scripts/package.sh export-ignore
+
+# Pure git metadata
+.gitignore     export-ignore
+.gitattributes export-ignore

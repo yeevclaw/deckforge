@@ -16,40 +16,6 @@
 - 合併 PDF: [`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
 - 原始 SVG(直接看 Bento Grid 的座標寫法): [`examples/sample-deck/`](examples/sample-deck/)
 
-## 資料夾內容
-
-```
-DeckForge/
-├── SKILL.md                ← Claude 讀的入口
-├── prompts/                ← 6 階段提示詞
-│   ├── 00_source_analysis.md  ← Phase 0:文件分析(可選)
-│   ├── 01_needs_research.md   ← Phase 1:需求調研
-│   ├── 02_outline_architect.md ← Phase 2:大綱
-│   ├── 03_content_research.md ← Phase 2.5:web research(可選)
-│   ├── 04_planning_draft.md   ← Phase 3:策劃稿(含內容拆解例子)
-│   └── 05_designer_svg.md     ← Phase 4:SVG 設計
-├── references/             ← 詳細知識庫
-│   ├── bento_grid.md       ← Bento Grid 8 種版型(含 stat_hero / mini_grid)
-│   ├── chart_anatomy.md    ← SVG bar / line / donut 圖表
-│   ├── design_system.md    ← dark_apple palette + 11 種傳統 palette
-│   ├── pyramid_principle.md
-│   └── editable_mode.md    ← PowerPoint Convert to Shape 編輯
-├── templates/              ← 11 個 viewBox 1280×720 SVG 起始檔
-│   ├── _base.svg           ← 共用 filter / 漸層 / 35 個 Lucide icon
-│   ├── cover.svg / toc.svg
-│   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
-│   ├── bento_mini_grid.svg ← 主卡內含 3–6 張 mini-card(dark_apple 風格)
-│   └── chart_bar.svg / chart_line.svg / chart_donut.svg
-├── scripts/
-│   ├── svg_to_pptx.py      ← Phase 5 組裝器(同時產出 .pptx + .pdf)
-│   ├── package.sh          ← 打包 deckforge.zip 供 Claude Desktop 上傳
-│   ├── setup.sh            ← 一鍵安裝依賴(mac / linux)
-│   └── setup.ps1           ← Windows PowerShell 版安裝腳本
-└── examples/               ← DeckForge 自介 mini-deck(3 頁完整產出)
-    ├── DeckForge-demo.pdf  ← 成品 PDF
-    ├── slide-1.jpg ... 3   ← 各頁預覽縮圖
-    └── sample-deck/        ← 原始 SVG 檔
-```
 
 ## 安裝(Claude Desktop)
 
@@ -111,7 +77,6 @@ Claude 會自動觸發 DeckForge,跑完整流程:
 | 4. SVG 設計 | `pages/*.svg` | 自動產出每頁向量設計 |
 | 5. 產出 | `presentation.pptx` + `presentation.pdf` | 自動組裝,兩個檔同時出 |
 
-重點是中間有兩個 review checkpoint(階段 2 跟 3),讓你可以**便宜地修正方向**,不會浪費後面的設計工。
 
 ## 為什麼用 SVG → PPTX(而不是套範本或圖片型 PPT)?
 
@@ -128,25 +93,40 @@ Claude 會自動觸發 DeckForge,跑完整流程:
 - **Bento Grid 設計語言**:Apple 產品頁帶起的便當網格排版。
 
 
-## 開發者 / 想 fork 的人
+## 資料夾內容
 
-如果你要修改 skill 內容、貢獻回上游、或在 Claude Code CLI 上用:
-
-```bash
-# Clone 完整 source
-git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
-cd ~/deckforge
-
-# 改完之後重新打包 zip(給 Claude Desktop)
-bash scripts/package.sh
-# 產出 ~/deckforge.zip,匯入 Claude Desktop 測試
-
-# 或: 用 Claude Code CLI
-git clone https://github.com/yeevclaw/deckforge.git ~/.claude/skills/deckforge
-bash ~/.claude/skills/deckforge/scripts/setup.sh
 ```
-
-`scripts/package.sh` 會自動讀 SKILL.md 的 `name:`,把資料夾用正確名字包成 zip(排除 .git / .DS_Store 等噪音)。Windows 用 `scripts/setup.ps1` 取代 setup.sh。
+DeckForge/
+├── SKILL.md                ← Claude 讀的入口
+├── prompts/                ← 6 階段提示詞
+│   ├── 00_source_analysis.md  ← Phase 0:文件分析(可選)
+│   ├── 01_needs_research.md   ← Phase 1:需求調研
+│   ├── 02_outline_architect.md ← Phase 2:大綱
+│   ├── 03_content_research.md ← Phase 2.5:web research(可選)
+│   ├── 04_planning_draft.md   ← Phase 3:策劃稿(含內容拆解例子)
+│   └── 05_designer_svg.md     ← Phase 4:SVG 設計
+├── references/             ← 詳細知識庫
+│   ├── bento_grid.md       ← Bento Grid 8 種版型(含 stat_hero / mini_grid)
+│   ├── chart_anatomy.md    ← SVG bar / line / donut 圖表
+│   ├── design_system.md    ← dark_apple palette + 11 種傳統 palette
+│   ├── pyramid_principle.md
+│   └── editable_mode.md    ← PowerPoint Convert to Shape 編輯
+├── templates/              ← 11 個 viewBox 1280×720 SVG 起始檔
+│   ├── _base.svg           ← 共用 filter / 漸層 / 35 個 Lucide icon
+│   ├── cover.svg / toc.svg
+│   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
+│   ├── bento_mini_grid.svg ← 主卡內含 3–6 張 mini-card(dark_apple 風格)
+│   └── chart_bar.svg / chart_line.svg / chart_donut.svg
+├── scripts/
+│   ├── svg_to_pptx.py      ← Phase 5 組裝器(同時產出 .pptx + .pdf)
+│   ├── package.sh          ← 打包 deckforge.zip 供 Claude Desktop 上傳
+│   ├── setup.sh            ← 一鍵安裝依賴(mac / linux)
+│   └── setup.ps1           ← Windows PowerShell 版安裝腳本
+└── examples/               ← DeckForge 自介 mini-deck(3 頁完整產出)
+    ├── DeckForge-demo.pdf  ← 成品 PDF
+    ├── slide-1.jpg ... 3   ← 各頁預覽縮圖
+    └── sample-deck/        ← 原始 SVG 檔
+```
 
 ## 授權
 

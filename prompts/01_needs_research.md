@@ -44,6 +44,8 @@ Then ask **only about the single highest-leverage gap**. Not all seven.
 ## Question dialogue format — POP-UP CHOICES BY DEFAULT
 
 > **When the host supports `AskUserQuestion` (Claude Desktop / Claude Code do), use it for every Socratic question. Free-text only when no honest options exist.**
+>
+> **If the host does NOT support `AskUserQuestion`** (third-party CLI, automation context, older harness): **fall back to inline numbered choices** that simulate the same format — same options, same trade-off descriptions, same "Recommended" tag, just rendered as text the user replies to with a digit. The Socratic loop must still run. See SKILL.md → "AskUserQuestion availability — fallback to inline numbered choices" for the format. Do NOT skip the question or proceed without an answer.
 
 Why: choice-style pop-ups (a) lower the cognitive load on the user, (b) force you to pre-think the realistic options, (c) make the user feel like they're navigating a decision tree rather than filling out a form. The system always appends "Other" automatically, so the user can still free-text.
 
@@ -211,7 +213,31 @@ If the resulting `proof_pillars` after revision still has obvious overlap, log i
 
 You do **not** need all assumptions resolved. Anything still open goes into `open_assumptions` in the brief, so Phase 2/3 can either inherit them or surface them later. Don't loop forever chasing certainty — perfect is the enemy of shippable.
 
-You **also** stop (forcibly) after 4 rounds. If you've asked 4 rounds and the deck thesis still isn't clear, switch to Quick mode: state your best-guess assumptions, write brief.md, continue.
+You **also** stop (forcibly) after 4 rounds. If 4 rounds of Socratic questions still didn't produce clarity, switch to **Forced Assumption mode** — this is a **distinct** mechanism from user-chosen Quick mode (do not call it Quick mode):
+
+- **Forced Assumption mode** = the agent ran 4 rounds and couldn't get clarity, so it documents every remaining unknown and proceeds with explicit caveats.
+- **Quick mode** = the user explicitly chose to skip the dialogue (still requires opt-in pop-up, see below).
+
+In Forced Assumption mode:
+1. List every still-unresolved field as a numbered assumption in `brief.md → open_assumptions[]`.
+2. For each of the four non-negotiable fields (`audience.current_belief`, `belief_shift`, `core_thesis`, `desired_action`) that remained unclear, write your best-guess value with a `⚠️` prefix.
+3. Write `brief.md`.
+4. At the Phase 1→2 handoff pop-up, **flag the unclear fields prominently** so the user can revise before any outline work:
+
+```
+Question: ⚠️ 4 輪反詰後有以下欄位我用了 best-guess (不是你親口給的):
+  - <field 1>: <my guess>
+  - <field 2>: <my guess>
+我可以繼續做大綱,但如果這些猜錯,後面整份 deck 會偏。怎麼處理?
+
+  ○ 繼續進入 Phase 2 (我的 best-guess 可接受) (Recommended)
+  ○ 我要先修正其中一個 best-guess
+       → 你告訴我哪個欄位,給我正確的值
+  ○ 再回到反詰多問一輪
+       → 我們再多繞一輪
+```
+
+Forced Assumption mode is a safety valve when the dialogue genuinely can't converge. It is **not** an excuse to short-circuit the Socratic loop on rounds 1-3. You only reach it by genuinely running 4 rounds.
 
 ---
 

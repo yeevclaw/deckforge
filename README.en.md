@@ -2,7 +2,7 @@
 
 **English** · [繁體中文](README.md)
 
-> A Claude skill that produces **professional, editable PowerPoint decks** by following a 5-phase expert workflow (research → outline → planning → design → produce), rather than stuffing your topic into a generic template.
+> A Claude skill that produces **professional, editable PowerPoint decks** by following an expert workflow built on three load-bearing methodologies: **Socratic dialogue** (Phase 1) to surface what the audience must believe after the deck, **pyramid principle** (Phase 1→2→3) to structure the argument, **Bento Grid + dark Apple aesthetic** (Phase 3→4) to render it. Not a one-shot generator — every phase boundary asks for your approval before advancing.
 
 Inspired by the methodology shared by *sandun* on linux.do ("应该是目前最强的PPT Agent，附上完整思路分享"). Output format is **SVG** — the key choice that essay makes — because PowerPoint 2016+ recognizes SVG as native vector graphics, and any user can right-click → *Convert to Shape* to edit every text run and shape.
 
@@ -97,11 +97,14 @@ Done. Just ask Claude:
 
 | Phase | Output |
 |---|---|
-| 1 — Needs research | `brief.md` (audience, goal, length, tone) |
-| 2 — Outline architecture | `outline.json` (pyramid principle, page titles as claims) |
-| 3 — **Planning draft** | `planning.json` (actual content + layout intent per page) ← *the step most AI tools skip* |
-| 4 — Design | `pages/page_NN.svg` (one vector page per slide) |
-| 5 — Produce | `presentation.pptx` (with SVG embeds — fully editable in PowerPoint 2016+) |
+| 0 — Source analysis (optional) | `analysis.md` (when you provide a source document) |
+| 1 — **Socratic Clarification** | `brief.md` — pop-up dialogue surfaces the deck's real thesis (audience belief shift, core thesis, proof pillars, likely objection, desired action) |
+| 2 — Outline architecture | `outline.json` — pyramid principle, every page title is a claim, MECE-aligned with brief.md's proof pillars |
+| 3 — **Planning draft** | `planning.json` — actual content + Bento Grid layout per page ← *the step most AI tools skip* |
+| 4 — Design | `pages/page_NN.svg` — one vector page per slide |
+| 5 — Produce | `presentation.pptx` + companion `.pdf` (+ `.notes.md` if speaker notes exist) — fully editable in PowerPoint 2016+ via Convert to Shape |
+
+Every phase boundary asks for explicit approval before advancing — no silent transitions.
 
 The skill is **NOT** a one-shot generator. It deliberately includes review checkpoints (after outline, after planning) so you can fix things cheaply before any design effort is spent.
 

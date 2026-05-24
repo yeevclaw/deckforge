@@ -100,6 +100,30 @@ If the predecessor file is missing, **stop and produce it** — do not improvise
 
 Why this rule exists: every time DeckForge has shipped a generic-looking deck, the cause traced back to a skipped phase. Phase-merging is the single highest-correlation failure mode. Even when phases run fast, they must run *separately* and produce *separate file artifacts*. This makes the work inspectable, restartable, and consistent.
 
+### AskUserQuestion availability — fallback to inline numbered choices
+
+DeckForge's Socratic loop and every phase handoff rely on `AskUserQuestion` (the pop-up multiple-choice tool). Claude Desktop and Claude Code expose it. **Some hosts (third-party CLIs, older harnesses, automation contexts) do not.** Do not get stuck if the tool isn't available — fall back to **inline numbered choices** that simulate the same format. Behaviorally identical: same options, same trade-off descriptions, same "Recommended" tag — just rendered as text the user replies to with a digit.
+
+Example fallback:
+
+```
+我看到三條可能主線。這次最想讓觀眾相信的是哪一條?
+(reply with 1 / 2 / 3, or describe your own answer)
+
+  1. 市場正在變大,現在是進入時機
+       → 把市場數字推到開頭,產品變支撐角色
+  2. 我們產品比競品完整  (Recommended)
+       → 把功能/性能比較放正中央
+  3. 客戶案例證明導入有效
+       → 把 traction / case study 變主軸
+```
+
+The fallback applies everywhere `AskUserQuestion` is mandated: Socratic rounds in Phase 1, MECE check pop-ups, Forced Assumption mode warnings, all phase-handoff approvals, the title-only read pop-up at Phase 3→4. **The Socratic loop runs regardless of host capabilities; only the rendering changes.**
+
+If you're unsure whether the host supports `AskUserQuestion`, try the tool once. If it errors or returns a not-available signal, switch to inline numbered choices for the rest of the session.
+
+---
+
 ### Every phase handoff requires explicit user approval
 
 Producing the checkpoint file is **not enough** to advance. After each phase's output file is written, you **MUST ask the user via `AskUserQuestion` whether to continue to the next phase**. No silent transitions. No "let me just keep going while I'm on a roll". The user needs the chance to fix things cheaply, *before* the next phase's effort is spent.
@@ -138,7 +162,7 @@ Not a questionnaire. A loop that derives questions from the user's actual input,
 - **Use `AskUserQuestion` (pop-up choice) as the default question format.** 2–4 mutually-exclusive options per question. Each option label ≤ 5 words; description explains the *trade-off*, not the definition. Free-text inline only when no honest options exist.
 - **Detect the scenario early** (fundraising / sales / internal sync / executive briefing / educational / strategy review / annual review / product launch / keynote / training / crisis comms). Each scenario needs a different spine surfaced — pop-up question them on which one fits if it isn't obvious.
 - **Pick one question type per round** from: Definition / Consequence / Evidence / Objection / Tradeoff / Compression. Don't mix.
-- **Max 3 questions per round, max 4 rounds.** After round 4 force Quick mode and document remaining unknowns in `brief.md` → `open_assumptions`.
+- **Max 3 questions per round, max 4 rounds.** After round 4, switch to **Forced Assumption mode** (distinct from user-chosen Quick mode) — document remaining unknowns in `brief.md` → `open_assumptions[]`, flag best-guess fields with `⚠️`, and surface them prominently in the Phase 1→2 handoff pop-up. See `prompts/01_needs_research.md` for the full procedure.
 - **Tone is consultant, not interrogator.** Lead with "I currently understand…" / "There's a trade-off here…" — never "You contradicted yourself."
 
 **Quick mode (opt-in only, never auto-switched)**: if the user shows impatience signals ("fast" / "quick" / "just do it" / "I gave you everything"), **do not auto-switch** — ask them via `AskUserQuestion` whether they want Quick mode or to stay in the full Socratic loop. Only switch if they explicitly pick it. Quick mode then asks **one** pop-up question (about the single highest-leverage gap) and proceeds with explicit assumptions written into `brief.md`. Quick mode reduces interview length; it does **not** skip Phase 1, the `brief.md` file checkpoint, or the Phase 1→2 handoff approval. The dialogue is the value DeckForge provides — auto-switching to Quick mode bypasses the product.
@@ -188,27 +212,63 @@ This is what most AI PPT tools miss. Before any design, decide for **each page**
 - What visual elements are needed (icons, images, charts, no-element)
 - Speaker notes (1–2 sentences per page)
 
-Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). Output goes to `planning.json` with this shape:
+Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). Output goes to `planning.json`. There are **two card-page shapes** (regular Bento + chart). Layout enum is:
+
+```
+"layout":
+  // Bento Grid card layouts:
+  "single_focus" | "stat_hero" | "mini_grid" | "two_col_50_50" |
+  "two_col_2_1" | "three_col" | "hero_top" | "mixed_grid"
+  // Chart layouts (use chart_data instead of cards):
+  | "chart_bar" | "chart_line" | "chart_donut"
+```
+
+**Bento card page** — uses `cards: []`. Each card supports `is_number_first`, `stat_value`/`stat_caption`/`stat_caption_en`, `heading`/`body`/`icon_hint`/`size_hint`, plus an **optional `sub_cards: []`** for nesting 2–3 mini-cards inside a hero card:
 
 ```json
 {
-  "pages": [
-    {
-      "page_id": 1,
-      "page_type": "cover" | "toc" | "content" | "section_break" | "end",
-      "title": "...",
-      "subtitle": "...",
-      "layout": "single_focus" | "stat_hero" | "mini_grid" | "two_col_50_50" | "two_col_2_1" | "three_col" | "hero_top" | "mixed_grid",
-      "cards": [
-        { "is_number_first": true, "stat_value": "42%", "stat_caption": "三年複合成長率", "stat_caption_en": "CAGR", "size_hint": "small" },
-        { "is_number_first": false, "heading": "服務優先", "body": "服務收入占比由 8% 升至 27%", "icon_hint": "trending-up", "size_hint": "small" }
-      ],
-      "visual_notes": "Use abstract gradient background, no stock photos",
-      "speaker_notes": "..."
+  "page_id": 7,
+  "page_type": "content",
+  "layout": "mini_grid",
+  "title": "AIoT 戰略推動營收三年翻倍",
+  "title_en": "AIoT Drives 2× Revenue in Three Years",
+  "cards": [
+    { "is_number_first": true, "stat_value": "42%", "stat_caption": "三年複合成長率", "stat_caption_en": "CAGR" },
+    { "is_number_first": false, "heading": "服務優先", "body": "服務收入占比 8% → 27%", "icon_hint": "trending-up",
+      "sub_cards": [
+        { "is_number_first": true, "stat_value": "+103%", "stat_caption": "三年累計增長" },
+        { "is_number_first": true, "stat_value": "27%", "stat_caption": "AIoT 業務佔比" }
+      ]
     }
-  ]
+  ],
+  "visual_notes": "Highlight color = #FF6900. Use mini_grid for 4 KPIs.",
+  "speaker_notes": "..."
 }
 ```
+
+**Chart page** — uses `chart_data: {...}` *instead* of `cards`:
+
+```json
+{
+  "page_id": 8,
+  "page_type": "content",
+  "layout": "chart_bar",
+  "title": "各業務板塊毛利率",
+  "title_en": "Gross Margin by Business Segment",
+  "chart_data": {
+    "unit": "%",
+    "items": [
+      { "label": "智慧家居", "label_en": "SMART HOME", "value": 42 },
+      { "label": "電動車", "label_en": "EV", "value": 75 },
+      { "label": "服務", "label_en": "SERVICES", "value": 50 }
+    ]
+  },
+  "visual_notes": "Single highlight color, no per-bar palette.",
+  "speaker_notes": "..."
+}
+```
+
+`chart_line` uses time-point labels; `chart_donut` items are composition segments (first item full saturation, others fade with alpha 0.55/0.25/0.12 of the same hue). See `prompts/04_planning_draft.md` for the full schema and `references/chart_anatomy.md` for the SVG geometry.
 
 Why this phase exists: top PPT agencies have a **Planner** role separate from the **Designer**. The Planner decides what + where; the Designer decides how it looks. Mixing these jobs produces the busy, cluttered slides that scream "AI generated".
 

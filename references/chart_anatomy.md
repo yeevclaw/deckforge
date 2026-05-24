@@ -1,6 +1,6 @@
 # Chart Anatomy — SVG charts for data-heavy slides
 
-Cards with numbers are great for hero stats. But when the story is **a trend, a composition, or a comparison across many items**, a chart communicates faster than a grid of mini-cards. This reference shows how to draw the four chart types DeckForge supports directly as SVG primitives — no external libraries, fully editable in PowerPoint after Convert to Shape.
+Cards with numbers are great for hero stats. But when the story is **a trend, a composition, or a comparison across many items**, a chart communicates faster than a grid of mini-cards. This reference shows how to draw the three chart types DeckForge supports (`chart_bar`, `chart_line`, `chart_donut`) directly as SVG primitives — no external libraries, fully editable in PowerPoint after Convert to Shape.
 
 The article that inspired DeckForge uses Chart.js for the web version. SVG charts here serve the same role for slides: visualizing trends, growth rates, compositions, and comparisons.
 
@@ -30,12 +30,11 @@ If you can fit it in cards, prefer cards — they're more flexible. Reach for ch
 
 ## Chart canvas
 
-For a chart that takes the full slide content area below the title:
+A chart layout (`chart_bar`, `chart_line`, `chart_donut`) takes the full slide content area below the title:
 - Chart area: `x=88, y=160, width=1104, height=480` (inside a 48-padding canvas)
 - Plot area (inside axes): leave ~64px gutter for axis labels on left & bottom
 
-For a chart inside one half of a `two_col_50_50`:
-- Chart area: roughly `x=88, y=160, width=510, height=480`
+**One chart per page.** Two-column charts (chart inside a `two_col_50_50` half) are **not supported** — the 510×480 area chokes both axes and labels. If you need two charts on the same topic, use two pages. See `prompts/04_planning_draft.md` for the planning-side rule.
 
 ---
 

@@ -204,15 +204,25 @@ The mistake to actively avoid: producing one big card per paragraph because the 
 
 ### Comprehensive data discipline — when Phase 0 ran
 
-If `analysis.md` from Phase 0 exists, **every key financial metric, growth rate, market share, ranking, and user/customer count in it must end up on a card somewhere in the deck**. Do not selectively drop KPIs because they "didn't fit the narrative" — that's exactly the failure mode this skill exists to prevent. If a number is in `analysis.md` because it was notable enough to extract, it deserves card real estate.
+If `analysis.md` from Phase 0 exists, **every key data point in it must be addressed in some way** — but "addressed" does NOT mean "every number gets a card". Use three-tier triage:
 
-Rules of thumb when distributing analysis.md content to pages:
-- **Cluster 3–5 related KPIs onto one `mini_grid` page** (e.g. all revenue / growth / margin metrics for a single year on one page).
-- **A single hero metric** (the one number that captures the whole story) gets its own `stat_hero` page.
-- **Parallel sets** (business segments, regions, quarters) become `mini_grid` or `chart_bar` pages — one card per set member.
-- If the deck would end up >25 pages just to fit every KPI, group them more densely (5-card `mini_grid` rows) rather than dropping them.
+**Tier 1 — Pyramid-load-bearing → goes on a card.**
+Numbers that defend one of the deck's `proof_pillars` (from `brief.md`) or directly support a page title's claim. Cluster 3–5 related ones per `mini_grid` page; promote the single most dramatic to a `stat_hero`; expand a parallel set (segments / regions / quarters) into one card per item.
 
-When Phase 0 did **not** run (topic-only deck, no source document), this rule doesn't apply — the planner picks the most leverageable content from the brief and inferred research.
+**Tier 2 — Supporting context → goes to `speaker_notes`.**
+Numbers that strengthen the narrative without being central evidence: historical comparisons, second-order metrics, methodology footnotes, denominators that contextualize a Tier-1 number. These belong in the relevant page's `speaker_notes` field, not on the slide itself. The audience hears them from the presenter when relevant; the slide stays focused.
+
+**Tier 3 — Out-of-scope → drop, but log the rationale.**
+Numbers that the source extracted but don't support any pyramid layer of *this particular deck*. Drop them from the page content. In `planning.json` add a top-level field `dropped_kpis: [{ value, source_section, reason }]` so the user can review what got left out and either accept the drop or push something back to Tier 1/2.
+
+**Why this triage exists** — the rule protects against two failure modes:
+
+- **Old failure** (selective amnesia): Phase 0 extracts 60 numbers, planner casually uses 8, the other 52 disappear silently. User never knows what was dropped.
+- **New failure to avoid** (KPI dump): Phase 0 extracts 60 numbers, planner stuffs all 60 onto cards across 25 pages, the deck reads like a spreadsheet. Pyramid alignment broken — most cards no longer defend their page title.
+
+Phase 1's Socratic loop already filtered which storyline carries the deck. The proof_pillars in brief.md tell you which KPIs are Tier 1. If a Phase-0 number can't be mapped to a pyramid layer, it's at most Tier 2; usually Tier 3.
+
+When Phase 0 did **not** run (topic-only deck, no source document), this rule doesn't apply — the planner picks leverageable content from `brief.md` directly.
 
 ### Mini-card density — 3–5 per row, not 6+
 
@@ -396,13 +406,22 @@ For **text-first** cards (`is_number_first: false`):
 
 ### Nested sub-cards — `sub_cards[]` on a hero card
 
-Any **large** card (in `single_focus`, `hero_top`, `two_col_2_1`, or `mixed_grid` layouts) can optionally contain a **sub-grid of 2–3 mini-cards** via a `sub_cards: []` array. This lets a single hero claim carry quantitative sub-evidence inline, without spending a separate page.
+**Whitelist**: a `sub_cards: []` array is allowed only on cards in `single_focus`, `two_col_2_1` (the wide slot), or `mixed_grid` (the big slot) layouts. These are the layouts whose hero card has enough vertical room (≥ 400px) to hold heading + body + a 2-3 mini-card sub-grid without overflow.
+
+**Blacklist — sub_cards FORBIDDEN on**:
+- `mini_grid` — the parent IS already a grid; nesting another grid inside it produces incoherent geometry.
+- `three_col` — each column is too narrow for sub-cards.
+- `hero_top` — the hero card is only 240px tall; sub-cards would overflow into the supporting cards below. Use `single_focus` instead if you need the claim + sub-grid pattern on this kind of page.
+
+A `sub_cards` array on a forbidden layout is a planning bug — the designer will reject it.
+
+Any **large** card on a whitelisted layout can optionally contain a **sub-grid of 2–3 mini-cards** via a `sub_cards: []` array. This lets a single hero claim carry quantitative sub-evidence inline, without spending a separate page.
 
 ```json
 {
   "page_id": 12,
   "page_type": "content",
-  "layout": "hero_top",
+  "layout": "single_focus",
   "title": "AIoT 戰略推動營收三年翻倍",
   "title_en": "AIoT Drives 2× Revenue in Three Years",
   "cards": [
@@ -414,13 +433,10 @@ Any **large** card (in `single_focus`, `hero_top`, `two_col_2_1`, or `mixed_grid
       "size_hint": "large",
       "sub_cards": [
         { "is_number_first": true, "stat_value": "+103%", "stat_caption": "三年累計增長", "stat_caption_en": "3Y Total Growth" },
-        { "is_number_first": true, "stat_value": "27%", "stat_caption": "AIoT 業務佔比" },
-        { "is_number_first": true, "stat_value": "+45%", "stat_caption": "AIoT 業務年增", "stat_caption_en": "AIoT YoY" }
+        { "is_number_first": true, "stat_value": "27%",   "stat_caption": "AIoT 業務佔比" },
+        { "is_number_first": true, "stat_value": "+45%",  "stat_caption": "AIoT 業務年增", "stat_caption_en": "AIoT YoY" }
       ]
-    },
-    { "is_number_first": true, "stat_value": "NT$365億", "stat_caption": "2025 年總營收" },
-    { "is_number_first": true, "stat_value": "26%", "stat_caption": "毛利率 (由 18%)" },
-    { "is_number_first": true, "stat_value": "服務優先", "stat_caption": "新策略定位" }
+    }
   ]
 }
 ```

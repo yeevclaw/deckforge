@@ -223,7 +223,9 @@ Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). 
   | "chart_bar" | "chart_line" | "chart_donut"
 ```
 
-**Bento card page** — uses `cards: []`. Each card supports `is_number_first`, `stat_value`/`stat_caption`/`stat_caption_en`, `heading`/`body`/`icon_hint`/`size_hint`, plus an **optional `sub_cards: []`** for nesting 2–3 mini-cards inside a hero card:
+**Bento card page** — uses `cards: []`. Each card supports `is_number_first`, `stat_value`/`stat_caption`/`stat_caption_en`, `heading`/`body`/`icon_hint`/`size_hint`. **Optional `sub_cards: []`** can nest 2–3 mini-cards inside a hero card, but only on layouts with a tall hero region — `single_focus`, `two_col_2_1` (wide slot), or `mixed_grid` (big slot). **Not** allowed on `mini_grid`, `three_col`, or `hero_top` (these layouts don't have enough vertical room).
+
+Mini_grid example (parallel KPIs, no nesting):
 
 ```json
 {
@@ -233,15 +235,39 @@ Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). 
   "title": "AIoT 戰略推動營收三年翻倍",
   "title_en": "AIoT Drives 2× Revenue in Three Years",
   "cards": [
-    { "is_number_first": true, "stat_value": "42%", "stat_caption": "三年複合成長率", "stat_caption_en": "CAGR" },
-    { "is_number_first": false, "heading": "服務優先", "body": "服務收入占比 8% → 27%", "icon_hint": "trending-up",
+    { "is_number_first": true, "stat_value": "42%",     "stat_caption": "三年複合成長率", "stat_caption_en": "CAGR" },
+    { "is_number_first": true, "stat_value": "NT$510億", "stat_caption": "2025 年總營收" },
+    { "is_number_first": true, "stat_value": "+45%",    "stat_caption": "AIoT 業務年增" },
+    { "is_number_first": true, "stat_value": "26%",     "stat_caption": "毛利率 (由 18%)" }
+  ],
+  "visual_notes": "Highlight color = #FF6900. 4 parallel KPIs, mini_grid 4-card geometry.",
+  "speaker_notes": "..."
+}
+```
+
+Single_focus + nested sub_cards example (claim + supporting evidence on one page):
+
+```json
+{
+  "page_id": 12,
+  "page_type": "content",
+  "layout": "single_focus",
+  "title": "服務優先戰略已交出三組關鍵指標",
+  "title_en": "The Services-First Strategy: Three Proof Points",
+  "cards": [
+    {
+      "is_number_first": false,
+      "heading": "從硬體製造商轉型生態服務商",
+      "body": "三年累計營收 NT$180億 → NT$365億,服務佔比躍升至 27%",
+      "icon_hint": "trending-up",
       "sub_cards": [
-        { "is_number_first": true, "stat_value": "+103%", "stat_caption": "三年累計增長" },
-        { "is_number_first": true, "stat_value": "27%", "stat_caption": "AIoT 業務佔比" }
+        { "is_number_first": true, "stat_value": "+103%", "stat_caption": "三年累計增長", "stat_caption_en": "3Y Growth" },
+        { "is_number_first": true, "stat_value": "27%",   "stat_caption": "AIoT 業務佔比" },
+        { "is_number_first": true, "stat_value": "+45%",  "stat_caption": "AIoT 年增" }
       ]
     }
   ],
-  "visual_notes": "Highlight color = #FF6900. Use mini_grid for 4 KPIs.",
+  "visual_notes": "Single hero card with 3 nested sub-cards as quantitative evidence.",
   "speaker_notes": "..."
 }
 ```
@@ -281,7 +307,12 @@ For each page in `planning.json`, generate **one self-contained SVG file** with 
 - Master prompt: [prompts/05_designer_svg.md](prompts/05_designer_svg.md)
 - Bento Grid spec: [references/bento_grid.md](references/bento_grid.md)
 - Color + typography system: [references/design_system.md](references/design_system.md)
-- SVG templates to start from: [templates/](templates/) — `cover.svg`, `toc.svg`, `bento_2col.svg`, `bento_3col.svg`, `bento_hero.svg`, `bento_mixed.svg` (and `_base.svg` for shared filters/icons)
+- SVG templates to start from: [templates/](templates/) — 11 files total:
+  - **Shared assets**: `_base.svg` (filters / gradients / 35 Lucide icons used via `<use>`)
+  - **Page-type starters**: `cover.svg`, `toc.svg`
+  - **Bento layouts**: `bento_2col.svg` (two_col_50_50 / two_col_2_1), `bento_3col.svg`, `bento_hero.svg` (hero_top), `bento_mixed.svg` (mixed_grid), `bento_mini_grid.svg` (mini_grid — main card + 3–5 mini-cards, dark_apple)
+  - **Chart layouts**: `chart_bar.svg`, `chart_line.svg`, `chart_donut.svg`
+  - **No dedicated template for**: `single_focus` (just use `bento_hero.svg` and drop the bottom row), `stat_hero` (single huge text, no template needed — see designer prompt geometry), `section_break` / `end` (derive from `cover.svg` with smaller hero text). These page types are simple enough that a template would add no value.
 
 Key rules:
 - **Default to the `dark_apple` palette family** unless the user explicitly asks for a light/brand look. Pure black bg + one highlight color is what produces the visual-quality jump (see [references/design_system.md](references/design_system.md)).

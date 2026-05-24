@@ -33,14 +33,18 @@ DeckForge/
 │   ├── design_system.md    ← 10 palettes + motifs + typography
 │   ├── pyramid_principle.md
 │   └── editable_mode.md    ← how Convert-to-Shape editing works
-├── templates/              ← 7 SVG starting points (viewBox 0 0 1280 720)
-│   ├── _base.svg           ← shared filters / gradients / Lucide icons
+├── templates/              ← 11 SVG starting points (viewBox 0 0 1280 720)
+│   ├── _base.svg           ← shared filters / gradients / 35 Lucide icons
 │   ├── cover.svg
 │   ├── toc.svg
-│   ├── bento_2col.svg
+│   ├── bento_2col.svg      ← two_col_50_50 or two_col_2_1
 │   ├── bento_3col.svg
-│   ├── bento_hero.svg
-│   └── bento_mixed.svg
+│   ├── bento_hero.svg      ← hero_top
+│   ├── bento_mixed.svg     ← mixed_grid
+│   ├── bento_mini_grid.svg ← main card + 3–5 mini-cards (dark_apple)
+│   ├── chart_bar.svg       ← vertical bar chart (single highlight color)
+│   ├── chart_line.svg      ← line + area chart for trends
+│   └── chart_donut.svg     ← donut chart with center label + legend
 ├── scripts/
 │   ├── svg_to_pptx.py      ← SVG → PPTX (embeds svgBlip ext, vectors preserved)
 │   ├── package.sh          ← build deckforge.zip for Claude Desktop upload

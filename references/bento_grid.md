@@ -5,7 +5,7 @@ The Bento Grid (便當網格) is a flexible card-based layout system, originally
 Why Bento Grid?
 
 1. **It holds a lot of info on one page** without feeling stuffed.
-2. **Card count and size are flexible** — fits 2, 3, 4, 5, 6+ items.
+2. **Card count and size are flexible** — the Bento system as a whole can carry 6+ items across the deck via multiple layouts (mini_grid + hero_top + mixed_grid, etc.). **However, a single `mini_grid` layout caps at 5 cards** — 6+ goes to two `mini_grid` pages, or gets promoted to `hero_top` (1 hero + 4 supporting).
 3. **It's easy for AI to design well.** Card boundaries give structure that prevents the "everything floating in space" failure mode.
 4. **Size = importance** is intuitive for viewers.
 
@@ -229,7 +229,9 @@ The same principle applies to `three_col`: don't force a 3rd column to fill spac
 
 ## Nested sub-cards — sub-grids inside any large card
 
-Any **large** card (in `single_focus`, `hero_top` hero slot, `two_col_2_1` wide slot, or `mixed_grid` big slot) may optionally contain a **2–3 mini-card sub-grid** via the planning schema's `sub_cards: []` field. This lets a hero claim carry quantitative evidence inline, without spending a separate page.
+Any **large** card on a whitelisted layout (`single_focus`, `two_col_2_1` wide slot, or `mixed_grid` big slot) may optionally contain a **2–3 mini-card sub-grid** via the planning schema's `sub_cards: []` field. This lets a hero claim carry quantitative evidence inline, without spending a separate page.
+
+**Excluded layouts**: `hero_top` (240px hero too short to fit heading + body + sub-cards without overflow), `mini_grid`, `three_col` (cards too narrow). On these, use a separate page or move the evidence to `speaker_notes`.
 
 ```
 +------------------------------------------+

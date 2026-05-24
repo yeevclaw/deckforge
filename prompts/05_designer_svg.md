@@ -154,42 +154,56 @@ Vertical layout inside a 360-tall mini-card: big number around y=350, CN caption
 
 #### Branch B+ — text-first card with nested `sub_cards`
 
-If a card has a non-empty `sub_cards` array, the card body splits into two regions: the upper region carries the heading + body (the textual claim), and the lower region holds a 2–3 mini-card sub-grid as quantitative evidence.
+If a card has a non-empty `sub_cards` array, the parent card body splits into two regions: the upper region carries the heading + body (the textual claim), and the lower region holds a 2–3 mini-card sub-grid as quantitative evidence.
+
+**Parent-layout whitelist**: `sub_cards` only renders on `single_focus`, `two_col_2_1` (wide slot), or `mixed_grid` (big slot) — these are the layouts whose hero card is ≥ 400px tall. `hero_top` is **excluded** (its hero card is only 240px tall; sub-cards would overflow into the supporting mini-cards below). If a planning.json page targets a non-whitelisted layout but includes `sub_cards`, reject it back to the planner.
+
+Example: **single_focus parent** (1184 × 532 inner area):
 
 ```xml
-<!-- Parent (hero) card -->
-<rect x="48" y="140" width="1184" height="240" rx="16" ry="16"
+<!-- Parent card (single_focus geometry: x=48, y=140, w=1184, h=532) -->
+<rect x="48" y="140" width="1184" height="532" rx="16" ry="16"
       fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
 
-<!-- Upper region: heading + body -->
-<text x="80" y="200" font-size="36" font-weight="800" fill="#FFFFFF">從硬體製造商轉型生態服務商</text>
-<text x="80" y="240" font-size="16" fill="#A0A0A0">三年累計營收 NT$180億 → NT$365億,服務佔比躍升至 27%</text>
+<!-- Upper region (y=140..340, 200px tall): heading + body -->
+<text x="80" y="220" font-size="44" font-weight="800" fill="#FFFFFF">從硬體製造商轉型生態服務商</text>
+<text x="80" y="270" font-size="18" fill="#A0A0A0">三年累計營收 NT$180億 → NT$365億,服務佔比躍升至 27%</text>
 
-<!-- Lower region: 3-sub-card grid, smaller than standalone mini-cards -->
-<!-- For 3 sub-cards across the 1184-wide parent: w ≈ 360, h = 140, gap = 24 -->
-<g id="sub1" transform="translate(80, 270)">
-  <rect width="360" height="120" rx="10" ry="10" fill="#222222" stroke="#333333" stroke-width="1"/>
-  <text x="180" y="65" font-size="48" font-weight="900" fill="<highlight>" text-anchor="middle">+103%</text>
-  <text x="180" y="95" font-size="12" fill="#A0A0A0" text-anchor="middle">三年累計增長</text>
+<!-- Lower region (y=360..640, 280px tall): 3-sub-card grid -->
+<!-- For 3 sub-cards across the 1184-wide parent with 80px side padding + 24px gaps: -->
+<!--   each card w = (1184 - 2*32 inner pad - 2*24 gap) / 3 ≈ 357 -->
+<!--   each card h = 240 -->
+<!--   x positions: 80, 461, 842 -->
+
+<g transform="translate(80, 360)">
+  <rect width="357" height="240" rx="10" ry="10" fill="#222222" stroke="#333333" stroke-width="1"/>
+  <text x="178" y="130" font-size="64" font-weight="900" fill="<highlight>" text-anchor="middle">+103%</text>
+  <text x="178" y="180" font-size="14" fill="#A0A0A0" text-anchor="middle">三年累計增長</text>
 </g>
-<g id="sub2" transform="translate(460, 270)">
-  <rect width="360" height="120" rx="10" ry="10" fill="#222222" stroke="#333333" stroke-width="1"/>
-  <text x="180" y="65" font-size="48" font-weight="900" fill="<highlight>" text-anchor="middle">27%</text>
-  <text x="180" y="95" font-size="12" fill="#A0A0A0" text-anchor="middle">AIoT 業務佔比</text>
+<g transform="translate(461, 360)">
+  <rect width="357" height="240" rx="10" ry="10" fill="#222222" stroke="#333333" stroke-width="1"/>
+  <text x="178" y="130" font-size="64" font-weight="900" fill="<highlight>" text-anchor="middle">27%</text>
+  <text x="178" y="180" font-size="14" fill="#A0A0A0" text-anchor="middle">AIoT 業務佔比</text>
 </g>
-<!-- ...sub3 etc. -->
+<g transform="translate(842, 360)">
+  <rect width="357" height="240" rx="10" ry="10" fill="#222222" stroke="#333333" stroke-width="1"/>
+  <text x="178" y="130" font-size="64" font-weight="900" fill="<highlight>" text-anchor="middle">+45%</text>
+  <text x="178" y="180" font-size="14" fill="#A0A0A0" text-anchor="middle">AIoT 年增</text>
+</g>
 ```
 
+The parent card bottom edge sits at y=140+532=**672**; the sub-cards bottom at y=360+240=**600**. Sub-cards are fully contained inside the parent — no overflow.
+
 **Sub-card rules**:
-- 2–3 sub-cards only. Never 4+ inside one parent (split to a `mini_grid` page).
+- 2–3 sub-cards only. Never 4+ inside one parent (split to a `mini_grid` page instead).
 - Sub-card `rx="10"` (smaller than standalone mini-card `rx="12"`, smaller than main card `rx="20"`).
-- Sub-card height ~120–140px (about 1/3 the height of a standalone mini-card).
-- Big element inside sub-card: 40–56px (vs 56–72px on a standalone mini-card) — proportional scaling.
+- Sub-card height ≈ 240px on `single_focus` parents (smaller on `two_col_2_1` / `mixed_grid` where the parent is narrower or shorter).
+- Big element inside sub-card: 56–72px (matching a small standalone mini-card hero number).
 - Optional `stat_caption_en` follows the 50–70% density rule — don't put EN on every sub-card.
 
 See [references/bento_grid.md](../references/bento_grid.md) for the full geometry.
 
-#### Branch C — when a card needs an icon (only on `single_focus` or `two_col`, never inside `mini_grid`)
+#### Branch C — when a card needs an icon (only on `single_focus`, `two_col_50_50`, or `two_col_2_1`; never inside `mini_grid`)
 
 Use 24×24 Lucide path data. Place inside a 48-radius circle filled in highlight color at 15% alpha. Never use emoji here.
 

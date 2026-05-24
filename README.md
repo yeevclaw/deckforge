@@ -93,7 +93,7 @@ DeckForge/
 ├── SKILL.md                ← Claude 讀的入口
 ├── prompts/                ← 6 階段提示詞
 │   ├── 00_source_analysis.md  ← Phase 0:文件分析(可選)
-│   ├── 01_needs_research.md   ← Phase 1:需求調研
+│   ├── 01_needs_research.md   ← Phase 1:蘇格拉底反詰(Socratic Clarification Loop)
 │   ├── 02_outline_architect.md ← Phase 2:大綱
 │   ├── 03_content_research.md ← Phase 2.5:web research(可選)
 │   ├── 04_planning_draft.md   ← Phase 3:策劃稿(含內容拆解例子)
@@ -102,13 +102,14 @@ DeckForge/
 │   ├── bento_grid.md       ← Bento Grid 8 種版型(含 stat_hero / mini_grid)
 │   ├── chart_anatomy.md    ← SVG bar / line / donut 圖表
 │   ├── design_system.md    ← dark_apple palette + 11 種傳統 palette
-│   ├── pyramid_principle.md
+│   ├── pyramid_principle.md ← 金字塔原理跨 Phase 1/2/3 的對照表
+│   ├── socratic_loop.md     ← Phase 1 反詰問題類型 + 11 種情境 spine
 │   └── editable_mode.md    ← PowerPoint Convert to Shape 編輯
 ├── templates/              ← 11 個 viewBox 1280×720 SVG 起始檔
 │   ├── _base.svg           ← 共用 filter / 漸層 / 35 個 Lucide icon
 │   ├── cover.svg / toc.svg
 │   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
-│   ├── bento_mini_grid.svg ← 主卡內含 3–6 張 mini-card(dark_apple 風格)
+│   ├── bento_mini_grid.svg ← 主卡內含 3–5 張 mini-card(dark_apple 風格)
 │   └── chart_bar.svg / chart_line.svg / chart_donut.svg
 ├── scripts/
 │   ├── svg_to_pptx.py      ← Phase 5 組裝器(同時產出 .pptx + .pdf)

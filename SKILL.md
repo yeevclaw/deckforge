@@ -22,7 +22,9 @@ The methodology is adapted from the "Strongest PPT Agent" essay shared on linux.
 
 Use whenever the user wants a presentation, deck, slides, or a `.pptx` file produced — especially for business proposals, sales decks, product intros, executive briefings, kick-off decks, or anything where "it has to look good". Don't use this skill if the user only wants to *read or extract text* from an existing `.pptx` — use the built-in `pptx` skill for that.
 
-If the user already has a topic and just wants slides fast, you can compress phases 1–2, but **never skip the Planning Draft (phase 3)** — that's where AI-generated decks usually fall apart.
+**You cannot skip phases.** No matter how complete the user's input looks — full whitepaper, full brief, "just do it" instructions — every phase produces a required file artifact, and the next phase must `Read` that artifact before it starts. See the "Phase order is non-skippable" section below for the exact rule and the file-checkpoint table.
+
+What changes when the user wants speed is *how long each phase takes*, not *whether it runs*. Phase 1 in particular has a Quick mode (one Socratic question + explicit assumptions) — but `brief.md` is still written, and Phase 2 still reads it first.
 
 ## Before starting — heads-up about Phase 5 dependencies
 
@@ -58,29 +60,58 @@ Don't assume a path. Refer to "the deckforge folder" or run scripts via relative
 
 The base workflow is 5 phases. Add a **Phase 0** when the user supplies a source document (PDF, annual report, transcript, whitepaper, etc.) — extract a structured analysis first, then run the rest.
 
-| Phase | Name | Output | When to run |
+| Phase | Name | Output file (checkpoint) | When to run |
 |---|---|---|---|
-| 0 | **Source analysis** (文件分析) | `analysis.md` — key metrics, claims, parallel sets, anomalies | Only when user gives a source document. See [prompts/00_source_analysis.md](prompts/00_source_analysis.md) |
-| 1 | **Needs research** (需求調研) | Audience, purpose, tone, length, constraints | Always — compress to one round if user is in a hurry |
-| 2 | **Outline architecture** (大綱規劃) | `outline.json` with cover / TOC / parts / pages | Always |
-| 3 | **Planning draft** (策劃稿) | `planning.json` with per-page layout, cards, charts | Always — this is the secret sauce |
-| 4 | **Design** (設計稿) | One `.svg` per page (`viewBox="0 0 1280 720"`) | Always |
-| 5 | **Produce** (產出) | Final `.pptx` (vector SVG + PNG fallback) **and** companion `.pdf` (PNG pages) | Always |
+| 0 | **Source analysis** (文件分析) | `analysis.md` | Only when user gives a source document. See [prompts/00_source_analysis.md](prompts/00_source_analysis.md) |
+| 1 | **Socratic clarification** (蘇格拉底反詰) | `brief.md` | **Always** — even when Phase 0 ran. Pop-up choices, not a form. See [prompts/01_needs_research.md](prompts/01_needs_research.md) |
+| 2 | **Outline architecture** (大綱規劃) | `outline.json` | Always — must Read `brief.md` first |
+| 3 | **Planning draft** (策劃稿) | `planning.json` | Always — must Read `outline.json` first |
+| 4 | **Design** (設計稿) | `pages/page_NN.svg` | Always — must Read `planning.json` first |
+| 5 | **Produce** (產出) | `.pptx` + `.pdf` (+ `.notes.md` if any notes) | Always — must Read `pages/` first |
 
-### Phase 1 — Needs research
+### Phase order is non-skippable — file-checkpoint rule
 
-Don't grab the topic and run. Behave like a consultant. Ask a tight set of questions before doing anything. Use `AskUserQuestion` if available; otherwise ask inline. See [prompts/01_needs_research.md](prompts/01_needs_research.md) for the exact question template.
+Every phase produces a file. The next phase must `Read` that file *before* it begins. There are **no exceptions** to this — not for rich input, not for "I'm in a hurry", not for "I already know what I want".
 
-What you must extract before moving on:
-- **Audience**: who will see this? (investors, customers, internal team, students…)
-- **Purpose**: what should they think/feel/do after?
-- **Length**: rough page count (10? 20? 40?)
-- **Tone**: serious / playful / data-heavy / story-driven
-- **Brand constraints**: any colors, fonts, logos, do-not-mention items?
-- **Visual style hint**: clean minimal / bold corporate / tech-futuristic / warm humanistic / academic
-- **Language**: 中文 / English / bilingual
+| To enter phase | You must have already produced | Next phase begins with |
+|---|---|---|
+| Phase 1 | (none — or `analysis.md` if Phase 0 ran) | `Read analysis.md` (if present) before drafting Socratic questions |
+| Phase 2 | `brief.md` | `Read brief.md` (mandatory) |
+| Phase 3 | `outline.json` | `Read outline.json` (mandatory) |
+| Phase 4 | `planning.json` | `Read planning.json` (mandatory) |
+| Phase 5 | `pages/page_*.svg` | `ls pages/` (mandatory) |
 
-If the user has uploaded reference material (e.g., a doc, a website URL, a previous deck), read it first.
+If the predecessor file is missing, **stop and produce it** — do not improvise from memory. If you skipped a phase by accident, go back and run it.
+
+**Anti-patterns to refuse (all are common AI-deck failure modes):**
+
+- ❌ "The user gave me a complete document, I'll go straight from Phase 0 to Phase 2." → No. Phase 1 still runs. Phase 0 supplies material; Phase 1 supplies the *thesis*.
+- ❌ "The user said 'just do it', I'll skip Phase 1 entirely." → No. Run Phase 1 Quick mode (one Socratic question, then write `brief.md` with explicit assumptions). The file checkpoint is still required.
+- ❌ "I already drafted the outline in my head, I'll write `planning.json` directly." → No. `outline.json` must exist as a file, and Phase 3 must `Read` it. This makes the structure user-visible and reviewable.
+- ❌ "The user's input was so detailed Phase 1 would be redundant." → No. The detail is *content*, not *audience belief shift*. Phase 1 is about the latter.
+- ❌ "I'll merge Phase 2 and 3 because the deck is short." → No. They produce different files because they're different jobs (Architect vs Planner). Even a 5-page deck runs both.
+
+Why this rule exists: every time DeckForge has shipped a generic-looking deck, the cause traced back to a skipped phase. Phase-merging is the single highest-correlation failure mode. Even when phases run fast, they must run *separately* and produce *separate file artifacts*. This makes the work inspectable, restartable, and consistent.
+
+---
+
+### Phase 1 — Socratic Clarification Loop
+
+Not a questionnaire. A loop that derives questions from the user's actual input, asks 1–3 high-leverage pop-up questions per round (via `AskUserQuestion`), and stops when the deck's thesis is "clear enough" to architect. See [prompts/01_needs_research.md](prompts/01_needs_research.md) for the full recipe and [references/socratic_loop.md](references/socratic_loop.md) for the reference taxonomy.
+
+**Mandatory behavior:**
+
+- **Use `AskUserQuestion` (pop-up choice) as the default question format.** 2–4 mutually-exclusive options per question. Each option label ≤ 5 words; description explains the *trade-off*, not the definition. Free-text inline only when no honest options exist.
+- **Detect the scenario early** (fundraising / sales / internal sync / executive briefing / educational / strategy review / annual review / product launch / keynote / training / crisis comms). Each scenario needs a different spine surfaced — pop-up question them on which one fits if it isn't obvious.
+- **Pick one question type per round** from: Definition / Consequence / Evidence / Objection / Tradeoff / Compression. Don't mix.
+- **Max 3 questions per round, max 4 rounds.** After round 4 force Quick mode and document remaining unknowns in `brief.md` → `open_assumptions`.
+- **Tone is consultant, not interrogator.** Lead with "I currently understand…" / "There's a trade-off here…" — never "You contradicted yourself."
+
+**Quick mode**: when the user signals impatience, ask **one** pop-up question (about the single highest-leverage gap), then proceed with explicit assumptions written into `brief.md`. Quick mode reduces interview length; it does **not** skip Phase 1 or the `brief.md` file checkpoint.
+
+**Output checkpoint**: write `brief.md` to the working directory. Required fields: `scenario`, `audience.who`, `audience.current_belief`, `belief_shift.from/to`, `core_thesis`, `proof_pillars[]`, `likely_objections[]`, `desired_action`, `constraints`, `open_assumptions[]`. Schema and examples are in `prompts/01_needs_research.md`. Phase 2 must `Read brief.md` as its first action.
+
+If the user has uploaded reference material, Phase 0 runs first and produces `analysis.md`; Phase 1 then runs with `analysis.md` as context (but `brief.md` is still produced — Phase 0 does **not** bypass Phase 1).
 
 ### Phase 2 — Outline architecture (大綱規劃)
 
@@ -279,33 +310,40 @@ Fix and re-render. Don't declare done until one full clean pass.
 
 ## Quick recipes
 
+> **All recipes still run every phase and produce every checkpoint file.** What changes is how long each phase takes, not whether it runs.
+
 ### Recipe A — Full enterprise deck (45 min)
 
 User: "Make me an investor pitch deck for our SaaS product."
 
-1. Phase 1: ask 4 questions (audience, ask amount, key traction stat, brand colors)
-2. Phase 2: generate outline.json (probably 12–18 pages)
-3. Phase 3: generate planning.json — show to user, get sign-off
-4. Phase 4: render all pages with a chosen palette (e.g., Midnight Executive)
-5. Phase 5: produce `pitch.pptx`
-6. QA loop
+1. **Phase 1** (Socratic): 2–3 rounds, ~6 pop-up questions total. Detect scenario = fundraising, then ask about belief shift, traction stat, ask amount, and the strongest objection. Write `brief.md`.
+2. **Phase 2**: Read `brief.md`. Generate `outline.json` (probably 12–18 pages). Show to user for sign-off.
+3. **Phase 3**: Read `outline.json`. Generate `planning.json`. Show to user for sign-off.
+4. **Phase 4**: Read `planning.json`. Render all pages with the dark_apple palette (or brand override).
+5. **Phase 5**: Read `pages/`. Produce `pitch.pptx` + `pitch.pdf` + (if any notes) `pitch.notes.md`. Deliver all files.
+6. QA loop.
 
-### Recipe B — Quick one-pager / short deck (10 min)
+### Recipe B — Quick short deck (10 min)
 
 User: "Quick deck on the Q4 results, 5 slides, internal team."
 
-1. Compress phase 1 to one inline question
-2. Outline + planning in one go (it's short)
-3. Render + produce
-4. Skip the sign-off — go straight to QA
+1. **Phase 1 Quick mode**: one pop-up question (typical: "which audience: full team / leadership only / mixed?"), then write `brief.md` with explicit assumptions for everything else.
+2. **Phase 2**: Read `brief.md`. Generate `outline.json` (5 pages, short).
+3. **Phase 3**: Read `outline.json`. Generate `planning.json` quickly — for a 5-page deck this is fast but **still produced as a file**.
+4. **Phase 4**: render.
+5. **Phase 5**: produce + deliver all files.
+6. QA: one quick pass.
 
-### Recipe C — User has a draft
+Skipping any phase here would actually save no time — `brief.md`, `outline.json`, `planning.json` for a 5-page deck are each a handful of seconds. What you skip is *rounds* and *sign-offs*, not phases.
+
+### Recipe C — User has a source document
 
 User: "I have this Word doc, turn it into slides."
 
-1. Read the doc first
-2. Skip phase 1 (audience is implied by content), generate outline from the doc
-3. Continue from phase 3 as usual
+1. **Phase 0** (Source analysis): read the doc, produce `analysis.md` with metrics, parallel sets, anomalies.
+2. **Phase 1** (Socratic, mandatory): first round usually a scenario / audience pop-up because the doc doesn't dictate that. Then 1–2 follow-up Socratic rounds. Write `brief.md`. *Phase 0 does not bypass Phase 1.*
+3. **Phase 2**: Read `brief.md` + `analysis.md`. Generate `outline.json` grounded in the document's actual numbers and parallel sets.
+4. **Phase 3** onward: as usual.
 
 ---
 
@@ -326,6 +364,7 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── chart_anatomy.md              ← SVG bar / line / donut charts
 │   ├── design_system.md              ← palettes, typography, motifs
 │   ├── pyramid_principle.md          ← 金字塔原理 quick guide
+│   ├── socratic_loop.md              ← Phase 1 reference: question types + scenario taxonomy
 │   └── editable_mode.md              ← how Convert-to-Shape works in PowerPoint
 ├── templates/                         ← SVG starting points (viewBox 0 0 1280 720)
 │   ├── _base.svg                     ← shared filters / gradients / 35 Lucide icons

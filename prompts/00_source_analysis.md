@@ -102,9 +102,25 @@ Save to `analysis.md` in the working directory:
 
 ---
 
-## Passing to Phase 2 (Outline)
+## Passing to Phase 1 (Socratic Clarification) — DO NOT SKIP
 
-When you run Phase 2's prompt, paste the relevant sections of `analysis.md` as the **背景調研信息 (Context)** block. The Outline Architect prompt is designed to consume it — page titles should make claims grounded in the analysis, parallel sets should suggest pages with `mini_grid` layouts, and key metrics should hint at `stat_hero` pages.
+> Phase 0 produces *material*. It does NOT produce a thesis.
+>
+> Even when `analysis.md` is rich (60+ metrics, multiple parallel sets, clear anomalies), you **must** run Phase 1 next — never jump to Phase 2 directly. The analysis tells you what's *in the document*; Phase 1's Socratic loop tells you what *judgment must change in the audience's head*. Those are different things, and skipping Phase 1 is the most common reason document-driven decks come out as generic summaries instead of decisions.
+
+When Phase 1 runs, hand it `analysis.md` as context. Phase 1's first Socratic question typically becomes: "I see three possible storylines from the document — which one are we writing the deck around?" The user picks one storyline; Phase 1 then layers in `audience / belief_shift / core_thesis / desired_action` via further Socratic rounds; only then is `brief.md` written and Phase 2 begins.
+
+The handoff order is non-negotiable:
+
+```
+Phase 0 (analysis.md)  →  Phase 1 (brief.md)  →  Phase 2 (outline.json)
+                          ^^^^^^^^^^^^^^^^^^
+                          cannot be bypassed
+```
+
+## Passing to Phase 2 (Outline) — via Phase 1, not directly
+
+When you eventually run Phase 2's prompt, paste the relevant sections of `analysis.md` as the **背景調研信息 (Context)** block, alongside `brief.md`. The Outline Architect prompt is designed to consume both — page titles should make claims grounded in the analysis, parallel sets should suggest pages with `mini_grid` layouts, and key metrics should hint at `stat_hero` pages. But the *spine* of the outline comes from `brief.md`'s `core_thesis` + `proof_pillars`, not from the analysis itself.
 
 ---
 

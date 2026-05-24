@@ -121,16 +121,44 @@ If the user's actual scenario doesn't match any row, propose the closest two as 
 
 ---
 
-## Quick mode — when the user is in a hurry
+## Quick mode — opt-in only, never auto-switched
 
-If the user says "fast" / "quick" / "just do it" / signals impatience: do **not** loop more than once.
+> **NEVER auto-switch to Quick mode just because the user sounds impatient or supplied a lot of data.** The Socratic dialogue **is** the value DeckForge provides. Even when the user gives you a 200-page document plus a complete brief, the dialogue is what surfaces the *one judgment the audience must change* — which neither documents nor briefs typically articulate. Auto-switching bypasses the product.
 
-1. Ask one pop-up question only — about the single highest-leverage gap (usually scenario or core thesis).
+If the user shows impatience signals ("fast" / "quick" / "just do it" / "I gave you everything already"), you **ask them** whether to switch — you do not switch by yourself:
+
+```
+Question: 你聽起來想快一點。我可以切到 Quick mode,但 DeckForge 的核心價值是反詰對話 — 不論你提供多少資料,真正要說服的判斷通常是在對話中才浮現的。怎麼處理？
+
+  ○ 維持完整反詰 (Recommended)
+       → 我繼續用 2-3 輪跳窗,把簡報真正要講的重點挖出來。
+         即使你已給我大量資料,對話仍可能挖出你還沒講的東西。
+  ○ 切到 Quick mode
+       → 我只問 1 題(最關鍵的那一題),然後用顯式假設往下走。
+         前幾頁如果偏掉再回頭修。
+```
+
+**Only switch to Quick mode if the user explicitly picks it.** Do not infer it from tone, document length, or message brevity.
+
+### What Quick mode does (after user opts in)
+
+1. Ask **one** pop-up question — about the single highest-leverage gap (usually scenario or core thesis).
 2. After the answer, write a brief.md filled with **explicit assumptions** for every field you didn't ask about.
 3. Tell the user: "I'm proceeding with these assumptions — interrupt if any are wrong, especially the first three."
-4. Continue to Phase 2.
+4. Continue to Phase 2 (still subject to the Phase 1 → Phase 2 handoff approval; Quick mode does not skip the handoff pop-up either).
 
-Quick mode reduces interview length, **but it never skips Phase 1 entirely**. The brief.md file must still be produced — it is a hard checkpoint for Phase 2.
+Quick mode reduces interview length, but **never** skips Phase 1 entirely, never skips brief.md, and never skips the handoff approval. The file checkpoint discipline is unconditional.
+
+### When abundant data does NOT justify skipping the dialogue
+
+A common temptation: "the user gave me a full whitepaper / a complete brief / detailed answers — Phase 1 dialogue would be redundant." Resist it. The data tells you *what's in the user's head*; the dialogue is the only way to surface:
+
+- What judgment the audience must change (rarely in any source doc)
+- Which storyline among the data is the *primary* one (the doc usually contains multiple)
+- The single objection the audience will raise (only the user knows their room)
+- What action the audience should take after the deck (almost never in source material)
+
+If you find yourself thinking "I have everything I need to skip the dialogue", that's a strong signal you should run **at least one** Socratic round to test the assumption. Often the user will reveal a constraint or audience reaction that completely reshapes the deck.
 
 ---
 

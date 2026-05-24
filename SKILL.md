@@ -11,8 +11,14 @@ This skill turns Claude into a **PPT planning team + designer**, not a template-
 ## Core philosophy
 
 > **PPT 的靈魂是內容,不是皮囊。** (A PPT's soul is content, not its skin.)
+>
+> **而內容的靈魂,是與使用者反詰對話中挖出來的核心命題。** (And the soul of that content is the core thesis excavated through Socratic dialogue with the user.)
 
-Most AI PPT tools fail because they jump straight from "topic" to "designed slides" — same recycled template, generic bullets, no thought. This skill enforces a **5-phase workflow** that human experts use, then renders each finished page to **SVG** and assembles them into an editable `.pptx`.
+Most AI PPT tools fail in two ways. First, they jump straight from "topic" to "designed slides" — same recycled template, generic bullets, no thought. Second, even the better ones treat the user's input as the deck's content — but the user's input almost never contains the *one judgment that must change* in the audience's head. That gap is what the Socratic dialogue exists to close.
+
+**The Socratic dialogue is not overhead. It IS the product.** No amount of provided data — a 200-page whitepaper, a complete brief, exhaustive answers to a form — substitutes for the dialogue. The data tells DeckForge what's in *your* head; the dialogue surfaces what should be in the *audience's* head after the deck. These are different things, and only the second one determines what slides actually need to exist.
+
+This skill enforces a **5-phase workflow** that human experts use: dialogue with the user to define the thesis, architect the structure, plan content, design pages, then render each finished page to **SVG** and assemble them into an editable `.pptx`.
 
 The methodology is adapted from the "Strongest PPT Agent" essay shared on linux.do by author *sandun* (a 7-year PPT instructor + 3-year AI product builder). The choice of SVG as the final design format also comes from that essay: SVG is the only format that gives both Figma-level design control *and* native editability in PowerPoint 2016+.
 
@@ -89,6 +95,7 @@ If the predecessor file is missing, **stop and produce it** — do not improvise
 - ❌ "The user said 'just do it', I'll skip Phase 1 entirely." → No. Run Phase 1 Quick mode (one Socratic question, then write `brief.md` with explicit assumptions). The file checkpoint is still required.
 - ❌ "I already drafted the outline in my head, I'll write `planning.json` directly." → No. `outline.json` must exist as a file, and Phase 3 must `Read` it. This makes the structure user-visible and reviewable.
 - ❌ "The user's input was so detailed Phase 1 would be redundant." → No. The detail is *content*, not *audience belief shift*. Phase 1 is about the latter.
+- ❌ "The user sounds impatient, I'll switch to Quick mode for them." → No. Quick mode is opt-in only — ask via `AskUserQuestion` before switching. Auto-switching bypasses the Socratic dialogue that IS the value DeckForge provides.
 - ❌ "I'll merge Phase 2 and 3 because the deck is short." → No. They produce different files because they're different jobs (Architect vs Planner). Even a 5-page deck runs both.
 
 Why this rule exists: every time DeckForge has shipped a generic-looking deck, the cause traced back to a skipped phase. Phase-merging is the single highest-correlation failure mode. Even when phases run fast, they must run *separately* and produce *separate file artifacts*. This makes the work inspectable, restartable, and consistent.
@@ -134,7 +141,7 @@ Not a questionnaire. A loop that derives questions from the user's actual input,
 - **Max 3 questions per round, max 4 rounds.** After round 4 force Quick mode and document remaining unknowns in `brief.md` → `open_assumptions`.
 - **Tone is consultant, not interrogator.** Lead with "I currently understand…" / "There's a trade-off here…" — never "You contradicted yourself."
 
-**Quick mode**: when the user signals impatience, ask **one** pop-up question (about the single highest-leverage gap), then proceed with explicit assumptions written into `brief.md`. Quick mode reduces interview length; it does **not** skip Phase 1 or the `brief.md` file checkpoint.
+**Quick mode (opt-in only, never auto-switched)**: if the user shows impatience signals ("fast" / "quick" / "just do it" / "I gave you everything"), **do not auto-switch** — ask them via `AskUserQuestion` whether they want Quick mode or to stay in the full Socratic loop. Only switch if they explicitly pick it. Quick mode then asks **one** pop-up question (about the single highest-leverage gap) and proceeds with explicit assumptions written into `brief.md`. Quick mode reduces interview length; it does **not** skip Phase 1, the `brief.md` file checkpoint, or the Phase 1→2 handoff approval. The dialogue is the value DeckForge provides — auto-switching to Quick mode bypasses the product.
 
 **Output checkpoint**: write `brief.md` to the working directory. Required fields: `scenario`, `audience.who`, `audience.current_belief`, `belief_shift.from/to`, `core_thesis`, `proof_pillars[]`, `likely_objections[]`, `desired_action`, `constraints`, `open_assumptions[]`. Schema and examples are in `prompts/01_needs_research.md`. Phase 2 must `Read brief.md` as its first action.
 

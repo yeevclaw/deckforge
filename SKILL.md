@@ -406,7 +406,7 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── bento_2col.svg                ← 50/50 or 2:1 (switch widths)
 │   ├── bento_3col.svg
 │   ├── bento_hero.svg
-│   ├── bento_mini_grid.svg           ← main card with 3–6 mini-cards (dark_apple)
+│   ├── bento_mini_grid.svg           ← main card with 3–5 mini-cards (dark_apple)
 │   ├── bento_mixed.svg
 │   ├── chart_bar.svg                 ← vertical bar chart (single highlight color)
 │   ├── chart_line.svg                ← line + area chart for trends

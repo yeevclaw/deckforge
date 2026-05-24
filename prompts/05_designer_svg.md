@@ -152,6 +152,43 @@ Vertical layout inside a 360-tall mini-card: big number around y=350, CN caption
       letter-spacing="1">#1 in Category</text>
 ```
 
+#### Branch B+ — text-first card with nested `sub_cards`
+
+If a card has a non-empty `sub_cards` array, the card body splits into two regions: the upper region carries the heading + body (the textual claim), and the lower region holds a 2–3 mini-card sub-grid as quantitative evidence.
+
+```xml
+<!-- Parent (hero) card -->
+<rect x="48" y="140" width="1184" height="240" rx="16" ry="16"
+      fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+
+<!-- Upper region: heading + body -->
+<text x="80" y="200" font-size="36" font-weight="800" fill="#FFFFFF">從硬體製造商轉型生態服務商</text>
+<text x="80" y="240" font-size="16" fill="#A0A0A0">三年累計營收 NT$180億 → NT$365億,服務佔比躍升至 27%</text>
+
+<!-- Lower region: 3-sub-card grid, smaller than standalone mini-cards -->
+<!-- For 3 sub-cards across the 1184-wide parent: w ≈ 360, h = 140, gap = 24 -->
+<g id="sub1" transform="translate(80, 270)">
+  <rect width="360" height="120" rx="10" ry="10" fill="#222222" stroke="#333333" stroke-width="1"/>
+  <text x="180" y="65" font-size="48" font-weight="900" fill="<highlight>" text-anchor="middle">+103%</text>
+  <text x="180" y="95" font-size="12" fill="#A0A0A0" text-anchor="middle">三年累計增長</text>
+</g>
+<g id="sub2" transform="translate(460, 270)">
+  <rect width="360" height="120" rx="10" ry="10" fill="#222222" stroke="#333333" stroke-width="1"/>
+  <text x="180" y="65" font-size="48" font-weight="900" fill="<highlight>" text-anchor="middle">27%</text>
+  <text x="180" y="95" font-size="12" fill="#A0A0A0" text-anchor="middle">AIoT 業務佔比</text>
+</g>
+<!-- ...sub3 etc. -->
+```
+
+**Sub-card rules**:
+- 2–3 sub-cards only. Never 4+ inside one parent (split to a `mini_grid` page).
+- Sub-card `rx="10"` (smaller than standalone mini-card `rx="12"`, smaller than main card `rx="20"`).
+- Sub-card height ~120–140px (about 1/3 the height of a standalone mini-card).
+- Big element inside sub-card: 40–56px (vs 56–72px on a standalone mini-card) — proportional scaling.
+- Optional `stat_caption_en` follows the 50–70% density rule — don't put EN on every sub-card.
+
+See [references/bento_grid.md](../references/bento_grid.md) for the full geometry.
+
 #### Branch C — when a card needs an icon (only on `single_focus` or `two_col`, never inside `mini_grid`)
 
 Use 24×24 Lucide path data. Place inside a 48-radius circle filled in highlight color at 15% alpha. Never use emoji here.
@@ -186,7 +223,7 @@ If `planning.json` specifies a chart layout (`chart_bar`, `chart_line`, `chart_d
 - **toc**: 4–6 numbered mini-cards in a 2×3 or 2×2 grid. Each has a big "01" / "02"… in highlight color (60–80px) + 1-line part title in white.
 - **section_break**: huge part title (80–96px white), small caption (16px gray-400). Optional faint giant numeral in background (opacity 0.08, 320–480px, in highlight color).
 - **content**: render the layout per the `cards` array.
-- **stat_hero**: one card containing one giant number. Number at 100–120px font-weight 900 in highlight color, centered at (640, 380). Caption below at (640, 450), 16px white. Optional EN caption at (640, 475), 12px gray-500.
+- **stat_hero**: one card containing one giant number. Number at 100–120px font-weight 900 in highlight color, centered at (640, 380). Caption below at (640, 450), 16px white. Optional EN caption at (640, 475), 12px gray-500. **Optionally place a subtle highlight-color radial glow behind the number** to make it feel lit from within — `<radialGradient>` with stops at `(0%, highlight, alpha=0.10) → (60%, highlight, alpha=0.03) → (100%, alpha=0)`, rendered as an 800×280 rect centered around the number. Single-color discipline preserved (same highlight color, just alpha). If the glow visibly competes with the number, lower max alpha to 0.06. Skip the glow entirely on dense data pages — it only fits when the page is genuinely about one number with breathing room.
 - **mini_grid**: main card (`x=48, y=140, w=1184, h=532, rx=20, fill=#1A1A1A, stroke=#333333`). Inside it, render mini-cards horizontally. For 4 cards: `x = 88, 369, 650, 931`, `y=226, w=257, h=360, rx=12, fill=#222222`. For 3 cards: `x = 130, 511, 892, w=295`. For 5 cards: `x = 88, 311, 534, 757, 980, w=200`. **Keep ≥24px gap between mini-cards.**
 - **end**: "Thank you" centered. Optional contact/CTA below in 14px gray-400. Keep it minimal.
 

@@ -118,7 +118,7 @@ Pick the *minimum* layout that fits the content. Don't over-engineer.
 |---|---|---|
 | `single_focus` | One headline element (quote, image) | 1 |
 | `stat_hero` | **One huge number is the message.** Quarter growth, market share, ARR | 1 stat |
-| `mini_grid` | **3–6 parallel stats / features.** Annual-report KPI page. | 3–6 mini-cards in 1 main card |
+| `mini_grid` | **3–5 parallel stats / features.** Annual-report KPI page. | 3–5 mini-cards in 1 main card (6+ → split into two pages) |
 | `two_col_50_50` | Two parallel ideas, before/after, pros/cons | 2 |
 | `two_col_2_1` | One main idea + 1 supporting fact | 2 (1 large + 1 small) |
 | `three_col` | Three parallel pillars / steps / values | 3 |
@@ -185,6 +185,37 @@ When you spot these, **split that card into multiple mini-cards** and use the `m
 Each extracted core point becomes one mini-card. A mini-card carries one big element (number or 3–5 char phrase) and one short caption. That's the unit. Nothing more.
 
 The mistake to actively avoid: producing one big card per paragraph because the paragraph "feels like one thing". A paragraph almost always contains 3–5 parallel points. Find them. Split them.
+
+### Comprehensive data discipline — when Phase 0 ran
+
+If `analysis.md` from Phase 0 exists, **every key financial metric, growth rate, market share, ranking, and user/customer count in it must end up on a card somewhere in the deck**. Do not selectively drop KPIs because they "didn't fit the narrative" — that's exactly the failure mode this skill exists to prevent. If a number is in `analysis.md` because it was notable enough to extract, it deserves card real estate.
+
+Rules of thumb when distributing analysis.md content to pages:
+- **Cluster 3–5 related KPIs onto one `mini_grid` page** (e.g. all revenue / growth / margin metrics for a single year on one page).
+- **A single hero metric** (the one number that captures the whole story) gets its own `stat_hero` page.
+- **Parallel sets** (business segments, regions, quarters) become `mini_grid` or `chart_bar` pages — one card per set member.
+- If the deck would end up >25 pages just to fit every KPI, group them more densely (5-card `mini_grid` rows) rather than dropping them.
+
+When Phase 0 did **not** run (topic-only deck, no source document), this rule doesn't apply — the planner picks the most leverageable content from the brief and inferred research.
+
+### Mini-card density — 3–5 per row, not 6+
+
+`mini_grid` pages render 3, 4, or 5 mini-cards in one horizontal row. **Do not use 6+ mini-cards in a single `mini_grid`**. At 6+, mini-cards become cramped (≤190px wide on the 1280px canvas) and lose visual breathing room.
+
+If you have 6+ parallel items, prefer one of:
+- Split into two `mini_grid` pages with 3–4 cards each (best — clearer rhythm).
+- Promote 2 items to a `hero_top` layout (1 hero card + 4 supporting mini-cards).
+- Use a `chart_bar` if the items are comparable on one metric.
+
+A 3-card `mini_grid` reads luxurious; a 5-card row reads densely informative; a 6-card row reads cluttered.
+
+### English subtitle density — 50–70%, not every card
+
+`stat_caption_en` is **decorative** — it adds visual polish to a deck, but uniformity ruins polish. Apply `stat_caption_en` to roughly **50–70% of mini-cards across a page**, not all of them. Leave the rest as Chinese-only.
+
+The omission creates rhythm: viewers' eyes notice the cards that *do* have the English line, and those cards feel more accented. If every card has an English line, none of them does.
+
+Same rule applies to `title_en` on content pages: it's optional and selective, not mandatory. Use it on cover, section breaks, and content pages where the bilingual register adds polish, but skip it on transitional pages.
 
 ### Concrete extraction examples
 
@@ -335,13 +366,66 @@ For **text-first** cards (`is_number_first: false`):
 - `icon_hint` — Lucide icon name (`trending-up`, `users`, `shield`, etc.)
 - `size_hint` — same as above
 
-### Decision rule: number-first vs text-first
+### Nested sub-cards — `sub_cards[]` on a hero card
+
+Any **large** card (in `single_focus`, `hero_top`, `two_col_2_1`, or `mixed_grid` layouts) can optionally contain a **sub-grid of 2–3 mini-cards** via a `sub_cards: []` array. This lets a single hero claim carry quantitative sub-evidence inline, without spending a separate page.
+
+```json
+{
+  "page_id": 12,
+  "page_type": "content",
+  "layout": "hero_top",
+  "title": "AIoT 戰略推動營收三年翻倍",
+  "title_en": "AIoT Drives 2× Revenue in Three Years",
+  "cards": [
+    {
+      "is_number_first": false,
+      "heading": "從硬體製造商轉型生態服務商",
+      "body": "三年累計營收 NT$180億 → NT$365億,服務佔比躍升至 27%",
+      "icon_hint": "trending-up",
+      "size_hint": "large",
+      "sub_cards": [
+        { "is_number_first": true, "stat_value": "+103%", "stat_caption": "三年累計增長", "stat_caption_en": "3Y Total Growth" },
+        { "is_number_first": true, "stat_value": "27%", "stat_caption": "AIoT 業務佔比" },
+        { "is_number_first": true, "stat_value": "+45%", "stat_caption": "AIoT 業務年增", "stat_caption_en": "AIoT YoY" }
+      ]
+    },
+    { "is_number_first": true, "stat_value": "NT$365億", "stat_caption": "2025 年總營收" },
+    { "is_number_first": true, "stat_value": "26%", "stat_caption": "毛利率 (由 18%)" },
+    { "is_number_first": true, "stat_value": "服務優先", "stat_caption": "新策略定位" }
+  ]
+}
+```
+
+**Rules for `sub_cards`**:
+- Only 2–3 sub-cards per parent card (4+ becomes its own `mini_grid` page).
+- Sub-cards follow the same `is_number_first` / `stat_value` / `stat_caption` schema as top-level cards.
+- The parent card must have a `heading` and `body` (text-first) — sub-cards work best as quantitative evidence under a textual claim.
+- Sub-cards inside a hero are smaller (~120–140px tall) than standalone mini-cards (~360px tall). Plan the content accordingly.
+
+**When to use nested sub-cards**:
+- The page's primary message is **a claim**, but you have 2–3 supporting numbers that would be lost in body text.
+- You want to keep a multi-claim deck under 20 pages by combining claim + evidence on the same page.
+- The claim's narrative power benefits from being visible *together with* the numbers (e.g. "Transformation done — and here are the three numbers that prove it").
+
+**When NOT to use**:
+- The numbers ARE the story (use `mini_grid` instead — claim becomes the page title).
+- You have 4+ supporting numbers (split into a dedicated `mini_grid` page).
+- A single dominant number captures everything (use `stat_hero`).
+
+### Decision rule: number-first vs text-first — **default to number-first**
 
 For every card, ask: "Is there a single, important number that captures this point?"
-- **Yes** → `is_number_first: true`. The number is the hero element.
-- **No, but there's a concept** → `is_number_first: false`. The short Chinese phrase is the hero element.
+- **Yes** → `is_number_first: true`. The number is the hero element. **This is the default.**
+- **No** → `is_number_first: false`. The short Chinese phrase is the hero element. Use this only when the card is genuinely conceptual (a strategy pillar, a brand value, a status label) AND there is no key number that could carry the point.
 
-When in doubt about an annual-report style or KPI deck, prefer number-first. Numbers create the visceral impression of "this matters" that text descriptions can't match.
+Concrete defaults:
+- KPI / financial / metric content → `is_number_first: true` always.
+- Strategy / pillar / value content → `is_number_first: false` typically, unless a number quantifies the pillar (e.g. "5 pillars" → still number-first with 5 as the stat).
+- Ranking ("#1", "Top 3") → `is_number_first: true` (the rank IS the number).
+- Status labels ("已上線", "進行中") → `is_number_first: false`.
+
+When in doubt — especially for annual-report / KPI / financial / product-metric decks — **prefer number-first**. Numbers create the visceral "this matters" impression that text descriptions can't match. The single most reliable visual upgrade in DeckForge is taking a wall-of-text body and finding the number hidden inside it.
 
 ## Page type rules
 

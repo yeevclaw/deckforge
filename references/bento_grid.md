@@ -25,7 +25,7 @@ Why Bento Grid?
 In addition to the six base layouts, there are two patterns designed specifically for the dark_apple aesthetic that come from the linux.do "Xiaomi annual report" methodology:
 
 - `stat_hero` — a single huge number dominates the slide.
-- `mini_grid` — a main card containing a 3–5-column grid of mini-cards. Each mini-card holds **one core point only**.
+- `mini_grid` — a main card containing a **3–5-column** grid of mini-cards. Each mini-card holds **one core point only**. (6+ cards is too dense — split into two pages.)
 
 These two patterns are where the visual quality jump comes from. Use them whenever the content is data-dense (annual reports, financials, product specs, comparisons).
 
@@ -181,16 +181,16 @@ A single statistic dominates. The number is rendered at **80–120px font-size, 
 +------------------------------------------+
 ```
 
-A main card holds 3–6 mini-cards in a horizontal grid. Each mini-card carries **exactly one core point** (one number + one caption, or one short text-title + one caption). Each mini-card is its own discrete visual unit. This is the linux.do "Xiaomi report" pattern — and where data-dense content really sings.
+A main card holds **3–5 mini-cards** in a horizontal grid. Each mini-card carries **exactly one core point** (one number + one caption, or one short text-title + one caption). Each mini-card is its own discrete visual unit. This is the linux.do "Xiaomi report" pattern — and where data-dense content really sings.
 
 **Use when**:
-- 3–6 parallel stats / features / risks / steps that you want to feel like a coherent set
+- 3–5 parallel stats / features / risks / steps that you want to feel like a coherent set
 - An annual-report-style "key metrics" page
 - Side-by-side comparison where each comparison item is short
 
 **Don't use when**:
 - 1–2 items (waste of structure — use single_focus or two_col)
-- 7+ items (too dense — split into two slides)
+- **6+ items** — too dense, mini-cards become cramped (≤190px wide). Split into two `mini_grid` pages with 3–4 cards each, OR promote 1–2 items to a `hero_top` layout with the rest as supports.
 - Items are unequal in importance (the grid implies equality — use mixed_grid for unequal weight)
 
 **SVG geometry**:
@@ -209,6 +209,72 @@ A main card holds 3–6 mini-cards in a horizontal grid. Each mini-card carries 
 - Caption = 14px gray-400, 1–2 short lines, no commas-breaking-sentences.
 - Optional bilingual subtitle: 11–13px gray-500 English phrase ("YoY Growth", "Total Revenue"). Apply selectively, not on every card.
 - **Never two long sentences on one mini-card.** If you can't fit it short, the content isn't extracted enough — go back to the planner.
+
+---
+
+## Nested sub-cards — sub-grids inside any large card
+
+Any **large** card (in `single_focus`, `hero_top` hero slot, `two_col_2_1` wide slot, or `mixed_grid` big slot) may optionally contain a **2–3 mini-card sub-grid** via the planning schema's `sub_cards: []` field. This lets a hero claim carry quantitative evidence inline, without spending a separate page.
+
+```
++------------------------------------------+
+|  Page title                              |
+|                                          |
+|  +------------------------------------+  |
+|  | Hero card                          |  |
+|  |                                    |  |
+|  |   "從硬體製造商轉型生態服務商"           |  |
+|  |   subtitle / body line              |  |
+|  |                                    |  |
+|  |   +------+ +------+ +------+       |  |
+|  |   |+103% | | 27%  | |+45%  |       |  |
+|  |   |三年增 | |佔比   | |AIoT增 |     |  |
+|  |   +------+ +------+ +------+       |  |
+|  +------------------------------------+  |
+|                                          |
++------------------------------------------+
+```
+
+**Geometry (sub-cards inside a hero card)**:
+- Sub-cards sit in the **bottom half** of the parent card.
+- For a hero with inner area `W × H`, sub-cards take `W × ~140px` at the bottom (leaving the upper area for the parent's heading + body).
+- 2 sub-cards: each `(W - gap) / 2` wide. 3 sub-cards: each `(W - 2×gap) / 3` wide.
+- Gap between sub-cards: `20–24px`.
+- Sub-card `rx = 10` (smaller than standalone mini-cards' `rx=12`, smaller still than main cards' `rx=20`).
+- Sub-card fill: `#222222`, same as standalone mini-cards.
+- Sub-card height: ~120–140px (shorter than standalone 360px mini-cards).
+
+**Typography inside sub-cards**:
+- Big element: 40–56px font-weight 900 (smaller than standalone mini-card 56–72px, because the sub-card is shorter).
+- Caption: 12–13px gray-400.
+- EN subtitle (optional): 10–11px gray-500. Apply to ~50–70% of sub-cards for rhythm.
+
+**Rule of thumb**: never exceed 3 sub-cards in one parent card. If you need 4+, the page should be a `mini_grid` page instead, with the parent's claim becoming the page title.
+
+---
+
+## stat_hero — subtle highlight-color glow behind the number
+
+A `stat_hero` slide can optionally place a **very subtle radial glow** behind the giant number to make it feel like it's lit from within. This is single-highlight-color discipline (same color as the number, just alpha gradient) — it does **not** introduce a second color.
+
+```xml
+<defs>
+  <radialGradient id="statHeroGlow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%"   stop-color="<highlight>" stop-opacity="0.10"/>
+    <stop offset="60%"  stop-color="<highlight>" stop-opacity="0.03"/>
+    <stop offset="100%" stop-color="<highlight>" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+
+<!-- Glow rectangle, centered behind the number -->
+<rect x="240" y="240" width="800" height="280" fill="url(#statHeroGlow)"/>
+
+<!-- Giant number, on top of the glow -->
+<text x="640" y="400" font-size="120" font-weight="900"
+      fill="<highlight>" text-anchor="middle">142.5%</text>
+```
+
+The glow's max alpha is **0.10** — easily missed at a glance, which is the point. It's a polish layer, not a foreground element. If the glow is so visible that it competes with the number, dial it back to 0.06.
 
 ---
 

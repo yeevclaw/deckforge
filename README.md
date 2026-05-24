@@ -13,8 +13,22 @@
 |---|---|---|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |
 
-- 合併 PDF: [`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
-- 原始 SVG(直接看 Bento Grid 的座標寫法): [`examples/sample-deck/`](examples/sample-deck/)
+
+
+## 為什麼用 SVG → PPTX(而不是套範本或圖片型 PPT)?
+- SVG 是 PowerPoint 2016+ 原生支援的向量圖格式。右鍵「轉換成圖形」就能把整張投影片拆成可編輯的文字框與形狀,**保留所有編輯性**。
+- 同時可以根據**內容自由設計版面**,不用把內容塞進固定範本。
+- 每份 deck 都有專屬配色 + 視覺主題,且整份一致(skill 會強制執行)。
+- 編輯細節見 [`references/editable_mode.md`](references/editable_mode.md)。
+
+## 設計理念出處
+- **起點**:linux.do 上 *sandun* 寫的「应该是目前最强的PPT Agent」一文。「頂級 PPT 結構架構師」與 便當網格,皆改寫自原文提示詞並加以延伸。
+- **核心方法論一：蘇格拉底反詰**:透過連續性提問進行辯證的哲學 inquiry 形式。引導對話者自我審視、揭示其觀點中的隱含假設與邏輯漏洞，從而承認無知 並探求客觀真理。。
+- **核心方法論二：金字塔原理**:「結論先行，由上往下一層層拆解論點」，讓聽眾或讀者能在最短時間內抓住核心訊息。
+- **SVG 作為最終格式**:SVG 是為了在 PowerPoint 端保留可編輯性,而不是只能輸出靜態圖片。
+- **Bento Grid 設計語言**:Apple 產品頁帶起的便當網格排版。
+
+
 
 
 ## 安裝(Claude Desktop)
@@ -33,16 +47,8 @@ pip install python-pptx resvg-py img2pdf --break-system-packages
 ```
 
 > 不會用命令列?直接到 [releases 頁面](https://github.com/yeevclaw/deckforge/releases/latest)點 `deckforge.zip` 下載,然後在終端機跑那一行 `pip install`。
-
-三個套件就好,**完全沒有系統依賴**——`resvg-py` 把 Rust SVG renderer 打包成 pip wheel,不用 Homebrew、不用 apt-get、不用 sudo。
-
-- `python-pptx` → 組 .pptx
-- `resvg-py` → SVG 渲成 PNG(Keynote / Preview / 舊版 PowerPoint 看的圖)
-- `img2pdf` → 同一批 PNG 組成 .pdf
-
-階段 1–4(研究 / 大綱 / 策劃 / 設計)是純 Markdown,Claude 直接讀,不需要任何套件。只有 Phase 5 才會用上面三個。
-
-> Phase 5 預設會**同時產出 `.pptx` 跟 `.pdf` 兩個檔案**——PPTX 給 PowerPoint 編輯用,PDF 給直接分享 / 客戶看 / 沒有 PowerPoint 的人。
+> 
+> 預設會**同時產出 `.pptx` 跟 `.pdf` 兩個檔案**——PPTX 給 PowerPoint 編輯用,PDF 給直接分享 / 客戶看 / 沒有 PowerPoint 的人。
 
 ### 2. 在 Claude Desktop 匯入 zip
 
@@ -76,21 +82,6 @@ Claude 會自動觸發 DeckForge,跑完整流程:
 | 3. 策劃稿 | `planning.json` | **檢視每頁內容**,改文案只要 1 分鐘 |
 | 4. SVG 設計 | `pages/*.svg` | 自動產出每頁向量設計 |
 | 5. 產出 | `presentation.pptx` + `presentation.pdf` | 自動組裝,兩個檔同時出 |
-
-
-## 為什麼用 SVG → PPTX(而不是套範本或圖片型 PPT)?
-
-- SVG 是 PowerPoint 2016+ 原生支援的向量圖格式。右鍵「轉換成圖形」就能把整張投影片拆成可編輯的文字框與形狀,**保留所有編輯性**。
-- 同時可以根據**內容自由設計版面**,不用把內容塞進固定範本。
-- 每份 deck 都有專屬配色 + 視覺主題,且整份一致(skill 會強制執行)。
-- 編輯細節見 [`references/editable_mode.md`](references/editable_mode.md)。
-
-## 設計理念出處
-
-- **方法論**:linux.do 上 *sandun* 寫的「应该是目前最强的PPT Agent」一文。`prompts/02_outline_architect.md` 的「頂級 PPT 結構架構師」與 `references/bento_grid.md` 的便當網格,皆改寫自原文提示詞並加以延伸。
-- **金字塔原理**:Barbara Minto 的經典結構。
-- **SVG 作為最終格式**:SVG 是為了在 PowerPoint 端保留可編輯性,而不是只能輸出靜態圖片。
-- **Bento Grid 設計語言**:Apple 產品頁帶起的便當網格排版。
 
 
 ## 資料夾內容

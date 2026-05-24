@@ -202,7 +202,20 @@ Before exiting Phase 1, write `brief.md` to the working directory. **Phase 2 mus
 <paths or URLs the user supplied; or "none">
 ```
 
-Once `brief.md` exists, hand off to Phase 2 (Outline Architect) — and **Phase 2's first action must be to Read brief.md**, not to start drafting from memory.
+Once `brief.md` exists, **do not silently start Phase 2**. Ask the user via `AskUserQuestion` whether to continue:
+
+```
+Question: Phase 1 完成（已產出 brief.md）。要繼續進入 Phase 2 大綱規劃嗎？
+
+  ○ 繼續進入 Phase 2 (Recommended)
+       → 我會 Read brief.md 然後產出 outline.json (每頁標題＝一個 mini-claim)
+  ○ 我要先修改 brief.md
+       → 告訴我哪邊要改 (thesis / pillars / objection / 任何欄位)
+  ○ 暫停在這裡
+       → brief.md 已存到 working directory，之後可以再回來繼續
+```
+
+Only continue to Phase 2 — and Phase 2's first action must be to `Read brief.md` — after the user approves. The same approval discipline applies at every later phase boundary; see SKILL.md "Every phase handoff requires explicit user approval".
 
 ---
 

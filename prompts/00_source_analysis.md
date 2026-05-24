@@ -102,6 +102,23 @@ Save to `analysis.md` in the working directory:
 
 ---
 
+## Handoff to Phase 1 — ask for approval, never silent
+
+After `analysis.md` is written, **do not start Phase 1 silently**. Ask the user via `AskUserQuestion` whether they want to continue:
+
+```
+Question: Phase 0 完成（已產出 analysis.md，含 <N> 個關鍵數字 / <M> 組平行集合）。要繼續進入 Phase 1 蘇格拉底反詰嗎？
+
+  ○ 繼續進入 Phase 1 (Recommended)
+       → 我會根據文件抽出的主線，用跳窗反詰幫你定 thesis 跟 belief shift
+  ○ 我要先檢視 analysis.md
+       → 你看完告訴我哪邊要補抓或重抓
+  ○ 暫停在這裡
+       → analysis.md 已存好，之後可以再回來繼續
+```
+
+Only continue when they approve. The same approval discipline applies at every phase boundary — see SKILL.md "Every phase handoff requires explicit user approval".
+
 ## Passing to Phase 1 (Socratic Clarification) — DO NOT SKIP
 
 > Phase 0 produces *material*. It does NOT produce a thesis.

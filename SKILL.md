@@ -93,6 +93,33 @@ If the predecessor file is missing, **stop and produce it** — do not improvise
 
 Why this rule exists: every time DeckForge has shipped a generic-looking deck, the cause traced back to a skipped phase. Phase-merging is the single highest-correlation failure mode. Even when phases run fast, they must run *separately* and produce *separate file artifacts*. This makes the work inspectable, restartable, and consistent.
 
+### Every phase handoff requires explicit user approval
+
+Producing the checkpoint file is **not enough** to advance. After each phase's output file is written, you **MUST ask the user via `AskUserQuestion` whether to continue to the next phase**. No silent transitions. No "let me just keep going while I'm on a roll". The user needs the chance to fix things cheaply, *before* the next phase's effort is spent.
+
+The handoff pop-up template:
+
+```
+Question: Phase <N> 完成（產出 <filename>）。要繼續進入 Phase <N+1> <name> 嗎？
+
+  ○ 繼續進入 Phase <N+1> (Recommended)
+       → <一句話描述下個 phase 要做什麼>
+  ○ 我要先修改 Phase <N> 的內容
+       → 告訴我哪裡要改，改完再回到這個 checkpoint
+  ○ 暫停在這裡
+       → 所有檔案都已存到 working directory，之後可以再回來繼續
+```
+
+Rules for the handoff pop-up:
+
+1. **One pop-up per phase boundary.** Don't ask multiple questions at the handoff — that's for inside Phase 1's Socratic loop. The handoff itself is a single yes/revise/stop choice.
+2. **Wait for the answer before doing any work on the next phase.** Reading the next phase's prompt file is fine; producing the next phase's output is not.
+3. **If the user picks "我要先修改"**, ask one follow-up pop-up about what specifically to change, then iterate on the current phase's output file. After the revision, ask the handoff question again.
+4. **If the user picks "暫停"**, summarize what files exist in the working directory and how to resume. Do not produce the next file.
+5. **Phase 5 doesn't have a "next phase"** — its handoff question is the mandatory delivery step (Step 4 of the Phase 5 checklist below), where you tell the user every produced file and attach them all.
+
+Approval is per-phase, not blanket. A user saying "go ahead" at the Phase 1→2 handoff does **not** authorize Phase 2→3 to proceed silently. Each boundary asks fresh.
+
 ---
 
 ### Phase 1 — Socratic Clarification Loop
@@ -112,6 +139,8 @@ Not a questionnaire. A loop that derives questions from the user's actual input,
 **Output checkpoint**: write `brief.md` to the working directory. Required fields: `scenario`, `audience.who`, `audience.current_belief`, `belief_shift.from/to`, `core_thesis`, `proof_pillars[]`, `likely_objections[]`, `desired_action`, `constraints`, `open_assumptions[]`. Schema and examples are in `prompts/01_needs_research.md`. Phase 2 must `Read brief.md` as its first action.
 
 If the user has uploaded reference material, Phase 0 runs first and produces `analysis.md`; Phase 1 then runs with `analysis.md` as context (but `brief.md` is still produced — Phase 0 does **not** bypass Phase 1).
+
+**Handoff checkpoint**: after writing `brief.md`, ask the user via `AskUserQuestion` whether to continue to Phase 2. Do not begin Phase 2 until they approve. (See "Every phase handoff requires explicit user approval" above.)
 
 ### Phase 2 — Outline architecture (大綱規劃)
 
@@ -138,7 +167,9 @@ The exact prompt to feed into your reasoning is in [prompts/02_outline_architect
 }
 ```
 
-Save the outline to `outline.json` in the working directory. Show it to the user for review (digital sticky notes — easy to add/remove/reorder before any design work happens).
+Save the outline to `outline.json` in the working directory.
+
+**Handoff checkpoint**: after writing `outline.json`, show it to the user (digital sticky notes — easy to add/remove/reorder before any design work happens) and ask via `AskUserQuestion` whether to continue to Phase 3. Do not begin Phase 3 until they approve.
 
 ### Phase 3 — Planning draft (策劃稿) — DO NOT SKIP
 
@@ -172,7 +203,7 @@ Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). 
 
 Why this phase exists: top PPT agencies have a **Planner** role separate from the **Designer**. The Planner decides what + where; the Designer decides how it looks. Mixing these jobs produces the busy, cluttered slides that scream "AI generated".
 
-If the deck is important, **let the user review `planning.json` before designing**. Cheap to fix here, expensive to fix later.
+**Handoff checkpoint**: after writing `planning.json`, show it to the user — this is the highest-leverage review point in the whole workflow, because design effort hasn't started yet — and ask via `AskUserQuestion` whether to continue to Phase 4. Do not begin Phase 4 until they approve. Fixing the content plan here is cheap; fixing it after 15 SVG pages have been rendered is expensive.
 
 ### Phase 4 — Design (設計稿)
 
@@ -199,6 +230,8 @@ Key rules:
 - **Every text run lives in a real `<text>` element** (not converted to path) — that's what keeps slides editable after Convert to Shape.
 
 Save each page as `pages/page_01.svg`, `pages/page_02.svg`, …
+
+**Handoff checkpoint**: after all pages are written, ask the user via `AskUserQuestion` whether to continue to Phase 5 (Produce). If you can preview a few pages inline or attach a quick QA render, do — it makes the approval informed. Do not begin Phase 5 until they approve.
 
 ### Phase 5 — Produce (產出) — DELIVERS MULTIPLE FILES
 

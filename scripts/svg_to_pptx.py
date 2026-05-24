@@ -435,10 +435,15 @@ def build(pages: list[Path], out_path: Path, planning: dict,
         deliverables = [out_path, pdf_out]
         if notes_sidecar.exists():
             deliverables.append(notes_sidecar)
-        print(f"⚠️  IMPORTANT: {len(deliverables)} files were produced — "
-              f"ALL should be delivered to the user.")
+        print()
+        print("=" * 70)
+        print(f"⚠️  CRITICAL: {len(deliverables)} files produced. DELIVER ALL OF THEM.")
+        print(f"   The user expects every one of these in their chat / Downloads:")
         for p in deliverables:
-            print(f"    • {p}")
+            print(f"     • {p}")
+        print("   Delivering only the .pptx and dropping the .pdf/.notes.md")
+        print("   is the #1 DeckForge bug. Do not do this.")
+        print("=" * 70)
 
 
 def write_pdf(png_paths: list[Path], pdf_path: Path) -> None:

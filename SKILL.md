@@ -169,7 +169,9 @@ Key rules:
 
 Save each page as `pages/page_01.svg`, `pages/page_02.svg`, …
 
-### Phase 5 — Produce (產出)
+### Phase 5 — Produce (產出) — DELIVERS MULTIPLE FILES
+
+> ⚠️ **THE MOST COMMON BUG IN PHASE 5: only delivering the `.pptx`.** Read this entire section. Phase 5 produces 2–3 files and you must deliver every one of them.
 
 Run the bundled converter:
 
@@ -183,27 +185,48 @@ This script:
 1. Renders each SVG to a high-DPI PNG via `resvg-py` (zero system deps).
 2. Creates a 16:9 PPTX with one slide per page; each slide embeds the original SVG via the PowerPoint 2016+ `svgBlip` extension plus the PNG fallback.
 3. Assembles the same PNGs into a companion `.pdf` (named after `--output` with the `.pdf` extension) via `img2pdf`.
-4. Attaches speaker notes from `planning.json` if it's in the same directory.
+4. If any page in `planning.json` has `speaker_notes`, writes them to a `<stem>.notes.md` sibling file (notes are NOT embedded in the .pptx — that breaks Keynote — they live in this Markdown file).
 
-### Phase 5 produces UP TO THREE artifacts — deliver ALL of them
+### Mandatory delivery checklist — do this every Phase 5
 
-Every successful Phase 5 run emits two or three files side by side:
+After the script runs successfully, you MUST do this BEFORE telling the user you're done:
 
-- `<output>.pptx` — editable artifact for PowerPoint users. Opens cleanly in Keynote / Preview / Quick Look too.
-- `<output>.pdf` — universal share-anywhere artifact (clients without PowerPoint, mobile preview, web sharing).
-- `<output>.notes.md` — Markdown file with all speaker notes, one section per slide. **Only emitted when `planning.json` actually has `speaker_notes`** on any page. Skipped silently when no notes exist.
+**Step 1: Read the script's stdout footer.**
 
-**You MUST deliver all files that were produced to the user's target location.** Don't drop the `.pdf` or `.notes.md` "because it's just supplementary" — they're part of the deliverable set. Common failure mode: the script writes all three into a session-temporary directory, you copy only `.pptx` to the user's Downloads / chat, and the rest get discarded when the session ends.
+The last block the script prints looks like:
 
-After running `svg_to_pptx.py`, do this check explicitly:
+```
+⚠️  IMPORTANT: 3 files were produced — ALL should be delivered to the user.
+    • /path/to/deck.pptx
+    • /path/to/deck.pdf
+    • /path/to/deck.notes.md
+```
 
-1. Confirm each file the stdout reported actually exists at the output path (use `ls` / `Read`).
-2. Copy EACH ONE to the user-visible destination (Downloads, the chat upload, wherever the user expects the result).
-3. Tell the user about every file in your reply: "I produced *deck.pptx* (editable in PowerPoint), *deck.pdf* (universal share), and *deck.notes.md* (speaker notes). All three attached."
+The number `N files` is the count you must deliver. Anything less is a failed Phase 5.
 
-The script's stdout ends with a `⚠️  IMPORTANT: N files were produced — ALL should be delivered to the user.` block listing every file. Use that as the source of truth — if you only see one file in the list, deliver one. If you see three, deliver three.
+**Step 2: List the output directory to confirm.**
 
-If `--no-pdf` was explicitly passed, only `.pptx` (+ optional `.notes.md`) exists — say so. If `--placeholder-only` was passed, the script automatically skips `.pdf` — also say so.
+Run `ls -la <output-directory>` or `Read` each path. Confirm every file the stdout listed actually exists. If a path is missing, the script failed silently — debug before declaring done.
+
+**Step 3: Attach EVERY file to your reply to the user.**
+
+Each file in the stdout list must be delivered, not just the `.pptx`. Common failure mode (please don't fall into it): "I attached the .pptx, that's the main thing, .pdf and .notes.md are bonus." **No.** They are part of the same deliverable set. The user expects all three from a single Phase 5 run.
+
+If you're operating in Claude Desktop, this means attaching each file individually to the chat. If a tool / agent harness wraps your file output, attach each file as a separate response.
+
+**Step 4: Mention every file in the prose of your reply.**
+
+Tell the user explicitly what was produced. Example phrasing:
+
+> "Phase 5 produced three files for you:
+> - `deck.pptx` — open in PowerPoint to edit (right-click a slide → Convert to Shape).
+> - `deck.pdf` — share with anyone, opens in any PDF reader / mobile / web.
+> - `deck.notes.md` — speaker notes per slide, plain Markdown.
+> All three are attached above."
+
+If only 2 files exist (no speaker notes), say so explicitly. If only 1 exists (you passed `--no-pdf` or `--placeholder-only`), say so explicitly and explain why.
+
+**Why this matters**: the .pdf and .notes.md sit in a Phase-5 working directory that Claude Desktop tears down at session end. If you don't actively attach them, they're permanently lost. This is the single most reported user complaint about DeckForge.
 
 ### Speaker notes — why they go to .notes.md, not into the .pptx
 

@@ -24,24 +24,24 @@
   <text x="80" y="370" font-size="128" font-weight="900" fill="#FFFFFF"
         letter-spacing="-3">DeckForge</text>
 
-  <!-- EN subtitle -->
+  <!-- EN tagline (refreshed: emphasize dialogue-driven) -->
   <text x="80" y="416" font-size="22" font-weight="500" fill="#A0A0A0">
-    The Claude skill for editable, designed presentations.
+    Built by dialogue. Structured by pyramid. Designed in dark.
   </text>
 
-  <!-- Three quiet value props -->
+  <!-- Three quiet value props (refreshed labels) -->
   <g font-size="13" letter-spacing="2">
     <text x="80" y="560" fill="#FF6900">01</text>
-    <text x="80" y="586" font-size="15" fill="#FFFFFF">5-Phase Workflow</text>
-    <text x="80" y="608" font-size="12" fill="#666666">研究 → 大綱 → 策劃 → 設計 → 產出</text>
+    <text x="80" y="586" font-size="15" fill="#FFFFFF">Socratic Dialogue</text>
+    <text x="80" y="608" font-size="12" fill="#666666">跳窗反詰挖出簡報真正要講的</text>
 
     <text x="430" y="560" fill="#FF6900">02</text>
-    <text x="430" y="586" font-size="15" fill="#FFFFFF">SVG-Native</text>
-    <text x="430" y="608" font-size="12" fill="#666666">向量輸出,不是圖片</text>
+    <text x="430" y="586" font-size="15" fill="#FFFFFF">Pyramid + Bento Grid</text>
+    <text x="430" y="608" font-size="12" fill="#666666">論證結構 + Apple 風格版型</text>
 
     <text x="780" y="560" fill="#FF6900">03</text>
     <text x="780" y="586" font-size="15" fill="#FFFFFF">Editable in PowerPoint</text>
-    <text x="780" y="608" font-size="12" fill="#666666">Convert to Shape → 完整可編輯</text>
+    <text x="780" y="608" font-size="12" fill="#666666">Convert to Shape · 完整可編輯</text>
   </g>
 
   <!-- Footer -->

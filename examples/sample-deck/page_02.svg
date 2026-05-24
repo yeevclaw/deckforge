@@ -17,18 +17,18 @@
   <!-- Mini cards — 5 columns: w=(1184-80-4*24)/5=201.6 ≈ 202 -->
   <!-- Positions: 88, 314, 540, 766, 992 -->
 
-  <!-- Mini 1 — number-first 01 -->
+  <!-- Mini 1 — 01 蘇格拉底反詰 (renamed from 需求調研) -->
   <rect x="88" y="226" width="202" height="360" rx="12" ry="12"
         fill="#222222" stroke="#333333" stroke-width="1"/>
   <text x="189" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">01</text>
-  <text x="189" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">需求調研</text>
-  <text x="189" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">RESEARCH</text>
+  <text x="189" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">蘇格拉底反詰</text>
+  <text x="189" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">SOCRATIC</text>
   <text x="189" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
-    <tspan x="189" dy="0">釐清觀眾、目的</tspan>
-    <tspan x="189" dy="1.5em">語氣、品牌限制</tspan>
+    <tspan x="189" dy="0">跳窗反詰挖出</tspan>
+    <tspan x="189" dy="1.5em">真正要說服的判斷</tspan>
   </text>
 
-  <!-- Mini 2 — 02 -->
+  <!-- Mini 2 — 02 大綱架構 -->
   <rect x="314" y="226" width="202" height="360" rx="12" ry="12"
         fill="#222222" stroke="#333333" stroke-width="1"/>
   <text x="415" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">02</text>
@@ -39,39 +39,42 @@
     <tspan x="415" dy="1.5em">每頁標題都是 claim</tspan>
   </text>
 
-  <!-- Mini 3 — 03 (highlighted as "secret sauce") -->
+  <!-- Mini 3 — 03 策劃稿 (highlighted as "secret sauce") -->
   <rect x="540" y="226" width="202" height="360" rx="12" ry="12"
         fill="#FF6900" fill-opacity="0.15" stroke="#FF6900" stroke-width="1"/>
   <text x="641" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">03</text>
   <text x="641" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">策劃稿</text>
   <text x="641" y="432" font-size="11" fill="#FF6900" text-anchor="middle" letter-spacing="1">PLANNING ★</text>
   <text x="641" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
-    <tspan x="641" dy="0">內容 + 版型</tspan>
-    <tspan x="641" dy="1.5em">大多 AI 跳過的關鍵</tspan>
+    <tspan x="641" dy="0">內容 + Bento 版型</tspan>
+    <tspan x="641" dy="1.5em">AI 慣性跳過的關鍵</tspan>
   </text>
 
-  <!-- Mini 4 — 04 -->
+  <!-- Mini 4 — 04 設計稿 -->
   <rect x="766" y="226" width="202" height="360" rx="12" ry="12"
         fill="#222222" stroke="#333333" stroke-width="1"/>
   <text x="867" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">04</text>
   <text x="867" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">設計稿</text>
   <text x="867" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">DESIGN</text>
   <text x="867" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
-    <tspan x="867" dy="0">每頁 SVG 向量</tspan>
-    <tspan x="867" dy="1.5em">viewBox 1280×720</tspan>
+    <tspan x="867" dy="0">SVG 向量輸出</tspan>
+    <tspan x="867" dy="1.5em">1280×720 viewBox</tspan>
   </text>
 
-  <!-- Mini 5 — 05 -->
+  <!-- Mini 5 — 05 產出 -->
   <rect x="992" y="226" width="202" height="360" rx="12" ry="12"
         fill="#222222" stroke="#333333" stroke-width="1"/>
   <text x="1093" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">05</text>
   <text x="1093" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">產出</text>
   <text x="1093" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">PRODUCE</text>
   <text x="1093" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
-    <tspan x="1093" dy="0">組成 .pptx</tspan>
-    <tspan x="1093" dy="1.5em">PowerPoint 可編輯</tspan>
+    <tspan x="1093" dy="0">.pptx + .pdf</tspan>
+    <tspan x="1093" dy="1.5em">+ speaker notes</tspan>
   </text>
 
-  <!-- Footer page number -->
+  <!-- Footer hint about phase 0 + handoff approvals -->
+  <text x="48" y="700" font-size="11" fill="#666666" letter-spacing="1">
+    + Phase 0 (source-doc analysis when provided)   ·   每個階段結束跳窗讓你確認才往下
+  </text>
   <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">02 / 03</text>
 </svg>

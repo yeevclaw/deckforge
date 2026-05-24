@@ -2,14 +2,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
      font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
   <defs>
-    <radialGradient id="heroBg" cx="50%" cy="55%" r="50%">
-      <stop offset="0%" stop-color="#FF6900" stop-opacity="0.15"/>
+    <!-- New v0.6.0 stat_hero glow pattern: single-hue alpha radial, max 0.10 -->
+    <radialGradient id="statHeroGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#FF6900" stop-opacity="0.10"/>
+      <stop offset="60%"  stop-color="#FF6900" stop-opacity="0.03"/>
       <stop offset="100%" stop-color="#FF6900" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
   <rect width="1280" height="720" fill="#000000"/>
-  <rect width="1280" height="720" fill="url(#heroBg)"/>
 
   <!-- Page title bilingual -->
   <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">為什麼用 SVG,而不是圖片?</text>
@@ -17,7 +18,10 @@
     Why SVG, not raster?
   </text>
 
-  <!-- One stat hero card: 100% editable -->
+  <!-- stat_hero glow rectangle: 800×280 centered around the number (640, 400) -->
+  <rect x="240" y="260" width="800" height="280" fill="url(#statHeroGlow)"/>
+
+  <!-- One stat hero: 100% editable, with subtle glow behind -->
   <text x="640" y="420" font-size="180" font-weight="900" fill="#FF6900"
         text-anchor="middle" letter-spacing="-4">100%</text>
   <text x="640" y="480" font-size="22" fill="#FFFFFF" text-anchor="middle">投影片內容完整可編輯</text>

@@ -225,6 +225,18 @@ If you have 6+ parallel items, prefer one of:
 
 A 3-card `mini_grid` reads luxurious; a 5-card row reads densely informative; a 6-card row reads cluttered.
 
+### Quality over quantity — don't pad to 5
+
+**Never pad a mini_grid to 5 cards just because the geometry supports 5.** If you have only 3–4 truly strong candidates that defend the page title's claim, render 3–4. A weak 5th card dragged in to fill space dilutes the deck — it visually adds noise and weakens every other card by association.
+
+How to spot a padding candidate: the 5th card is the only one whose `stat_caption` you had to invent because the source doesn't actually highlight that number. Or the 5th card's claim is "supporting context" rather than "evidence for the page claim". Drop it.
+
+The designer will then use the **wider** 3-card or 4-card geometry (cards become wider, more breathing room around each), not the cramped 5-card geometry with one slot empty.
+
+Geometry switch happens at planning time, not designer time — if you output 4 cards in the JSON, the designer renders the 4-card layout (`x = 88, 369, 650, 931`, w=257), not the 5-card layout with one cell missing. This is intentional: the result reads "we chose 4" rather than "we forgot the 5th".
+
+**Special case**: if you genuinely need all 5 slots for narrative reasons (e.g. 5 quarters, 5 named pillars where the count matters), then 5 is correct even if one card is weaker. Don't drop "Q3" just because Q3's number isn't as exciting — sequence integrity matters more than per-card strength.
+
 ### English subtitle density — 50–70%, not every card
 
 `stat_caption_en` is **decorative** — it adds visual polish to a deck, but uniformity ruins polish. Apply `stat_caption_en` to roughly **50–70% of mini-cards across a page**, not all of them. Leave the rest as Chinese-only.

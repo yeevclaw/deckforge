@@ -212,6 +212,21 @@ A main card holds **3–5 mini-cards** in a horizontal grid. Each mini-card carr
 
 ---
 
+## Quality over quantity — empty slots are a feature
+
+A common visual mistake is padding a layout to fill every position. **A 4-card `mini_grid` with strong cards reads better than a 5-card `mini_grid` where the 5th is filler.**
+
+Rule:
+- If 5 candidates exist but only 3–4 truly defend the page claim → use 3-card or 4-card geometry. The cards get wider, the breathing room increases, and the deck reads more confident.
+- The planner controls this — Phase 3 outputs the right number of cards, the designer just follows.
+- **Never** render 5-card geometry with one slot left blank — that reads as "we forgot one", not "we chose four". The empty slot signals an error to the viewer.
+
+Exception: if the slot count is **narratively meaningful** (5 quarters, 5 named pillars, 5 regions), keep all 5 even if one card is weaker — sequence integrity beats per-card strength.
+
+The same principle applies to `three_col`: don't force a 3rd column to fill space. Two genuinely strong items go to `two_col_50_50`.
+
+---
+
 ## Nested sub-cards — sub-grids inside any large card
 
 Any **large** card (in `single_focus`, `hero_top` hero slot, `two_col_2_1` wide slot, or `mixed_grid` big slot) may optionally contain a **2–3 mini-card sub-grid** via the planning schema's `sub_cards: []` field. This lets a hero claim carry quantitative evidence inline, without spending a separate page.

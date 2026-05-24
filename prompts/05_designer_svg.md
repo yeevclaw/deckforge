@@ -193,6 +193,15 @@ See [references/bento_grid.md](../references/bento_grid.md) for the full geometr
 
 Use 24×24 Lucide path data. Place inside a 48-radius circle filled in highlight color at 15% alpha. Never use emoji here.
 
+**Icon-to-text weight balance**: when an icon sits next to a heading, the icon's visible diameter and the heading's cap-height should be in a **1 : 1.0–1.5 ratio**. If the icon is 24px in a 48px-diameter circle, the adjacent heading should be 24–36px — not 48px. Otherwise the heading dominates and the icon visually shrinks to decoration.
+
+Concrete pairings that work:
+- 24px icon (48px circle) + 28–32px heading
+- 32px icon (64px circle) + 36–48px heading
+- 48px icon (96px circle) + 56–72px heading (rare; hero-card use only)
+
+If you need a 48px heading but only have room for a 24px icon, **drop the icon entirely** rather than ship a mismatched pair. Tip 10 from the Keynote研究所 "15 tips" article: text that overpowers an icon makes the icon look LOW; cut text or scale up the icon, never paint a tiny icon next to a huge text block.
+
 **Icon library** — pick from this allow-list. The icons are pre-defined in `templates/_base.svg` as `<symbol>` elements; reference them via `<use href="#icon-<name>"/>` or inline the path data:
 
 - **Trends/data**: `trending-up`, `trending-down`, `bar-chart`, `pie-chart`, `activity`

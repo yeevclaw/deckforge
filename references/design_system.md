@@ -53,6 +53,23 @@ This is non-negotiable for the dark Apple style and is what separates "AI deck" 
 - Tech gradient: allowed only as `rgba(highlight, 0.7) → rgba(highlight, 0.3)` — single hue alpha gradient. **No multi-color gradients ever.**
 - When in doubt, more black + more highlight ≠ multiple colors.
 
+### Highlight color saturation tiers — what alpha to use where
+
+Single highlight color discipline doesn't mean "use the same alpha everywhere". The highlight color carries different visual weight in different roles. Use this tier table:
+
+| Role | Alpha / Saturation | Example |
+|---|---|---|
+| **Hero element** (numbers, key icons, hero text) | **1.00** (full saturation) | `<text fill="#FF6900">142.5%</text>` — the number IS the message |
+| **Card border / accent line** | 1.00 | `stroke="#FF6900"` 1–2px on the secret-sauce card |
+| **Highlighted card body tint** | **≤ 0.20** | The "secret sauce" `mini_grid` Phase 3 card uses `fill-opacity="0.15"` |
+| **stat_hero radial glow behind number** | **≤ 0.10** (peak), fades to 0 | `radialGradient` stops `0% → 0.10, 60% → 0.03, 100% → 0` |
+| **Page-background mesh / atmosphere** | **≤ 0.08** | Cover page corner glow: `radialGradient` with `stop-opacity="0.08"` |
+| **Subtle card lift** (whole-page secondary fills) | **≤ 0.06** | Quiet background warmth on a section_break |
+
+**The rule of thumb**: full saturation only on the thing the audience must *read*. Sustained or large-area use of the highlight color must drop below 0.20 alpha. Going above 0.30 on a large area produces eye fatigue — Tip 4 from the Keynote研究所 "15 tips" article ("大面積純色降低飽和度") translated to our dark + alpha context.
+
+Bright orange (`#FF6900`) filling 40% of the canvas at 1.00 alpha is a **failure mode**, not a feature. The eye gets nowhere to rest, and the actual content stops reading. If you find yourself painting big regions with the highlight color, drop the alpha first; never reach for a second hue.
+
 ### Dominance rule (light family)
 
 For light palettes, one color carries **60–70% visual weight**, 1–2 supporting tones, one sharp accent. Most decks should use the primary as card headers / titles (light deck) or background (dark variant).

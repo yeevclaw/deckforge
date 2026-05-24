@@ -1,6 +1,6 @@
-# Pyramid Principle — Quick Guide
+# Pyramid Principle — Cross-Phase Reference
 
-The Outline Architect prompt (`prompts/02_outline_architect.md`) is built on Barbara Minto's Pyramid Principle. Read this if you want to understand *why* the prompt is shaped the way it is, or if you want to debug a weak outline.
+Barbara Minto's Pyramid Principle is one of DeckForge's two load-bearing methodologies (alongside the Bento Grid layout system). It is **not** a Phase 2 detail — it runs end-to-end from Phase 1's `brief.md` through Phase 3's `planning.json` and is checked again at the Phase 3 → Phase 4 handoff. This reference explains both the principle and where it lives in each phase.
 
 ## The four rules
 
@@ -67,6 +67,40 @@ When reviewing an outline, run this:
 - [ ] Is the order within each level explainable in one sentence?
 
 If 5/5 → ship the outline. If <5/5 → revise before Phase 3.
+
+## How pyramid principle shows up across phases
+
+The whole deck is one pyramid. Each phase fills in a different layer:
+
+```
+                        APEX  ← Phase 1: brief.md → core_thesis
+                          ▲
+                          │
+                  ┌───────┴───────┐
+                  │               │
+              LAYER 2  ← Phase 1: proof_pillars  (must be MECE)
+                          ↓
+                  ┌───────┴───────┐  ← Phase 2: outline.json
+                  │   PART TITLES │       (part_title = pillar rephrased as claim)
+                  └───────┬───────┘
+                          ↓
+              ┌──────┴──────┐  ← Phase 2: page titles
+              │ PAGE TITLES │       (each title = sub-claim supporting part)
+              └──────┬──────┘
+                     ↓
+            LEAVES ← Phase 3: planning.json → cards
+                          (each card = evidence defending its page title)
+```
+
+| Phase | What it produces | Pyramid layer | Check enforced |
+|---|---|---|---|
+| Phase 1 | `brief.md` | apex (`core_thesis`) + layer 2 (`proof_pillars`) | **MECE check on proof_pillars** before writing brief.md. See `prompts/01_needs_research.md`. |
+| Phase 2 | `outline.json` | layer 2 (part_titles) + layer 3 (page titles) | part_titles map to proof_pillars 1:1; every title is a claim; **title-only read** test runs |
+| Phase 3 | `planning.json` | leaves (card content) | every card defends its page title's claim (on-topic ≠ load-bearing); **title-only read** test runs again at Phase 3→4 handoff |
+| Phase 4 | `pages/*.svg` | render only — pyramid is already settled | n/a |
+| Phase 5 | `.pptx` + `.pdf` | render only | n/a |
+
+If any phase produces output that breaks the pyramid (overlapping pillars, topic-label titles, off-claim cards), it's caught at that phase's quality checklist and again at the next phase's handoff. The principle is not "applied once at the outline stage"; it's the spine that holds the whole deck together.
 
 ## Further reading
 

@@ -153,6 +153,8 @@ If the user has uploaded reference material, Phase 0 runs first and produces `an
 
 Use the **金字塔原理 (pyramid principle)** + 便利貼法 ("sticky-note method"): each page is one digital sticky note. Logic first, design later.
 
+Pyramid principle is one of DeckForge's two load-bearing methodologies (alongside Bento Grid). It runs end-to-end: `brief.md`'s `core_thesis` + `proof_pillars` (Phase 1, with MECE check), `outline.json` part/page titles (Phase 2), and `planning.json` cards that must defend each page's title-claim (Phase 3). See [references/pyramid_principle.md](references/pyramid_principle.md) for the cross-phase map.
+
 The exact prompt to feed into your reasoning is in [prompts/02_outline_architect.md](prompts/02_outline_architect.md). It enforces a JSON schema with this shape:
 
 ```json
@@ -210,7 +212,7 @@ Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). 
 
 Why this phase exists: top PPT agencies have a **Planner** role separate from the **Designer**. The Planner decides what + where; the Designer decides how it looks. Mixing these jobs produces the busy, cluttered slides that scream "AI generated".
 
-**Handoff checkpoint**: after writing `planning.json`, show it to the user — this is the highest-leverage review point in the whole workflow, because design effort hasn't started yet — and ask via `AskUserQuestion` whether to continue to Phase 4. Do not begin Phase 4 until they approve. Fixing the content plan here is cheap; fixing it after 15 SVG pages have been rendered is expensive.
+**Handoff checkpoint**: after writing `planning.json`, show it to the user — this is the highest-leverage review point in the whole workflow, because design effort hasn't started yet. The handoff pop-up **must include the title-only read** (all part_titles + page titles in sequence) so the user can confirm the pyramid argument reads top-down before any rendering happens. Do not begin Phase 4 until they approve. Fixing the content plan here is cheap; fixing it after 15 SVG pages have been rendered is expensive.
 
 ### Phase 4 — Design (設計稿)
 

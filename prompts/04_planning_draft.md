@@ -19,9 +19,25 @@ You do **not** style the page. That's the Designer's job in Phase 4.
 ## Input
 
 You will receive:
-- `outline.json` (from Phase 2)
-- `brief.md` (from Phase 1)
+- `outline.json` (from Phase 2) — **every page's `title` is a pyramid-principle claim** (e.g. "AIoT 戰略推動三年營收翻倍"), not a topic label
+- `brief.md` (from Phase 1) — `core_thesis` + `proof_pillars` define the pyramid's apex and layer 2
 - `research.md` (optional, from Phase 2.5)
+
+## Pyramid alignment — every card must defend its page's claim
+
+Pyramid principle didn't stop with the outline. **Card content is the leaves of the pyramid.** Each card must materially support its page's `title` claim — not just relate to it topically.
+
+Before writing the `cards` array for any page, do this two-step check:
+
+1. **Re-read the page `title`.** Treat it as a claim that needs proof. Ask yourself: "What evidence would make this claim *more likely to be true*?"
+2. **For every card you draft, test:** does this card body provide that evidence? If you removed this card, would the page title's claim become less defensible?
+   - **Yes, it would weaken the claim** → card belongs.
+   - **The card is on-topic but doesn't defend the claim** → drop it or rewrite. On-topic ≠ load-bearing.
+   - **The card defends a different claim** → it belongs on a different page, or the page title is wrong.
+
+Concrete failure mode: page title = "服務收入成為新引擎"; cards talk about hardware sales numbers. Hardware sales are *on topic* (same company), but they don't defend "services are the new engine" — they're parallel data, not supporting data. Either drop them, or change the page title to a claim those cards actually defend.
+
+This is the planner's pyramid responsibility. Get this right and the deck reads top-down: a reader can scan only the page titles and walk away with the argument; the cards exist to prove each title.
 
 ## Output
 
@@ -470,5 +486,36 @@ In `design_brief.highlight_color`, set the actual hex value for the single highl
 - [ ] Is the `design_brief` palette consistent with the tone in `brief.md`?
 - [ ] Is `design_brief.highlight_color` set to ONE concrete hex value?
 - [ ] Are there 0 placeholders ("Lorem", "xxxx", "TBD", "Insert here")?
+- [ ] **Pyramid alignment**: for every page, do the cards actually defend the page `title` claim (not just relate to it topically)?
+- [ ] **Title-only read**: if I read only the part_titles + page titles in order, do they form a coherent argument from setup through conclusion?
 
 Fail any check → revise before emitting.
+
+## Title-only read QA — required before the Phase 3→4 handoff
+
+The strongest pyramid-principle test: **a reader should be able to scan only the page titles and walk away with the full argument**. Before asking the user to approve the Phase 3→4 handoff, do this:
+
+1. Extract the part_titles + page titles in order (cover → toc → part 1 titles → part 2 titles → … → end).
+2. Read them aloud (or to yourself) as one continuous narrative.
+3. Ask: does this read like an argument? Does each title set up or extend the previous one? Is there a setup → development → conclusion arc?
+
+If the title-only read sounds like a topic list ("公司介紹 / 產品 / 未來"), the pyramid failed — re-write titles into claims ("我們是亞洲最大的 AIoT 解方商 / 產品線已覆蓋全價值鏈 / 2026 年將進入服務型營收拐點") and re-do the planning.
+
+When you ask the user to approve the Phase 3→4 handoff, **include the title-only read in the pop-up question**:
+
+```
+Question: Phase 3 完成。所有頁標題串起來如下,讀起來像一段完整論證嗎?
+
+  <Title 1>
+  <Title 2>
+  ...
+  <Title N>
+
+  ○ 像一段完整論證,繼續進入 Phase 4 (Recommended)
+  ○ 某幾頁標題還像 topic label,要修
+       → 你告訴我哪幾頁,我重寫成 claim
+  ○ 標題串起來缺一段論證
+       → 補哪一塊,我加頁面進去
+```
+
+This makes the user a check on the pyramid structure before the design phase begins (cheap to fix here, expensive to fix in Phase 4).

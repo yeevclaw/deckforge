@@ -171,10 +171,43 @@ Stop the Socratic loop and produce `brief.md` when **all** of these are true:
 ✅ Desired belief shift is articulated (from X → to Y)
 ✅ Core thesis fits in one sentence
 ✅ 2–4 proof pillars supporting the thesis are named (even if rough)
+✅ Proof pillars pass the MECE check (see below — required, not optional)
 ✅ The most likely objection is identified
 ✅ Desired audience action after the deck is named
 ✅ Page count, tone, language, brand constraints are at least sketched
 ```
+
+### MECE check on proof_pillars — **required before writing brief.md**
+
+`proof_pillars` is the second layer of the deck's pyramid (apex = `core_thesis`, layer 2 = `proof_pillars`, leaves = card content in Phase 3). For the pyramid to hold, the pillars must be **MECE**:
+
+- **Mutually Exclusive**: no pillar partially restates another. If "team is experienced" + "founders have 30 years in the industry" — that's not two pillars, it's one.
+- **Collectively Exhaustive**: pillars together should be a complete defence of the thesis. If a smart objection can be raised that none of the pillars addresses, the set is incomplete.
+
+Before writing `brief.md`, run this check silently. Concrete failure modes to look for:
+
+| Failure mode | Example | Fix |
+|---|---|---|
+| Cause-effect mixed in | "Speed + Reliability + Great team" — team causes the first two | Drop "team" or move it under one of the first two |
+| Different abstraction levels | "Market is large + Our SDK supports REST" — one is strategy, one is a feature | Lift the feature to its strategic claim, or drop |
+| Partial overlap | "Lower cost + Higher ROI" — overlap on price-value axis | Merge into one pillar, or split into truly distinct dimensions |
+| Missing dimension | Pitch deck with pillars only about product, none about market/team | Add the missing dimension |
+
+**If the silent check finds an overlap or gap that you can't resolve confidently**, run one more Socratic round before writing brief.md. The pop-up:
+
+```
+Question: 我整理出 N 個 proof pillars,但 <pillar A> 跟 <pillar B> 看起來有重疊
+(<具體解釋哪邊重疊>)。怎麼處理?
+
+  ○ 合併成一個 (Recommended)
+       → 我把這兩個合併成 <合併後敘述>,讓 pillars 維持 MECE
+  ○ 保留兩個,但把界線講清楚
+       → 你說明二者的真正分工,我用你的講法重寫
+  ○ 拿掉一個
+       → 哪一個比較不重要,我就拿掉
+```
+
+If the resulting `proof_pillars` after revision still has obvious overlap, log it in `open_assumptions` and continue (Phase 2 outline architect will surface MECE violations again). Better to ship a slightly-overlapping pillar set than to loop forever.
 
 You do **not** need all assumptions resolved. Anything still open goes into `open_assumptions` in the brief, so Phase 2/3 can either inherit them or surface them later. Don't loop forever chasing certainty — perfect is the enemy of shippable.
 

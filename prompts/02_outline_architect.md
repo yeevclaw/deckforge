@@ -86,9 +86,43 @@ Before outputting, silently check:
 
 - [ ] Does every page title make a claim, not just name a topic?
 - [ ] Do same-level items follow MECE?
-- [ ] Is there a clear narrative arc (setup → development → conclusion)?
+- [ ] Do the part_titles (layer 2 of the pyramid) align with `brief.md`'s `proof_pillars`? If brief has 3 pillars, outline should typically have 3 parts that mirror them.
+- [ ] **Title-only read test**: if I extract part_titles + page titles in order, do they form a coherent argument (setup → development → conclusion)?
 - [ ] Does the page count match the target?
 - [ ] Is the TOC consistent with the part titles?
 - [ ] Did I use the research, or did I invent facts?
 
 If any check fails, revise before outputting.
+
+## Pyramid alignment with brief.md
+
+`brief.md` (from Phase 1) defines the pyramid's apex (`core_thesis`) and layer 2 (`proof_pillars`). The outline IS the pyramid made concrete:
+
+- **`cover` title** ≈ `core_thesis` rephrased for visual impact
+- **`parts[i].part_title`** ≈ `proof_pillars[i]` rephrased as a claim
+- **`parts[i].pages[].title`** = sub-claims supporting the part_title
+
+If you find yourself writing a part_title that doesn't map back to one of the proof_pillars, **stop**. Either the pillar is missing from brief.md (go back to Phase 1) or the part doesn't belong (drop or merge). The outline cannot introduce structural claims that the brief never authorized.
+
+## Title-only read test
+
+The single most reliable pyramid test: extract all titles in order, read them as continuous prose. If they tell the argument by themselves, the pyramid holds. If they read like a table of contents ("公司介紹 / 產品 / 未來"), the pyramid is missing — rewrite titles as claims.
+
+Example of titles that pass the test:
+
+```
+我們是亞洲最大的 AIoT 解決方案商
+  三年內服務 50 家 Fortune 500 企業
+  在 8 個國家建立區域中心
+  創辦團隊累計 50+ 年產業經驗
+我們的產品線已覆蓋 AIoT 全價值鏈
+  邊緣裝置 — 從感測器到閘道器
+  雲端平台 — 數據編排與 AI 分析
+  應用層 — 行業專屬解決方案
+2026 年我們將進入服務型營收佔比 50% 的拐點
+  服務型營收年增 80%
+  訂閱客戶數突破 1,000
+  服務毛利率超越硬體毛利率
+```
+
+Read top-down, this **is** the deck's argument. The cards in Phase 3 just provide proof for each title.

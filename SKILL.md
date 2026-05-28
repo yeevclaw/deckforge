@@ -92,7 +92,7 @@ If the predecessor file is missing, **stop and produce it** — do not improvise
 **Anti-patterns to refuse (all are common AI-deck failure modes):**
 
 - ❌ "The user gave me a complete document, I'll go straight from Phase 0 to Phase 2." → No. Phase 1 still runs. Phase 0 supplies material; Phase 1 supplies the *thesis*.
-- ❌ "The user said 'just do it', I'll skip Phase 1 entirely." → No. Run Phase 1 Quick mode (one Socratic question, then write `brief.md` with explicit assumptions). The file checkpoint is still required.
+- ❌ "The user said 'just do it', I'll skip Phase 1 entirely." → No. Phase 1 still runs. If the user's tone signals impatience, **ask via `AskUserQuestion`** whether to use Quick mode or the full Socratic loop — never auto-switch. Only enter Quick mode if they explicitly pick it. The `brief.md` file checkpoint is required regardless of mode.
 - ❌ "I already drafted the outline in my head, I'll write `planning.json` directly." → No. `outline.json` must exist as a file, and Phase 3 must `Read` it. This makes the structure user-visible and reviewable.
 - ❌ "The user's input was so detailed Phase 1 would be redundant." → No. The detail is *content*, not *audience belief shift*. Phase 1 is about the latter.
 - ❌ "The user sounds impatient, I'll switch to Quick mode for them." → No. Quick mode is opt-in only — ask via `AskUserQuestion` before switching. Auto-switching bypasses the Socratic dialogue that IS the value DeckForge provides.
@@ -162,7 +162,7 @@ Not a questionnaire. A loop that derives questions from the user's actual input,
 - **Use `AskUserQuestion` (pop-up choice) as the default question format.** 2–4 mutually-exclusive options per question. Each option label ≤ 5 words; description explains the *trade-off*, not the definition. Free-text inline only when no honest options exist.
 - **Detect the scenario early** (fundraising / sales / internal sync / executive briefing / educational / strategy review / annual review / product launch / keynote / training / crisis comms). Each scenario needs a different spine surfaced — pop-up question them on which one fits if it isn't obvious.
 - **Pick one question type per round** from: Definition / Consequence / Evidence / Objection / Tradeoff / Compression. Don't mix.
-- **Between every round, run the Between-round reflection** (see [prompts/01_needs_research.md](prompts/01_needs_research.md) → "The loop" → Step 1) — silent notes naming what the user's answer newly clarified, what new ambiguity it surfaced, and which stop conditions remain ❌/⚠️ open. The loop only exits when reflection confirms all 8 stop conditions are ✅ AND the latest answer surfaced no new ambiguity. **Reflection runs AFTER each user answer, not just at the start of Phase 1** — collapsing the loop into a single round because "I got most of what I need" is the single most common Phase 1 failure mode.
+- **Between every round (Round 2 onward), run the Between-round reflection** (see [prompts/01_needs_research.md](prompts/01_needs_research.md) → "The loop" → Round 2+ → Step 1) — silent notes naming what the user's answer newly clarified, what new ambiguity it surfaced, and which stop conditions remain ❌/⚠️ open. The loop only exits when reflection confirms all 7 stop conditions are ✅ AND the latest answer surfaced no new ambiguity. Round 1 itself runs Initial triage (read input → triage → ask) with no reflection — there's no answer to reflect on yet. **Reflection runs AFTER each user answer, not just at the start of Phase 1** — collapsing the loop into a single round because "I got most of what I need" is the single most common Phase 1 failure mode.
 - **Max 3 questions per round, max 4 rounds.** After round 4, switch to **Forced Assumption mode** (distinct from user-chosen Quick mode) — document remaining unknowns in `brief.md` → `open_assumptions[]`, flag best-guess fields with `⚠️`, and surface them prominently in the Phase 1→2 handoff pop-up. See `prompts/01_needs_research.md` for the full procedure.
 - **Tone is consultant, not interrogator.** Lead with "I currently understand…" / "There's a trade-off here…" — never "You contradicted yourself."
 
@@ -470,7 +470,7 @@ User: "Make me an investor pitch deck for our SaaS product."
 
 User: "Quick deck on the Q4 results, 5 slides, internal team."
 
-1. **Phase 1 Quick mode**: one pop-up question (typical: "which audience: full team / leadership only / mixed?"), then write `brief.md` with explicit assumptions for everything else.
+1. **Phase 1 — ask before switching to Quick mode**: the user's framing ("quick", short deck) signals impatience, but you still **ask via `AskUserQuestion`** whether they want full Socratic (recommended) or Quick mode. Never auto-switch. If they pick Quick mode, ask one pop-up question (typical: "which audience: full team / leadership only / mixed?") and write `brief.md` with explicit assumptions for everything else. If they pick full Socratic, run the normal multi-round loop (it's usually only 2 rounds for a 5-page deck anyway).
 2. **Phase 2**: Read `brief.md`. Generate `outline.json` (5 pages, short).
 3. **Phase 3**: Read `outline.json`. Generate `planning.json` quickly — for a 5-page deck this is fast but **still produced as a file**.
 4. **Phase 4**: render.

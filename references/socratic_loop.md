@@ -84,19 +84,15 @@ The Socratic method *can* feel like cross-examination. That makes users defensiv
 2. **Frame gaps as trade-offs, not contradictions.** "There's a trade-off here between A and B" — not "Your goals conflict."
 3. **Surface options the user can pick from.** Pop-up choices are inherently less confrontational than open-ended questions. A user picking option B isn't admitting a mistake — they're making a decision.
 
-If a user pushes back on a question ("just make the deck already"), switch to Quick mode (one question max) and document the resulting assumptions explicitly. Don't argue.
+If a user pushes back on a question ("just make the deck already"), **do not auto-switch**. Ask via `AskUserQuestion` whether they want Quick mode (one pop-up question max, then proceed with documented assumptions) or the full Socratic loop. Only switch if they explicitly pick Quick mode. Auto-switching bypasses the Socratic dialogue that IS DeckForge's value.
 
 ---
 
-## 6. Stop conditions — clear enough, not perfect
+## 6. Stop conditions
 
-You stop the loop when:
+**Single source of truth**: stop conditions live in [`prompts/01_needs_research.md` → "Stop conditions"](../prompts/01_needs_research.md). This reference doc deliberately does **not** duplicate them — duplication has drifted in the past (this file used to list 7 fields; the prompt now lists 7 stop conditions with different framing, plus a Between-round reflection contract that gates exit). When in doubt about whether the loop can stop, consult the prompt, not this reference.
 
-- The 7 brief.md required fields are filled with non-empty values, **and**
-- The 4 non-negotiable fields (current_belief, belief_shift, core_thesis, desired_action) are concrete (not "TBD"), **and**
-- The user is not actively flagging a problem with your current understanding.
-
-Forced stop after **4 rounds**. If 4 rounds didn't produce clarity, the issue is deeper than question quality — switch to Quick mode, document your best-guess assumptions in `open_assumptions`, and proceed. Surfacing assumptions in the brief is better than looping forever; Phase 3 or QA can catch the bad ones.
+Forced stop after **4 rounds**. If 4 rounds didn't produce clarity, switch to **Forced Assumption mode** (a **distinct** mechanism from user-chosen Quick mode — do not conflate). Document your best-guess assumptions in `open_assumptions`, prefix the four non-negotiable fields (`audience.current_belief`, `belief_shift`, `core_thesis`, `desired_action`) with `⚠️` if they remained unclear, and flag the unclear fields prominently at the Phase 1→2 handoff so the user can revise before any outline work. See `prompts/01_needs_research.md` → "Forced Assumption mode" for the full procedure.
 
 ---
 
@@ -106,7 +102,7 @@ A common user mistake: "I gave you the full document, just make the deck." When 
 
 > "The document tells me *what's in your head*. It doesn't tell me *what should change in the audience's head* after the deck. That second part is what determines structure. Let me ask one or two questions to pin it down, then I'll move fast."
 
-If they refuse, run Quick mode (one pop-up question, then proceed with explicit assumptions). The Quick mode brief.md must still be written — it documents the assumptions for later inspection.
+If they still push back after this framing, **ask via `AskUserQuestion`** whether they want Quick mode (one pop-up question, then proceed with explicit assumptions) or the full Socratic loop. Only switch to Quick mode if they explicitly pick it. The `brief.md` file is required in either mode — it documents the assumptions for later inspection.
 
 ---
 

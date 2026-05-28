@@ -25,36 +25,12 @@ Never dump the whole list of fields on the user in round one. Triage. Never coll
 
 ## The loop
 
-Round 1 starts when you first receive the user's input. Round N+1 starts **after** the user answers round N's pop-up. Each round has three steps — **steps 1 and 2 are mandatory between rounds, not just at the start of Phase 1.**
+Round 1 is the **initial round**: read input → initial triage → ask. There is no reflection yet — there's no answer to reflect on. Rounds 2 onward are **reflection rounds**: each starts with a Between-round reflection that gates the loop.
 
-### Step 1 — Between-round reflection (mandatory, silent)
+### Round 1 — Initial triage (runs once)
 
-Before deciding whether to ask another round or stop, write **silent notes** (not shown to the user, but informing your next action) answering:
-
-```text
-A. What did this round's answer newly clarify?
-   (one sentence — e.g. "Audience is the board, not the full investment committee")
-
-B. Did the answer surface anything I hadn't anticipated?
-   (a new ambiguity, a hidden constraint, a contradiction with earlier input —
-   name it specifically. If none, say "none".)
-
-C. For each of the 8 stop conditions (see "Stop conditions" below), mark:
-   ✅ satisfied / ⚠️ partial / ❌ still open
-
-D. What is the SINGLE highest-leverage gap that remains open after this round?
-   (skip if C is all ✅ and B is "none")
-```
-
-**Exit branch**: if C is all ✅ AND B is "none" → run the MECE check (see "Stop conditions"), then write `brief.md`. Skip steps 2–3.
-
-**Continue branch** (more common, especially on round 1): keep going to step 2 with the gap from (D).
-
-> The most common failure mode is reading the user's first-round answer, ticking 5–6 stop conditions, and exiting. **Round 1's answer almost never surfaces what round 2 surfaces** — typically a hidden audience constraint, an objection the user underweights, or a tradeoff between two pillars. Reflection (B) is what catches this. If B is "none" on round 1, suspect you haven't pushed hard enough — re-read the user's input and look for an assumption they made silently.
-
-### Step 2 — Triage the angle of attack
-
-Reflection (D) named *which* gap to pursue. Now decide *how* to ask. Internally answer these 7 triage questions to pick the framing:
+1. **Read** the user's input. If Phase 0 produced `analysis.md`, read it too.
+2. **Internally answer** these 7 triage questions:
 
 ```text
 1. What is already clear from the user's input?
@@ -66,11 +42,48 @@ Reflection (D) named *which* gap to pursue. Now decide *how* to ask. Internally 
 7. If page count had to be cut in half, what would survive?
 ```
 
-### Step 3 — Ask 1–3 questions about the SINGLE remaining gap
+3. **Ask 1–3 pop-up questions** about the SINGLE highest-leverage gap (see "Question dialogue format" below). Never dump all seven.
+
+After the user answers, go to Round 2.
+
+### Round 2+ — Between-round reflection → triage → ask
+
+Every round after Round 1 runs the same three-step structure. **The reflection is what gates the loop**: if it confirms exit conditions, write `brief.md` and stop; otherwise it identifies what to ask next.
+
+#### Step 1 — Between-round reflection (mandatory, silent)
+
+After the previous round's answer, write **silent notes** (not shown to the user, but informing your next action) answering:
+
+```text
+A. What did this round's answer newly clarify?
+   (one sentence — e.g. "Audience is the board, not the full investment committee")
+
+B. Did the answer surface anything I hadn't anticipated?
+   (a new ambiguity, a hidden constraint, a contradiction with earlier input —
+   name it specifically. If none, say "none".)
+
+C. For each of the 7 stop conditions (see "Stop conditions" below), mark:
+   ✅ satisfied / ⚠️ partial / ❌ still open
+
+D. What is the SINGLE highest-leverage gap that remains open after this round?
+   (skip if C is all ✅ and B is "none")
+```
+
+**Exit branch**: if C is all ✅ AND B is "none" → run the MECE check on `proof_pillars` (see "Stop conditions" → MECE check). If MECE passes, write `brief.md` and stop. If MECE fails AND you are not yet on round 4, go to the continue branch for one MECE-revision round. If MECE fails AND you are already on round 4, log the overlap in `open_assumptions` and enter Forced Assumption mode (see below).
+
+**Continue branch** (more common, especially at Round 2): proceed to Step 2 with the gap from (D).
+
+> The most common failure mode is exiting at Round 2's reflection (i.e. right after Round 1's answer), ticking 5–6 stop conditions and treating the rest as "fine enough". **Round 1's answer almost never surfaces what round 2 surfaces** — typically a hidden audience constraint, an objection the user underweights, or a tradeoff between two pillars. Reflection (B) is what catches this. If B is "none" at Round 2, suspect you haven't pushed hard enough — re-read the user's input and look for an assumption they made silently.
+
+#### Step 2 — Triage the angle of attack
+
+Reflection (D) named *which* gap to pursue. Now decide *how* to ask — internally re-run the 7 triage questions from Round 1, this time biased toward the gap reflection identified.
+
+#### Step 3 — Ask 1–3 questions about the SINGLE remaining gap
 
 Use pop-up choices (see next section). One round, one gap — don't mix multiple gaps even if multiple are open. The next-highest gap waits for round N+1.
 
-After the user answers, return to step 1.
+After the user answers, return to Step 1.
 
 ---
 
@@ -149,6 +162,7 @@ Different occasions need different emphasis surfaced. Detect the scenario early 
 | **Product launch** | Before/after, key features, demo cue, availability | Hero stat, feature trinity, demo screenshots, launch date |
 | **Keynote / conference talk** | Single big idea, story arc, takeaway | Narrative spine, memorable line, no busy slides |
 | **Training / onboarding** | Roles, steps, checkpoints, where to get help | Step-by-step, "you are here", resources |
+| **Crisis comms** | Stakeholders demanding answers fast | Acknowledge → Facts (what's known) → Actions (what's being done) → Timeline → Contact | What's known, what's still being investigated, who decides next, communications cadence |
 
 After the scenario is locked, ask scenario-specific questions. Example: if user picks **Sales/proposal**, your next-round questions probably target *buyer pain* and *the specific objection that loses deals* — not "tone" or "length".
 
@@ -199,20 +213,22 @@ If you find yourself thinking "I have everything I need to skip the dialogue", t
 
 ## Stop conditions — "clear enough", not "perfect"
 
-Stop the Socratic loop and produce `brief.md` when, **at the most recent Between-round reflection (see "The loop" → Step 1)**, all 8 of these are ✅ AND reflection-question B (new-ambiguity-surfaced) was "none":
+Stop the Socratic loop and produce `brief.md` when, **at the most recent Between-round reflection (see "The loop" → Round 2+ → Step 1)**, all 7 of these are ✅ AND reflection-question B (new-ambiguity-surfaced) was "none":
 
 ```text
 ✅ Audience is named, plus what they currently believe / what room they're in
 ✅ Desired belief shift is articulated (from X → to Y)
 ✅ Core thesis fits in one sentence
-✅ 2–4 proof pillars supporting the thesis are named (even if rough)
-✅ Proof pillars pass the MECE check (see below — required, not optional)
+✅ 2–4 candidate proof pillars supporting the thesis are named (MECE-verified
+   in the exit branch, not here — reflection only checks that pillars exist)
 ✅ The most likely objection is identified
 ✅ Desired audience action after the deck is named
 ✅ Page count, tone, language, brand constraints are at least sketched
 ```
 
 If a condition is ⚠️ partial in reflection, treat it as ❌ for stop purposes — partial means there's a clarification worth one more round.
+
+**Why MECE isn't a stop condition**: MECE is a verification that runs in the **exit branch** (see "The loop" → Round 2+ → Step 1 → Exit branch). Listing it as a stop condition would create a circular dependency — reflection can't tick it ✅ without running the check, but won't run the check unless reflection is all ✅.
 
 ### MECE check on proof_pillars — **required before writing brief.md**
 
@@ -230,7 +246,9 @@ Before writing `brief.md`, run this check silently. Concrete failure modes to lo
 | Partial overlap | "Lower cost + Higher ROI" — overlap on price-value axis | Merge into one pillar, or split into truly distinct dimensions |
 | Missing dimension | Pitch deck with pillars only about product, none about market/team | Add the missing dimension |
 
-**If the silent check finds an overlap or gap that you can't resolve confidently**, run one more Socratic round before writing brief.md. The pop-up:
+**If the silent check finds an overlap or gap that you can't resolve confidently**, run one more Socratic round before writing brief.md — **unless you are already on round 4**. If you are on round 4, do NOT ask a 5th round; log the overlap in `open_assumptions` and enter Forced Assumption mode (see below). The 4-round cap is hard.
+
+For rounds 1–3, the MECE-revision round uses this pop-up:
 
 ```
 Question: 我整理出 N 個 proof pillars,但 <pillar A> 跟 <pillar B> 看起來有重疊

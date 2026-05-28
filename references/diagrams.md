@@ -193,6 +193,8 @@ Track changes to this status in the same edit that lands a Designer SVG template
   "layout": "cycle",
   "cycle_data": {
     "direction": "clockwise",
+    "center_label": "PDCA",
+    "center_label_en": "CONTINUOUS · LOOP",
     "stages": [
       { "label": "規劃", "label_en": "PLAN",  "body": "設定目標與假設" },
       { "label": "執行", "label_en": "DO",    "body": "小規模試行" },
@@ -218,7 +220,7 @@ Track changes to this status in the same edit that lands a Designer SVG template
   - Bottom→Left: `M 560 568 C 502 568, 460 524, 460 460`
   - Left→Top: `M 460 360 C 460 296, 502 252, 560 252`
   - For `direction: "counter_clockwise"`, reverse the M/end points of each path.
-- **Center label**: cycle name (e.g. "PDCA") at `(640, 395)` (34px weight 900, highlight color, letter-spacing 2). Optional EN subline at `(640, 430)` (13px gray).
+- **Center label**: render `cycle_data.center_label` at `(640, 395)` (34px weight 900, highlight color, letter-spacing 2). Optional `center_label_en` at `(640, 430)` (13px gray, letter-spacing 2). Planner must provide `center_label` for the cycle framework name (e.g. "PDCA", "OODA") — Designer must not invent it from the page title.
 - **Highlight**: by default the last stage (the "act" / "improve" stage). Override via `highlight_index`.
 - **For 3 stages**: positions at 0°, 120°, 240° from top — `(640, 230)`, `(796, 480)`, `(484, 480)` (radius 180). Three curved arrows.
 - **For 5+ stages**: cycle becomes cramped — downgrade to `flow` with a "loops back to step 1" note.
@@ -283,7 +285,7 @@ Track changes to this status in the same edit that lands a Designer SVG template
   - `LABEL_EN` (e.g. `01 · VISITORS`) at top of trapezoid (11px gray, letter-spacing 2)
   - `label + value` (e.g. `訪客  1,000,000`) at vertical middle of trapezoid (28–34px weight 900, scaling DOWN as the trapezoid narrows). Stages 1→4: 34px, 32px, 30px, 28px. Stage 4 in highlight color.
 - **Conversion rate labels** (when `show_conversion_rate: true`): between each pair of stages, right-anchored just outside the funnel. Format: `↓  12.0%`. 13px gray.
-- **Overall conversion summary** (bottom-right): `總轉化率` (13px gray) above `0.32%` (20px weight 900 highlight color).
+- **Overall conversion summary** (top-right corner of slide, aligned to title baseline): `總轉化率` label at `(1232, 88)` right-anchored (13px gray, letter-spacing 2) above the big number at `(1232, 122)` right-anchored (28px weight 900 highlight color). Placing the summary in the title row (instead of the bottom corner) keeps the standard page-number position at `(1200, 710)` free, consistent with every other primitive page in the deck.
 - **For 5 stages**: widths `880 → 720 → 560 → 400 → 240 → 80` — that's a 5-step linear narrowing, but the bottom 80-wide segment will be too narrow for legible text. Prefer 4 stages; if you must have 5, use narrowing `880 → 752 → 624 → 496 → 368 → 240` (Δ=128).
 - **Highlight**: bottom stage (the conversion goal) always — funnels are intrinsically about the goal at the bottom.
 
@@ -327,10 +329,10 @@ Track changes to this status in the same edit that lands a Designer SVG template
       { "label": "方案C", "label_en": "OPTION C" }
     ],
     "rows": [
-      { "dimension": "起始成本", "cells": ["低", "中", "高"] },
-      { "dimension": "上線時間", "cells": ["3 月", "2 月", "6 月"] },
-      { "dimension": "擴展性",   "cells": ["中", "高", "高"] },
-      { "dimension": "維運複雜度","cells": ["低", "中", "高"] }
+      { "dimension": "起始成本",   "dimension_en": "UPFRONT COST",  "cells": ["低", "中", "高"] },
+      { "dimension": "上線時間",   "dimension_en": "TIME TO LIVE",  "cells": ["3 月", "2 月", "6 月"] },
+      { "dimension": "擴展性",     "dimension_en": "SCALABILITY",   "cells": ["中", "高", "高"] },
+      { "dimension": "維運複雜度", "dimension_en": "OPS COMPLEXITY","cells": ["低", "中", "高"] }
     ],
     "highlight_column": 1
   }
@@ -356,7 +358,7 @@ Track changes to this status in the same edit that lands a Designer SVG template
   - Option label: 20px weight 800, white (or highlight for the highlighted column).
   - Dimension column header: small caps `維度  ·  DIMENSION` left-aligned at `x=116`, `y=194`, 13px gray.
 - **Cell content**:
-  - Dimension cell (left column): primary CN label (16px weight 500, `#A0A0A0`, left-anchored at `x=116`) + small EN subline (11px `#666666`, letter-spacing 1, ~22px below).
+  - Dimension cell (left column): primary CN label `rows[i].dimension` (16px weight 500, `#A0A0A0`, left-anchored at `x=116`). Optional EN subline `rows[i].dimension_en` (11px `#666666`, letter-spacing 1, ~22px below). Skip the EN subline if not provided — same selective-density rule as `stat_caption_en`.
   - Value cells (option columns): 18px weight 700, centered horizontally on column center, vertically centered in row. White for normal, highlight color for highlighted column.
 - **Cell value brevity**: each value ≤6 Chinese chars or ≤3 EN words. For longer values, downgrade to a non-table layout — the comparison breaks if cells need to wrap.
 - **Highlight**: default to no highlighted column (just neutral comparison); when `highlight_column` is set, that column is the recommended option.

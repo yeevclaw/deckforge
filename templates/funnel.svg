@@ -7,6 +7,10 @@
   Each stage height: 114. Stage y-positions: 160, 282, 404, 526 (gap 8).
   Stroke alpha fades from top (0.4) to bottom (1.0) so the conversion goal pops.
   Conversion rates rendered to the right of each gap.
+
+  Top-right corner carries the overall-conversion summary (header KPI tag,
+  aligned to title baseline) so the bottom-right corner is free for the
+  standard page number at x=1200, y=710 — consistent with all other primitives.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
      font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
@@ -18,6 +22,10 @@
   <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
     User Conversion Funnel
   </text>
+
+  <!-- Top-right overall-conversion summary (header KPI tag, aligned to title baseline) -->
+  <text x="1232" y="88" font-size="13" fill="#A0A0A0" letter-spacing="2" text-anchor="end">總轉化率</text>
+  <text x="1232" y="122" font-size="28" font-weight="900" fill="#FF6900" text-anchor="end">0.32%</text>
 
   <!-- Stage 1: VISITORS — top, widest -->
   <path d="M 200 160 L 1080 160 L 1000 274 L 280 274 Z"
@@ -50,10 +58,6 @@
   <text x="640" y="572" font-size="13" font-weight="500" fill="#FF6900" letter-spacing="2" text-anchor="middle">04 · PAID</text>
   <text x="640" y="610" font-size="28" font-weight="900" fill="#FF6900" text-anchor="middle">付費  3,200</text>
 
-  <!-- Overall conversion (bottom-right summary) -->
-  <text x="1232" y="680" font-size="13" fill="#A0A0A0" text-anchor="end">總轉化率</text>
-  <text x="1232" y="704" font-size="20" font-weight="900" fill="#FF6900" text-anchor="end">0.32%</text>
-
-  <!-- Footer page number -->
-  <text x="60" y="710" font-size="12" fill="#666666">N / N</text>
+  <!-- Footer page number (standard position, restored in v0.7.1) -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
 </svg>

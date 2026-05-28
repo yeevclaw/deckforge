@@ -29,11 +29,14 @@ DeckForge/
 │   ├── 04_planning_draft.md
 │   └── 05_designer_svg.md
 ├── references/             ← detailed knowledge bases
-│   ├── bento_grid.md       ← Bento Grid layout system (the secret sauce)
+│   ├── bento_grid.md       ← Bento Grid layout system (base layout family)
+│   ├── diagrams.md         ← 9 diagram primitives (used only when bento loses info)
+│   ├── chart_anatomy.md    ← SVG bar / line / donut chart anatomy
 │   ├── design_system.md    ← 10 palettes + motifs + typography
 │   ├── pyramid_principle.md
+│   ├── socratic_loop.md    ← Phase 1 question types + 11 scenario spines
 │   └── editable_mode.md    ← how Convert-to-Shape editing works
-├── templates/              ← 11 SVG starting points (viewBox 0 0 1280 720)
+├── templates/              ← 20 SVG starting points (viewBox 0 0 1280 720)
 │   ├── _base.svg           ← shared filters / gradients / 35 Lucide icons
 │   ├── cover.svg
 │   ├── toc.svg
@@ -44,7 +47,9 @@ DeckForge/
 │   ├── bento_mini_grid.svg ← main card + 3–5 mini-cards (dark_apple)
 │   ├── chart_bar.svg       ← vertical bar chart (single highlight color)
 │   ├── chart_line.svg      ← line + area chart for trends
-│   └── chart_donut.svg     ← donut chart with center label + legend
+│   ├── chart_donut.svg     ← donut chart with center label + legend
+│   └── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
+│       quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← diagram primitives
 ├── scripts/
 │   ├── svg_to_pptx.py      ← SVG → PPTX (embeds svgBlip ext, vectors preserved)
 │   ├── package.sh          ← build deckforge.zip for Claude Desktop upload

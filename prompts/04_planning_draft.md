@@ -594,7 +594,7 @@ In `design_brief.highlight_color`, set the actual hex value for the single highl
 - [ ] Is `is_number_first` set correctly on every content card?
 - [ ] For number-first cards, is `stat_value` a real concrete number (not "many", "several", "various")?
 - [ ] Did I pick `stat_hero` or `mini_grid` for data-dense pages?
-- [ ] Are layouts varied across the deck? (Don't repeat `three_col` 5 pages in a row.)
+- [ ] Are layouts driven by content shape? (Avoid mechanical repetition like 5 `three_col` pages in a row — **but layout choice follows content, not visual variety. Never switch to a primitive layout just to break a streak of bento pages.** Repetition of bento is a feature: shared layout language across the deck.)
 - [ ] Did I write actual speaker notes, not "TBD"?
 - [ ] Is the `design_brief` palette consistent with the tone in `brief.md`?
 - [ ] Is `design_brief.highlight_color` set to ONE concrete hex value?

@@ -311,13 +311,16 @@ Why this phase exists: top PPT agencies have a **Planner** role separate from th
 For each page in `planning.json`, generate **one self-contained SVG file** with `viewBox="0 0 1280 720"`, styled with the Bento Grid system.
 
 - Master prompt: [prompts/05_designer_svg.md](prompts/05_designer_svg.md)
-- Bento Grid spec: [references/bento_grid.md](references/bento_grid.md)
+- Bento Grid spec (base layout family): [references/bento_grid.md](references/bento_grid.md)
+- Diagram primitives spec (information-loss layouts): [references/diagrams.md](references/diagrams.md)
+- Chart anatomy: [references/chart_anatomy.md](references/chart_anatomy.md)
 - Color + typography system: [references/design_system.md](references/design_system.md)
-- SVG templates to start from: [templates/](templates/) — 11 files total:
+- SVG templates to start from: [templates/](templates/) — 20 files total:
   - **Shared assets**: `_base.svg` (filters / gradients / 35 Lucide icons used via `<use>`)
   - **Page-type starters**: `cover.svg`, `toc.svg`
   - **Bento layouts**: `bento_2col.svg` (two_col_50_50 / two_col_2_1), `bento_3col.svg`, `bento_hero.svg` (hero_top), `bento_mixed.svg` (mixed_grid), `bento_mini_grid.svg` (mini_grid — main card + 3–5 mini-cards, dark_apple)
   - **Chart layouts**: `chart_bar.svg`, `chart_line.svg`, `chart_donut.svg`
+  - **Diagram primitives** (used only when bento would lose structural information — see [references/diagrams.md](references/diagrams.md)): `flow.svg`, `timeline.svg`, `cycle.svg`, `funnel.svg`, `compare_table.svg`, `quadrant_2x2.svg`, `venn.svg`, `hierarchy_tree.svg`, `pyramid.svg`
   - **No dedicated template for**: `single_focus` (just use `bento_hero.svg` and drop the bottom row), `stat_hero` (single huge text, no template needed — see designer prompt geometry), `section_break` / `end` (derive from `cover.svg` with smaller hero text). These page types are simple enough that a template would add no value.
 
 Key rules:

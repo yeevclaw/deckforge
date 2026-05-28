@@ -57,7 +57,15 @@ Output **only** the SVG file content. Start with `<?xml version="1.0" encoding="
 
 ### Step 1: pick the layout skeleton
 
-Look up the layout in [references/bento_grid.md](../references/bento_grid.md) and use the matching template from [templates/](../templates/) as a starting point. The skeletons give you Bento card rectangles already positioned at the right coordinates.
+First identify which **layout family** this page's `layout` belongs to, then look it up in the family's reference doc and copy the matching template from [templates/](../templates/) as a starting point:
+
+| Layout family | `layout` values | Reference doc | Renders from |
+|---|---|---|---|
+| **Bento** (default) | `single_focus` / `stat_hero` / `mini_grid` / `two_col_50_50` / `two_col_2_1` / `three_col` / `hero_top` / `mixed_grid` | [references/bento_grid.md](../references/bento_grid.md) | `cards[]` |
+| **Chart** | `chart_bar` / `chart_line` / `chart_donut` | [references/chart_anatomy.md](../references/chart_anatomy.md) | `chart_data` |
+| **Diagram primitive** | `flow` / `timeline` / `cycle` / `funnel` / `compare_table` / `quadrant_2x2` / `venn` / `hierarchy_tree` / `pyramid` | [references/diagrams.md](../references/diagrams.md) | matching `*_data` field (e.g. `flow_data`, `cycle_data`) — NOT `cards` |
+
+The reference doc for each family carries the exact coordinates / geometry / color rules; the template provides a runnable starting SVG with sample data you can replace.
 
 ### Step 2: apply the palette
 
@@ -242,7 +250,7 @@ If `planning.json` specifies a chart layout (`chart_bar`, `chart_line`, `chart_d
 
 ### Step 5.6: diagram primitives when bento would lose information
 
-If `planning.json` specifies a diagram primitive layout — `flow`, `timeline`, `cycle`, `funnel`, `compare_table`, `quadrant_2x2`, `venn`, `hierarchy_tree`, or `pyramid` — the page **does not have a `cards` array**. It carries a primitive-specific data field (`flow_data`, `timeline_data`, `cycle_data`, etc.) that you render directly.
+If `planning.json` specifies a diagram primitive layout — `flow`, `timeline`, `cycle`, `funnel`, `compare_table`, `quadrant_2x2`, `venn`, `hierarchy_tree`, or `pyramid` — the page renders from a primitive-specific data field (`flow_data`, `timeline_data`, `cycle_data`, etc.), not from `cards`. The `cards` field may be omitted or `[]`; both are valid input and you must accept either without rejecting the page.
 
 **Diagram canvas convention** (same as charts):
 - Title area: page title at `x=48, y=86`, EN subtitle at `x=48, y=114` (matching standard content pages)
@@ -283,7 +291,7 @@ If `planning.json` specifies a diagram primitive layout — `flow`, `timeline`, 
 - **cover**: CN title huge (96–120px, font-weight 900) anchored left (`x=80, y=340`). EN title_en below (22–28px, gray-400). Subtle highlight-color radial-gradient glow at one corner of canvas.
 - **toc**: 4–6 numbered mini-cards in a 2×3 or 2×2 grid. Each has a big "01" / "02"… in highlight color (60–80px) + 1-line part title in white.
 - **section_break**: huge part title (80–96px white), small caption (16px gray-400). Optional faint giant numeral in background (opacity 0.08, 320–480px, in highlight color).
-- **content**: render the layout per the `cards` array — **except** for `chart_bar` / `chart_line` / `chart_donut` layouts, which **render from `chart_data` instead of `cards`** (see Step 5.5 and `references/chart_anatomy.md`). Chart pages do not have a `cards` array.
+- **content**: render the layout per the `cards` array — **except** for `chart_*` layouts (render from `chart_data`, see Step 5.5) and the 9 diagram primitive layouts (render from the matching `*_data` field, see Step 5.6). Chart and primitive pages may have an empty or omitted `cards` field; accept either without rejecting.
 - **stat_hero**: one card containing one giant number. Number at 100–120px font-weight 900 in highlight color, centered at (640, 380). Caption below at (640, 450), 16px white. Optional EN caption at (640, 475), 12px gray-500. **Optionally place a subtle highlight-color radial glow behind the number** to make it feel lit from within — `<radialGradient>` with stops at `(0%, highlight, alpha=0.10) → (60%, highlight, alpha=0.03) → (100%, alpha=0)`, rendered as an 800×280 rect centered around the number. Single-color discipline preserved (same highlight color, just alpha). If the glow visibly competes with the number, lower max alpha to 0.06. Skip the glow entirely on dense data pages — it only fits when the page is genuinely about one number with breathing room.
 - **mini_grid**: main card (`x=48, y=140, w=1184, h=532, rx=20, fill=#1A1A1A, stroke=#333333`). Inside it, render mini-cards horizontally. For 4 cards: `x = 88, 369, 650, 931`, `y=226, w=257, h=360, rx=12, fill=#222222`. For 3 cards: `x = 130, 511, 892, w=295`. For 5 cards: `x = 88, 311, 534, 757, 980, w=200`. **Keep ≥24px gap between mini-cards.**
 - **end**: "Thank you" centered. Optional contact/CTA below in 14px gray-400. Keep it minimal.

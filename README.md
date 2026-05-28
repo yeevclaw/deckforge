@@ -99,18 +99,21 @@ DeckForge/
 │   ├── 04_planning_draft.md   ← Phase 3:策劃稿(含內容拆解例子)
 │   └── 05_designer_svg.md     ← Phase 4:SVG 設計
 ├── references/             ← 詳細知識庫
-│   ├── bento_grid.md       ← Bento Grid 8 種版型(含 stat_hero / mini_grid)
+│   ├── bento_grid.md       ← Bento Grid 8 種版型(預設;含 stat_hero / mini_grid)
+│   ├── diagrams.md         ← 9 種 diagram primitives(只在 Bento 會丟資訊時切換)
 │   ├── chart_anatomy.md    ← SVG bar / line / donut 圖表
 │   ├── design_system.md    ← dark_apple palette + 11 種傳統 palette
 │   ├── pyramid_principle.md ← 金字塔原理跨 Phase 1/2/3 的對照表
 │   ├── socratic_loop.md     ← Phase 1 反詰問題類型 + 11 種情境 spine
 │   └── editable_mode.md    ← PowerPoint Convert to Shape 編輯
-├── templates/              ← 11 個 viewBox 1280×720 SVG 起始檔
+├── templates/              ← 20 個 viewBox 1280×720 SVG 起始檔
 │   ├── _base.svg           ← 共用 filter / 漸層 / 35 個 Lucide icon
 │   ├── cover.svg / toc.svg
 │   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
 │   ├── bento_mini_grid.svg ← 主卡內含 3–5 張 mini-card(dark_apple 風格)
-│   └── chart_bar.svg / chart_line.svg / chart_donut.svg
+│   ├── chart_bar.svg / chart_line.svg / chart_donut.svg
+│   └── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
+│       quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← Diagram primitives
 ├── scripts/
 │   ├── svg_to_pptx.py      ← Phase 5 組裝器(同時產出 .pptx + .pdf)
 │   ├── package.sh          ← 打包 deckforge.zip 供 Claude Desktop 上傳

@@ -1,6 +1,6 @@
 # Bento Grid Layout System
 
-The Bento Grid (便當網格) is a flexible card-based layout system, originally inspired by Japanese bento boxes and popularized by Apple's product pages. It's the **only** layout language this skill uses for content pages.
+The Bento Grid (便當網格) is a flexible card-based layout system, originally inspired by Japanese bento boxes and popularized by Apple's product pages. It's the **base** layout language for content pages — used by default unless a page genuinely needs to express direction / alignment / topology / axis structure that bento would flatten, in which case Phase 3 switches to a diagram primitive (see [diagrams.md](diagrams.md)).
 
 Why Bento Grid?
 

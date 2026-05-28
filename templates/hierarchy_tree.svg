@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  hierarchy_tree.svg — 3-layer org chart on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Vertical orientation (root at top). 3 layers, 6 leaves total.
+  Layer 1 (root):  1 node at (640, 200), 200w × 80h → y 160..240
+  Layer 2 (mid):   3 nodes at x = 256, 640, 1024, 200w × 80h → y 340..420
+  Layer 3 (leaves): 6 nodes (2 per mid-node), 160w × 80h → y 520..600
+  Connectors: right-angle lines stroke #333333 1.5px (or highlight for highlighted branch).
+  Cap at 3 layers and ~12 leaves; beyond that, split to sub-trees on separate pages.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">三層組織架構</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Three-Layer Reporting Structure
+  </text>
+
+  <!-- Connectors layer 1 → layer 2 (drawn before nodes so nodes overlay them) -->
+  <!-- Vertical from CEO bottom -->
+  <line x1="640" y1="240" x2="640" y2="290" stroke="#333333" stroke-width="1.5"/>
+  <!-- Horizontal branch -->
+  <line x1="256" y1="290" x2="1024" y2="290" stroke="#333333" stroke-width="1.5"/>
+  <!-- Verticals down to each VP -->
+  <line x1="256" y1="290" x2="256" y2="340" stroke="#333333" stroke-width="1.5"/>
+  <line x1="640" y1="290" x2="640" y2="340" stroke="#333333" stroke-width="1.5"/>
+  <line x1="1024" y1="290" x2="1024" y2="340" stroke="#333333" stroke-width="1.5"/>
+
+  <!-- Connectors layer 2 → layer 3 (left VP branch) -->
+  <line x1="256" y1="420" x2="256" y2="470" stroke="#333333" stroke-width="1.5"/>
+  <line x1="170" y1="470" x2="342" y2="470" stroke="#333333" stroke-width="1.5"/>
+  <line x1="170" y1="470" x2="170" y2="520" stroke="#333333" stroke-width="1.5"/>
+  <line x1="342" y1="470" x2="342" y2="520" stroke="#333333" stroke-width="1.5"/>
+
+  <!-- Connectors layer 2 → layer 3 (mid VP branch — highlighted) -->
+  <line x1="640" y1="420" x2="640" y2="470" stroke="#FF6900" stroke-width="2"/>
+  <line x1="554" y1="470" x2="726" y2="470" stroke="#FF6900" stroke-width="2"/>
+  <line x1="554" y1="470" x2="554" y2="520" stroke="#FF6900" stroke-width="2"/>
+  <line x1="726" y1="470" x2="726" y2="520" stroke="#FF6900" stroke-width="2"/>
+
+  <!-- Connectors layer 2 → layer 3 (right VP branch) -->
+  <line x1="1024" y1="420" x2="1024" y2="470" stroke="#333333" stroke-width="1.5"/>
+  <line x1="938" y1="470" x2="1110" y2="470" stroke="#333333" stroke-width="1.5"/>
+  <line x1="938" y1="470" x2="938" y2="520" stroke="#333333" stroke-width="1.5"/>
+  <line x1="1110" y1="470" x2="1110" y2="520" stroke="#333333" stroke-width="1.5"/>
+
+  <!-- Layer 1: CEO (highlighted) -->
+  <g transform="translate(540, 160)">
+    <rect width="200" height="80" rx="12" fill="#1A1A1A" stroke="#FF6900" stroke-width="2"/>
+    <text x="100" y="30" font-size="10" font-weight="500" fill="#FF6900" letter-spacing="2" text-anchor="middle">LEVEL 1</text>
+    <text x="100" y="58" font-size="22" font-weight="800" fill="#FF6900" text-anchor="middle">CEO</text>
+  </g>
+
+  <!-- Layer 2: VPs -->
+  <g transform="translate(156, 340)">
+    <rect width="200" height="80" rx="12" fill="#1A1A1A" stroke="#333333" stroke-width="1.5"/>
+    <text x="100" y="30" font-size="10" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">LEVEL 2</text>
+    <text x="100" y="58" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">VP 工程</text>
+  </g>
+
+  <g transform="translate(540, 340)">
+    <rect width="200" height="80" rx="12" fill="#1A1A1A" stroke="#FF6900" stroke-width="2"/>
+    <text x="100" y="30" font-size="10" font-weight="500" fill="#FF6900" letter-spacing="2" text-anchor="middle">LEVEL 2</text>
+    <text x="100" y="58" font-size="20" font-weight="700" fill="#FF6900" text-anchor="middle">VP 業務</text>
+  </g>
+
+  <g transform="translate(924, 340)">
+    <rect width="200" height="80" rx="12" fill="#1A1A1A" stroke="#333333" stroke-width="1.5"/>
+    <text x="100" y="30" font-size="10" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">LEVEL 2</text>
+    <text x="100" y="58" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">VP 財務</text>
+  </g>
+
+  <!-- Layer 3: leaves (directors) -->
+  <g transform="translate(90, 520)">
+    <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+    <text x="80" y="32" font-size="10" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
+    <text x="80" y="58" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">平台</text>
+  </g>
+  <g transform="translate(262, 520)">
+    <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+    <text x="80" y="32" font-size="10" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
+    <text x="80" y="58" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">產品</text>
+  </g>
+  <g transform="translate(474, 520)">
+    <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#FF6900" stroke-width="1.5"/>
+    <text x="80" y="32" font-size="10" font-weight="500" fill="#FF6900" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
+    <text x="80" y="58" font-size="16" font-weight="600" fill="#FF6900" text-anchor="middle">大型客戶</text>
+  </g>
+  <g transform="translate(646, 520)">
+    <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#FF6900" stroke-width="1.5"/>
+    <text x="80" y="32" font-size="10" font-weight="500" fill="#FF6900" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
+    <text x="80" y="58" font-size="16" font-weight="600" fill="#FF6900" text-anchor="middle">中小客戶</text>
+  </g>
+  <g transform="translate(858, 520)">
+    <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+    <text x="80" y="32" font-size="10" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
+    <text x="80" y="58" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">會計</text>
+  </g>
+  <g transform="translate(1030, 520)">
+    <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+    <text x="80" y="32" font-size="10" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
+    <text x="80" y="58" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">投關</text>
+  </g>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

@@ -126,9 +126,11 @@ Output **only** the JSON block, wrapped in `[PPT_PLANNING]` and `[/PPT_PLANNING]
 [/PPT_PLANNING]
 ```
 
-## Layout choices (Bento Grid + Charts)
+## Layout choices — bento-first, primitives on loss
 
-Pick the *minimum* layout that fits the content. Don't over-engineer.
+**Bento is the base layout language.** For every content page, your default question is: "Can a bento layout carry this page's essence cleanly?" If yes → use bento. Visual coherence across the deck comes from a shared layout language, not from variety.
+
+Pick the *minimum* bento layout that fits the content. Don't over-engineer.
 
 | Layout | When to use | Card slots |
 |---|---|---|
@@ -145,6 +147,8 @@ Pick the *minimum* layout that fits the content. Don't over-engineer.
 | `chart_donut` | **Composition** — 2–5 segments of a whole | 1 chart, see `chart_data` |
 
 **Prefer `stat_hero` and `mini_grid` for data-dense content.** Reach for `chart_*` when the data has actual shape (curve / distribution / ranking) — don't force a chart when 3 cards would read faster. See [references/bento_grid.md](../references/bento_grid.md) and [references/chart_anatomy.md](../references/chart_anatomy.md).
+
+If a bento attempt would *drop structural information the audience needs* (direction, alignment, topology, axis), switch to a primitive layout instead — see [Primitive layouts](#primitive-layouts--used-only-when-bento-would-lose-information) below and [references/diagrams.md](../references/diagrams.md).
 
 ### Chart pages — required `chart_data` field
 
@@ -179,6 +183,86 @@ For `chart_line`, `items[].label` represents time points ("Q1 2024", "Q2 2024", 
 2. `value` must be a real number. No placeholders. No commas/units inside the value.
 3. `label` short (≤6 Chinese chars), `label_en` short ALL-CAPS English (decorative). Both optional but recommended.
 4. Don't mix layout types inside one chart. Two metrics on the same page → two charts (use `two_col_50_50` with each side as `chart_bar` is not currently supported; create two pages instead).
+
+## Primitive layouts — used only when bento would lose information
+
+**Bento is the default. Primitives are precision rescue, not variety tools.** The test is not "could a primitive express this", it's "**what gets lost if I render this in bento?**" If you can't articulate the loss, stay in bento.
+
+### The four information-loss signals
+
+Switch from bento to a primitive only when one of these fires when you imagine the page rendered as a bento layout:
+
+| Loss type | Symptom in the bento draft | Primitive to switch to |
+|---|---|---|
+| **Direction loss** | Ordered steps flattened into a `mini_grid` / `three_col`; reader can't tell what comes first, or that one step depends on the prior | `flow` / `timeline` / `cycle` / `funnel` |
+| **Alignment loss** | Items that should compare row-by-row split into independent cards; reader has to mentally pair them across cards | `compare_table` |
+| **Topology loss** | Parent-child / tree structure flattened into peers; "who reports to whom" or "what contains what" disappears | `hierarchy_tree` / `pyramid` |
+| **Axis loss** | A 2D positional concept (one axis × another axis) described in prose or split across cards; spatial semantics gone | `quadrant_2x2` / `venn` |
+
+If none fires → stay in bento. **No primitive is justified by "the deck looks too uniform".** Visual variety is a side effect of good content-shape detection, not the goal.
+
+### The nine primitives — overview table
+
+| Primitive | Used when (positive trigger) | When NOT to use (escape back to bento) |
+|---|---|---|
+| `flow` | Sequential steps with direction, each depends on prior, no time anchor | Items are parallel features (use `mini_grid`); has dates (use `timeline`); loops back (use `cycle`) |
+| `timeline` | Events anchored to specific time points (years, quarters, milestones) | Abstract steps without time (use `flow`); single dominant date (use `stat_hero`) |
+| `cycle` | Iterative process that returns to start (PDCA, OODA, feedback loop) | One-way process (use `flow`); 6+ stages (cycle becomes unreadable) |
+| `funnel` | Stage-by-stage *quantity decrease* (conversion rates, sales pipeline) | Equal-importance stages (use `flow`); no quantity drop (use `flow`) |
+| `compare_table` | Multiple options × multiple dimensions, row-by-row alignment matters | 2 items with no shared dimensions (use `two_col_50_50`); single dimension (use `chart_bar`) |
+| `quadrant_2x2` | Items positioned by two independent axes (BCG, Eisenhower, market positioning) | Only one axis (use ranking via `chart_bar`); axes are not meaningful |
+| `venn` | 2-3 sets with explicit overlap that carries the point | No actual overlap (use comparison); 4+ sets (becomes unreadable) |
+| `hierarchy_tree` | Parent → child branching structure (org chart, taxonomy, product family) | Items are peers (use `mini_grid`); strict layer count where layer thickness matters (use `pyramid`) |
+| `pyramid` | Layered foundation→apex where *each layer supports the next* | Branching hierarchy (use `hierarchy_tree`); no foundation metaphor (use `three_col` or `mini_grid`) |
+
+Detailed schemas, ASCII geometry, designer notes, and worked examples → [references/diagrams.md](../references/diagrams.md).
+
+### Worked example — "organizational chart" page
+
+Same topic, different page essences, different layout choices:
+
+- **Page essence is "we have a CEO + 4 direct reports"** → bento `hero_top`. The structure is one-deep; nothing is lost by treating CEO as the hero and 4 VPs as peer mini-cards. Stay in bento.
+- **Page essence is "three-layer reporting structure with cross-functional links"** → primitive `hierarchy_tree`. A bento attempt flattens the reporting lines; the audience would lose "who reports to whom". Topology loss → switch.
+
+The same topic resolves to either layout depending on *which structural information the slide must carry*, not the topic name.
+
+### Anti-pattern: kitchen-sink overuse
+
+If more than ~40% of pages in a deck use primitives, that's a smell signal — reconsider. Two likely causes:
+
+1. The content really is structurally exotic (multiple flows + comparisons + hierarchies). Rare but valid.
+2. You're reaching for primitives because the deck "needs variety". Wrong reason. Go back and check the 4 loss signals — if none fires for a given page, use bento even if the previous page also used bento. Repetition of bento layouts is a feature (shared language); forced variety is a bug.
+
+### Schema — primitive `layout` field
+
+All nine primitives are valid values for the `"layout"` field. Each primitive carries its data in a primitive-specific field (parallel to how `chart_*` layouts use `chart_data`), not in `cards`. Exact field shapes are documented per primitive in [references/diagrams.md](../references/diagrams.md). Common pattern:
+
+```json
+{
+  "page_id": 11,
+  "page_type": "content",
+  "layout": "flow",
+  "title": "從訊號到決策的四步流程",
+  "title_en": "From Signal to Decision in 4 Steps",
+  "flow_data": {
+    "orientation": "horizontal",
+    "steps": [
+      { "label": "訊號收集", "label_en": "COLLECT",  "body": "..." },
+      { "label": "聚合分析", "label_en": "AGGREGATE","body": "..." },
+      { "label": "假設驗證", "label_en": "VALIDATE", "body": "..." },
+      { "label": "決策行動", "label_en": "ACT",      "body": "..." }
+    ]
+  },
+  "visual_notes": "...",
+  "speaker_notes": "..."
+}
+```
+
+When a primitive layout is set, `cards` may be empty or omitted; the primitive's data field replaces it.
+
+> **Designer-side note**: all 9 primitives have Phase 4 SVG support (geometry specs in [references/diagrams.md](../references/diagrams.md) + starter templates in `templates/`). Planner can emit any primitive freely; Designer renders directly from the matching `*_data` field.
+
+---
 
 ## Card content rules — **one card, one core point**
 
@@ -381,10 +465,11 @@ Why good: one number takes the page. 80–120px in highlight color. Caption give
 
 Before emitting a page's `cards` array, silently run this check:
 
+0. **First, scan the page essence against the 4 information-loss signals** (direction / alignment / topology / axis — see "Primitive layouts" above). If any fires → switch to the matching primitive layout and use its data field instead of `cards`. **The rules below only apply when bento is the right choice.**
 1. **If the source paragraph has 3+ specific numbers** → it's a `mini_grid` candidate. Build 3–5 mini-cards with `is_number_first: true`.
 2. **If the source paragraph has 1 dominant number** that captures the whole point → it's a `stat_hero` candidate.
 3. **If the source paragraph has 3+ parallel concepts** (no big numbers) → it's `three_col` or `mini_grid` with `is_number_first: false`.
-4. **If the source paragraph has 2 contrasting ideas** → `two_col_50_50` with 1 card each.
+4. **If the source paragraph has 2 contrasting ideas** → `two_col_50_50` with 1 card each (unless they should compare row-by-row → that's `compare_table`, see Rule 0).
 5. **Otherwise** → use `single_focus` only if literally one idea takes the page.
 
 If you find yourself wanting to put multiple ideas in one card, **go back to the source and re-extract**. There are almost always more parallel points than the first read suggests.
@@ -516,6 +601,8 @@ In `design_brief.highlight_color`, set the actual hex value for the single highl
 - [ ] Are there 0 placeholders ("Lorem", "xxxx", "TBD", "Insert here")?
 - [ ] **Pyramid alignment**: for every page, do the cards actually defend the page `title` claim (not just relate to it topically)?
 - [ ] **Title-only read**: if I read only the part_titles + page titles in order, do they form a coherent argument from setup through conclusion?
+- [ ] **Bento-first discipline**: for every page using a primitive layout (`flow` / `timeline` / `cycle` / `funnel` / `compare_table` / `quadrant_2x2` / `venn` / `hierarchy_tree` / `pyramid`), can I name the specific information-loss signal that justified leaving bento? If not, switch back to bento.
+- [ ] **Primitive ratio**: is the primitive-layout share of content pages ≤ ~40%? If higher, re-check each primitive page for false positives on the loss signals.
 
 Fail any check → revise before emitting.
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  venn.svg — 3-set Venn diagram on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Three circles in equilateral arrangement, r=180.
+  Centers form a triangle with side 240:
+    Set 0 (top):          (640, 280)
+    Set 1 (bottom-left):  (520, 488)
+    Set 2 (bottom-right): (760, 488)
+  Each circle: stroke highlight at full saturation, fill highlight at very low alpha (0.10).
+  Intersection labels: "all" at center of triangle, "01"/"02"/"12" in 2-way overlap regions (optional).
+  For 2-set venn: only Set 0 and Set 1, centers (520, 410) and (760, 410), no "02"/"12"/"all".
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">理想人選的三能力交集</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Three Competencies · Where the Ideal Candidate Sits
+  </text>
+
+  <!-- Three circles (stroke + low-alpha fill so overlaps darken naturally) -->
+  <circle cx="640" cy="280" r="180" fill="#FF6900" fill-opacity="0.10" stroke="#FF6900" stroke-width="1.5"/>
+  <circle cx="520" cy="488" r="180" fill="#FF6900" fill-opacity="0.10" stroke="#FF6900" stroke-width="1.5"/>
+  <circle cx="760" cy="488" r="180" fill="#FF6900" fill-opacity="0.10" stroke="#FF6900" stroke-width="1.5"/>
+
+  <!-- Set labels (outside each circle) -->
+  <!-- Set 0 (top) -->
+  <text x="640" y="78" font-size="20" font-weight="800" fill="#FFFFFF" text-anchor="middle">技術能力</text>
+  <text x="640" y="146" font-size="12" fill="#A0A0A0" text-anchor="middle">深度技術經驗</text>
+
+  <!-- Set 1 (bottom-left) — placed left of the bottom-left circle -->
+  <text x="280" y="592" font-size="20" font-weight="800" fill="#FFFFFF" text-anchor="middle">業務理解</text>
+  <text x="280" y="616" font-size="12" fill="#A0A0A0" text-anchor="middle">讀懂市場與成本</text>
+
+  <!-- Set 2 (bottom-right) — placed right of the bottom-right circle -->
+  <text x="1000" y="592" font-size="20" font-weight="800" fill="#FFFFFF" text-anchor="middle">溝通能力</text>
+  <text x="1000" y="616" font-size="12" fill="#A0A0A0" text-anchor="middle">向上下傳遞清晰決策</text>
+
+  <!-- Intersection labels -->
+  <!-- "all" — center of triangle, highlighted -->
+  <text x="640" y="416" font-size="18" font-weight="800" fill="#FF6900" text-anchor="middle">理想人選</text>
+  <text x="640" y="438" font-size="11" fill="#FF6900" text-anchor="middle" letter-spacing="2">IDEAL FIT</text>
+
+  <!-- "01" (top ∩ bottom-left, excluding bottom-right) -->
+  <text x="455" y="380" font-size="12" fill="#A0A0A0" text-anchor="middle">業務型</text>
+  <text x="455" y="398" font-size="12" fill="#A0A0A0" text-anchor="middle">技術主管</text>
+
+  <!-- "02" (top ∩ bottom-right) -->
+  <text x="825" y="380" font-size="12" fill="#A0A0A0" text-anchor="middle">技術型</text>
+  <text x="825" y="398" font-size="12" fill="#A0A0A0" text-anchor="middle">業務 PM</text>
+
+  <!-- "12" (bottom-left ∩ bottom-right) -->
+  <text x="640" y="534" font-size="12" fill="#A0A0A0" text-anchor="middle">面向業務的</text>
+  <text x="640" y="552" font-size="12" fill="#A0A0A0" text-anchor="middle">職能主管</text>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

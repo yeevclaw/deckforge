@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  funnel.svg — 4-stage conversion funnel on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  4 stacked trapezoids, centered horizontally on x=640.
+  Stage widths (linear narrowing): 880 → 720 → 560 → 400 → 240 (per-stage Δ=160).
+  Each stage height: 114. Stage y-positions: 160, 282, 404, 526 (gap 8).
+  Stroke alpha fades from top (0.4) to bottom (1.0) so the conversion goal pops.
+  Conversion rates rendered to the right of each gap.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">用戶轉化漏斗</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    User Conversion Funnel
+  </text>
+
+  <!-- Stage 1: VISITORS — top, widest -->
+  <path d="M 200 160 L 1080 160 L 1000 274 L 280 274 Z"
+        fill="#1A1A1A" stroke="#FF6900" stroke-width="1.5" stroke-opacity="0.40"/>
+  <text x="640" y="210" font-size="13" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">01 · VISITORS</text>
+  <text x="640" y="248" font-size="34" font-weight="900" fill="#FFFFFF" text-anchor="middle">訪客  1,000,000</text>
+
+  <!-- Conversion arrow + rate (between stages 1 and 2) -->
+  <text x="1110" y="282" font-size="13" fill="#A0A0A0">↓  12.0%</text>
+
+  <!-- Stage 2: SIGNUP -->
+  <path d="M 280 282 L 1000 282 L 920 396 L 360 396 Z"
+        fill="#1A1A1A" stroke="#FF6900" stroke-width="1.5" stroke-opacity="0.60"/>
+  <text x="640" y="328" font-size="13" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">02 · SIGNUP</text>
+  <text x="640" y="366" font-size="32" font-weight="900" fill="#FFFFFF" text-anchor="middle">註冊  120,000</text>
+
+  <text x="1030" y="404" font-size="13" fill="#A0A0A0">↓  20.0%</text>
+
+  <!-- Stage 3: TRIAL -->
+  <path d="M 360 404 L 920 404 L 840 518 L 440 518 Z"
+        fill="#1A1A1A" stroke="#FF6900" stroke-width="1.5" stroke-opacity="0.80"/>
+  <text x="640" y="450" font-size="13" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">03 · TRIAL</text>
+  <text x="640" y="488" font-size="30" font-weight="900" fill="#FFFFFF" text-anchor="middle">試用  24,000</text>
+
+  <text x="950" y="526" font-size="13" fill="#A0A0A0">↓  13.3%</text>
+
+  <!-- Stage 4: PAID — bottom, conversion goal, highlighted -->
+  <path d="M 440 526 L 840 526 L 760 640 L 520 640 Z"
+        fill="#1A1A1A" stroke="#FF6900" stroke-width="2.5"/>
+  <text x="640" y="572" font-size="13" font-weight="500" fill="#FF6900" letter-spacing="2" text-anchor="middle">04 · PAID</text>
+  <text x="640" y="610" font-size="28" font-weight="900" fill="#FF6900" text-anchor="middle">付費  3,200</text>
+
+  <!-- Overall conversion (bottom-right summary) -->
+  <text x="1232" y="680" font-size="13" fill="#A0A0A0" text-anchor="end">總轉化率</text>
+  <text x="1232" y="704" font-size="20" font-weight="900" fill="#FF6900" text-anchor="end">0.32%</text>
+
+  <!-- Footer page number -->
+  <text x="60" y="710" font-size="12" fill="#666666">N / N</text>
+</svg>

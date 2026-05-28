@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  timeline.svg — horizontal 5-event timeline on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Axis line at y=420 spanning x=144..1136. Dots evenly spaced (gap 248).
+  Last event highlighted by default (bigger dot, highlight-color label).
+  For 4 events: dots at x = 184, 488, 792, 1096 (gap 304).
+  For 6 events: dots at x = 124, 326, 528, 730, 932, 1134 (gap ~202).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">公司五年發展軌跡</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Five-Year Trajectory
+  </text>
+
+  <!-- Axis line -->
+  <line x1="120" y1="420" x2="1160" y2="420" stroke="#333333" stroke-width="2"/>
+
+  <!-- Event 1: 2021 -->
+  <text x="144" y="382" font-size="18" font-weight="700" fill="#A0A0A0" text-anchor="middle">2021</text>
+  <circle cx="144" cy="420" r="8" fill="#1A1A1A" stroke="#A0A0A0" stroke-width="2"/>
+  <text x="144" y="462" font-size="20" font-weight="800" fill="#FFFFFF" text-anchor="middle">上市</text>
+  <text x="144" y="488" font-size="12" fill="#A0A0A0" text-anchor="middle" letter-spacing="1">IPO HK</text>
+  <text x="144" y="510" font-size="13" fill="#A0A0A0" text-anchor="middle">於港交所掛牌</text>
+
+  <!-- Event 2: 2022 -->
+  <text x="392" y="382" font-size="18" font-weight="700" fill="#A0A0A0" text-anchor="middle">2022</text>
+  <circle cx="392" cy="420" r="8" fill="#1A1A1A" stroke="#A0A0A0" stroke-width="2"/>
+  <text x="392" y="462" font-size="20" font-weight="800" fill="#FFFFFF" text-anchor="middle">戰略併購</text>
+  <text x="392" y="488" font-size="12" fill="#A0A0A0" text-anchor="middle" letter-spacing="1">M&amp;A</text>
+  <text x="392" y="510" font-size="13" fill="#A0A0A0" text-anchor="middle">整合 AIoT 平台</text>
+
+  <!-- Event 3: 2023 -->
+  <text x="640" y="382" font-size="18" font-weight="700" fill="#A0A0A0" text-anchor="middle">2023</text>
+  <circle cx="640" cy="420" r="8" fill="#1A1A1A" stroke="#A0A0A0" stroke-width="2"/>
+  <text x="640" y="462" font-size="20" font-weight="800" fill="#FFFFFF" text-anchor="middle">業務轉型</text>
+  <text x="640" y="488" font-size="12" fill="#A0A0A0" text-anchor="middle" letter-spacing="1">PIVOT</text>
+  <text x="640" y="510" font-size="13" fill="#A0A0A0" text-anchor="middle">服務占比破 20%</text>
+
+  <!-- Event 4: 2024 -->
+  <text x="888" y="382" font-size="18" font-weight="700" fill="#A0A0A0" text-anchor="middle">2024</text>
+  <circle cx="888" cy="420" r="8" fill="#1A1A1A" stroke="#A0A0A0" stroke-width="2"/>
+  <text x="888" y="462" font-size="20" font-weight="800" fill="#FFFFFF" text-anchor="middle">服務拐點</text>
+  <text x="888" y="488" font-size="12" fill="#A0A0A0" text-anchor="middle" letter-spacing="1">INFLECTION</text>
+  <text x="888" y="510" font-size="13" fill="#A0A0A0" text-anchor="middle">服務首超硬體</text>
+
+  <!-- Event 5: 2025 — highlighted -->
+  <text x="1136" y="378" font-size="20" font-weight="800" fill="#FF6900" text-anchor="middle">2025</text>
+  <circle cx="1136" cy="420" r="12" fill="#FF6900" stroke="#FF6900" stroke-width="2"/>
+  <text x="1136" y="462" font-size="20" font-weight="800" fill="#FF6900" text-anchor="middle">IPO 分拆</text>
+  <text x="1136" y="488" font-size="12" fill="#FF6900" text-anchor="middle" letter-spacing="1">SPIN-OFF</text>
+  <text x="1136" y="510" font-size="13" fill="#A0A0A0" text-anchor="middle">服務事業獨立上市</text>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

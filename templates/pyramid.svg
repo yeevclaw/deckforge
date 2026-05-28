@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  pyramid.svg — 4-layer pyramid (bottom_up direction) on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Each layer is a trapezoid; layer N's top width = layer N+1's bottom width.
+  Layer widths (bottom..top of pyramid): foundation 800↓600, mid 600↓400, upper 400↓200, apex 200↓80.
+  Each layer height: 100. Total pyramid height: 400. Pyramid y range: 200..600 (centered on canvas).
+  All layer centers on x=640.
+  direction = "bottom_up" (apex highlighted by default). For "top_down", flip data assignment.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">資料到決策的四層階梯</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    From Raw Data to Decisions · Bottom Up
+  </text>
+
+  <!-- Layer 1: foundation (bottom, widest) -->
+  <path d="M 240 600 L 1040 600 L 940 500 L 340 500 Z"
+        fill="#1A1A1A" stroke="#333333" stroke-width="1.5"/>
+  <text x="640" y="544" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">原始資料層</text>
+  <text x="640" y="572" font-size="12" fill="#A0A0A0" text-anchor="middle">感測器 + 日誌 + 第三方資料</text>
+
+  <!-- Layer 2 -->
+  <path d="M 340 500 L 940 500 L 840 400 L 440 400 Z"
+        fill="#1A1A1A" stroke="#333333" stroke-width="1.5"/>
+  <text x="640" y="444" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">結構化資料層</text>
+  <text x="640" y="472" font-size="12" fill="#A0A0A0" text-anchor="middle">ETL 後可查詢</text>
+
+  <!-- Layer 3 -->
+  <path d="M 440 400 L 840 400 L 740 300 L 540 300 Z"
+        fill="#1A1A1A" stroke="#333333" stroke-width="1.5"/>
+  <text x="640" y="344" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">洞察層</text>
+  <text x="640" y="372" font-size="12" fill="#A0A0A0" text-anchor="middle">BI 報表與模型輸出</text>
+
+  <!-- Layer 4: apex (highlighted by default for bottom_up) -->
+  <path d="M 540 300 L 740 300 L 680 200 L 600 200 Z"
+        fill="#1A1A1A" stroke="#FF6900" stroke-width="2.5"/>
+  <text x="640" y="258" font-size="16" font-weight="800" fill="#FF6900" text-anchor="middle">決策層</text>
+  <text x="640" y="280" font-size="11" fill="#A0A0A0" text-anchor="middle" letter-spacing="1">DECISION</text>
+
+  <!-- Side annotations (optional reading-direction hint) -->
+  <text x="100" y="558" font-size="11" fill="#666666" letter-spacing="2" text-anchor="start">FOUNDATION</text>
+  <text x="100" y="258" font-size="11" fill="#FF6900" letter-spacing="2" text-anchor="start">APEX</text>
+
+  <!-- Upward direction arrow on the side -->
+  <defs>
+    <marker id="pyramidArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#666666"/>
+    </marker>
+  </defs>
+  <line x1="120" y1="540" x2="120" y2="280" stroke="#666666" stroke-width="1.5" marker-end="url(#pyramidArrow)"/>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

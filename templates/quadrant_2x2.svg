@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  quadrant_2x2.svg — 2-axis positioning (BCG / Eisenhower / market-positioning) on dark_apple (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Plot bounding box: x=200..1080 (w=880), y=200..620 (h=420). Origin (axes intersect): (640, 410).
+  Normalized item position (x in [0,1], y in [0,1]): canvas_x = 200 + x*880, canvas_y = 620 − y*420.
+  Highlighted quadrant: light tint background (highlight at 0.05 alpha) + quadrant label in highlight color.
+  Default highlight = top_right (the "good" quadrant in BCG / Eisenhower frameworks).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">產品線在 BCG 矩陣中的定位</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Product Lines · BCG Growth-Share Matrix
+  </text>
+
+  <!-- Highlighted quadrant background (top-right = Star) -->
+  <rect x="640" y="200" width="440" height="210" fill="#FF6900" fill-opacity="0.05"/>
+
+  <!-- Quadrant labels (subtle, in each quadrant's upper area) -->
+  <text x="220" y="226" font-size="11" font-weight="500" fill="#666666" letter-spacing="2">問號 · QUESTION</text>
+  <text x="1060" y="226" font-size="11" font-weight="500" fill="#FF6900" letter-spacing="2" text-anchor="end">明星 · STAR</text>
+  <text x="220" y="608" font-size="11" font-weight="500" fill="#666666" letter-spacing="2">瘦狗 · DOG</text>
+  <text x="1060" y="608" font-size="11" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="end">金牛 · CASH COW</text>
+
+  <!-- Axes -->
+  <line x1="200" y1="410" x2="1080" y2="410" stroke="#333333" stroke-width="1.5"/>
+  <line x1="640" y1="200" x2="640" y2="620" stroke="#333333" stroke-width="1.5"/>
+
+  <!-- X-axis labels -->
+  <text x="1080" y="438" font-size="13" font-weight="500" fill="#A0A0A0" text-anchor="end">市占率 (Share)  ▶</text>
+  <text x="210" y="438" font-size="11" fill="#666666" letter-spacing="1">LOW</text>
+  <text x="1075" y="438" font-size="11" fill="#666666" letter-spacing="1" text-anchor="end">HIGH</text>
+
+  <!-- Y-axis labels -->
+  <text x="652" y="208" font-size="13" font-weight="500" fill="#A0A0A0">▲  成長率 (Growth)</text>
+  <text x="652" y="608" font-size="11" fill="#666666" letter-spacing="1">LOW</text>
+  <text x="652" y="218" font-size="11" fill="#666666" letter-spacing="1">HIGH</text>
+
+  <!-- Items: BCG products. (x=share, y=growth), both normalized 0..1 -->
+  <!-- Item A: high share, high growth → Star -->
+  <circle cx="904" cy="326" r="9" fill="#FF6900"/>
+  <text x="922" y="330" font-size="14" font-weight="600" fill="#FFFFFF">產品線 A</text>
+
+  <!-- Item B: low share, high growth → Question Mark -->
+  <circle cx="464" cy="242" r="9" fill="#FFFFFF" fill-opacity="0.65"/>
+  <text x="482" y="246" font-size="14" font-weight="600" fill="#FFFFFF">產品線 B</text>
+
+  <!-- Item C: high share, low growth → Cash Cow -->
+  <circle cx="728" cy="494" r="9" fill="#FFFFFF" fill-opacity="0.65"/>
+  <text x="746" y="498" font-size="14" font-weight="600" fill="#FFFFFF">產品線 C</text>
+
+  <!-- Item D: low share, low growth → Dog -->
+  <circle cx="376" cy="536" r="9" fill="#FFFFFF" fill-opacity="0.45"/>
+  <text x="394" y="540" font-size="14" font-weight="600" fill="#A0A0A0">產品線 D</text>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

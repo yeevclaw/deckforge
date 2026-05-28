@@ -208,19 +208,25 @@ Save the outline to `outline.json` in the working directory.
 
 This is what most AI PPT tools miss. Before any design, decide for **each page**:
 - What concrete content goes there (bullets, stats, quotes, charts — actual words, not placeholders)
-- Which **Bento Grid layout** fits (see [references/bento_grid.md](references/bento_grid.md))
+- Which layout fits — **bento-first**: try a Bento Grid layout first (see [references/bento_grid.md](references/bento_grid.md)). Only switch to a diagram primitive when the bento attempt would lose structural information the audience needs (see [references/diagrams.md](references/diagrams.md))
 - What visual elements are needed (icons, images, charts, no-element)
 - Speaker notes (1–2 sentences per page)
 
-Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). Output goes to `planning.json`. There are **two card-page shapes** (regular Bento + chart). Layout enum is:
+Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). Output goes to `planning.json`. Layout enum is:
 
 ```
 "layout":
-  // Bento Grid card layouts:
+  // Bento Grid card layouts (default — try these first):
   "single_focus" | "stat_hero" | "mini_grid" | "two_col_50_50" |
   "two_col_2_1" | "three_col" | "hero_top" | "mixed_grid"
   // Chart layouts (use chart_data instead of cards):
   | "chart_bar" | "chart_line" | "chart_donut"
+  // Diagram primitives (use only when bento loses information —
+  // direction / alignment / topology / axis loss; see references/diagrams.md):
+  | "flow" | "timeline" | "cycle" | "funnel"
+  | "compare_table"
+  | "hierarchy_tree" | "pyramid"
+  | "quadrant_2x2" | "venn"
 ```
 
 **Bento card page** — uses `cards: []`. Each card supports `is_number_first`, `stat_value`/`stat_caption`/`stat_caption_en`, `heading`/`body`/`icon_hint`/`size_hint`. **Optional `sub_cards: []`** can nest 2–3 mini-cards inside a hero card, but only on layouts with a tall hero region — `single_focus`, `two_col_2_1` (wide slot), or `mixed_grid` (big slot). **Not** allowed on `mini_grid`, `three_col`, or `hero_top` (these layouts don't have enough vertical room).
@@ -493,7 +499,8 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── 04_planning_draft.md          ← phase 3 master prompt (with extraction examples)
 │   └── 05_designer_svg.md            ← phase 4 master prompt (SVG output)
 ├── references/
-│   ├── bento_grid.md                 ← Bento Grid layout system (8 layouts)
+│   ├── bento_grid.md                 ← Bento Grid layout system (8 layouts — the default)
+│   ├── diagrams.md                   ← 9 diagram primitives — used only when bento loses information
 │   ├── chart_anatomy.md              ← SVG bar / line / donut charts
 │   ├── design_system.md              ← palettes, typography, motifs
 │   ├── pyramid_principle.md          ← 金字塔原理 quick guide

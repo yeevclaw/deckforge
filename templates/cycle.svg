@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  cycle.svg — 4-stage circular cycle on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Cycle center: (640, 410). 4 stages at compass positions, node centers on radius 180.
+    Top: (640, 230)   — node y=180..280
+    Right: (820, 410) — node x=740..900
+    Bottom: (640, 590) — node y=540..640
+    Left: (460, 410)  — node x=380..540
+  Curved arrows hug the central area between adjacent nodes (clockwise direction).
+  Center carries the cycle name (e.g. "PDCA"). One stage may be highlighted via highlight_index.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">持續改進的 PDCA 循環</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    The PDCA Continuous Improvement Loop
+  </text>
+
+  <!-- Arrowhead marker for cycle arrows -->
+  <defs>
+    <marker id="cycleArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#666666"/>
+    </marker>
+  </defs>
+
+  <!-- Center label (cycle name) -->
+  <text x="640" y="395" font-size="34" font-weight="900" fill="#FF6900" text-anchor="middle" letter-spacing="2">PDCA</text>
+  <text x="640" y="430" font-size="13" fill="#A0A0A0" text-anchor="middle" letter-spacing="2">CONTINUOUS · LOOP</text>
+
+  <!-- Curved arrows (clockwise: Top→Right→Bottom→Left→Top) -->
+  <!-- Top → Right -->
+  <path d="M 720 252 C 778 252, 820 296, 820 360"
+        fill="none" stroke="#666666" stroke-width="2" marker-end="url(#cycleArrow)"/>
+  <!-- Right → Bottom -->
+  <path d="M 820 460 C 820 524, 778 568, 720 568"
+        fill="none" stroke="#666666" stroke-width="2" marker-end="url(#cycleArrow)"/>
+  <!-- Bottom → Left -->
+  <path d="M 560 568 C 502 568, 460 524, 460 460"
+        fill="none" stroke="#666666" stroke-width="2" marker-end="url(#cycleArrow)"/>
+  <!-- Left → Top -->
+  <path d="M 460 360 C 460 296, 502 252, 560 252"
+        fill="none" stroke="#666666" stroke-width="2" marker-end="url(#cycleArrow)"/>
+
+  <!-- Node 1: PLAN (top) -->
+  <g transform="translate(560, 180)">
+    <rect width="160" height="100" rx="14" fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+    <text x="80" y="30" font-size="11" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">PLAN</text>
+    <text x="80" y="62" font-size="22" font-weight="800" fill="#FFFFFF" text-anchor="middle">規劃</text>
+    <text x="80" y="84" font-size="12" fill="#A0A0A0" text-anchor="middle">設定目標與假設</text>
+  </g>
+
+  <!-- Node 2: DO (right) -->
+  <g transform="translate(740, 360)">
+    <rect width="160" height="100" rx="14" fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+    <text x="80" y="30" font-size="11" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">DO</text>
+    <text x="80" y="62" font-size="22" font-weight="800" fill="#FFFFFF" text-anchor="middle">執行</text>
+    <text x="80" y="84" font-size="12" fill="#A0A0A0" text-anchor="middle">小規模試行</text>
+  </g>
+
+  <!-- Node 3: CHECK (bottom) -->
+  <g transform="translate(560, 540)">
+    <rect width="160" height="100" rx="14" fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
+    <text x="80" y="30" font-size="11" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">CHECK</text>
+    <text x="80" y="62" font-size="22" font-weight="800" fill="#FFFFFF" text-anchor="middle">檢視</text>
+    <text x="80" y="84" font-size="12" fill="#A0A0A0" text-anchor="middle">對照結果與假設</text>
+  </g>
+
+  <!-- Node 4: ACT (left) — highlighted -->
+  <g transform="translate(380, 360)">
+    <rect width="160" height="100" rx="14" fill="#1A1A1A" stroke="#FF6900" stroke-width="2"/>
+    <text x="80" y="30" font-size="11" font-weight="500" fill="#FF6900" letter-spacing="2" text-anchor="middle">ACT</text>
+    <text x="80" y="62" font-size="22" font-weight="800" fill="#FF6900" text-anchor="middle">改進</text>
+    <text x="80" y="84" font-size="12" fill="#A0A0A0" text-anchor="middle">調整後進入下一輪</text>
+  </g>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

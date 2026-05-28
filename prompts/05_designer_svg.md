@@ -240,6 +240,44 @@ If `planning.json` specifies a chart layout (`chart_bar`, `chart_line`, `chart_d
 
 **Single-highlight-color discipline applies to charts too** — never paint each segment a different color. Use alpha variations of the deck's highlight color.
 
+### Step 5.6: diagram primitives when bento would lose information
+
+If `planning.json` specifies a diagram primitive layout — `flow`, `timeline`, `cycle`, `funnel`, `compare_table`, `quadrant_2x2`, `venn`, `hierarchy_tree`, or `pyramid` — the page **does not have a `cards` array**. It carries a primitive-specific data field (`flow_data`, `timeline_data`, `cycle_data`, etc.) that you render directly.
+
+**Diagram canvas convention** (same as charts):
+- Title area: page title at `x=48, y=86`, EN subtitle at `x=48, y=114` (matching standard content pages)
+- Diagram area: `x=88, y=160, width=1104, height=480` (inside the canvas with 48px outer margin, with ~32px gutter top/bottom of the diagram region)
+- Footer page number: `x=1200, y=710` as usual
+
+**Primitive rules — applies to all 9**:
+1. **Single-highlight-color discipline**: same rule as charts. The primitive's "primary" element (the recommended quadrant, the headline flow node, the apex pyramid layer, etc.) uses `highlight_color`; everything else is the dark-mode neutral stack (`#FFFFFF` / `#A0A0A0` / `#666666` text, `#1A1A1A` / `#222222` fills, `#333333` strokes/connectors).
+2. **No accent line under page title** — same as bento.
+3. **Editable text** — every label/value sits in a real `<text>` element.
+4. **Self-contained** — no remote refs.
+5. **One primitive per page** — primitives are not composable. Don't nest a flow inside a quadrant. If the content needs two diagrams, split to two pages.
+6. **Highlight one element** — by default, exactly one element in the primitive carries the highlight color (the headline step, the recommended option, the apex layer, etc.). The primitive_data field may specify which via `highlight_index` (flow / timeline / cycle / funnel / pyramid) or `highlight_column` (compare_table) or `highlight_quadrant` (quadrant_2x2). If unspecified, default to highlighting the most recent / final / apex element.
+
+**Per-primitive geometry, schema, and SVG anatomy** → [references/diagrams.md](../references/diagrams.md). Each primitive has a dedicated section with full coordinate math, a starter template path, and worked examples. Starter SVGs are in `templates/`:
+
+| Primitive | Starter template |
+|---|---|
+| `flow` | `templates/flow.svg` |
+| `timeline` | `templates/timeline.svg` |
+| `cycle` | `templates/cycle.svg` |
+| `funnel` | `templates/funnel.svg` |
+| `compare_table` | `templates/compare_table.svg` |
+| `quadrant_2x2` | `templates/quadrant_2x2.svg` |
+| `venn` | `templates/venn.svg` |
+| `hierarchy_tree` | `templates/hierarchy_tree.svg` |
+| `pyramid` | `templates/pyramid.svg` |
+
+**Workflow for a primitive page**:
+1. Read `planning.json` page → find `layout` (one of the 9 primitives) and the matching `*_data` field.
+2. Open the matching section in `references/diagrams.md` for canvas math.
+3. Copy the matching template from `templates/` as a starting point.
+4. Replace sample data with the page's actual data; map highlight color from `design_brief.highlight_color`.
+5. Run the primitive-specific QA at the end of `references/diagrams.md` (e.g., "no overlapping labels", "arrows point in the declared direction").
+
 ### Step 6: page-type-specific tweaks
 
 - **cover**: CN title huge (96–120px, font-weight 900) anchored left (`x=80, y=340`). EN title_en below (22–28px, gray-400). Subtle highlight-color radial-gradient glow at one corner of canvas.

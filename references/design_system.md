@@ -187,43 +187,55 @@ Atmospheric. Best on dark backgrounds for cover/section pages, paired with white
 
 | Hint key | Header font | Body font | Vibe |
 |---|---|---|---|
-| `serif_header_sans_body` | Noto Serif TC, Playfair Display | Noto Sans TC, Inter | Editorial, premium |
-| `sans_only_bold` | Noto Sans TC 900, Inter 800 | Noto Sans TC 400, Inter 400 | Modern, tech |
-| `mono_accent` | JetBrains Mono 700, Inter 800 | Inter 400 | Tech-forward, dev-tools |
+| `serif_header_sans_body` | Noto Serif TC, Playfair Display | PingFang TC, Helvetica | Editorial, premium |
+| `sans_only_bold` | PingFang TC 900, Helvetica 800 | PingFang TC 400, Helvetica 400 | Modern, tech |
+| `mono_accent` | JetBrains Mono 700, Helvetica 800 | Helvetica 400 | Tech-forward, dev-tools |
 
-Web fonts are **not** loaded. To keep SVG pages fully self-contained, portable, and editable in PowerPoint, the designer uses a system-font stack via the SVG `font-family` attribute:
+Web fonts are **not** loaded. To keep SVG pages fully self-contained, portable, and editable in PowerPoint, the designer uses a system-font stack via the SVG `font-family` attribute on the root `<svg>`:
 
 ```xml
-<svg … font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', Inter, system-ui, sans-serif">
+<svg … font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
 ```
 
-This stack picks the best available CJK + Latin pair on macOS, Windows, and Linux. The PNG fallback rendered by `svg_to_pptx.py` will resolve the same stack via the renderer's font config (cairosvg → fontconfig, Inkscape → system fonts, rsvg-convert → fontconfig).
+**Order rationale**:
+- **Latin chars** resolve to Helvetica (macOS preinstalled) → Helvetica Neue → Arial (Windows fallback; visually near-identical Microsoft clone of Helvetica)
+- **CJK chars** resolve to PingFang TC (macOS preinstalled) → Microsoft JhengHei 微軟正黑體 (Windows preinstalled) → Hiragino Sans (older macOS) → Noto Sans CJK TC (Linux / installed-by-choice) → Noto Sans TC → sans-serif final fallback
+
+Both Latin and CJK use OS-preinstalled fonts — zero recipient install effort. Same stack works in macOS / Windows / Linux without anyone needing to download anything. The PNG fallback rendered by `svg_to_pptx.py` resolves the same stack via the renderer's font config (resvg-py → fontkit / fontconfig, cairosvg → fontconfig, Inkscape → system fonts).
 
 ### Sizes (1280×720 canvas)
 
 Use **dramatic** size contrast. The point of the design system is to create a clear visual hierarchy from "this matters" to "this is supporting." Soft, similar sizes flatten the deck.
+
+**Sizes bumped in v0.7.4** to improve readability of body / caption / supporting text on projected slides. Hero numbers, cover titles, and mini-card stat numbers unchanged — they were already commanding.
 
 | Element | Size | Weight | Color (dark_apple) | Color (light) |
 |---|---|---|---|---|
 | Cover title (CN) | 96–120px | 900 | white | primary |
 | Cover subtitle (EN) | 22–28px | 500 | gray-400 / `#A0A0A0` | text-muted |
 | Page title (CN) | 40–52px | 800 | white | primary |
-| Page title (EN, optional) | 16–20px | 500 | gray-500 / `#666666` | text-muted |
+| Page title (EN, optional) | **18–22px** | 500 | gray-500 / `#666666` | text-muted |
 | Page subtitle | 18–22px | 400 | gray-400 | text-muted |
 | **Hero stat number** | **80–120px** | **900** | **highlight color** | **highlight color** |
-| Hero stat caption | 14–16px | 400 | gray-400 | text-muted |
-| Card heading (text-first) | 32–48px | 700–800 | white or highlight | primary |
-| Mini-card heading | 24–32px | 700 | white | primary |
-| Card body | 14–16px | 400, line-height 1.55 | gray-400 | text |
-| English subtitle on mini-card | 11–13px | 400 | gray-500 | text-muted |
+| Hero stat caption (CN) | **16–18px** | 400 | gray-300 / `#A0A0A0` | text-muted |
+| Hero stat caption (EN) | **12–14px** | 400 | gray-500 / `#666666` | text-muted |
+| Card heading (text-first, big) | **36–52px** | 700–800 | white or highlight | primary |
+| Mini-card heading (text-first) | **26–34px** | 700 | white | primary |
+| Mini-card stat number | 56–72px | 900 | highlight | highlight |
+| Mini-card caption (CN) | **16–18px** | 400, line-height 1.55 | white / gray-300 | text |
+| Mini-card caption (EN, decorative) | **12–14px** | 400 | gray-500 | text-muted |
+| Card body / support text | **17–19px** | 400, line-height 1.55 | gray-400 | text |
+| Primitive body (flow / cycle / pyramid / venn / tree node body) | **14–15px** | 400 | gray-400 | text |
+| Compare_table cell value | **19px** | 700 | white or highlight | primary |
+| Compare_table dimension label | **17px** | 500 | gray-400 | text |
 | Captions / footnotes | 11–13px | 400, opacity 0.6 | gray-600 | text-muted |
 
 ### Visual hierarchy rules
 
-1. **Numbers dominate.** Whenever a card carries a key statistic, the number itself is the largest element on the card (`80–120px` for hero stats; `48–64px` for secondary stats). The caption explaining the number sits beneath it at `14–16px gray-400`.
+1. **Numbers dominate.** Whenever a card carries a key statistic, the number itself is the largest element on the card (`80–120px` for hero stats; `56–72px` for mini-card stats). The caption explaining the number sits beneath it at `16–18px gray-300`.
 2. **One hero element per card.** Either the big number OR the big text-title, never both at the same size.
 3. **English is decorative.** Bilingual subtitles use one tier smaller and gray-500/600 — they add design polish without competing with the Chinese core.
-4. **Body text is small and quiet.** `14–16px gray-400` for support copy. Don't make body text fight with headings.
+4. **Body text is readable but quiet.** `17–19px gray-400` for support copy. Quieter than headings, but **large enough to read when projected** (the v0.7.4 bump targeted this specifically — pre-v0.7.4 sizes were 14–16px which read too small from the back row).
 
 ---
 

@@ -9,7 +9,7 @@
   direction = "bottom_up" (apex highlighted by default). For "top_down", flip data assignment.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
-     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
 
   <rect width="1280" height="720" fill="#000000"/>
 
@@ -23,19 +23,19 @@
   <path d="M 240 600 L 1040 600 L 940 500 L 340 500 Z"
         fill="#1A1A1A" stroke="#333333" stroke-width="1.5"/>
   <text x="640" y="544" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">原始資料層</text>
-  <text x="640" y="572" font-size="12" fill="#A0A0A0" text-anchor="middle">感測器 + 日誌 + 第三方資料</text>
+  <text x="640" y="572" font-size="14" fill="#A0A0A0" text-anchor="middle">感測器 + 日誌 + 第三方資料</text>
 
   <!-- Layer 2 -->
   <path d="M 340 500 L 940 500 L 840 400 L 440 400 Z"
         fill="#1A1A1A" stroke="#333333" stroke-width="1.5"/>
   <text x="640" y="444" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">結構化資料層</text>
-  <text x="640" y="472" font-size="12" fill="#A0A0A0" text-anchor="middle">ETL 後可查詢</text>
+  <text x="640" y="472" font-size="14" fill="#A0A0A0" text-anchor="middle">ETL 後可查詢</text>
 
   <!-- Layer 3 -->
   <path d="M 440 400 L 840 400 L 740 300 L 540 300 Z"
         fill="#1A1A1A" stroke="#333333" stroke-width="1.5"/>
   <text x="640" y="344" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">洞察層</text>
-  <text x="640" y="372" font-size="12" fill="#A0A0A0" text-anchor="middle">BI 報表與模型輸出</text>
+  <text x="640" y="372" font-size="14" fill="#A0A0A0" text-anchor="middle">BI 報表與模型輸出</text>
 
   <!-- Layer 4: apex (highlighted by default for bottom_up) -->
   <path d="M 540 300 L 740 300 L 680 200 L 600 200 Z"
@@ -56,5 +56,5 @@
   <line x1="120" y1="540" x2="120" y2="280" stroke="#666666" stroke-width="1.5" marker-end="url(#pyramidArrow)"/>
 
   <!-- Footer page number -->
-  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+  <text x="1200" y="710" font-size="14" fill="#666666" text-anchor="end">N / N</text>
 </svg>

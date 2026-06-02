@@ -89,7 +89,7 @@ Track changes to this status in the same edit that lands a Designer SVG template
   - Each node: `240w × 180h`, `rx=16`, fill `#1A1A1A`, stroke `#333333` (1px).
   - Vertical center `y=370` (node y `280..460`).
   - Node x positions: `88, 376, 664, 952` (gap 48 between right edge and next left edge).
-  - Per-node text: `01 · LABEL_EN` at `y=42` (11px, `#666666`, letter-spacing 2); `label` at `y=92` (28px weight 800 white); `body` at `y=130..150` (13px gray, wrap with `<tspan>`).
+  - Per-node text: `01 · LABEL_EN` at `y=42` (11px, `#666666`, letter-spacing 2); `label` at `y=92` (28px weight 800 white); `body` at `y=130..150` (14px gray, wrap with `<tspan>`).
   - Arrows: `<line>` between node edges with `marker-end="url(#flowArrow)"`. x1 = node_right + 4, x2 = next_node_left − 4. y=370.
   - Arrowhead marker (in `<defs>`): `markerWidth=10, refX=9, refY=5, orient=auto`, fill `#666666`.
 - **Highlight**: by default the last node uses highlight-color stroke (2px), highlight-color label_en + label text, plus a highlight-color arrow leading INTO it. Override via `highlight_index` (0-indexed).
@@ -151,7 +151,7 @@ Track changes to this status in the same edit that lands a Designer SVG template
   - Dot at `y=420`: non-highlighted = `r=8` fill `#1A1A1A` stroke `#A0A0A0` 2px; highlighted = `r=12` fill highlight stroke highlight.
   - `label` at `y=462` (20px weight 800, white — or highlight)
   - `label_en` at `y=488` (12px, `#A0A0A0` — or highlight, letter-spacing 1)
-  - `body` at `y=510` (13px, `#A0A0A0`); wrap to `y=510 + y=530` only if necessary.
+  - `body` at `y=510` (14px, `#A0A0A0`); wrap to `y=510 + y=530` only if necessary.
 - **Highlight**: by default the last event (most recent). Override via `highlight_index`.
 - **Vertical orientation** (`orientation: "vertical"`): axis `<line x1="640" y1="180" x2="640" y2="640" />`, dots at `y = 200, 308, 416, 524, 632` for 5 events. Time label LEFT of dot, label/body RIGHT.
 
@@ -213,7 +213,7 @@ Track changes to this status in the same edit that lands a Designer SVG template
   - Right: `(820, 410)` → node `x=740..900, y=360..460`
   - Bottom: `(640, 590)` → node `x=560..720, y=540..640`
   - Left: `(460, 410)` → node `x=380..540, y=360..460`
-- **Each node**: `160w × 100h`, `rx=14`, fill `#1A1A1A`, stroke `#333333` (1px). Stage text stack: `LABEL_EN` at `y=30` (11px gray, letter-spacing 2), `label` at `y=62` (22px weight 800 white), `body` at `y=84` (12px gray).
+- **Each node**: `160w × 100h`, `rx=14`, fill `#1A1A1A`, stroke `#333333` (1px). Stage text stack: `LABEL_EN` at `y=30` (11px gray, letter-spacing 2), `label` at `y=62` (22px weight 800 white), `body` at `y=84` (14px gray).
 - **Curved arrows** (clockwise direction by default): cubic Bezier path between adjacent nodes, with `marker-end="url(#cycleArrow)"`. Exact paths (clockwise):
   - Top→Right: `M 720 252 C 778 252, 820 296, 820 360`
   - Right→Bottom: `M 820 460 C 820 524, 778 568, 720 568`
@@ -358,8 +358,8 @@ Track changes to this status in the same edit that lands a Designer SVG template
   - Option label: 20px weight 800, white (or highlight for the highlighted column).
   - Dimension column header: small caps `維度  ·  DIMENSION` left-aligned at `x=116`, `y=194`, 13px gray.
 - **Cell content**:
-  - Dimension cell (left column): primary CN label `rows[i].dimension` (16px weight 500, `#A0A0A0`, left-anchored at `x=116`). Optional EN subline `rows[i].dimension_en` (11px `#666666`, letter-spacing 1, ~22px below). Skip the EN subline if not provided — same selective-density rule as `stat_caption_en`.
-  - Value cells (option columns): 18px weight 700, centered horizontally on column center, vertically centered in row. White for normal, highlight color for highlighted column.
+  - Dimension cell (left column): primary CN label `rows[i].dimension` (17px weight 500, `#A0A0A0`, left-anchored at `x=116`). Optional EN subline `rows[i].dimension_en` (12px `#666666`, letter-spacing 1, ~22px below). Skip the EN subline if not provided — same selective-density rule as `stat_caption_en`.
+  - Value cells (option columns): 19px weight 700, centered horizontally on column center, vertically centered in row. White for normal, highlight color for highlighted column.
 - **Cell value brevity**: each value ≤6 Chinese chars or ≤3 EN words. For longer values, downgrade to a non-table layout — the comparison breaks if cells need to wrap.
 - **Highlight**: default to no highlighted column (just neutral comparison); when `highlight_column` is set, that column is the recommended option.
 
@@ -433,7 +433,7 @@ Track changes to this status in the same edit that lands a Designer SVG template
 - **Per-node text**:
   - Root: `LEVEL 1` (10px) + label (22px weight 800). Highlighted by default (highlight-color stroke 2px, highlight text).
   - L2 nodes: `LEVEL 2` (10px) + label (20px weight 700).
-  - L3 nodes: `LEVEL 3` (10px) + label (16px weight 600).
+  - L3 nodes: `LEVEL 3` (10px) + label (17px weight 600).
 - **Horizontal orientation** (`orientation: "horizontal"`, root at left): rotate the layout 90° — root at `(60, 360)`, L2 nodes at y-centers `200, 360, 520` with x-center `380`, etc. Use this for wide-shallow trees (few layers, many siblings).
 - **Caps**: 3 layers max; ~12 leaf nodes max. Beyond that, abstract into sub-trees on separate pages.
 
@@ -491,7 +491,7 @@ Track changes to this status in the same edit that lands a Designer SVG template
   - Apex (top): bottom w=200, top w=80, y `200..300` — path `M 540 300 L 740 300 L 680 200 L 600 200 Z`
 - **Layer fill**: `#1A1A1A`. **Layer stroke**: `#333333` 1.5px for normal layers; **highlight color 2.5px for the highlighted layer**.
 - **Per-layer text** (centered on `x=640`, vertical center of each layer):
-  - Foundation (y_mid 550): label 18px weight 700 white at `y=544`, body 12px gray at `y=572`.
+  - Foundation (y_mid 550): label 18px weight 700 white at `y=544`, body 14px gray at `y=572`.
   - Layer 2 (y_mid 450): same sizes at `y=444` / `y=472`.
   - Layer 3 (y_mid 350): same at `y=344` / `y=372`.
   - Apex (y_mid 250): smaller because the layer is narrow — label 16px weight 800 (highlight color) at `y=258`, optional small EN at `y=280` (11px, letter-spacing 1).
@@ -579,7 +579,7 @@ Track changes to this status in the same edit that lands a Designer SVG template
   - Bottom-left (Q3): `x=220, y=608`
   - Bottom-right (Q4): `x=1060, y=608` (anchor end)
 - **Highlighted quadrant** (`highlight_quadrant`): light tint background — `<rect>` filling that quadrant's bounding box with `fill=highlight, fill-opacity=0.05`. Quadrant label uses highlight color. Default: `top_right` (the "good" quadrant in BCG / Eisenhower).
-- **Items**: `<circle r="9">` filled in highlight color if inside the highlighted quadrant, else white at fading alpha (0.65 in 2nd/3rd quadrants, 0.45 in worst quadrant). Label 14px weight 600 white, anchored to the right of the dot (`x = dot_x + 18, y = dot_y + 4`).
+- **Items**: `<circle r="9">` filled in highlight color if inside the highlighted quadrant, else white at fading alpha (0.65 in 2nd/3rd quadrants, 0.45 in worst quadrant). Label 15px weight 600 white, anchored to the right of the dot (`x = dot_x + 18, y = dot_y + 4`).
 - **Cap**: ~8 items max — beyond that, label overlap becomes unmanageable. If items cluster, optionally shift label position around the dot (above, below, left, right) to avoid overlap.
 
 ---
@@ -644,9 +644,9 @@ Intersection keys: `"all"` = all sets overlap; `"01"` = sets 0 and 1 only; etc. 
   - Set 2: right of bottom-right circle at `(1000, 592)` + `(1000, 616)`.
 - **Intersection labels** (centered inside each overlap region):
   - `"all"` (3-way intersection): `(640, 416)` — highlight color, 18px weight 800, with optional EN line at `(640, 438)` (11px highlight, letter-spacing 2). This is the typical headline.
-  - `"01"` (Set 0 ∩ Set 1 only): `(455, 380)`, 12px gray.
-  - `"02"` (Set 0 ∩ Set 2 only): `(825, 380)`, 12px gray.
-  - `"12"` (Set 1 ∩ Set 2 only): `(640, 534)`, 12px gray.
+  - `"01"` (Set 0 ∩ Set 1 only): `(455, 380)`, 13px gray.
+  - `"02"` (Set 0 ∩ Set 2 only): `(825, 380)`, 13px gray.
+  - `"12"` (Set 1 ∩ Set 2 only): `(640, 534)`, 13px gray.
   - Labels are optional — only render the keys provided in `venn_data.intersections`.
 - **2-set Venn variant** (when `venn_data.sets.length === 2`):
   - Set 0 center: `(520, 410)`, Set 1 center: `(760, 410)`, radius 180.

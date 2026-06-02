@@ -10,13 +10,13 @@
   Cap at 3 layers and ~12 leaves; beyond that, split to sub-trees on separate pages.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
-     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
 
   <rect width="1280" height="720" fill="#000000"/>
 
   <!-- Page title -->
   <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">三層組織架構</text>
-  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+  <text x="48" y="114" font-size="17" font-weight="500" fill="#A0A0A0" letter-spacing="1">
     Three-Layer Reporting Structure
   </text>
 
@@ -78,32 +78,32 @@
   <g transform="translate(90, 520)">
     <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
     <text x="80" y="32" font-size="10" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
-    <text x="80" y="58" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">平台</text>
+    <text x="80" y="58" font-size="17" font-weight="600" fill="#FFFFFF" text-anchor="middle">平台</text>
   </g>
   <g transform="translate(262, 520)">
     <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
     <text x="80" y="32" font-size="10" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
-    <text x="80" y="58" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">產品</text>
+    <text x="80" y="58" font-size="17" font-weight="600" fill="#FFFFFF" text-anchor="middle">產品</text>
   </g>
   <g transform="translate(474, 520)">
     <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#FF6900" stroke-width="1.5"/>
     <text x="80" y="32" font-size="10" font-weight="500" fill="#FF6900" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
-    <text x="80" y="58" font-size="16" font-weight="600" fill="#FF6900" text-anchor="middle">大型客戶</text>
+    <text x="80" y="58" font-size="17" font-weight="600" fill="#FF6900" text-anchor="middle">大型客戶</text>
   </g>
   <g transform="translate(646, 520)">
     <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#FF6900" stroke-width="1.5"/>
     <text x="80" y="32" font-size="10" font-weight="500" fill="#FF6900" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
-    <text x="80" y="58" font-size="16" font-weight="600" fill="#FF6900" text-anchor="middle">中小客戶</text>
+    <text x="80" y="58" font-size="17" font-weight="600" fill="#FF6900" text-anchor="middle">中小客戶</text>
   </g>
   <g transform="translate(858, 520)">
     <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
     <text x="80" y="32" font-size="10" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
-    <text x="80" y="58" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">會計</text>
+    <text x="80" y="58" font-size="17" font-weight="600" fill="#FFFFFF" text-anchor="middle">會計</text>
   </g>
   <g transform="translate(1030, 520)">
     <rect width="160" height="80" rx="12" fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
     <text x="80" y="32" font-size="10" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">LEVEL 3</text>
-    <text x="80" y="58" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">投關</text>
+    <text x="80" y="58" font-size="17" font-weight="600" fill="#FFFFFF" text-anchor="middle">投關</text>
   </g>
 
   <!-- Footer page number -->

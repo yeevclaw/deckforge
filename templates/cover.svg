@@ -4,7 +4,7 @@
   Default palette: midnight_executive. Replace fill colors with the resolved palette.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
-     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
   <defs>
     <radialGradient id="bgA" cx="18%" cy="22%" r="55%">
       <stop offset="0%" stop-color="#3955A6" stop-opacity="0.55"/>

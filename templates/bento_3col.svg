@@ -5,7 +5,7 @@
   Card width = (1184 - 2*20) / 3 = 381; x positions: 48, 449, 850.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
-     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
   <defs>
     <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur in="SourceAlpha" stdDeviation="12"/>
@@ -25,7 +25,7 @@
         fill="#FFFFFF" filter="url(#cardShadow)"/>
   <circle cx="104" cy="196" r="24" fill="#CADCFC"/>
   <text x="80" y="280" font-size="22" font-weight="700" fill="#1E2761">第一點</text>
-  <text x="80" y="320" font-size="15" fill="#1A1A2E">
+  <text x="80" y="320" font-size="16" fill="#1A1A2E">
     <tspan x="80" dy="0">說明文字第一行。</tspan>
     <tspan x="80" dy="1.55em">第二行繼續。</tspan>
   </text>
@@ -35,7 +35,7 @@
         fill="#FFFFFF" filter="url(#cardShadow)"/>
   <circle cx="505" cy="196" r="24" fill="#CADCFC"/>
   <text x="481" y="280" font-size="22" font-weight="700" fill="#1E2761">第二點</text>
-  <text x="481" y="320" font-size="15" fill="#1A1A2E">
+  <text x="481" y="320" font-size="16" fill="#1A1A2E">
     <tspan x="481" dy="0">說明文字第一行。</tspan>
     <tspan x="481" dy="1.55em">第二行繼續。</tspan>
   </text>
@@ -45,7 +45,7 @@
         fill="#FFFFFF" filter="url(#cardShadow)"/>
   <circle cx="906" cy="196" r="24" fill="#CADCFC"/>
   <text x="882" y="280" font-size="22" font-weight="700" fill="#1E2761">第三點</text>
-  <text x="882" y="320" font-size="15" fill="#1A1A2E">
+  <text x="882" y="320" font-size="16" fill="#1A1A2E">
     <tspan x="882" dy="0">說明文字第一行。</tspan>
     <tspan x="882" dy="1.55em">第二行繼續。</tspan>
   </text>

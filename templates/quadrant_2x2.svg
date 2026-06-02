@@ -8,7 +8,7 @@
   Default highlight = top_right (the "good" quadrant in BCG / Eisenhower frameworks).
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
-     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
 
   <rect width="1280" height="720" fill="#000000"/>
 
@@ -44,19 +44,19 @@
   <!-- Items: BCG products. (x=share, y=growth), both normalized 0..1 -->
   <!-- Item A: high share, high growth → Star -->
   <circle cx="904" cy="326" r="9" fill="#FF6900"/>
-  <text x="922" y="330" font-size="14" font-weight="600" fill="#FFFFFF">產品線 A</text>
+  <text x="922" y="330" font-size="15" font-weight="600" fill="#FFFFFF">產品線 A</text>
 
   <!-- Item B: low share, high growth → Question Mark -->
   <circle cx="464" cy="242" r="9" fill="#FFFFFF" fill-opacity="0.65"/>
-  <text x="482" y="246" font-size="14" font-weight="600" fill="#FFFFFF">產品線 B</text>
+  <text x="482" y="246" font-size="15" font-weight="600" fill="#FFFFFF">產品線 B</text>
 
   <!-- Item C: high share, low growth → Cash Cow -->
   <circle cx="728" cy="494" r="9" fill="#FFFFFF" fill-opacity="0.65"/>
-  <text x="746" y="498" font-size="14" font-weight="600" fill="#FFFFFF">產品線 C</text>
+  <text x="746" y="498" font-size="15" font-weight="600" fill="#FFFFFF">產品線 C</text>
 
   <!-- Item D: low share, low growth → Dog -->
   <circle cx="376" cy="536" r="9" fill="#FFFFFF" fill-opacity="0.45"/>
-  <text x="394" y="540" font-size="14" font-weight="600" fill="#A0A0A0">產品線 D</text>
+  <text x="394" y="540" font-size="15" font-weight="600" fill="#A0A0A0">產品線 D</text>
 
   <!-- Footer page number -->
   <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>

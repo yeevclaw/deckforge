@@ -148,7 +148,7 @@ Combine sizes freely. Most flexibility, most design judgment required.
 +------------------------------------------+
 ```
 
-A single statistic dominates. The number is rendered at **80–120px font-size, font-weight 900**, in the highlight color. Below, a short caption (Chinese 14–16px + optional English subtitle 11–13px) explains what the number means.
+A single statistic dominates. The number is rendered at **80–120px font-size, font-weight 900**, in the highlight color. Below, a short caption (Chinese 16–18px + optional English subtitle 12–14px) explains what the number means.
 
 **Use when**: a single number is the headline. Quarterly growth, market share, ARR, downloads, customers — anywhere "the number is the message".
 
@@ -157,8 +157,8 @@ A single statistic dominates. The number is rendered at **80–120px font-size, 
 **SVG geometry**:
 - Page title: standard header band (y=48..120)
 - Big number: centered around `(640, 380)`, font-size 100, anchored mid
-- Caption (CN): centered at `(640, 450)`, font-size 16
-- Caption (EN, optional): centered at `(640, 475)`, font-size 12, gray-500
+- Caption (CN): centered at `(640, 450)`, font-size 18
+- Caption (EN, optional): centered at `(640, 475)`, font-size 13, gray-500
 
 ---
 
@@ -206,8 +206,8 @@ A main card holds **3–5 mini-cards** in a horizontal grid. Each mini-card carr
 **Mini-card content rules** (this is the secret):
 - Each mini-card: ONE big element on top, ONE supporting caption below.
 - Big element = either a huge number (80–96px, highlight color) OR a 3–5 character Chinese phrase (32–40px, white or highlight).
-- Caption = 14px gray-400, 1–2 short lines, no commas-breaking-sentences.
-- Optional bilingual subtitle: 11–13px gray-500 English phrase ("YoY Growth", "Total Revenue"). Apply selectively, not on every card.
+- Caption = 16–18px gray-400, 1–2 short lines, no commas-breaking-sentences.
+- Optional bilingual subtitle: 12–14px gray-500 English phrase ("YoY Growth", "Total Revenue"). Apply selectively, not on every card.
 - **Never two long sentences on one mini-card.** If you can't fit it short, the content isn't extracted enough — go back to the planner.
 
 ---

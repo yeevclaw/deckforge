@@ -7,13 +7,13 @@
   highlight_column: shaded column background (highlight at 8% alpha) + header text in highlight color.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
-     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
 
   <rect width="1280" height="720" fill="#000000"/>
 
   <!-- Page title -->
   <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">三套方案逐項對比</text>
-  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+  <text x="48" y="114" font-size="17" font-weight="500" fill="#A0A0A0" letter-spacing="1">
     Three Options · Side-by-Side
   </text>
 
@@ -33,35 +33,35 @@
   <text x="1055" y="194" font-size="20" font-weight="800" fill="#FFFFFF" text-anchor="middle">方案 C</text>
 
   <!-- Row 1: 起始成本 -->
-  <text x="116" y="280" font-size="16" font-weight="500" fill="#A0A0A0">起始成本</text>
+  <text x="116" y="280" font-size="17" font-weight="500" fill="#A0A0A0">起始成本</text>
   <text x="116" y="302" font-size="11" fill="#666666" letter-spacing="1">UPFRONT COST</text>
-  <text x="507" y="290" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">低</text>
-  <text x="781" y="290" font-size="18" font-weight="700" fill="#FF6900" text-anchor="middle">中</text>
-  <text x="1055" y="290" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">高</text>
+  <text x="507" y="290" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">低</text>
+  <text x="781" y="290" font-size="19" font-weight="700" fill="#FF6900" text-anchor="middle">中</text>
+  <text x="1055" y="290" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">高</text>
   <line x1="88" y1="319" x2="1192" y2="319" stroke="#333333" stroke-width="1"/>
 
   <!-- Row 2: 上線時間 -->
-  <text x="116" y="387" font-size="16" font-weight="500" fill="#A0A0A0">上線時間</text>
+  <text x="116" y="387" font-size="17" font-weight="500" fill="#A0A0A0">上線時間</text>
   <text x="116" y="409" font-size="11" fill="#666666" letter-spacing="1">TIME TO LIVE</text>
-  <text x="507" y="397" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">3 月</text>
-  <text x="781" y="397" font-size="18" font-weight="700" fill="#FF6900" text-anchor="middle">2 月</text>
-  <text x="1055" y="397" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">6 月</text>
+  <text x="507" y="397" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">3 月</text>
+  <text x="781" y="397" font-size="19" font-weight="700" fill="#FF6900" text-anchor="middle">2 月</text>
+  <text x="1055" y="397" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">6 月</text>
   <line x1="88" y1="426" x2="1192" y2="426" stroke="#333333" stroke-width="1"/>
 
   <!-- Row 3: 擴展性 -->
-  <text x="116" y="494" font-size="16" font-weight="500" fill="#A0A0A0">擴展性</text>
+  <text x="116" y="494" font-size="17" font-weight="500" fill="#A0A0A0">擴展性</text>
   <text x="116" y="516" font-size="11" fill="#666666" letter-spacing="1">SCALABILITY</text>
-  <text x="507" y="504" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">中</text>
-  <text x="781" y="504" font-size="18" font-weight="700" fill="#FF6900" text-anchor="middle">高</text>
-  <text x="1055" y="504" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">高</text>
+  <text x="507" y="504" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">中</text>
+  <text x="781" y="504" font-size="19" font-weight="700" fill="#FF6900" text-anchor="middle">高</text>
+  <text x="1055" y="504" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">高</text>
   <line x1="88" y1="533" x2="1192" y2="533" stroke="#333333" stroke-width="1"/>
 
   <!-- Row 4: 維運複雜度 -->
-  <text x="116" y="601" font-size="16" font-weight="500" fill="#A0A0A0">維運複雜度</text>
+  <text x="116" y="601" font-size="17" font-weight="500" fill="#A0A0A0">維運複雜度</text>
   <text x="116" y="623" font-size="11" fill="#666666" letter-spacing="1">OPS COMPLEXITY</text>
-  <text x="507" y="611" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">低</text>
-  <text x="781" y="611" font-size="18" font-weight="700" fill="#FF6900" text-anchor="middle">中</text>
-  <text x="1055" y="611" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">高</text>
+  <text x="507" y="611" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">低</text>
+  <text x="781" y="611" font-size="19" font-weight="700" fill="#FF6900" text-anchor="middle">中</text>
+  <text x="1055" y="611" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">高</text>
 
   <!-- Footer page number -->
   <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>

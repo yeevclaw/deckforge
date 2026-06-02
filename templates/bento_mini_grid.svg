@@ -12,7 +12,7 @@
     Use big number 80–96px or short text title 32–40px inside each mini-card.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
-     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
 
   <!-- Pure black page background -->
   <rect width="1280" height="720" fill="#000000"/>
@@ -31,27 +31,27 @@
   <rect x="88" y="226" width="257" height="360" rx="12" ry="12"
         fill="#222222" stroke="#333333" stroke-width="1"/>
   <text x="216" y="350" font-size="64" font-weight="900" fill="#FF6900" text-anchor="middle">42%</text>
-  <text x="216" y="410" font-size="15" fill="#FFFFFF" text-anchor="middle">營收同比增長</text>
+  <text x="216" y="410" font-size="16" fill="#FFFFFF" text-anchor="middle">營收同比增長</text>
   <text x="216" y="435" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">YoY Revenue Growth</text>
 
   <!-- Mini card 2 — number-first -->
   <rect x="369" y="226" width="257" height="360" rx="12" ry="12"
         fill="#222222" stroke="#333333" stroke-width="1"/>
   <text x="497" y="350" font-size="64" font-weight="900" fill="#FF6900" text-anchor="middle">15M</text>
-  <text x="497" y="410" font-size="15" fill="#FFFFFF" text-anchor="middle">月活用戶</text>
+  <text x="497" y="410" font-size="16" fill="#FFFFFF" text-anchor="middle">月活用戶</text>
   <text x="497" y="435" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">Monthly Active Users</text>
 
   <!-- Mini card 3 — text-title -->
   <rect x="650" y="226" width="257" height="360" rx="12" ry="12"
         fill="#222222" stroke="#333333" stroke-width="1"/>
   <text x="778" y="360" font-size="36" font-weight="800" fill="#FFFFFF" text-anchor="middle">行業第一</text>
-  <text x="778" y="410" font-size="15" fill="#A0A0A0" text-anchor="middle">細分市場排名</text>
+  <text x="778" y="410" font-size="16" fill="#A0A0A0" text-anchor="middle">細分市場排名</text>
   <text x="778" y="435" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">#1 in Category</text>
 
   <!-- Mini card 4 — number-first -->
   <rect x="931" y="226" width="257" height="360" rx="12" ry="12"
         fill="#222222" stroke="#333333" stroke-width="1"/>
   <text x="1059" y="350" font-size="64" font-weight="900" fill="#FF6900" text-anchor="middle">3.2億</text>
-  <text x="1059" y="410" font-size="15" fill="#FFFFFF" text-anchor="middle">年度淨利潤</text>
+  <text x="1059" y="410" font-size="16" fill="#FFFFFF" text-anchor="middle">年度淨利潤</text>
   <text x="1059" y="435" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">Annual Net Profit</text>
 </svg>

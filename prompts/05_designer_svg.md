@@ -22,7 +22,7 @@ Your aesthetic anchor is **Apple keynote slides + Bento Grid + single brand high
 6. **Use the `design_brief` from planning.json**: palette, `highlight_color`, motif. Do not invent your own palette per page — consistency across the deck is non-negotiable.
 7. **Single highlight color discipline**: for `dark_apple*` palettes, use ONLY the `design_brief.highlight_color` for emphasis. No secondary or accent colors. Everything else is the dark-mode neutral stack: `#000000` bg, `#1A1A1A` main cards, `#222222` mini cards, `#333333` borders, `#FFFFFF` primary text, `#A0A0A0` secondary text, `#666666` tertiary/English text. **Never invent a second accent color.**
 8. **Bento Grid spacing**: main cards have ≥20px outer margin from canvas edge; mini-cards inside a main card have ≥24px gaps and ≥40px main-card inner padding.
-9. **Fonts**: use a system-font stack via `font-family` attribute on text — `font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', Inter, system-ui, sans-serif"`. Do not embed web fonts.
+9. **Fonts**: use the canonical system-font stack via `font-family` attribute on the root `<svg>` — `font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif"`. Latin chars resolve to Helvetica (macOS) / Arial (Windows fallback); CJK chars resolve to PingFang TC (macOS) / 微軟正黑體 (Windows) / Noto Sans CJK TC (Linux). Both Latin and CJK use OS-preinstalled fonts — zero recipient install effort. Do not embed web fonts.
 10. **Editability**: every text string must live in a `<text>` element (not rasterized, not converted to paths). PowerPoint will preserve these as editable text runs after Convert to Shape.
 11. **No emoji as functional icons.** Emoji are decorative only — never use them as the bullet-point or category indicator. For icons, use inline `<path>` data from a single icon family (Lucide stroke icons preferred). If unsure, omit the icon entirely.
 
@@ -92,26 +92,32 @@ Apply the same motif on **every** page of the deck.
 
 | Hint | Header weight | Body weight |
 |---|---|---|
-| `serif_header_sans_body` | font-family Noto Serif TC / Playfair Display, 700 | Noto Sans TC / Inter, 400 |
-| `sans_only_bold` | Inter / Noto Sans TC, 800–900 | Inter / Noto Sans TC, 400 |
-| `mono_accent` | JetBrains Mono, 700 | Inter, 400 |
+| `serif_header_sans_body` | font-family Noto Serif TC / Playfair Display, 700 | PingFang TC / Helvetica, 400 |
+| `sans_only_bold` | Helvetica / PingFang TC, 800–900 | Helvetica / PingFang TC, 400 |
+| `mono_accent` | JetBrains Mono, 700 | Helvetica, 400 |
 
-Sizes (px, on the 1280×720 canvas). **Use dramatic differences — flat sizes flatten the deck**:
+(These hints are styling intent — the actual `font-family` attribute always uses the full Helvetica + PingFang TC stack from Hard rule #9; the hint just affects weight + serif/sans choice.)
+
+Sizes (px, on the 1280×720 canvas). **Use dramatic differences — flat sizes flatten the deck**. Sizes bumped in v0.7.4 for projected-slide readability — hero numbers / cover / mini-card stat numbers unchanged:
 
 | Element | Size | Weight | Color (dark_apple) |
 |---|---|---|---|
 | Cover title (CN) | 96–120 | 900 | `#FFFFFF` |
 | Cover subtitle (EN) | 22–28 | 500 | `#A0A0A0` |
 | Page title (CN) | 40–52 | 800 | `#FFFFFF` |
-| Page title (EN) — `title_en` field | 16–20 | 500 | `#A0A0A0` |
+| Page title (EN) — `title_en` field | **18–22** | 500 | `#A0A0A0` |
 | **Hero stat number** | **80–120** | **900** | **highlight_color** |
-| Hero stat caption (CN) | 14–16 | 400 | `#A0A0A0` |
-| Hero stat caption (EN) | 11–13 | 400 | `#666666` |
-| Card heading (text-first, big) | 32–48 | 800 | `#FFFFFF` or highlight |
-| Mini-card heading (text-first) | 24–32 | 700 | `#FFFFFF` |
+| Hero stat caption (CN) | **16–18** | 400 | `#A0A0A0` |
+| Hero stat caption (EN) | **12–14** | 400 | `#666666` |
+| Card heading (text-first, big) | **36–52** | 800 | `#FFFFFF` or highlight |
+| Mini-card heading (text-first) | **26–34** | 700 | `#FFFFFF` |
 | Mini-card stat number | 56–72 | 900 | highlight |
-| Mini-card caption | 14–16 | 400 | `#FFFFFF` (line 1) / `#666666` (EN, line 2) |
-| Body / support text | 14–16 | 400 | `#A0A0A0` |
+| Mini-card caption (CN) | **16–18** | 400 | `#FFFFFF` |
+| Mini-card caption (EN) | **12–14** | 400 | `#666666` |
+| Body / support text | **17–19** | 400 | `#A0A0A0` |
+| Primitive body (flow / cycle / pyramid / venn / tree node body) | **14–15** | 400 | `#A0A0A0` |
+| Compare_table cell value | **19** | 700 | white or highlight |
+| Compare_table dimension label (CN) | **17** | 500 | `#A0A0A0` |
 
 For light palettes, swap `#FFFFFF`/`#A0A0A0`/`#666666` to the equivalent text-on-light colors but **keep the SAME relative size structure** — that's what produces the visual hierarchy.
 

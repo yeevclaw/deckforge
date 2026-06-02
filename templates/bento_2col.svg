@@ -5,7 +5,7 @@
   Inner working width = 1184 (1280 - 2*48 outer pad). Gap = 20.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
-     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
   <defs>
     <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur in="SourceAlpha" stdDeviation="12"/>
@@ -35,7 +35,7 @@
   </g>
 
   <text x="80" y="280" font-size="24" font-weight="700" fill="#1E2761">第一張卡片標題</text>
-  <text x="80" y="320" font-size="16" fill="#1A1A2E">
+  <text x="80" y="320" font-size="18" fill="#1A1A2E">
     <tspan x="80" dy="0">第一行說明文字。</tspan>
     <tspan x="80" dy="1.55em">第二行繼續說明,讓內容自然分行。</tspan>
   </text>
@@ -55,7 +55,7 @@
   </g>
 
   <text x="682" y="280" font-size="24" font-weight="700" fill="#1E2761">第二張卡片標題</text>
-  <text x="682" y="320" font-size="16" fill="#1A1A2E">
+  <text x="682" y="320" font-size="18" fill="#1A1A2E">
     <tspan x="682" dy="0">說明文字第一行。</tspan>
     <tspan x="682" dy="1.55em">第二行接續。</tspan>
   </text>

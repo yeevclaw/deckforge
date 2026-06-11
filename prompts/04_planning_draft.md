@@ -48,9 +48,9 @@ Output **only** the JSON block, wrapped in `[PPT_PLANNING]` and `[/PPT_PLANNING]
 {
   "meta": { "topic": "...", "page_count": 15, "language": "zh-TW" },
   "design_brief": {
-    "palette_hint": "dark_apple | dark_apple_blue | dark_apple_orange | dark_apple_green | dark_apple_red | midnight_executive | forest_moss | coral_energy | warm_terracotta | ocean_gradient | charcoal_minimal | teal_trust | berry_cream | sage_calm | cherry_bold",
+    "palette_hint": "dark_apple | dark_apple_blue | dark_apple_orange | dark_apple_green | dark_apple_red | corporate_fresh | midnight_executive | forest_moss | coral_energy | warm_terracotta | ocean_gradient | charcoal_minimal | teal_trust | berry_cream | sage_calm | cherry_bold",
     "highlight_color": "#FF6900",
-    "motif_hint": "apple_dark_cards | rounded_cards_soft_shadow | left_accent_bar | icon_in_circle | gradient_mesh_bg",
+    "motif_hint": "apple_dark_cards | fresh_pill_cards | rounded_cards_soft_shadow | left_accent_bar | icon_in_circle | gradient_mesh_bg",
     "typography_hint": "serif_header_sans_body | sans_only_bold | mono_accent"
   },
   "pages": [
@@ -578,7 +578,9 @@ Skip `title_en` only when the deck is entirely Chinese for a Chinese-only audien
 
 ## Highlight color selection
 
-In `design_brief.highlight_color`, set the actual hex value for the single highlight color used across the entire deck. If the brand has a known color (e.g. Xiaomi `#FF6900`, Tesla `#E31937`, Anthropic `#D97757`), use that. Otherwise pick one of:
+**Default when the user didn't specify a style** (no visual style hint in `brief.md`): `palette_hint: "corporate_fresh"`, `highlight_color: "#E8872E"`, `motif_hint: "fresh_pill_cards"` — see the exception paragraph below; the hex menu that follows applies to `dark_apple*` decks.
+
+For `dark_apple*` decks, set `design_brief.highlight_color` to the actual hex value for the single highlight color used across the entire deck. If the brand has a known color (e.g. Xiaomi `#FF6900`, Tesla `#E31937`, Anthropic `#D97757`), use that. Otherwise pick one of:
 - `#FF6900` Xiaomi orange (default energetic)
 - `#00AEEF` tech blue (SaaS / enterprise)
 - `#FFA500` bright orange (consumer launch)
@@ -586,6 +588,8 @@ In `design_brief.highlight_color`, set the actual hex value for the single highl
 - `#FF3B30` Apple red (bold / statement)
 
 **One color carries the entire deck.** Don't switch highlights between sections. See [references/design_system.md](../references/design_system.md).
+
+Exception — `corporate_fresh`: this family uses a **fixed role palette** instead of a single free-choice highlight (structure green `#3DB377`, icon blue `#5E8FEF`, inline-emphasis orange `#E8872E`). Set `highlight_color` to `#E8872E` (the emphasis role) and don't substitute brand colors into the roles; the discipline is per-role, not per-deck. Pair it with `motif_hint: "fresh_pill_cards"`.
 
 ## Quality checklist
 

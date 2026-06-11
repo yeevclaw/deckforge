@@ -42,7 +42,7 @@
 
   <!-- title -->
   <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
-  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">五階段不可跳過：每階段產出檔案查核點，下一階段必須先讀取</text>
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">流程頁標題：用一句主張說明這個流程保證了什麼</text>
 
   <!-- tapered swoosh: ONE continuous path (tail flick → wedge → integrated arrowhead),
        drawn BEFORE the arches so its endpoints tuck behind the first and last arch -->
@@ -71,40 +71,40 @@
 
   <!-- step 1 -->
   <g>
-    <text x="170" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 1</text>
-    <text x="170" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">反詰訪談</text>
+    <text x="170" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Step 1</text>
+    <text x="170" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">階段名稱一</text>
     <rect x="75" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
     <g transform="translate(141 392) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
       <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
     </g>
     <text x="170" y="488" font-size="17" fill="#4A5158" text-anchor="middle">
-      <tspan x="170" dy="0">以提問釐清受眾</tspan>
-      <tspan x="170" dy="30">與觀點轉變</tspan>
+      <tspan x="170" dy="0">兩行內說明這一步</tspan>
+      <tspan x="170" dy="30">做什麼、為何重要</tspan>
     </text>
-    <text x="170" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">brief.md</text>
+    <text x="170" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">產出物一</text>
   </g>
 
   <!-- step 2 -->
   <g>
-    <text x="405" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 2</text>
-    <text x="405" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">大綱架構</text>
+    <text x="405" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Step 2</text>
+    <text x="405" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">階段名稱二</text>
     <rect x="310" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
     <g transform="translate(376 392) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
       <line x1="6" y1="8" x2="9" y2="8"/><line x1="6" y1="12" x2="9" y2="12"/>
     </g>
     <text x="405" y="488" font-size="17" fill="#4A5158" text-anchor="middle">
-      <tspan x="405" dy="0">金字塔原理</tspan>
-      <tspan x="405" dy="30">架構章節邏輯</tspan>
+      <tspan x="405" dy="0">兩行內說明這一步</tspan>
+      <tspan x="405" dy="30">做什麼、為何重要</tspan>
     </text>
-    <text x="405" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">outline.json</text>
+    <text x="405" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">產出物二</text>
   </g>
 
   <!-- step 3 -->
   <g>
-    <text x="640" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 3</text>
-    <text x="640" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">策劃稿</text>
+    <text x="640" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Step 3</text>
+    <text x="640" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">階段名稱三</text>
     <rect x="545" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
     <g transform="translate(611 392) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -112,16 +112,16 @@
       <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
     </g>
     <text x="640" y="488" font-size="17" fill="#4A5158" text-anchor="middle">
-      <tspan x="640" dy="0">每頁一個主張</tspan>
-      <tspan x="640" dy="30">與佐證卡片</tspan>
+      <tspan x="640" dy="0">兩行內說明這一步</tspan>
+      <tspan x="640" dy="30">做什麼、為何重要</tspan>
     </text>
-    <text x="640" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">planning.json</text>
+    <text x="640" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">產出物三</text>
   </g>
 
   <!-- step 4 -->
   <g>
-    <text x="875" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 4</text>
-    <text x="875" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">SVG 設計</text>
+    <text x="875" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Step 4</text>
+    <text x="875" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">階段名稱四</text>
     <rect x="780" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
     <g transform="translate(846 392) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="10"/>
@@ -129,26 +129,26 @@
       <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
     </g>
     <text x="875" y="488" font-size="17" fill="#4A5158" text-anchor="middle">
-      <tspan x="875" dy="0">Bento 版型</tspan>
-      <tspan x="875" dy="30">逐頁設計</tspan>
+      <tspan x="875" dy="0">兩行內說明這一步</tspan>
+      <tspan x="875" dy="30">做什麼、為何重要</tspan>
     </text>
-    <text x="875" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">pages/*.svg</text>
+    <text x="875" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">產出物四</text>
   </g>
 
   <!-- step 5 -->
   <g>
-    <text x="1110" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 5</text>
-    <text x="1110" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">組裝產出</text>
+    <text x="1110" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Step 5</text>
+    <text x="1110" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">階段名稱五</text>
     <rect x="1015" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
     <g transform="translate(1081 392) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
       <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
     </g>
     <text x="1110" y="488" font-size="17" fill="#4A5158" text-anchor="middle">
-      <tspan x="1110" dy="0">組裝可編輯簡報</tspan>
-      <tspan x="1110" dy="30">與講者備忘</tspan>
+      <tspan x="1110" dy="0">兩行內說明這一步</tspan>
+      <tspan x="1110" dy="30">做什麼、為何重要</tspan>
     </text>
-    <text x="1110" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">.pptx + .pdf</text>
+    <text x="1110" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">產出物五</text>
   </g>
 
   <!-- soft white chevrons in the arch-overlap lenses -->

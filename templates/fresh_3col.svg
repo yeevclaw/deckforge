@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <radialGradient id="washLav" cx="92%" cy="4%" r="48%">
+      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#D9D4F0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
+
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="106" font-size="45" font-weight="800" fill="#383838">Executive Summary</text>
+
+  <!-- dashed separators -->
+  <line x1="427" y1="240" x2="427" y2="630" stroke="#9BD4B8" stroke-width="2" stroke-dasharray="3 8"/>
+  <line x1="853" y1="240" x2="853" y2="630" stroke="#9BD4B8" stroke-width="2" stroke-dasharray="3 8"/>
+
+  <!-- column 1 : duotone icon (interview) -->
+  <g>
+    <g transform="translate(183 252)">
+      <g transform="scale(4.5)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" fill="#D8E4FB"/>
+        <circle cx="9" cy="7" r="4" fill="#D8E4FB"/>
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" fill="none"/>
+      </g>
+      <g stroke="#5E8FEF" stroke-width="2.5" fill="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M70 -6 h30 a7 7 0 0 1 7 7 v14 a7 7 0 0 1 -7 7 h-18 l-9 9 v-9 h-3 a7 7 0 0 1 -7 -7 v-14 a7 7 0 0 1 7 -7 Z"/>
+      </g>
+      <g fill="#5E8FEF">
+        <circle cx="77" cy="8" r="2.4"/><circle cx="85" cy="8" r="2.4"/><circle cx="93" cy="8" r="2.4"/>
+      </g>
+    </g>
+    <text x="237" y="430" font-size="28" font-weight="700" fill="#383838" text-anchor="middle">結論一：短主張</text>
+    <text x="237" y="480" font-size="19" fill="#4A5158" text-anchor="middle">
+      <tspan x="237" dy="0">兩到三行支撐句，每行</tspan>
+      <tspan x="237" dy="35"><tspan fill="#E8872E" font-weight="700">關鍵詞用橘色</tspan>粗體標示，</tspan>
+      <tspan x="237" dy="35">其餘維持灰色內文。</tspan>
+    </text>
+  </g>
+
+  <!-- column 2 : duotone icon (design system) -->
+  <g>
+    <g transform="translate(589 250)">
+      <g transform="scale(4.5)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" fill="#D8E4FB"/>
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="#FFFFFF"/>
+      </g>
+      <g stroke="#5E8FEF" stroke-width="2.5" fill="#FFFFFF" stroke-linejoin="round">
+        <rect x="76" y="68" width="17" height="13" rx="3"/>
+        <rect x="97" y="68" width="13" height="13" rx="3"/>
+        <rect x="76" y="85" width="13" height="13" rx="3"/>
+        <rect x="93" y="85" width="17" height="13" rx="3"/>
+      </g>
+    </g>
+    <text x="640" y="430" font-size="28" font-weight="700" fill="#383838" text-anchor="middle">結論二：短主張</text>
+    <text x="640" y="480" font-size="19" fill="#4A5158" text-anchor="middle">
+      <tspan x="640" dy="0">支撐句直接寫證據，</tspan>
+      <tspan x="640" dy="35">一段最多<tspan fill="#E8872E" font-weight="700">兩處強調</tspan>，</tspan>
+      <tspan x="640" dy="35">行高一點八五倍。</tspan>
+    </text>
+  </g>
+
+  <!-- column 3 : duotone icon (editable delivery) -->
+  <g>
+    <g transform="translate(995 250)">
+      <g transform="scale(4.5)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#D8E4FB"/>
+        <polyline points="14 2 14 8 20 8" fill="#FFFFFF"/>
+        <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+      </g>
+      <g stroke="#5E8FEF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M74 70 l26 10 -11 4 -4 11 Z" fill="#FFFFFF"/>
+        <line x1="89" y1="89" x2="98" y2="98"/>
+      </g>
+    </g>
+    <text x="1043" y="430" font-size="28" font-weight="700" fill="#383838" text-anchor="middle">結論三：短主張</text>
+    <text x="1043" y="480" font-size="19" fill="#4A5158" text-anchor="middle">
+      <tspan x="1043" dy="0">欄寬內每行約十二字，</tspan>
+      <tspan x="1043" dy="35">短段落<tspan fill="#E8872E" font-weight="700">可置中</tspan>對齊，</tspan>
+      <tspan x="1043" dy="35">長段落改為靠左。</tspan>
+    </text>
+  </g>
+</svg>

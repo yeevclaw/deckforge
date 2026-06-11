@@ -2,7 +2,7 @@
 
 **English** · [繁體中文](README.md)
 
-> A Claude skill that produces **professional, editable PowerPoint decks** by following an expert workflow built on three load-bearing methodologies: **Socratic dialogue** (Phase 1) to surface what the audience must believe after the deck, **pyramid principle** (Phase 1→2→3) to structure the argument, **Bento Grid + dark Apple aesthetic** (Phase 3→4) to render it. Not a one-shot generator — every phase boundary asks for your approval before advancing.
+> A Claude skill that produces **professional, editable PowerPoint decks** by following an expert workflow built on three load-bearing methodologies: **Socratic dialogue** (Phase 1) to surface what the audience must believe after the deck, **pyramid principle** (Phase 1→2→3) to structure the argument, **Bento Grid + a dual-style design system** (Phase 3→4 — corporate-fresh light consulting style by default, dark Apple on request) to render it. Not a one-shot generator — every phase boundary asks for your approval before advancing.
 
 Inspired by the methodology shared by *sandun* on linux.do ("应该是目前最强的PPT Agent，附上完整思路分享"). Output format is **SVG** — the key choice that essay makes — because PowerPoint 2016+ recognizes SVG as native vector graphics, and any user can right-click → *Convert to Shape* to edit every text run and shape.
 
@@ -32,11 +32,11 @@ DeckForge/
 │   ├── bento_grid.md       ← Bento Grid layout system (base layout family)
 │   ├── diagrams.md         ← 9 diagram primitives (used only when bento loses info)
 │   ├── chart_anatomy.md    ← SVG bar / line / donut chart anatomy
-│   ├── design_system.md    ← 10 palettes + motifs + typography
+│   ├── design_system.md    ← dark_apple + corporate_fresh light consulting style + 10 traditional palettes
 │   ├── pyramid_principle.md
 │   ├── socratic_loop.md    ← Phase 1 question types + 11 scenario spines
 │   └── editable_mode.md    ← how Convert-to-Shape editing works
-├── templates/              ← 20 SVG starting points (viewBox 0 0 1280 720)
+├── templates/              ← 24 SVG starting points (viewBox 0 0 1280 720)
 │   ├── _base.svg           ← shared filters / gradients / 35 Lucide icons
 │   ├── cover.svg
 │   ├── toc.svg
@@ -48,8 +48,10 @@ DeckForge/
 │   ├── chart_bar.svg       ← vertical bar chart (single highlight color)
 │   ├── chart_line.svg      ← line + area chart for trends
 │   ├── chart_donut.svg     ← donut chart with center label + legend
-│   └── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
-│       quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← diagram primitives
+│   ├── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
+│   │   quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← diagram primitives
+│   └── fresh_cover.svg / fresh_3col.svg / fresh_flow.svg / fresh_compare.svg
+│                           ← corporate_fresh light consulting starters
 ├── scripts/
 │   ├── svg_to_pptx.py      ← SVG → PPTX (embeds svgBlip ext, vectors preserved)
 │   ├── package.sh          ← build deckforge.zip for Claude Desktop upload

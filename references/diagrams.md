@@ -13,6 +13,8 @@ Visual variety is a side effect of good content-shape detection, not a goal. A d
 
 See [prompts/04_planning_draft.md → Primitive layouts](../prompts/04_planning_draft.md) for the four information-loss signals and the detection rule that decides when each primitive applies.
 
+**Styling note — the geometry in this document is style-agnostic; the example colors are dark_apple.** On `corporate_fresh` decks (the default style), keep every coordinate but swap the neutrals: canvas `#F4F4F4`, white cards (no border, whisper shadow), ink `#383838`, body `#4A5158`/`#6B7178`, connectors/strokes `#9BD4B8`, the single highlighted element uses structure green `#3DB377` (never orange — that's reserved for inline text emphasis). Where the family's composition vocabulary has a richer equivalent, prefer it: `flow` → `glass_arch_flow`, `cycle` → `glass_orbit_loop`, `timeline`/process pipelines → `transit_pipeline`, `hierarchy_tree`/`pyramid` → `claim_tree` (see design_system.md → "Composition vocabulary").
+
 ---
 
 ## The four information-loss signals → 9 primitives

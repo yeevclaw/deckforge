@@ -4,15 +4,15 @@ This is the lookup table the Designer prompt uses to resolve `palette_hint`, `mo
 
 ## Palettes
 
-DeckForge ships two **palette families**: dark Apple-style (single highlight color on black, our recommended default for data-dense decks) and traditional light themes.
+DeckForge ships three **palette families**: the corporate-fresh light style (**the default** — consulting-deck look: light canvas, green gradient structure, orange inline emphasis), dark Apple-style (single highlight color on black — pick on request, or propose it for overwhelmingly stat-heavy decks), and traditional light themes.
 
-### Dark Apple family (recommended default)
+### Dark Apple family (on request — the dark, data-dense pick)
 
 Pure black background, dark gray cards, one bold highlight color drawn from the brand or topic. Single-color discipline: that highlight carries 100% of the emphasis (no secondary or accent colors). Inspired by Apple keynote slides and the linux.do "Xiaomi annual report" visualization methodology.
 
 | Hint key | Highlight | Best for |
 |---|---|---|
-| `dark_apple` | auto — pick brand color from content (e.g. Xiaomi `#FF6900`, Tesla `#E31937`, Anthropic `#D97757`); fallback `#FFA500` bright orange | Default for any data-/stat-heavy deck, annual reports, product launches, financial summaries |
+| `dark_apple` | auto — pick brand color from content (e.g. Xiaomi `#FF6900`, Tesla `#E31937`, Anthropic `#D97757`); fallback `#FFA500` bright orange | The family's base hint — data-/stat-heavy decks, annual reports, product launches, financial summaries |
 | `dark_apple_blue` | `#00AEEF` tech blue | Tech / SaaS / enterprise software |
 | `dark_apple_orange` | `#FFA500` bright orange | Energy, launch, consumer-tech |
 | `dark_apple_green` | `#00C277` Spotify-green | Health-tech, growth narratives, sustainability with edge |
@@ -26,6 +26,153 @@ All `dark_apple_*` variants share the same neutrals:
 - Primary text on dark: `#FFFFFF` 100%
 - Secondary text on dark: `#A0A0A0` (gray-400 equivalent)
 - Tertiary / English subtitle text: `#666666` (gray-500/600)
+
+### Corporate fresh family (`corporate_fresh`) — THE DEFAULT style
+
+**DeckForge's default: whenever the user doesn't specify a style, use this family** (`palette_hint: "corporate_fresh"`, `highlight_color: "#E8872E"`, `motif_hint: "fresh_pill_cards"`).
+
+Light consulting-deck style modeled on top-tier bank/consulting internal decks: warm light-gray canvas with soft pastel radial washes, a green→indigo gradient reserved for cover/end pages, white rounded cards, dashed separators, blue line-icons, and **orange bold inline emphasis** inside body text. Where `dark_apple` speaks through one highlight color and giant numbers, `corporate_fresh` speaks through **full-sentence assertion titles and dense, well-set body text** — executive briefings, internal proposals, and decks that argue in prose rather than in statistics.
+
+**Role palette — colors are assigned to fixed roles, never mixed freely:**
+
+All values below were calibrated by pixel-sampling a reference deck of this style — don't "round" them toward adjacent hues.
+
+| Role | Color | Used for — and nothing else |
+|---|---|---|
+| Canvas | `#F4F4F4` neutral light gray | page background on all content pages |
+| Pastel washes | `#BFE5CC` green / `#D9D4F0` lavender / `#F6ECC4` yellow / `#F3D4D4` rose | huge soft `radialGradient` blobs (opacity ≤ 0.55) at canvas corners/sides; max 2 per page |
+| Ink | `#383838` neutral charcoal | titles, card headings |
+| Body text | `#4A5158`; secondary `#6B7178` | paragraphs, captions |
+| Structure green | bright mint gradient `#4EC487 → #7BD8A6`; dashed separators `#9BD4B8` | title pill bar, connectors, timeline/arrow shapes |
+| Teal | `#1B8A82` | positive / recommended option headings, scheme names, underlined key phrases on roadmap cards |
+| Icon blue | `#5E8FEF` stroke, `#D8E4FB` duotone fill | duotone icons ONLY — never text, never card fills |
+| **Emphasis orange** | `#E8872E` | **bold inline runs inside body text only** — never fills, never icons, never large areas |
+| Alert pair | `#E05B5B` red / `#E5B53A` amber | risk/warning panels only (dashed-border boxes + warning labels) |
+| Recommendation capsule | gradient `#A8E8E0 → #80D0F8`, text `#2F3437` near-black bold | the 推薦方案-style capsule only |
+| Cover gradient | `x1=0,y1=0 → x2=100%,y2=55%`: `#56BE85 → #5BA7D6 42% → #7378E0 80% → #878DEB` | cover + end pages only, full-bleed, with a white panel-emblem watermark at 0.13–0.18 opacity |
+
+**Emphasis discipline (this family's equivalent of single-highlight discipline):** each color may appear only in its role above. Orange is the loudest voice and lives exclusively in bold `<tspan>` runs inside body paragraphs — 1–2 runs per paragraph, marking the phrase the audience must retain. If orange shows up as a card fill, an icon, or a heading, the style is broken. Green carries structure, blue carries icons, orange carries meaning.
+
+**Signature components:**
+
+```xml
+<!-- Title pill bar + assertion title (every content page) -->
+<defs><linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+</linearGradient></defs>
+<rect x="48" y="44" width="64" height="8" rx="4" fill="url(#pillGrad)"/>
+<text x="48" y="96" font-size="34" font-weight="700" fill="#383838">標題是一句完整的主張，不是名詞短語</text>
+
+<!-- White card -->
+<rect x="…" y="…" width="…" height="…" rx="14" fill="#FFFFFF" filter="url(#freshShadow)"/>
+<!-- freshShadow: feGaussianBlur stdDeviation 10, offset (0,5), alpha slope 0.05 -->
+
+<!-- Dashed column separator -->
+<line x1="640" y1="220" x2="640" y2="600" stroke="#9BD4B8" stroke-width="2" stroke-dasharray="2 7"/>
+
+<!-- Dashed alert box (risk panels) -->
+<rect x="…" y="…" width="…" height="…" rx="10" fill="#FFFFFF" fill-opacity="0.6"
+      stroke="#E05B5B" stroke-width="1.5" stroke-dasharray="6 5"/>
+
+<!-- Recommendation capsule (e.g. 推薦方案) — spans the recommended column's full width -->
+<defs><linearGradient id="recGrad" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0%" stop-color="#A8E8E0"/><stop offset="100%" stop-color="#80D0F8"/>
+</linearGradient></defs>
+<rect x="…" y="…" width="330" height="48" rx="14" fill="url(#recGrad)"/>
+<text x="…" y="…" font-size="21" font-weight="700" fill="#2F3437" text-anchor="middle">推薦方案</text>
+
+<!-- Orange inline emphasis inside body text -->
+<text x="…" y="…" font-size="19" fill="#4A5158">現行私銀網銀
+  <tspan fill="#E8872E" font-weight="700">活躍度極低</tspan>，且存在
+  <tspan fill="#E8872E" font-weight="700">嚴重資安風險</tspan>。</text>
+```
+
+**Craft recipes — where the 質感 comes from.** Flat fills, uniform strokes, and bare scaled-up icons are what make a page read "AI-generated" in this family. Each named recipe below replaces one of those tells. Starter templates `templates/fresh_*.svg` already embed them.
+
+*`glass_arch`* — step-flow background shapes are bottom-bleed ARCHES, not floating circles. A complete circle hovering mid-canvas with a visible bottom edge is the #1 fusion killer: the composition must anchor to the page's bottom edge. Each step is TWO nested layers (outer halo + inner, more saturated dome), both running off the canvas bottom, with a vertical gradient that dissolves to near-nothing by the bottom edge. Overlapping neighbors layer into soft lenses:
+
+```xml
+<defs>
+  <linearGradient id="archHalo" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#A6CDD4" stop-opacity="0.50"/>
+    <stop offset="60%" stop-color="#BCD9D6" stop-opacity="0.22"/>
+    <stop offset="100%" stop-color="#C8DED8" stop-opacity="0.05"/>
+  </linearGradient>
+  <linearGradient id="archDome" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#A6CDD4" stop-opacity="0.62"/>
+    <stop offset="60%" stop-color="#BCD9D6" stop-opacity="0.28"/>
+    <stop offset="100%" stop-color="#C8DED8" stop-opacity="0.08"/>
+  </linearGradient>
+</defs>
+<!-- per step, centered on cx: paint ALL halos first, then all domes -->
+<path d="M cx-150 720 L cx-150 380 A 150 150 0 0 1 cx+150 380 L cx+150 720 Z" fill="url(#archHalo)"/>
+<path d="M cx-125 720 L cx-125 383 A 125 125 0 0 1 cx+125 383 L cx+125 720 Z" fill="url(#archDome)"/>
+```
+
+Give the FINAL step's arch a slightly greener pair (`#A1E5DE` / `#B6E8D8` / `#C5EDD8` at the same alphas) — a quiet closing emphasis. Cards inside arches: `fill="#FFFFFF" fill-opacity="0.88"`, **no shadow filter** — the arch itself provides separation; a shadow would lift the card off the arch and break the fusion.
+
+*`tapered_swoosh`* — the sweeping arrow is ATMOSPHERE, not a line. Three rules: ① it is extremely light (tail ~`#CDEBD9` α0.55 → head ~`#A8DFC2` α0.9 — on canvas that reads as a 10–15% tint); ② it is ONE continuous filled path — tail flick, widening wedge, and arrowhead barbs in a single outline, never a stroke with a triangle glued on; ③ it is drawn BEFORE the arches, so the translucent arches overlap its endpoints and the swoosh visibly tucks behind the first and last arch:
+
+```xml
+<defs><linearGradient id="swooshGrad" x1="180" y1="0" x2="1042" y2="0" gradientUnits="userSpaceOnUse">
+  <stop offset="0%" stop-color="#CDEBD9" stop-opacity="0.55"/>
+  <stop offset="100%" stop-color="#A8DFC2" stop-opacity="0.9"/>
+</linearGradient></defs>
+<!-- tail flick at (180,196) → upper edge → barb up → tip → barb down → lower edge back -->
+<path d="M 180 196 Q 480 122 950 172 L 938 148 L 1042 206 L 920 238 L 940 210 Q 470 180 190 232 Z"
+      fill="url(#swooshGrad)"/>
+<!-- then paint the arches OVER this -->
+```
+
+*`duotone_icon`* — feature icons are composed, 96–120px, in three layers: ① light-blue filled panels (`#D8E4FB`) giving the illustration its mass, ② a Lucide skeleton scaled up in `#5E8FEF` 2px strokes, ③ 2–4 extra detail strokes (screen content lines, signal dots, small badge). Never ship a bare 24×24 Lucide scaled 4× as a hero icon:
+
+```xml
+<g transform="translate(190 258)">
+  <rect x="14" y="10" width="68" height="46" rx="6" fill="#D8E4FB"/>          <!-- ① panel -->
+  <g transform="scale(4)" stroke="#5E8FEF" stroke-width="2" fill="none"
+     stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/>
+    <line x1="12" y1="17" x2="12" y2="21"/>                                    <!-- ② skeleton -->
+  </g>
+  <path d="M22 38 l10 -10 8 6 14 -14" stroke="#5E8FEF" stroke-width="3"
+        fill="none" stroke-linecap="round" stroke-linejoin="round"/>           <!-- ③ detail -->
+</g>
+```
+
+*`panel_emblem`* — the cover/end watermark is a leaf/tree built from LARGE rounded panels separated by a 12–16px trunk-and-branch channel (the gradient shows through the channel), white at 0.13–0.18. Small sharp petals read cheap; panels must be big and blunt-cornered.
+
+*`chunky_chevron`* — arrows between cards are single soft white wedges (~56×110px, α0.55) sitting in the arch-overlap lens at card mid-height — not 20px chevron glyphs, and not high-contrast stacked layers:
+
+```xml
+<path d="M 259 429 L 315 484 L 259 539 Z" fill="#FFFFFF" fill-opacity="0.55"/>
+```
+
+*dotted separator* — row separators inside cards are round dots, not dashes: `stroke="#9FB9AE" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="0.1 9"`.
+
+**Composition vocabulary — pick the layout from the content's shape, then build it from the recipes above.** These ten named compositions are proven combinations (all built from the same recipes; none copies a reference slide). The shape of the content decides:
+
+| Composition | Content shape it fits | Geometry in one line |
+|---|---|---|
+| `arch_horizon_cover` | cover | gradient + title/bar formula + a row of small white α0.10 bleed arches along the bottom edge previewing the inner motif (template: `fresh_cover.svg` + horizon row) |
+| `bento_hero_duo` | one core claim + 2 supports | 60% hero white card (duotone icon + 2-line 32px claim + emphasized body) + two stacked support cards right |
+| `dual_alert_panels` | problems / risks | rose + amber washes left/right, dashed alert boxes grouped under red/amber labels, bottom gradient capsule pointing to the solution |
+| `glass_arch_flow` | 3–5 sequential steps | bottom-bleed two-layer arches + light tapered swoosh behind them + white cards + soft chevrons (template: `fresh_flow.svg`) |
+| `glass_orbit_loop` | a cycle / iterative loop | dotted `#9BD4B8` orbit ring, 4 glass-circle nodes (dark line icons + labels), tangential direction arrows, center white claim card, side annotation |
+| `claim_tree` | hierarchy (thesis → pillars → pages) | apex gradient capsule → thin green S-curve fans → 3 white pillar cards → fading ghost-thumbnail row |
+| `meta_bento` | an inventory / catalog | true bento grid (1 big + 2 medium + N small white cards), each holding a gray `#E3E8E5` wireframe + name + one-line caption |
+| `split_style_duel` | two-sided contrast | two large rounded panels (each styled as the thing it depicts, as content thumbnails), bridged by a centered gradient capsule |
+| `transit_pipeline` | a transformation pipeline | one wide white panel, a single gradient transit line (12px, round caps, integrated arrowhead), ring stations + duotone icons above, names/bodies below |
+| `cta_end` | closing with an action | cover gradient + emblem, centered CTA title + translucent mono command chip + link line; "Thanks" demoted to a small corner note |
+
+Three-column dashed-separator pages and compare-table card pages (the `fresh_3col.svg` / `fresh_compare.svg` templates) remain available for plain parallel claims and option comparisons.
+
+**Style traits** (what makes it read as this family):
+- **Full-sentence assertion titles** — page titles state the conclusion ("新架構兼具現代化與極致安全，無需重建安控"), not the topic ("架構介紹"). 30–36px, weight 700, charcoal, left-aligned after the pill bar.
+- **Text density is a feature** — body runs 18–19px / line-height 1.85, 2–4 lines per block, with orange emphasis carrying the skim path. This family tolerates (and expects) more prose than `dark_apple`.
+- **Centered short blocks are allowed** — column/card paragraphs ≤4 lines under an icon may center; longer prose left-aligns. (Per-family exception to the global "never center body text" rule.)
+- **Icons are composed duotone illustrations** — 96–120px, built per the `duotone_icon` recipe (light-blue `#D8E4FB` panels + `#5E8FEF` Lucide skeleton + detail strokes). Icons never carry color variety.
+- **Cover/end formula** — full-bleed gradient, white title 64–72px weight 700 left at x≈120, a solid white bar beneath holding the subtitle in `#3E5BA8` bold, date/author line in white 0.92; end page is the same gradient with a single centered "Thanks".
+- **Diagram affinity** — this family renders timelines, step flows, comparison cards, and even sequence diagrams comfortably; structure shapes (arrows, bars, lifelines) use greens/teals at 0.5–0.9 opacity, message/flow arrows may use a yellow→blue subtle duo-tone, returns are dashed gray.
 
 ### Light traditional family
 
@@ -116,6 +263,22 @@ Dark gray cards on pure black, subtle 1px borders. The highlight color appears o
 ```
 
 The look: minimal, modern, premium. Card boundaries do the work; shadow is replaced by border + slight value separation (`#1A1A1A` cards on `#000000` page).
+
+### `fresh_pill_cards` (default for `corporate_fresh`)
+
+White rounded cards (rx=14) with a whisper shadow on the light `#F4F4F4` canvas, the green gradient pill bar above every page title, pastel radial washes in the canvas corners, and dashed green separators between columns. SVG snippets live in the `corporate_fresh` palette section above. The look: airy, premium consulting; structure drawn in green, content in charcoal/gray with orange inline emphasis.
+
+```xml
+<!-- Canvas with one pastel wash -->
+<defs>
+  <radialGradient id="washA" cx="12%" cy="88%" r="55%">
+    <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.5"/>
+    <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="1280" height="720" fill="#F4F4F4"/>
+<rect width="1280" height="720" fill="url(#washA)"/>
+```
 
 ### `rounded_cards_soft_shadow`
 
@@ -230,6 +393,23 @@ Use **dramatic** size contrast. The point of the design system is to create a cl
 | Compare_table dimension label | **17px** | 500 | gray-400 | text |
 | Captions / footnotes | 11–13px | 400, opacity 0.6 | gray-600 | text-muted |
 
+### Sizes — `corporate_fresh` family (1280×720 canvas)
+
+This family argues in sentences, so its hierarchy is flatter than `dark_apple`'s number-driven drama — but still deliberate. Titles assert, body carries the reasoning, orange emphasis carries the skim path.
+
+| Element | Size | Weight | Color |
+|---|---|---|---|
+| Cover title (CN) | 64–72px | 700 | `#FFFFFF` |
+| Cover subtitle (in white bar) | 26–30px | 700 | `#3E5BA8` |
+| Cover date/author | 20–22px | 400 | white 0.92 |
+| Page title (full-sentence assertion) | 30–36px | 700 | `#383838` |
+| Column / card heading | 28–34px | 700 | `#383838` (or `#1B8A82` teal when "recommended/positive") |
+| Step or option label (Step 1 / 方案一) | 22–26px | 700 | `#1B8A82` or `#383838` |
+| Body text | 18–19px | 400, line-height 1.85 | `#4A5158` |
+| Inline emphasis run | 18–19px (same as body) | 700 | `#E8872E` |
+| Small annotation / axis label | 15–16px | 400–700 | `#6B7178` |
+| End-page "Thanks" | 52–60px | 300–400 | `#FFFFFF` |
+
 ### Visual hierarchy rules
 
 1. **Numbers dominate.** Whenever a card carries a key statistic, the number itself is the largest element on the card (`80–120px` for hero stats; `56–72px` for mini-card stats). The caption explaining the number sits beneath it at `16–18px gray-300`.
@@ -244,7 +424,7 @@ Use **dramatic** size contrast. The point of the design system is to create a cl
 - **Generic blue everywhere.** If the topic is sustainability, the palette should be earthy, not blue.
 - **All colors at equal weight.** Pick a dominant one (60-70%).
 - **Accent underline below the page title.** Use whitespace or color instead.
-- **Centering body text.** Left-align always; center only titles when it serves the design.
+- **Centering body text.** Left-align always; center only titles when it serves the design. (Exception: `corporate_fresh` may center short ≤4-line blocks under icons in columns/cards.)
 - **Mixing icon styles.** Stick to one stroke family (Lucide outline) at one stroke width (2px).
 - **Random gap sizes.** Pick `20px` or `24px` — don't mix.
 - **Forgetting padding when using `left_accent_bar`.** The bar will eat content if you don't add `padding-left: 30px`.

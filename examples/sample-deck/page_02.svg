@@ -1,80 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
-     font-family="'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Inter, system-ui, sans-serif">
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <radialGradient id="washLav" cx="92%" cy="4%" r="48%">
+      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#D9D4F0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="freshShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
 
-  <rect width="1280" height="720" fill="#000000"/>
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
 
-  <!-- Page title bilingual -->
-  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">五個階段,專家團隊的工作流</text>
-  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
-    A Five-Phase Expert Workflow
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">DeckForge 把簡報當顧問專案來做：三件事與眾不同</text>
+
+  <!-- hero card (the core claim) -->
+  <rect x="48" y="150" width="700" height="510" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
+  <!-- duotone icon: interview with speech bubble -->
+  <g transform="translate(108 200)">
+    <g transform="scale(4.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" fill="#D8E4FB"/>
+      <circle cx="9" cy="7" r="4" fill="#D8E4FB"/>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" fill="none"/>
+    </g>
+    <g stroke="#5E8FEF" stroke-width="2.5" fill="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M66 -8 h28 a7 7 0 0 1 7 7 v13 a7 7 0 0 1 -7 7 h-16 l-9 9 v-9 h-3 a7 7 0 0 1 -7 -7 v-13 a7 7 0 0 1 7 -7 Z"/>
+    </g>
+    <g fill="#5E8FEF">
+      <circle cx="73" cy="5" r="2.3"/><circle cx="80" cy="5" r="2.3"/><circle cx="87" cy="5" r="2.3"/>
+    </g>
+  </g>
+  <text x="108" y="392" font-size="32" font-weight="700" fill="#383838">不是模板填空，</text>
+  <text x="108" y="440" font-size="32" font-weight="700" fill="#383838">是先定論點再做頁面。</text>
+  <text x="108" y="500" font-size="19" fill="#4A5158">
+    <tspan x="108" dy="0">蘇格拉底式訪談先釐清<tspan fill="#E8872E" font-weight="700">觀點轉變</tspan>與核心主張，</tspan>
+    <tspan x="108" dy="35">金字塔原理把主張長成大綱與佐證，</tspan>
+    <tspan x="108" dy="35">每一頁都為<tspan fill="#E8872E" font-weight="700">說服</tspan>而存在。</tspan>
   </text>
 
-  <!-- Main card containing 5 mini-cards (mini_grid layout) -->
-  <rect x="48" y="140" width="1184" height="532" rx="20" ry="20"
-        fill="#1A1A1A" stroke="#333333" stroke-width="1"/>
-
-  <!-- Mini cards — 5 columns: w=(1184-80-4*24)/5=201.6 ≈ 202 -->
-  <!-- Positions: 88, 314, 540, 766, 992 -->
-
-  <!-- Mini 1 — 01 蘇格拉底反詰 (renamed from 需求調研) -->
-  <rect x="88" y="226" width="202" height="360" rx="12" ry="12"
-        fill="#222222" stroke="#333333" stroke-width="1"/>
-  <text x="189" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">01</text>
-  <text x="189" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">蘇格拉底反詰</text>
-  <text x="189" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">SOCRATIC</text>
-  <text x="189" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
-    <tspan x="189" dy="0">跳窗反詰挖出</tspan>
-    <tspan x="189" dy="1.5em">真正要說服的判斷</tspan>
+  <!-- support card A -->
+  <rect x="772" y="150" width="460" height="243" rx="14" fill="#FFFFFF" filter="url(#freshShadow)"/>
+  <g transform="translate(806 196)">
+    <g transform="scale(2.4)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10" fill="#D8E4FB"/>
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="#FFFFFF"/>
+    </g>
+  </g>
+  <text x="892" y="216" font-size="24" font-weight="700" fill="#383838">Bento 版型與雙風格</text>
+  <text x="892" y="262" font-size="17" fill="#4A5158">
+    <tspan x="892" dy="0">八種 Bento 版型 + 深淺<tspan fill="#E8872E" font-weight="700">雙風格</tspan>，</tspan>
+    <tspan x="892" dy="31">全程角色色紀律，杜絕 AI 簡報感。</tspan>
   </text>
 
-  <!-- Mini 2 — 02 大綱架構 -->
-  <rect x="314" y="226" width="202" height="360" rx="12" ry="12"
-        fill="#222222" stroke="#333333" stroke-width="1"/>
-  <text x="415" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">02</text>
-  <text x="415" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">大綱架構</text>
-  <text x="415" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">OUTLINE</text>
-  <text x="415" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
-    <tspan x="415" dy="0">金字塔原理</tspan>
-    <tspan x="415" dy="1.5em">每頁標題都是 claim</tspan>
+  <!-- support card B -->
+  <rect x="772" y="417" width="460" height="243" rx="14" fill="#FFFFFF" filter="url(#freshShadow)"/>
+  <g transform="translate(806 463)">
+    <g transform="scale(2.4)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#D8E4FB"/>
+      <polyline points="14 2 14 8 20 8" fill="#FFFFFF"/>
+      <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+    </g>
+  </g>
+  <text x="892" y="483" font-size="24" font-weight="700" fill="#383838">交付即可編輯</text>
+  <text x="892" y="529" font-size="17" fill="#4A5158">
+    <tspan x="892" dy="0">SVG 組裝 .pptx，<tspan fill="#E8872E" font-weight="700">轉換為圖形</tspan>後</tspan>
+    <tspan x="892" dy="31">每段文字、色彩皆可在 PPT 內編輯。</tspan>
   </text>
-
-  <!-- Mini 3 — 03 策劃稿 (highlighted as "secret sauce") -->
-  <rect x="540" y="226" width="202" height="360" rx="12" ry="12"
-        fill="#FF6900" fill-opacity="0.15" stroke="#FF6900" stroke-width="1"/>
-  <text x="641" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">03</text>
-  <text x="641" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">策劃稿</text>
-  <text x="641" y="432" font-size="11" fill="#FF6900" text-anchor="middle" letter-spacing="1">PLANNING ★</text>
-  <text x="641" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
-    <tspan x="641" dy="0">內容 + Bento 版型</tspan>
-    <tspan x="641" dy="1.5em">AI 慣性跳過的關鍵</tspan>
-  </text>
-
-  <!-- Mini 4 — 04 設計稿 -->
-  <rect x="766" y="226" width="202" height="360" rx="12" ry="12"
-        fill="#222222" stroke="#333333" stroke-width="1"/>
-  <text x="867" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">04</text>
-  <text x="867" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">設計稿</text>
-  <text x="867" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">DESIGN</text>
-  <text x="867" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
-    <tspan x="867" dy="0">SVG 向量輸出</tspan>
-    <tspan x="867" dy="1.5em">1280×720 viewBox</tspan>
-  </text>
-
-  <!-- Mini 5 — 05 產出 -->
-  <rect x="992" y="226" width="202" height="360" rx="12" ry="12"
-        fill="#222222" stroke="#333333" stroke-width="1"/>
-  <text x="1093" y="340" font-size="72" font-weight="900" fill="#FF6900" text-anchor="middle">05</text>
-  <text x="1093" y="405" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">產出</text>
-  <text x="1093" y="432" font-size="11" fill="#666666" text-anchor="middle" letter-spacing="1">PRODUCE</text>
-  <text x="1093" y="490" font-size="13" fill="#A0A0A0" text-anchor="middle">
-    <tspan x="1093" dy="0">.pptx + .pdf</tspan>
-    <tspan x="1093" dy="1.5em">+ speaker notes</tspan>
-  </text>
-
-  <!-- Footer hint about phase 0 + handoff approvals -->
-  <text x="48" y="700" font-size="11" fill="#666666" letter-spacing="1">
-    + Phase 0 (source-doc analysis when provided)   ·   每個階段結束跳窗讓你確認才往下
-  </text>
-  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">02 / 03</text>
 </svg>

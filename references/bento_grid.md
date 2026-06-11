@@ -2,6 +2,8 @@
 
 The Bento Grid (便當網格) is a flexible card-based layout system, originally inspired by Japanese bento boxes and popularized by Apple's product pages. It's the **base** layout language for content pages — used by default unless a page genuinely needs to express direction / alignment / topology / axis structure that bento would flatten, in which case Phase 3 switches to a diagram primitive (see [diagrams.md](diagrams.md)).
 
+**Styling note**: the coordinates in this document are style-agnostic; the example fills are dark_apple (`#1A1A1A` / `#222222` cards on black). On `corporate_fresh` decks (the default style), keep the geometry but render cards as white rx=14–16 with the whisper shadow on the `#F4F4F4` canvas, per design_system.md → "Corporate fresh family".
+
 Why Bento Grid?
 
 1. **It holds a lot of info on one page** without feeling stuffed.

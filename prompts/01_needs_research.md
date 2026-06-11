@@ -333,7 +333,7 @@ Before exiting Phase 1, write `brief.md` to the working directory. **Phase 2 mus
 - **Tone**: <serious / playful / data-heavy / story-driven / hybrid>
 - **Language**: <zh-TW / en / bilingual / other>
 - **Brand**: <colors, fonts, taboo items, must-mention items>
-- **Visual style hint**: <dark_apple / clean minimal / bold corporate / tech-futuristic / warm humanistic / academic>
+- **Visual style hint**: <corporate_fresh (default when unspecified) / dark_apple / clean minimal / bold corporate / tech-futuristic / warm humanistic / academic>
 
 ## Open assumptions
 - <things we did not confirm but are proceeding with — Phase 2/3 may revisit>

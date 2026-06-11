@@ -2,7 +2,7 @@
 
 [English](README.en.md) · **繁體中文**
 
-> 一個 Claude skill,專門用來產出**高品質、可在 PowerPoint 編輯的簡報**。不是把你的主題丟進範本套版,而是用三套方法論串起整個流程:**蘇格拉底反詰**(Phase 1)挖出簡報真正要說服的判斷、**金字塔原理**(Phase 1→2→3)把零碎想法結構成可讀的論證、**Bento Grid + 暗黑 Apple 美學**(Phase 3→4)把論證渲染成可編輯 PPT。不是一鍵生成——每個階段邊界都會跳窗讓你確認才往下。
+> 一個 Claude skill,專門用來產出**高品質、可在 PowerPoint 編輯的簡報**。不是把你的主題丟進範本套版,而是用三套方法論串起整個流程:**蘇格拉底反詰**(Phase 1)挖出簡報真正要說服的判斷、**金字塔原理**(Phase 1→2→3)把零碎想法結構成可讀的論證、**Bento Grid + 雙風格設計系統**(Phase 3→4,預設 corporate_fresh 淺色顧問風,可改選暗黑 Apple 風)把論證渲染成可編輯 PPT。不是一鍵生成——每個階段邊界都會跳窗讓你確認才往下。
 
 
 ## Demo
@@ -102,18 +102,20 @@ DeckForge/
 │   ├── bento_grid.md       ← Bento Grid 8 種版型(預設;含 stat_hero / mini_grid)
 │   ├── diagrams.md         ← 9 種 diagram primitives(只在 Bento 會丟資訊時切換)
 │   ├── chart_anatomy.md    ← SVG bar / line / donut 圖表
-│   ├── design_system.md    ← dark_apple palette + 11 種傳統 palette
+│   ├── design_system.md    ← dark_apple palette + corporate_fresh 淺色顧問風 + 10 種傳統 palette
 │   ├── pyramid_principle.md ← 金字塔原理跨 Phase 1/2/3 的對照表
 │   ├── socratic_loop.md     ← Phase 1 反詰問題類型 + 11 種情境 spine
 │   └── editable_mode.md    ← PowerPoint Convert to Shape 編輯
-├── templates/              ← 20 個 viewBox 1280×720 SVG 起始檔
+├── templates/              ← 24 個 viewBox 1280×720 SVG 起始檔
 │   ├── _base.svg           ← 共用 filter / 漸層 / 35 個 Lucide icon
 │   ├── cover.svg / toc.svg
 │   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
 │   ├── bento_mini_grid.svg ← 主卡內含 3–5 張 mini-card(dark_apple 風格)
 │   ├── chart_bar.svg / chart_line.svg / chart_donut.svg
-│   └── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
-│       quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← Diagram primitives
+│   ├── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
+│   │   quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← Diagram primitives
+│   └── fresh_cover.svg / fresh_3col.svg / fresh_flow.svg / fresh_compare.svg
+│                           ← corporate_fresh 淺色顧問風起始檔
 ├── scripts/
 │   ├── svg_to_pptx.py      ← Phase 5 組裝器(同時產出 .pptx + .pdf)
 │   ├── package.sh          ← 打包 deckforge.zip 供 Claude Desktop 上傳

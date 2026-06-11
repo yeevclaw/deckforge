@@ -24,6 +24,7 @@ If you can fit it in cards, prefer cards — they're more flexible. Reach for ch
 - **Background**: same dark gray card (`#1A1A1A`) or pure black slide bg.
 - **Axes / gridlines**: thin (1px) `#333333`. Subtle, not assertive.
 - **Labels**: `#A0A0A0` 12–14px. Axis labels in English, data labels in CN.
+- **`corporate_fresh` decks (the default style)**: same geometry, swap the neutrals and the data hue — white card on `#F4F4F4` canvas, gridlines `#DDE2DF`, labels `#6B7178` (values `#383838`), and the data series uses the family's **structure green `#3DB377`** with the same alpha tiers (donut segments: alphas of that green). Orange `#E8872E` stays reserved for inline text emphasis — never as chart fill.
 - **Title sits OUTSIDE the chart**, as the page title. The chart itself has no internal title — the page title carries it.
 - **Numbers on bars / points**: optional. If shown, render at 14–16px in highlight color, above each data point.
 - **No legend** if the highlight color is single-series. Legend only when you have 2+ series — keep it 12px in `#A0A0A0`, positioned top-right.

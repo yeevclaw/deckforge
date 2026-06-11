@@ -12,16 +12,6 @@
 
   <rect width="1280" height="720" fill="url(#coverGrad)"/>
 
-  <!-- arch horizon along the bottom edge — previews the inner pages' glass_arch motif -->
-  <g fill="#FFFFFF" fill-opacity="0.10">
-    <path d="M 15 720 L 15 700 A 95 95 0 0 1 205 700 L 205 720 Z"/>
-    <path d="M 235 720 L 235 686 A 95 95 0 0 1 425 686 L 425 720 Z"/>
-    <path d="M 455 720 L 455 696 A 95 95 0 0 1 645 696 L 645 720 Z"/>
-    <path d="M 675 720 L 675 682 A 95 95 0 0 1 865 682 L 865 720 Z"/>
-    <path d="M 895 720 L 895 698 A 95 95 0 0 1 1085 698 L 1085 720 Z"/>
-    <path d="M 1115 720 L 1115 690 A 95 95 0 0 1 1305 690 L 1305 720 Z"/>
-  </g>
-
   <!-- panel_emblem watermark: leaf of large rounded panels split by a trunk/branch channel -->
   <g transform="translate(880 110) scale(3.0)" fill="#FFFFFF" fill-opacity="0.15">
     <!-- upper-left panel -->
@@ -35,8 +25,8 @@
   </g>
 
   <!-- title block -->
-  <text x="120" y="336" font-size="66" font-weight="700" fill="#FFFFFF">DeckForge 簡報生成技能介紹</text>
+  <text x="120" y="336" font-size="66" font-weight="700" fill="#FFFFFF">簡報主標題：八到十四字內</text>
   <rect x="120" y="366" width="700" height="50" fill="#FFFFFF"/>
-  <text x="140" y="402" font-size="28" font-weight="700" fill="#3E5BA8">五階段專家工作流 — 從需求訪談到可編輯簡報</text>
-  <text x="120" y="470" font-size="21" fill="#FFFFFF" fill-opacity="0.92">2026/06  DeckForge v0.8.0</text>
+  <text x="140" y="402" font-size="28" font-weight="700" fill="#3E5BA8">副標：一句說明這份簡報要促成的決定</text>
+  <text x="120" y="470" font-size="21" fill="#FFFFFF" fill-opacity="0.92">2026/06  報告人姓名</text>
 </svg>

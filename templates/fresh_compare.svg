@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <linearGradient id="recGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#A8E8E0"/><stop offset="100%" stop-color="#80D0F8"/>
+    </linearGradient>
+    <linearGradient id="recCard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EDF9F2"/><stop offset="100%" stop-color="#E6F1FB"/>
+    </linearGradient>
+    <radialGradient id="washGreen" cx="8%" cy="92%" r="48%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="freshShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
+
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">比較頁標題：直接寫出推薦結論與比較範圍</text>
+
+  <!-- recommendation capsule over column 3 -->
+  <rect x="880" y="120" width="330" height="48" rx="14" fill="url(#recGrad)"/>
+  <text x="1045" y="152" font-size="22" font-weight="700" fill="#2F3437" text-anchor="middle">推薦方案</text>
+
+  <!-- vertical dimension labels -->
+  <g font-size="22" font-weight="700" fill="#4A5158" text-anchor="middle">
+    <text x="92" y="313"><tspan x="92" dy="0">維</tspan><tspan x="92" dy="26">度</tspan><tspan x="92" dy="26">一</tspan></text>
+    <text x="92" y="445"><tspan x="92" dy="0">維</tspan><tspan x="92" dy="26">度</tspan><tspan x="92" dy="26">二</tspan></text>
+    <text x="92" y="575"><tspan x="92" dy="0">維</tspan><tspan x="92" dy="26">度</tspan><tspan x="92" dy="26">三</tspan></text>
+  </g>
+
+  <!-- column cards -->
+  <rect x="130" y="180" width="345" height="488" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
+  <rect x="505" y="180" width="345" height="488" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
+  <rect x="880" y="180" width="330" height="488" rx="16" fill="url(#recCard)" filter="url(#freshShadow)"/>
+
+  <!-- column headers -->
+  <g text-anchor="middle">
+    <text x="302" y="226" font-size="22" font-weight="700" fill="#1B8A82">方案一</text>
+    <text x="302" y="260" font-size="26" font-weight="700" fill="#383838">選項 A 名稱</text>
+    <text x="677" y="226" font-size="22" font-weight="700" fill="#1B8A82">方案二</text>
+    <text x="677" y="260" font-size="26" font-weight="700" fill="#383838">選項 B 名稱</text>
+    <text x="1045" y="226" font-size="22" font-weight="700" fill="#1B8A82">方案三</text>
+    <text x="1045" y="260" font-size="26" font-weight="700" fill="#383838">選項 C 名稱</text>
+  </g>
+
+  <!-- round-dot row separators -->
+  <g stroke="#9FB9AE" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="0.1 9">
+    <line x1="160" y1="402" x2="445" y2="402"/>
+    <line x1="535" y1="402" x2="820" y2="402"/>
+    <line x1="910" y1="402" x2="1180" y2="402"/>
+    <line x1="160" y1="532" x2="445" y2="532"/>
+    <line x1="535" y1="532" x2="820" y2="532"/>
+    <line x1="910" y1="532" x2="1180" y2="532"/>
+  </g>
+
+  <!-- column 1 rows -->
+  <g>
+    <text x="158" y="318" font-size="22" font-weight="700" fill="#383838">維度一的判斷</text>
+    <text x="158" y="350" font-size="18" fill="#6B7178"><tspan x="158" dy="0">一到兩行說明，</tspan><tspan x="158" dy="30">寫具體事實。</tspan></text>
+    <text x="158" y="448" font-size="22" font-weight="700" fill="#383838">維度二的判斷</text>
+    <text x="158" y="480" font-size="18" fill="#6B7178"><tspan x="158" dy="0">一到兩行說明，</tspan><tspan x="158" dy="30">寫具體事實。</tspan></text>
+    <text x="158" y="578" font-size="22" font-weight="700" fill="#383838">維度三的判斷</text>
+    <text x="158" y="610" font-size="18" fill="#6B7178"><tspan x="158" dy="0">一到兩行說明，</tspan><tspan x="158" dy="30">寫具體事實。</tspan></text>
+  </g>
+
+  <!-- column 2 rows -->
+  <g>
+    <text x="533" y="318" font-size="22" font-weight="700" fill="#383838">維度一的判斷</text>
+    <text x="533" y="350" font-size="18" fill="#6B7178"><tspan x="533" dy="0">一到兩行說明，</tspan><tspan x="533" dy="30">寫具體事實。</tspan></text>
+    <text x="533" y="448" font-size="22" font-weight="700" fill="#383838">維度二的判斷</text>
+    <text x="533" y="480" font-size="18" fill="#6B7178"><tspan x="533" dy="0">一到兩行說明，</tspan><tspan x="533" dy="30">寫具體事實。</tspan></text>
+    <text x="533" y="578" font-size="22" font-weight="700" fill="#383838">維度三的判斷</text>
+    <text x="533" y="610" font-size="18" fill="#6B7178"><tspan x="533" dy="0">一到兩行說明，</tspan><tspan x="533" dy="30">寫具體事實。</tspan></text>
+  </g>
+
+  <!-- column 3 rows (recommended) -->
+  <g>
+    <text x="908" y="318" font-size="22" font-weight="700" fill="#1B8A82">維度一的判斷</text>
+    <text x="908" y="350" font-size="18" fill="#4A5158"><tspan x="908" dy="0">推薦欄的說明中</tspan><tspan x="908" dy="30"><tspan fill="#E8872E" font-weight="700">關鍵詞</tspan>用橘色。</tspan></text>
+    <text x="908" y="448" font-size="22" font-weight="700" fill="#1B8A82">維度二的判斷</text>
+    <text x="908" y="480" font-size="18" fill="#4A5158"><tspan x="908" dy="0">說明寫深灰，<tspan fill="#E8872E" font-weight="700">強調橘</tspan></tspan><tspan x="908" dy="30">每格最多一處。</tspan></text>
+    <text x="908" y="578" font-size="22" font-weight="700" fill="#1B8A82">維度三的判斷</text>
+    <text x="908" y="610" font-size="18" fill="#4A5158"><tspan x="908" dy="0">判斷用<tspan fill="#E8872E" font-weight="700">青綠色</tspan>粗體</tspan><tspan x="908" dy="30">與兩欄區隔。</tspan></text>
+  </g>
+</svg>

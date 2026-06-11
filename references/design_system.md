@@ -49,7 +49,7 @@ All values below were calibrated by pixel-sampling a reference deck of this styl
 | **Emphasis orange** | `#E8872E` | **bold inline runs inside body text only** — never fills, never icons, never large areas |
 | Alert pair | `#E05B5B` red / `#E5B53A` amber | risk/warning panels only (dashed-border boxes + warning labels) |
 | Recommendation capsule | gradient `#A8E8E0 → #80D0F8`, text `#2F3437` near-black bold | the 推薦方案-style capsule only |
-| Cover gradient | `x1=0,y1=0 → x2=100%,y2=55%`: `#56BE85 → #5BA7D6 42% → #7378E0 80% → #878DEB` | cover + end pages only, full-bleed, with a white panel-emblem watermark at 0.13–0.18 opacity |
+| Cover gradient | `x1=0,y1=0 → x2=100%,y2=55%`: `#56BE85 → #5BA7D6 42% → #7378E0 80% → #878DEB` | cover + end pages only, full-bleed, with white aurora ribbons at 0.05–0.10 opacity + one soft white corner glow |
 
 **Emphasis discipline (this family's equivalent of single-highlight discipline):** each color may appear only in its role above. Orange is the loudest voice and lives exclusively in bold `<tspan>` runs inside body paragraphs — 1–2 runs per paragraph, marking the phrase the audience must retain. If orange shows up as a card fill, an icon, or a heading, the style is broken. Green carries structure, blue carries icons, orange carries meaning.
 
@@ -139,7 +139,21 @@ Give the FINAL step's arch a slightly greener pair (`#A1E5DE` / `#B6E8D8` / `#C5
 </g>
 ```
 
-*`panel_emblem`* — the cover/end watermark is a leaf/tree built from LARGE rounded panels separated by a 12–16px trunk-and-branch channel (the gradient shows through the channel), white at 0.13–0.18. Small sharp petals read cheap; panels must be big and blunt-cornered.
+*`aurora_ribbons`* — the cover/end background texture is 2–3 SMOOTH translucent ribbon bands (long C-curve paths, white at 0.05–0.10) flowing across the lower half, plus one soft white radial glow in a top corner (α≤0.16). Bands must be wide, slow curves spanning the full canvas width — no hard-edged geometric shapes, emblems, or rows of repeated silhouettes (those read as clutter on a gradient):
+
+```xml
+<radialGradient id="glowTR" cx="86%" cy="8%" r="42%">
+  <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.16"/>
+  <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+</radialGradient>
+<rect width="1280" height="720" fill="url(#glowTR)"/>
+<g fill="#FFFFFF">
+  <path d="M -60 560 C 280 450, 620 620, 940 490 C 1130 413, 1250 400, 1340 385
+           L 1340 480 C 1250 495, 1150 515, 960 590 C 640 716, 300 560, -60 670 Z" fill-opacity="0.07"/>
+  <path d="M -60 680 C 320 580, 700 716, 1020 600 C 1180 542, 1290 532, 1340 526
+           L 1340 720 L -60 720 Z" fill-opacity="0.10"/>
+</g>
+```
 
 *`chunky_chevron`* — arrows between cards are single soft white wedges (~56×110px, α0.55) sitting in the arch-overlap lens at card mid-height — not 20px chevron glyphs, and not high-contrast stacked layers:
 
@@ -153,7 +167,7 @@ Give the FINAL step's arch a slightly greener pair (`#A1E5DE` / `#B6E8D8` / `#C5
 
 | Composition | Content shape it fits | Geometry in one line |
 |---|---|---|
-| `arch_horizon_cover` | cover | gradient + title/bar formula + a row of small white α0.10 bleed arches along the bottom edge previewing the inner motif (template: `fresh_cover.svg` + horizon row) |
+| `aurora_cover` | cover | gradient + title/bar formula + `aurora_ribbons` background texture (template: `fresh_cover.svg`) |
 | `bento_hero_duo` | one core claim + 2 supports | 60% hero white card (duotone icon + 2-line 32px claim + emphasized body) + two stacked support cards right |
 | `dual_alert_panels` | problems / risks | rose + amber washes left/right, dashed alert boxes grouped under red/amber labels, bottom gradient capsule pointing to the solution |
 | `glass_arch_flow` | 3–5 sequential steps | bottom-bleed two-layer arches + light tapered swoosh behind them + white cards + soft chevrons (template: `fresh_flow.svg`) |
@@ -162,7 +176,7 @@ Give the FINAL step's arch a slightly greener pair (`#A1E5DE` / `#B6E8D8` / `#C5
 | `meta_bento` | an inventory / catalog | true bento grid (1 big + 2 medium + N small white cards), each holding a gray `#E3E8E5` wireframe + name + one-line caption |
 | `split_style_duel` | two-sided contrast | two large rounded panels (each styled as the thing it depicts, as content thumbnails), bridged by a centered gradient capsule |
 | `transit_pipeline` | a transformation pipeline | one wide white panel, a single gradient transit line (12px, round caps, integrated arrowhead), ring stations + duotone icons above, names/bodies below |
-| `cta_end` | closing with an action | cover gradient + emblem, centered CTA title + translucent mono command chip + link line; "Thanks" demoted to a small corner note |
+| `cta_end` | closing with an action | cover gradient + aurora ribbons, centered CTA title + translucent mono command chip + link line; "Thanks" demoted to a small corner note |
 
 Three-column dashed-separator pages and compare-table card pages (the `fresh_3col.svg` / `fresh_compare.svg` templates) remain available for plain parallel claims and option comparisons.
 

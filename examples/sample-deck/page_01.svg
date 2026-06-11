@@ -8,35 +8,33 @@
       <stop offset="80%" stop-color="#7378E0"/>
       <stop offset="100%" stop-color="#878DEB"/>
     </linearGradient>
+    <radialGradient id="glowTR" cx="86%" cy="8%" r="42%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
   <rect width="1280" height="720" fill="url(#coverGrad)"/>
+  <rect width="1280" height="720" fill="url(#glowTR)"/>
 
-  <!-- arch horizon along the bottom edge — previews the inner pages' glass_arch motif -->
-  <g fill="#FFFFFF" fill-opacity="0.10">
-    <path d="M 15 720 L 15 700 A 95 95 0 0 1 205 700 L 205 720 Z"/>
-    <path d="M 235 720 L 235 686 A 95 95 0 0 1 425 686 L 425 720 Z"/>
-    <path d="M 455 720 L 455 696 A 95 95 0 0 1 645 696 L 645 720 Z"/>
-    <path d="M 675 720 L 675 682 A 95 95 0 0 1 865 682 L 865 720 Z"/>
-    <path d="M 895 720 L 895 698 A 95 95 0 0 1 1085 698 L 1085 720 Z"/>
-    <path d="M 1115 720 L 1115 690 A 95 95 0 0 1 1305 690 L 1305 720 Z"/>
-  </g>
-
-  <!-- panel_emblem watermark: leaf of large rounded panels split by a trunk/branch channel -->
-  <g transform="translate(880 110) scale(3.0)" fill="#FFFFFF" fill-opacity="0.15">
-    <!-- upper-left panel -->
-    <path d="M 10 64 Q 10 50 22 43 L 82 9 Q 96 1 96 17 L 96 99 Q 96 108 88 113 L 24 149 Q 10 157 10 142 Z"/>
-    <!-- upper-right panel -->
-    <path d="M 200 64 Q 200 50 188 43 L 128 9 Q 114 1 114 17 L 114 99 Q 114 108 122 113 L 186 149 Q 200 157 200 142 Z"/>
-    <!-- lower-left panel -->
-    <path d="M 10 172 Q 10 157 24 165 L 88 201 Q 96 206 96 217 L 96 248 Q 96 262 82 254 L 22 220 Q 10 213 10 199 Z"/>
-    <!-- lower-right panel -->
-    <path d="M 200 172 Q 200 157 186 165 L 122 201 Q 114 206 114 217 L 114 248 Q 114 262 128 254 L 188 220 Q 200 213 200 199 Z"/>
+  <!-- aurora ribbons: smooth translucent bands flowing low across the canvas -->
+  <g fill="#FFFFFF">
+    <path d="M -60 560 C 280 450, 620 620, 940 490
+             C 1130 413, 1250 400, 1340 385
+             L 1340 480
+             C 1250 495, 1150 515, 960 590
+             C 640 716, 300 560, -60 670 Z" fill-opacity="0.07"/>
+    <path d="M -60 680 C 320 580, 700 716, 1020 600
+             C 1180 542, 1290 532, 1340 526
+             L 1340 720 L -60 720 Z" fill-opacity="0.10"/>
+    <path d="M 560 248 C 800 196, 1040 232, 1340 150
+             L 1340 196
+             C 1050 274, 810 240, 560 286 Z" fill-opacity="0.05"/>
   </g>
 
   <!-- title block -->
   <text x="120" y="336" font-size="66" font-weight="700" fill="#FFFFFF">DeckForge 簡報生成技能介紹</text>
   <rect x="120" y="366" width="700" height="50" fill="#FFFFFF"/>
   <text x="140" y="402" font-size="28" font-weight="700" fill="#3E5BA8">五階段專家工作流 — 從需求訪談到可編輯簡報</text>
-  <text x="120" y="470" font-size="21" fill="#FFFFFF" fill-opacity="0.92">2026/06  DeckForge v0.8.0</text>
+  <text x="120" y="470" font-size="21" fill="#FFFFFF" fill-opacity="0.92">2026/06  DeckForge v0.8.1</text>
 </svg>

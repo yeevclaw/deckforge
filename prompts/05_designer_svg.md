@@ -309,10 +309,10 @@ If `planning.json` specifies a diagram primitive layout — `flow`, `timeline`, 
 
 **`corporate_fresh` page-type overrides** (everything else above still applies):
 
-- **cover**: full-bleed gradient (`x1=0,y1=0 → x2=100%,y2=55%`): `#56BE85 → #5BA7D6 (42%) → #7378E0 (80%) → #878DEB`; white geometric watermark motif (large abstract leaf/diamond built from 2–3 rounded `<path>` shapes, fill white at 0.12) in the lower-right; CN title 64–72px weight 700 white, left-anchored at x≈120, y≈330; beneath it a solid white bar (height ≈ 48) carrying the subtitle in `#3E5BA8` bold 26–30px; date/author line in white 0.92 at 20–22px.
+- **cover**: full-bleed gradient (`x1=0,y1=0 → x2=100%,y2=55%`): `#56BE85 → #5BA7D6 (42%) → #7378E0 (80%) → #878DEB`; `aurora_ribbons` background texture (2–3 smooth translucent white ribbon bands at 0.05–0.10 across the lower half + one soft white corner glow — never hard-edged geometric emblems); CN title 64–72px weight 700 white, left-anchored at x≈120, y≈330; beneath it a solid white bar (height ≈ 48) carrying the subtitle in `#3E5BA8` bold 26–30px; date/author line in white 0.92 at 20–22px.
 - **content**: green gradient pill bar (64×8, rx 4) at (48, 44); full-sentence assertion title at (48, 96), 30–36px weight 700 `#383838`; canvas `#F4F4F4` with 1–2 pastel radial washes; content in white rx=14 cards or icon-topped columns split by dashed `#9BD4B8` separators; orange `#E8872E` bold inline emphasis on the 1–2 phrases per block the audience must retain.
 - **section_break / toc**: rarely used in this family (its decks run dense and short); if needed, style as a content page with an oversized teal heading — do not reuse the dark_apple giant-numeral treatment.
-- **end**: same gradient + watermark as cover, single centered "Thanks" 52–60px white, weight 300–400. Nothing else.
+- **end**: same gradient + aurora ribbons as cover, single centered "Thanks" 52–60px white, weight 300–400. Nothing else.
 
 ## SVG patterns to remember
 
@@ -398,7 +398,7 @@ If any fails → fix before output.
 - **Reusing the cover gradient on content pages.** The green→indigo gradient belongs to cover/end only. Content pages stay on `#F4F4F4` + pastel washes.
 - **Solid borders where the style wants dashed.** Column separators and alert boxes are dashed; white cards have no border at all (shadow only).
 - **Importing dark_apple drama.** No giant 100px hero numbers, no pure-black anything. Key figures sit inside sentences in orange bold, or as modest 28–36px values in cards.
-- **Skipping the craft recipes.** Complete circles floating mid-canvas, uniform-stroke arc arrows with a triangle glued on, bare 24×24 Lucide icons scaled 4× as hero icons, and dash-style row separators are the four 質感 killers in this family. Use the named recipes in design_system.md → "Craft recipes" (`glass_arch`, `tapered_swoosh`, `duotone_icon`, `panel_emblem`, `chunky_chevron`, round-dot separators) — the `templates/fresh_*.svg` starters already embed them. Composition fusion rules that matter most: step shapes are bottom-bleed arches anchored to the page edge (never floating circles), and the swoosh is painted BEFORE the arches so its endpoints tuck behind the first and last one.
+- **Skipping the craft recipes.** Complete circles floating mid-canvas, uniform-stroke arc arrows with a triangle glued on, bare 24×24 Lucide icons scaled 4× as hero icons, and dash-style row separators are the four 質感 killers in this family. Use the named recipes in design_system.md → "Craft recipes" (`glass_arch`, `tapered_swoosh`, `duotone_icon`, `aurora_ribbons`, `chunky_chevron`, round-dot separators) — the `templates/fresh_*.svg` starters already embed them. Composition fusion rules that matter most: step shapes are bottom-bleed arches anchored to the page edge (never floating circles), and the swoosh is painted BEFORE the arches so its endpoints tuck behind the first and last one.
 
 ## Why SVG (not HTML, not PNG)
 

@@ -5,157 +5,113 @@
     <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
     </linearGradient>
-    <!-- two-layer glass arches: outer halo + inner dome, bleeding off the bottom -->
-    <linearGradient id="archHalo" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#A6CDD4" stop-opacity="0.50"/>
-      <stop offset="60%" stop-color="#BCD9D6" stop-opacity="0.22"/>
-      <stop offset="100%" stop-color="#C8DED8" stop-opacity="0.05"/>
-    </linearGradient>
-    <linearGradient id="archDome" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#A6CDD4" stop-opacity="0.62"/>
-      <stop offset="60%" stop-color="#BCD9D6" stop-opacity="0.28"/>
-      <stop offset="100%" stop-color="#C8DED8" stop-opacity="0.08"/>
-    </linearGradient>
-    <linearGradient id="archHaloEnd" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#A1E5DE" stop-opacity="0.50"/>
-      <stop offset="60%" stop-color="#B6E8D8" stop-opacity="0.24"/>
-      <stop offset="100%" stop-color="#C5EDD8" stop-opacity="0.10"/>
-    </linearGradient>
-    <linearGradient id="archDomeEnd" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#A1E5DE" stop-opacity="0.62"/>
-      <stop offset="60%" stop-color="#B6E8D8" stop-opacity="0.30"/>
-      <stop offset="100%" stop-color="#C5EDD8" stop-opacity="0.12"/>
-    </linearGradient>
-    <!-- swoosh gradient along the path -->
-    <linearGradient id="swooshGrad" x1="180" y1="0" x2="1042" y2="0" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#CDEBD9" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#A8DFC2" stop-opacity="0.9"/>
+    <linearGradient id="lineGrad" x1="120" y1="0" x2="1140" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#CDEBD9"/>
+      <stop offset="100%" stop-color="#7BCBA4"/>
     </linearGradient>
     <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
       <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.45"/>
       <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
     </radialGradient>
+    <radialGradient id="washLav" cx="94%" cy="6%" r="44%">
+      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#D9D4F0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="freshShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
 
   <rect width="1280" height="720" fill="#F4F4F4"/>
   <rect width="1280" height="720" fill="url(#washGreen)"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
 
   <!-- title -->
   <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
-  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">五階段不可跳過：每階段產出檔案查核點，下一階段必須先讀取</text>
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">五階段工作流：每階段一個檔案查核點，缺一不可</text>
 
-  <!-- tapered swoosh: ONE continuous path (tail flick → wedge → integrated arrowhead),
-       drawn BEFORE the arches so its endpoints tuck behind the first and last arch -->
-  <path d="M 180 196
-           Q 480 122 950 172
-           L 938 148
-           L 1042 206
-           L 920 238
-           L 940 210
-           Q 470 180 190 232
-           Z" fill="url(#swooshGrad)"/>
+  <!-- wide panel -->
+  <rect x="48" y="160" width="1184" height="480" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
 
-  <!-- outer halos (left to right) -->
-  <path d="M 20 720 L 20 380 A 150 150 0 0 1 320 380 L 320 720 Z" fill="url(#archHalo)"/>
-  <path d="M 255 720 L 255 380 A 150 150 0 0 1 555 380 L 555 720 Z" fill="url(#archHalo)"/>
-  <path d="M 490 720 L 490 380 A 150 150 0 0 1 790 380 L 790 720 Z" fill="url(#archHalo)"/>
-  <path d="M 725 720 L 725 380 A 150 150 0 0 1 1025 380 L 1025 720 Z" fill="url(#archHalo)"/>
-  <path d="M 960 720 L 960 380 A 150 150 0 0 1 1260 380 L 1260 720 Z" fill="url(#archHaloEnd)"/>
+  <!-- transit line with integrated arrowhead -->
+  <line x1="140" y1="360" x2="1090" y2="360" stroke="url(#lineGrad)" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 1084 338 L 1144 360 L 1084 382 Z" fill="#7BCBA4"/>
 
-  <!-- inner domes (left to right) -->
-  <path d="M 45 720 L 45 383 A 125 125 0 0 1 295 383 L 295 720 Z" fill="url(#archDome)"/>
-  <path d="M 280 720 L 280 383 A 125 125 0 0 1 530 383 L 530 720 Z" fill="url(#archDome)"/>
-  <path d="M 515 720 L 515 383 A 125 125 0 0 1 765 383 L 765 720 Z" fill="url(#archDome)"/>
-  <path d="M 750 720 L 750 383 A 125 125 0 0 1 1000 383 L 1000 720 Z" fill="url(#archDome)"/>
-  <path d="M 985 720 L 985 383 A 125 125 0 0 1 1235 383 L 1235 720 Z" fill="url(#archDomeEnd)"/>
-
-  <!-- step 1 -->
+  <!-- station 1: Socratic interview -->
   <g>
-    <text x="170" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 1</text>
-    <text x="170" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">反詰訪談</text>
-    <rect x="75" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
-    <g transform="translate(141 392) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    <g transform="translate(143 240)">
+      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" fill="#D8E4FB"/>
+        <circle cx="9" cy="7" r="4" fill="#D8E4FB"/>
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" fill="none"/>
+      </g>
     </g>
-    <text x="170" y="488" font-size="17" fill="#4A5158" text-anchor="middle">
-      <tspan x="170" dy="0">以提問釐清受眾</tspan>
-      <tspan x="170" dy="30">與觀點轉變</tspan>
-    </text>
-    <text x="170" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">brief.md</text>
+    <circle cx="170" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
+    <text x="170" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">反詰訪談</text>
+    <text x="170" y="460" font-size="16" fill="#6B7178" text-anchor="middle">釐清觀點轉變</text>
+    <text x="170" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">brief.md</text>
   </g>
 
-  <!-- step 2 -->
+  <!-- station 2: outline -->
   <g>
-    <text x="405" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 2</text>
-    <text x="405" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">大綱架構</text>
-    <rect x="310" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
-    <g transform="translate(376 392) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-      <line x1="6" y1="8" x2="9" y2="8"/><line x1="6" y1="12" x2="9" y2="12"/>
+    <g transform="translate(373 240)">
+      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" fill="#D8E4FB"/>
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" fill="#FFFFFF"/>
+      </g>
     </g>
-    <text x="405" y="488" font-size="17" fill="#4A5158" text-anchor="middle">
-      <tspan x="405" dy="0">金字塔原理</tspan>
-      <tspan x="405" dy="30">架構章節邏輯</tspan>
-    </text>
-    <text x="405" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">outline.json</text>
+    <circle cx="400" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
+    <text x="400" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">大綱架構</text>
+    <text x="400" y="460" font-size="16" fill="#6B7178" text-anchor="middle">金字塔原理</text>
+    <text x="400" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">outline.json</text>
   </g>
 
-  <!-- step 3 -->
+  <!-- station 3: planning -->
   <g>
-    <text x="640" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 3</text>
-    <text x="640" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">策劃稿</text>
-    <rect x="545" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
-    <g transform="translate(611 392) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-      <polyline points="14 2 14 8 20 8"/>
-      <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+    <g transform="translate(603 240)">
+      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#D8E4FB"/>
+        <polyline points="14 2 14 8 20 8" fill="#FFFFFF"/>
+        <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+      </g>
     </g>
-    <text x="640" y="488" font-size="17" fill="#4A5158" text-anchor="middle">
-      <tspan x="640" dy="0">每頁一個主張</tspan>
-      <tspan x="640" dy="30">與佐證卡片</tspan>
-    </text>
-    <text x="640" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">planning.json</text>
+    <circle cx="630" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
+    <text x="630" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">策劃稿</text>
+    <text x="630" y="460" font-size="16" fill="#6B7178" text-anchor="middle">每頁一個主張</text>
+    <text x="630" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">planning.json</text>
   </g>
 
-  <!-- step 4 -->
+  <!-- station 4: SVG design -->
   <g>
-    <text x="875" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 4</text>
-    <text x="875" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">SVG 設計</text>
-    <rect x="780" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
-    <g transform="translate(846 392) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
-      <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+    <g transform="translate(833 240)">
+      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" fill="#D8E4FB"/>
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="#FFFFFF"/>
+      </g>
     </g>
-    <text x="875" y="488" font-size="17" fill="#4A5158" text-anchor="middle">
-      <tspan x="875" dy="0">Bento 版型</tspan>
-      <tspan x="875" dy="30">逐頁設計</tspan>
-    </text>
-    <text x="875" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">pages/*.svg</text>
+    <circle cx="860" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
+    <text x="860" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">SVG 設計</text>
+    <text x="860" y="460" font-size="16" fill="#6B7178" text-anchor="middle">Bento 版型</text>
+    <text x="860" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">pages/*.svg</text>
   </g>
 
-  <!-- step 5 -->
+  <!-- station 5: assemble & deliver -->
   <g>
-    <text x="1110" y="290" font-size="24" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 5</text>
-    <text x="1110" y="330" font-size="30" font-weight="700" fill="#383838" text-anchor="middle">組裝產出</text>
-    <rect x="1015" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
-    <g transform="translate(1081 392) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-      <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+    <g transform="translate(1063 240)">
+      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" fill="none"/>
+        <polyline points="7 10 12 15 17 10" fill="none"/><line x1="12" y1="15" x2="12" y2="3"/>
+      </g>
     </g>
-    <text x="1110" y="488" font-size="17" fill="#4A5158" text-anchor="middle">
-      <tspan x="1110" dy="0">組裝可編輯簡報</tspan>
-      <tspan x="1110" dy="30">與講者備忘</tspan>
-    </text>
-    <text x="1110" y="568" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">.pptx + .pdf</text>
+    <circle cx="1090" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
+    <text x="1090" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">組裝交付</text>
+    <text x="1090" y="460" font-size="16" fill="#6B7178" text-anchor="middle">全程可編輯</text>
+    <text x="1090" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">.pptx + .pdf</text>
   </g>
 
-  <!-- soft white chevrons in the arch-overlap lenses -->
-  <g fill="#FFFFFF" fill-opacity="0.55">
-    <path d="M 259 429 L 315 484 L 259 539 Z"/>
-    <path d="M 494 429 L 550 484 L 494 539 Z"/>
-    <path d="M 729 429 L 785 484 L 729 539 Z"/>
-    <path d="M 964 429 L 1020 484 L 964 539 Z"/>
-  </g>
+  <!-- footnote -->
+  <text x="640" y="586" font-size="16" fill="#4A5158" text-anchor="middle">跳過任何一階段是品質事故的頭號原因——檔案查核點讓流程可檢視、可重啟</text>
 </svg>

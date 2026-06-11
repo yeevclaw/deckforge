@@ -23,8 +23,8 @@
 
   <!-- Arrowhead marker for cycle arrows -->
   <defs>
-    <marker id="cycleArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 Z" fill="#666666"/>
+    <marker id="cycleArrow" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto">
+      <path d="M0,0 L12,4.5 L0,9 Z" fill="#666666"/>
     </marker>
   </defs>
 

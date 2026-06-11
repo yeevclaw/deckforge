@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Motion-first transit rail in dark_apple — the layout is DESIGNED for the
+  animation: the rail is the page's structural spine (950px), stations sit on
+  it, and the animated element is a highlight-color pulse overlay. The rail
+  itself and its integrated arrowhead stay static.
+  Single-highlight discipline: orange appears only in the pulses, the
+  integrated arrowhead, and the terminal station ring.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">資料持續流經五站，在終點成為決策</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Motion-first transit rail — the rail IS the layout
+  </text>
+
+  <!-- graphite rail with integrated highlight arrowhead (static) -->
+  <line x1="140" y1="400" x2="1090" y2="400" stroke="#333333" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 1084 378 L 1144 400 L 1084 422 Z" fill="#FF6900"/>
+
+  <!-- animated pulse overlay: highlight dashes flowing along the rail,
+       drawn after the rail and before the station rings -->
+  <line class="flow-anim" x1="140" y1="400" x2="1078" y2="400"
+        stroke="#FF6900" stroke-width="4" stroke-linecap="round"
+        stroke-dasharray="10 18" stroke-opacity="0.9"/>
+
+  <!-- station 1 -->
+  <g>
+    <text x="170" y="330" font-size="11" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">01 · COLLECT</text>
+    <circle cx="170" cy="400" r="16" fill="#1A1A1A" stroke="#666666" stroke-width="4"/>
+    <text x="170" y="464" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">訊號收集</text>
+    <text x="170" y="492" font-size="14" fill="#A0A0A0" text-anchor="middle">多源持續捕捉</text>
+    <text x="170" y="528" font-size="14" font-weight="600" fill="#666666" text-anchor="middle">原始資料</text>
+  </g>
+
+  <!-- station 2 -->
+  <g>
+    <text x="400" y="330" font-size="11" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">02 · CLEAN</text>
+    <circle cx="400" cy="400" r="16" fill="#1A1A1A" stroke="#666666" stroke-width="4"/>
+    <text x="400" y="464" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">清洗整理</text>
+    <text x="400" y="492" font-size="14" fill="#A0A0A0" text-anchor="middle">去噪統一格式</text>
+    <text x="400" y="528" font-size="14" font-weight="600" fill="#666666" text-anchor="middle">標準資料</text>
+  </g>
+
+  <!-- station 3 -->
+  <g>
+    <text x="630" y="330" font-size="11" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">03 · AGGREGATE</text>
+    <circle cx="630" cy="400" r="16" fill="#1A1A1A" stroke="#666666" stroke-width="4"/>
+    <text x="630" y="464" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">聚合分析</text>
+    <text x="630" y="492" font-size="14" fill="#A0A0A0" text-anchor="middle">形成可檢驗假設</text>
+    <text x="630" y="528" font-size="14" font-weight="600" fill="#666666" text-anchor="middle">候選假設</text>
+  </g>
+
+  <!-- station 4 -->
+  <g>
+    <text x="860" y="330" font-size="11" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">04 · VALIDATE</text>
+    <circle cx="860" cy="400" r="16" fill="#1A1A1A" stroke="#666666" stroke-width="4"/>
+    <text x="860" y="464" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">假設驗證</text>
+    <text x="860" y="492" font-size="14" fill="#A0A0A0" text-anchor="middle">數據檢驗可信度</text>
+    <text x="860" y="528" font-size="14" font-weight="600" fill="#666666" text-anchor="middle">驗證結論</text>
+  </g>
+
+  <!-- station 5: terminal, highlighted ring -->
+  <g>
+    <text x="1090" y="330" font-size="11" font-weight="500" fill="#666666" letter-spacing="2" text-anchor="middle">05 · DELIVER</text>
+    <circle cx="1090" cy="400" r="16" fill="#1A1A1A" stroke="#FF6900" stroke-width="4"/>
+    <text x="1090" y="464" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">決策交付</text>
+    <text x="1090" y="492" font-size="14" fill="#A0A0A0" text-anchor="middle">可執行決策建議</text>
+    <text x="1090" y="528" font-size="14" font-weight="600" fill="#666666" text-anchor="middle">行動方案</text>
+  </g>
+
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">4 / 4</text>
+</svg>

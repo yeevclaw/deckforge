@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  flow-anim demo in the default corporate_fresh style — transit_pipeline
+  composition (geometry from examples/sample-deck/page_03.svg).
+  The 12px gradient transit line + integrated arrowhead stay STATIC; the
+  animated element is a thin white pulse overlay (class="flow-anim") running
+  along the line, passing under the station rings. This is the correct way to
+  animate a thick rail — a marker-end on a 12px stroke can never be
+  proportionate, and dashing the rail itself reads as beads, not flow.
+-->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
      font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
   <defs>
@@ -31,23 +40,22 @@
 
   <!-- title -->
   <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
-  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">五階段工作流：每階段一個檔案查核點，缺一不可</text>
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">資料在管線中持續流動，每一站都有明確產出</text>
 
   <!-- wide panel -->
   <rect x="48" y="160" width="1184" height="480" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
 
-  <!-- transit line with integrated arrowhead -->
+  <!-- transit line with integrated arrowhead (static) -->
   <line x1="140" y1="360" x2="1090" y2="360" stroke="url(#lineGrad)" stroke-width="12" stroke-linecap="round"/>
   <path d="M 1084 338 L 1144 360 L 1084 382 Z" fill="#7BCBA4"/>
 
-  <!-- animated pulse overlay: white dashes flowing along the rail when the
-       page is produced as a GIF (flow-anim); renders as static dashes in
-       PNG/PDF/jpg thumbnails -->
+  <!-- animated pulse overlay: thin white dashes flowing along the rail,
+       drawn after the rail and before the station rings -->
   <line class="flow-anim" x1="140" y1="360" x2="1078" y2="360"
         stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"
         stroke-dasharray="10 18" stroke-opacity="0.9"/>
 
-  <!-- station 1: Socratic interview -->
+  <!-- station 1: collect -->
   <g>
     <g transform="translate(143 240)">
       <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -57,12 +65,12 @@
       </g>
     </g>
     <circle cx="170" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
-    <text x="170" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">反詰訪談</text>
-    <text x="170" y="460" font-size="16" fill="#6B7178" text-anchor="middle">釐清觀點轉變</text>
-    <text x="170" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">brief.md</text>
+    <text x="170" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">訊號收集</text>
+    <text x="170" y="460" font-size="16" fill="#6B7178" text-anchor="middle">多源持續捕捉</text>
+    <text x="170" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">原始資料</text>
   </g>
 
-  <!-- station 2: outline -->
+  <!-- station 2: clean -->
   <g>
     <g transform="translate(373 240)">
       <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -71,12 +79,12 @@
       </g>
     </g>
     <circle cx="400" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
-    <text x="400" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">大綱架構</text>
-    <text x="400" y="460" font-size="16" fill="#6B7178" text-anchor="middle">金字塔原理</text>
-    <text x="400" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">outline.json</text>
+    <text x="400" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">清洗整理</text>
+    <text x="400" y="460" font-size="16" fill="#6B7178" text-anchor="middle">去噪統一格式</text>
+    <text x="400" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">標準資料</text>
   </g>
 
-  <!-- station 3: planning -->
+  <!-- station 3: aggregate -->
   <g>
     <g transform="translate(603 240)">
       <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -86,12 +94,12 @@
       </g>
     </g>
     <circle cx="630" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
-    <text x="630" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">策劃稿</text>
-    <text x="630" y="460" font-size="16" fill="#6B7178" text-anchor="middle">每頁一個主張</text>
-    <text x="630" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">planning.json</text>
+    <text x="630" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">聚合分析</text>
+    <text x="630" y="460" font-size="16" fill="#6B7178" text-anchor="middle">形成可檢驗假設</text>
+    <text x="630" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">候選假設</text>
   </g>
 
-  <!-- station 4: SVG design -->
+  <!-- station 4: validate -->
   <g>
     <g transform="translate(833 240)">
       <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -100,12 +108,12 @@
       </g>
     </g>
     <circle cx="860" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
-    <text x="860" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">SVG 設計</text>
-    <text x="860" y="460" font-size="16" fill="#6B7178" text-anchor="middle">Bento 版型</text>
-    <text x="860" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">pages/*.svg</text>
+    <text x="860" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">假設驗證</text>
+    <text x="860" y="460" font-size="16" fill="#6B7178" text-anchor="middle">數據檢驗可信度</text>
+    <text x="860" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">驗證結論</text>
   </g>
 
-  <!-- station 5: assemble & deliver -->
+  <!-- station 5: deliver -->
   <g>
     <g transform="translate(1063 240)">
       <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -114,11 +122,11 @@
       </g>
     </g>
     <circle cx="1090" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
-    <text x="1090" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">組裝交付</text>
-    <text x="1090" y="460" font-size="16" fill="#6B7178" text-anchor="middle">全程可編輯</text>
-    <text x="1090" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">.pptx + .pdf</text>
+    <text x="1090" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">決策交付</text>
+    <text x="1090" y="460" font-size="16" fill="#6B7178" text-anchor="middle">可執行決策建議</text>
+    <text x="1090" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">行動方案</text>
   </g>
 
   <!-- footnote -->
-  <text x="640" y="586" font-size="16" fill="#4A5158" text-anchor="middle">跳過任何一階段是品質事故的頭號原因——檔案查核點讓流程可檢視、可重啟</text>
+  <text x="640" y="586" font-size="16" fill="#4A5158" text-anchor="middle">流動的虛線標記資料持續通過管線——動畫只用在「持續流動」的語意上，離散步驟維持靜態</text>
 </svg>

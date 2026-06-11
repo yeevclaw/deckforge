@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fan-in demo (dark_apple): how many-to-one flows avoid arrowhead crowding.
+  Top:    ≤3 sources — direct edges to anchors SPREAD along the target's edge
+          (≥32px separation between arrowheads).
+  Bottom: 4+ sources — branches MERGE into one trunk first; only ONE arrowhead
+          reaches the target. Branches + trunk animate as one system
+          (same dasharray; direction follows each path's drawing direction).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">多對一的兩種處理:分散錨點,或先匯流再進入</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Fan-in patterns: spread anchors (up to 3) vs. trunk merge (4+)
+  </text>
+
+  <defs>
+    <marker id="faHl" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="9"
+            refX="11" refY="4.5" orient="auto">
+      <path d="M0,0 L12,4.5 L0,9 Z" fill="#FF6900"/>
+    </marker>
+  </defs>
+
+  <!-- ===== Top: ≤3 sources, spread anchors ===== -->
+  <text x="48" y="172" font-size="12" font-weight="500" fill="#666666" letter-spacing="2">PATTERN 1 · 直連分散錨點(≤3 來源)</text>
+
+  <g fill="#1A1A1A" stroke="#333333" stroke-width="1">
+    <rect x="88" y="190" width="200" height="56" rx="12"/>
+    <rect x="88" y="262" width="200" height="56" rx="12"/>
+    <rect x="88" y="334" width="200" height="56" rx="12"/>
+  </g>
+  <g font-size="17" font-weight="600" fill="#FFFFFF" text-anchor="middle">
+    <text x="188" y="224">來源 A</text>
+    <text x="188" y="296">來源 B</text>
+    <text x="188" y="368">來源 C</text>
+  </g>
+
+  <!-- three direct edges, anchors spread on the hub's left edge (50px apart) -->
+  <g fill="none" stroke="#FF6900" stroke-width="2.5">
+    <path class="flow-anim" d="M292,218 C430,218 470,240 604,240" stroke-dasharray="8 6" marker-end="url(#faHl)"/>
+    <path class="flow-anim" d="M292,290 C430,290 470,290 604,290" stroke-dasharray="8 6" marker-end="url(#faHl)"/>
+    <path class="flow-anim" d="M292,362 C430,362 470,340 604,340" stroke-dasharray="8 6" marker-end="url(#faHl)"/>
+  </g>
+
+  <rect x="620" y="200" width="260" height="180" rx="16" fill="#1A1A1A" stroke="#FF6900" stroke-width="2"/>
+  <text x="750" y="280" font-size="24" font-weight="800" fill="#FFFFFF" text-anchor="middle">資料中樞</text>
+  <text x="750" y="312" font-size="14" fill="#A0A0A0" text-anchor="middle">三路輸入分錨直連</text>
+
+  <text x="940" y="270" font-size="15" fill="#A0A0A0">錨點沿目標左緣分散,</text>
+  <text x="940" y="296" font-size="15" fill="#A0A0A0">箭頭間距 50px(底線 24px),</text>
+  <text x="940" y="322" font-size="15" fill="#A0A0A0">互不重疊、各自可讀</text>
+
+  <!-- divider -->
+  <line x1="48" y1="420" x2="1232" y2="420" stroke="#222222" stroke-width="1"/>
+
+  <!-- ===== Bottom: 4+ sources, trunk merge ===== -->
+  <text x="48" y="456" font-size="12" font-weight="500" fill="#666666" letter-spacing="2">PATTERN 2 · 匯流主幹(4+ 來源)</text>
+
+  <g fill="#1A1A1A" stroke="#333333" stroke-width="1">
+    <rect x="88" y="474" width="200" height="46" rx="12"/>
+    <rect x="88" y="532" width="200" height="46" rx="12"/>
+    <rect x="88" y="590" width="200" height="46" rx="12"/>
+    <rect x="88" y="648" width="200" height="46" rx="12"/>
+  </g>
+  <g font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">
+    <text x="188" y="503">來源 A</text>
+    <text x="188" y="561">來源 B</text>
+    <text x="188" y="619">來源 C</text>
+    <text x="188" y="677">來源 D</text>
+  </g>
+
+  <!-- four branches merging into one trunk; ONE arrowhead at the target -->
+  <g fill="none" stroke="#FF6900" stroke-width="2.5">
+    <path class="flow-anim" d="M292,497 C390,497 410,575 470,575" stroke-dasharray="8 6"/>
+    <path class="flow-anim" d="M292,555 C390,555 410,575 470,575" stroke-dasharray="8 6"/>
+    <path class="flow-anim" d="M292,613 C390,613 410,575 470,575" stroke-dasharray="8 6"/>
+    <path class="flow-anim" d="M292,671 C390,671 410,575 470,575" stroke-dasharray="8 6"/>
+    <path class="flow-anim" d="M470,575 H604" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#faHl)"/>
+  </g>
+
+  <rect x="620" y="485" width="260" height="180" rx="16" fill="#1A1A1A" stroke="#FF6900" stroke-width="2"/>
+  <text x="750" y="565" font-size="24" font-weight="800" fill="#FFFFFF" text-anchor="middle">彙整服務</text>
+  <text x="750" y="597" font-size="14" fill="#A0A0A0" text-anchor="middle">四路先匯流再進入</text>
+
+  <text x="940" y="555" font-size="15" fill="#A0A0A0">超過三個來源時先匯成主幹,</text>
+  <text x="940" y="581" font-size="15" fill="#A0A0A0">只留一個箭頭進入目標;</text>
+  <text x="940" y="607" font-size="15" fill="#A0A0A0">支流與主幹同步流動</text>
+
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">3 / 4</text>
+</svg>

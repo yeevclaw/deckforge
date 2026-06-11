@@ -297,6 +297,46 @@ If `planning.json` specifies a diagram primitive layout — `flow`, `timeline`, 
 4. Replace sample data with the page's actual data; map highlight color from `design_brief.highlight_color`.
 5. Run the primitive-specific QA at the end of `references/diagrams.md` (e.g., "no overlapping labels", "arrows point in the declared direction").
 
+### Step 5.7: motion pages — flow-anim 標記與構造
+
+**Trigger**: the page carries a `"motion"` field (set by the planner in Phase 3 — never invent one yourself). The converter auto-detects elements marked `class="flow-anim"` + `stroke-dasharray` and embeds that slide as a looping GIF: dashes flow in PowerPoint / Keynote slideshow mode; the edit view and PDF show a static first frame; **that slide is NOT Convert-to-Shape editable**. Build the page so the animated path is the structural spine — the layout serves the animation, not the other way around.
+
+**Construction recipes by `motion` value** (this section is the canonical home of these rules):
+
+- **`transit_rail`** — the rail is the page's skeleton, spanning ≥900px. The rail itself is STATIC (12px stroke, round caps, integrated arrowhead — never a `marker` on a thick line); the animated element is a thin **pulse overlay** drawn after the rail and before the station rings:
+
+  ```xml
+  <!-- rail: static. corporate_fresh → gradient rail + #7BCBA4 arrowhead (transit_pipeline
+       composition); dark_apple → graphite #333333 rail + highlight-color arrowhead -->
+  <line x1="140" y1="360" x2="1090" y2="360" stroke="…" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 1084 338 L 1144 360 L 1084 382 Z" fill="…"/>
+  <!-- pulse overlay: the ONLY animated element; ends before the arrowhead base.
+       corporate_fresh → #FFFFFF; dark_apple → highlight_color -->
+  <line class="flow-anim" x1="140" y1="360" x2="1078" y2="360"
+        stroke="…" stroke-width="4" stroke-linecap="round"
+        stroke-dasharray="10 18" stroke-opacity="0.9"/>
+  ```
+
+- **`orbit`** — animate the closed loop itself: `glass_orbit_loop`'s dashed orbit ring (corporate_fresh) or the cycle arcs (dark_apple). A closed loop counts as ONE animated system; all arcs share the same dasharray and animate together (the rotation reading is the point).
+
+- **`hub`** — fan-in / fan-out geometry is defined in [references/diagrams.md](../references/diagrams.md) (flow primitive, "Fan-in / fan-out variant"): ≤3 sources connect directly to anchors spread along the target's edge; ≥4 sources merge into a trunk first, ONE arrowhead at the target. Branches + trunk all carry `flow-anim` with the same dasharray; flow direction follows each path's drawing direction.
+
+- **`accent_bypass`** — a normal static layout where exactly ONE long bypass bezier (the fast path / feedback that IS the message) carries `flow-anim`. Every other connector stays static. The bypass must run ≥5 dash periods.
+
+**Marking rules & numeric baselines** (the converter warns on the first two; the rest are design law):
+
+| Rule | Value |
+|---|---|
+| What may carry `flow-anim` | open `<line>` / `<path>` only — **NEVER a closed dashed shape** (an animated dashed rect = marching-ants selection box) |
+| Minimum animated length | ≥ 5 dash periods measured along the path (`"8 6"` → 70px) |
+| dasharray | ONE value per page and per deck: `"8 6"` for edges, `"10 18"` for pulse overlays (mixed values loop with a visible seam) |
+| Budget | ≤ 3 animated paths per page, or one closed-loop / hub system |
+| Arrowheads on animated edges | `markerUnits="userSpaceOnUse"`, 12×9px head (`M0,0 L12,4.5 L0,9`, refX=11, refY=4.5) for 2–2.5px strokes; head length ≈ 4–5× stroke width |
+| Thick lines (≥8px) | no `marker` ever — integrated arrowhead + pulse overlay |
+| Background | prefer flat fills on motion pages — large soft gradients band in the 256-color GIF |
+
+Animation speed and frame count are fixed in the converter (2 dash periods per loop ≈ 29px/s) — nothing to set in the SVG. Direction = the path's drawing direction; to reverse the flow, reverse the path.
+
 ### Step 6: page-type-specific tweaks
 
 - **cover**: CN title huge (96–120px, font-weight 900) anchored left (`x=80, y=340`). EN title_en below (22–28px, gray-400). Subtle highlight-color radial-gradient glow at one corner of canvas.
@@ -366,6 +406,7 @@ Silently run this before emitting:
 - [ ] At least one visual element (icon, chart-shape, or motif) besides text?
 - [ ] No leftover placeholders (Lorem, xxx, TBD)?
 - [ ] Every text run lives in a real `<text>` element (not converted to path)?
+- [ ] Motion page only: `flow-anim` only on open `<line>`/`<path>` (never closed shapes), one dasharray, ≤3 animated paths or one closed system? (Step 5.7)
 
 If any fails → fix before output.
 
@@ -380,6 +421,8 @@ If any fails → fix before output.
 - Stock-photo placeholders. Use SVG gradients or shapes instead.
 - Forgetting padding when the motif is `left_accent_bar` — the bar will eat into card content if you don't shift card text by ~18px right.
 - Converting text to `<path>` (e.g., for "perfect" font rendering). This kills editability after Convert to Shape in PowerPoint.
+- Putting `flow-anim` on a closed dashed shape (alert box, dashed border) — animated, it becomes a marching-ants selection box. Open directed paths only (Step 5.7).
+- Animating a timeline axis or funnel, or adding `flow-anim` to a page whose planning has no `motion` field. Motion is a Phase 3 composition decision, not a Phase 4 garnish.
 
 ### Dark Apple-specific mistakes
 

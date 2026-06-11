@@ -171,14 +171,23 @@ Give the FINAL step's arch a slightly greener pair (`#A1E5DE` / `#B6E8D8` / `#C5
 | `bento_hero_duo` | one core claim + 2 supports | 60% hero white card (duotone icon + 2-line 32px claim + emphasized body) + two stacked support cards right |
 | `dual_alert_panels` | problems / risks | rose + amber washes left/right, dashed alert boxes grouped under red/amber labels, bottom gradient capsule pointing to the solution |
 | `glass_arch_flow` | 3–5 sequential steps | bottom-bleed two-layer arches + light tapered swoosh behind them + white cards + soft chevrons (template: `fresh_flow.svg`) |
-| `glass_orbit_loop` | a cycle / iterative loop | dotted `#9BD4B8` orbit ring, 4 glass-circle nodes (dark line icons + labels), tangential direction arrows, center white claim card, side annotation |
+| `glass_orbit_loop` | a cycle / iterative loop | dotted `#9BD4B8` orbit ring, 4 glass-circle nodes (dark line icons + labels), tangential direction arrows, center white claim card, side annotation; the orbit ring can carry `flow-anim` (`motion: "orbit"`) |
 | `claim_tree` | hierarchy (thesis → pillars → pages) | apex gradient capsule → thin green S-curve fans → 3 white pillar cards → fading ghost-thumbnail row |
 | `meta_bento` | an inventory / catalog | true bento grid (1 big + 2 medium + N small white cards), each holding a gray `#E3E8E5` wireframe + name + one-line caption |
 | `split_style_duel` | two-sided contrast | two large rounded panels (each styled as the thing it depicts, as content thumbnails), bridged by a centered gradient capsule |
-| `transit_pipeline` | a transformation pipeline | one wide white panel, a single gradient transit line (12px, round caps, integrated arrowhead), ring stations + duotone icons above, names/bodies below |
+| `transit_pipeline` | a transformation pipeline | one wide white panel, a single gradient transit line (12px, round caps, integrated arrowhead), ring stations + duotone icons above, names/bodies below; the line takes a white `flow-anim` pulse overlay (`motion: "transit_rail"`) |
 | `cta_end` | closing with an action | cover gradient + aurora ribbons, centered CTA title + translucent mono command chip + link line; "Thanks" demoted to a small corner note |
 
 Three-column dashed-separator pages and compare-table card pages (the `fresh_3col.svg` / `fresh_compare.svg` templates) remain available for plain parallel claims and option comparisons.
+
+### Motion pages — flow-anim 載體
+
+When planning sets a `motion` field, the slide ships as a looping GIF (flowing dashes in slideshow mode; that slide loses Convert-to-Shape). The animated element rides an existing composition — never invent a new one for it:
+
+- **`corporate_fresh`**: `transit_pipeline`'s gradient rail takes a thin **white** pulse overlay (`motion: "transit_rail"`); `glass_orbit_loop`'s dotted ring animates directly (`motion: "orbit"`). The swoosh is atmosphere, not a line — it never animates.
+- **`dark_apple`**: same rail composition with a graphite `#333333` 12px rail, integrated arrowhead and pulse overlay in the deck's **highlight color** — the highlight appears only in the pulses, the arrowhead, and the terminal station ring (single-highlight discipline holds).
+
+Construction recipes, marking rules, and all numeric baselines: [prompts/05_designer_svg.md](../prompts/05_designer_svg.md) Step 5.7 (canonical). The "never animate" list: [references/diagrams.md](diagrams.md).
 
 **Style traits** (what makes it read as this family):
 - **Full-sentence assertion titles** — page titles state the conclusion ("新架構兼具現代化與極致安全，無需重建安控"), not the topic ("架構介紹"). 30–36px, weight 700, charcoal, left-aligned after the pill bar.

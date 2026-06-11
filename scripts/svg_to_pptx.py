@@ -43,6 +43,12 @@ Flags:
                       a real renderer is available. Smaller file, but the
                       slide only displays in PowerPoint 2016+.
   --png-width N       Width (px) of the PNG fallback. Default 2560 (2× DPI).
+  --no-anim           Disable flow-edge animation. By default, a page whose SVG
+                      marks dashed edges with class="flow-anim" is embedded as a
+                      looping animated GIF (dashes flow in PowerPoint / Keynote
+                      slideshow mode). Animated slides skip the svgBlip layer,
+                      so they are not Convert-to-Shape editable.
+  --gif-width N       Width (px) of animated GIF frames. Default 1600.
 
 Examples:
   python svg_to_pptx.py --pages-dir pages/ --output deck.pptx
@@ -54,6 +60,7 @@ from __future__ import annotations
 import argparse
 import base64
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -187,6 +194,139 @@ def verify_renderer_works(test_svg: Path) -> str | None:
         tmp_path.unlink(missing_ok=True)
 
 
+# ---------- Flow-edge animated GIF rendering ----------
+#
+# A page opts in by marking dashed edges with class="flow-anim" (must also
+# carry a stroke-dasharray). The page is then rendered once per frame with a
+# shifted stroke-dashoffset and assembled into a seamlessly looping GIF —
+# total offset travel per cycle equals the dasharray period, so frame N wraps
+# exactly back to frame 0. PowerPoint and Keynote play GIFs in slideshow mode
+# (embedded SVG animations do NOT play — svgBlip renders statically), which is
+# why animated slides embed a GIF and skip the svgBlip layer.
+
+FLOW_ANIM_CLASS = "flow-anim"
+GIF_FRAMES = 12
+GIF_FRAME_MS = 80   # GIF timing is centisecond-granular; keep it a multiple of 10
+GIF_TRAVEL_PERIODS = 2  # dash travel per loop, in periods — any integer keeps the
+                        # loop seamless; 2 ≈ 29px/s for "8 6" (1 looks sleepy,
+                        # 3 drops to 4 samples/period and stutters at 12 frames)
+DEFAULT_GIF_WIDTH = 1600
+
+
+def _svg_has_flow_anim(svg_text: str) -> bool:
+    return re.search(
+        r'class\s*=\s*["\'][^"\']*\b' + FLOW_ANIM_CLASS + r'\b', svg_text
+    ) is not None
+
+
+def _flow_dash_period(svg_text: str) -> float:
+    """Sum of the first flow-anim element's stroke-dasharray values — the px
+    distance one dash cycle travels. Falls back to 14.0 (dasharray "8 6") on
+    any parse failure; a wrong period only makes the loop seam visible, it
+    never breaks rendering."""
+    for pattern in (
+        # class before stroke-dasharray, and the reverse attribute order
+        r'<[^>]*\b' + FLOW_ANIM_CLASS + r'\b[^>]*stroke-dasharray\s*=\s*["\']([^"\']+)["\']',
+        r'<[^>]*stroke-dasharray\s*=\s*["\']([^"\']+)["\'][^>]*\b' + FLOW_ANIM_CLASS + r'\b',
+    ):
+        m = re.search(pattern, svg_text)
+        if m:
+            try:
+                total = sum(float(v) for v in re.split(r"[\s,]+", m.group(1).strip()) if v)
+                if total > 0:
+                    return total
+            except ValueError:
+                pass
+    return 14.0
+
+
+def _inject_dashoffset_style(svg_text: str, offset_px: float) -> str:
+    """Insert a <style> rule right after the opening <svg> tag. CSS author
+    styles override presentation attributes, so this wins over any
+    stroke-dashoffset already on the elements (verified with resvg)."""
+    style = f"<style>.{FLOW_ANIM_CLASS}{{stroke-dashoffset:{offset_px:.3f}px;}}</style>"
+    return re.sub(r"(<svg\b[^>]*>)", r"\1" + style, svg_text, count=1)
+
+
+def _lint_flow_anim(svg_text: str, period: float, name: str) -> None:
+    """Non-fatal design checks on a flow-anim page (warnings to stderr).
+    The GIF still renders either way — these catch the two mistakes that
+    produce a working-but-ugly animation."""
+    tags = [m.group(0) for m in re.finditer(r"<[^>]*>", svg_text)
+            if re.search(r'class\s*=\s*["\'][^"\']*\b' + FLOW_ANIM_CLASS + r"\b",
+                         m.group(0))]
+    # One dashoffset is injected for the whole class, so mixed dasharrays loop
+    # with a visible seam on every element except the first.
+    dasharrays = set()
+    for tag in tags:
+        m = re.search(r'stroke-dasharray\s*=\s*["\']([^"\']+)["\']', tag)
+        if m:
+            dasharrays.add(" ".join(m.group(1).replace(",", " ").split()))
+    if len(dasharrays) > 1:
+        print(f"[svg_to_pptx] ⚠️  {name}: flow-anim elements mix stroke-dasharray "
+              f"values {sorted(dasharrays)} — only the first defines the loop "
+              "period, the others will show a seam each cycle. Use ONE dasharray "
+              "per page.", file=sys.stderr)
+    # Flowing dashes need room to read as flow: ≥5 periods of visible length.
+    min_len = 5 * period
+    for tag in tags:
+        if not tag.startswith("<line"):
+            continue  # path lengths aren't worth computing here
+        try:
+            x1, y1, x2, y2 = (float(re.search(c + r'\s*=\s*["\']([^"\']+)["\']', tag).group(1))
+                              for c in ("x1", "y1", "x2", "y2"))
+        except AttributeError:
+            continue
+        length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+        if length < min_len:
+            print(f"[svg_to_pptx] ⚠️  {name}: flow-anim line of {length:.0f}px is "
+                  f"shorter than 5 dash periods ({min_len:.0f}px) — too short to "
+                  "read as flow; consider a static connector instead.",
+                  file=sys.stderr)
+
+
+def render_flow_anim_gif(svg_path: Path, gif_path: Path, width: int,
+                         frames: int = GIF_FRAMES,
+                         frame_ms: int = GIF_FRAME_MS) -> bool:
+    """Render svg_path into a looping GIF at gif_path. Requires resvg-py
+    (the only renderer with in-memory svg_string input). Returns False on any
+    failure so the caller falls back to the normal static slide."""
+    try:
+        import resvg_py
+        from io import BytesIO
+        from PIL import Image
+    except ImportError as e:
+        print(f"[svg_to_pptx] flow-anim GIF needs resvg-py + Pillow ({e}); "
+              f"{svg_path.name} stays static.", file=sys.stderr)
+        return False
+    try:
+        svg_text = svg_path.read_text(encoding="utf-8")
+        period = _flow_dash_period(svg_text)
+        _lint_flow_anim(svg_text, period, svg_path.name)
+        travel = period * GIF_TRAVEL_PERIODS
+        rgb_frames = []
+        for i in range(frames):
+            offset = -(travel * i / frames)  # negative → dashes flow in path direction
+            png_bytes = resvg_py.svg_to_bytes(
+                svg_string=_inject_dashoffset_style(svg_text, offset), width=width)
+            rgb_frames.append(Image.open(BytesIO(bytes(png_bytes))).convert("RGB"))
+        # Quantize all frames against one shared palette, every frame with
+        # dither=NONE (including frame 0 — quantize() defaults to
+        # Floyd-Steinberg, and a dithered first frame flickers once per loop).
+        pal = rgb_frames[0].quantize(colors=256, method=Image.Quantize.MEDIANCUT)
+        quantized = [f.quantize(palette=pal, dither=Image.Dither.NONE)
+                     for f in rgb_frames]
+        gif_path.parent.mkdir(parents=True, exist_ok=True)
+        quantized[0].save(str(gif_path), format="GIF", save_all=True,
+                          append_images=quantized[1:], duration=frame_ms, loop=0,
+                          disposal=1, optimize=True)
+        return True
+    except Exception as e:
+        print(f"[svg_to_pptx] flow-anim GIF failed on {svg_path.name}: {e}; "
+              "slide stays static.", file=sys.stderr)
+        return False
+
+
 # ---------- PPTX assembly ----------
 
 def collect_pages(pages_dir: Path) -> list[Path]:
@@ -250,10 +390,11 @@ def _inject_svg_ext(pic_elem, svg_rId: str):
     svgBlip.set(f'{{{R_NS}}}embed', svg_rId)
 
 
-def add_svg_slide(prs, svg_path: Path, png_path: Path, embed_svg: bool):
+def add_svg_slide(prs, svg_path: Path, png_path: Path, embed_svg: bool,
+                  pic_path: Path | None = None):
     slide = prs.slides.add_slide(prs.slide_layouts[6])  # blank
     pic = slide.shapes.add_picture(
-        str(png_path), 0, 0,
+        str(pic_path or png_path), 0, 0,
         width=prs.slide_width, height=prs.slide_height,
     )
     if embed_svg:
@@ -331,7 +472,8 @@ def build(pages: list[Path], out_path: Path, planning: dict,
           workdir: Path, png_width: int,
           placeholder_only: bool, embed_svg: bool,
           also_pdf: bool, pdf_path: Path | None,
-          keep_notes: bool):
+          keep_notes: bool,
+          no_anim: bool = False, gif_width: int = DEFAULT_GIF_WIDTH):
     workdir.mkdir(parents=True, exist_ok=True)
     prs = Presentation()
     prs.slide_width = SLIDE_W_EMU
@@ -371,9 +513,26 @@ def build(pages: list[Path], out_path: Path, planning: dict,
                 print(f"PNG fallback engine: {engine} ({png_width}px wide)")
                 engine_reported = True
 
+        # Flow-anim pages become looping GIF slides (svgBlip skipped — PowerPoint
+        # would otherwise render the static SVG layer on top of the GIF).
+        # Only attempted when a real static render succeeded; the static PNG is
+        # still what the PDF uses.
+        gif_path = None
+        if not no_anim and png_path is not placeholder_path:
+            if _svg_has_flow_anim(svg_path.read_text(encoding="utf-8")):
+                candidate = workdir / f"{svg_path.stem}.gif"
+                if render_flow_anim_gif(svg_path, candidate, width=gif_width):
+                    gif_path = candidate
+
         real_pngs.append(png_path)
-        print(f"[{i+1}/{len(pages)}] {svg_path.name} → slide", flush=True)
-        slide = add_svg_slide(prs, svg_path, png_path, embed_svg=embed_svg)
+        if gif_path is not None:
+            print(f"[{i+1}/{len(pages)}] {svg_path.name} → slide "
+                  "(animated GIF; not Convert-to-Shape editable)", flush=True)
+            slide = add_svg_slide(prs, svg_path, png_path, embed_svg=False,
+                                  pic_path=gif_path)
+        else:
+            print(f"[{i+1}/{len(pages)}] {svg_path.name} → slide", flush=True)
+            slide = add_svg_slide(prs, svg_path, png_path, embed_svg=embed_svg)
         slide_objs.append(slide)
 
     # Speaker notes — only if --keep-notes is set. By default we strip notes
@@ -476,6 +635,13 @@ def main():
                         "displays correctly in PowerPoint 2016+.")
     p.add_argument("--png-width", type=int, default=2560,
                    help="Width (px) of the PNG fallback. Default 2560 (2× DPI).")
+    p.add_argument("--no-anim", action="store_true",
+                   help="Disable flow-edge animation. By default, pages marked "
+                        "with class=\"flow-anim\" dashed edges are embedded as "
+                        "looping animated GIFs (those slides skip svgBlip and "
+                        "are not Convert-to-Shape editable).")
+    p.add_argument("--gif-width", type=int, default=DEFAULT_GIF_WIDTH,
+                   help="Width (px) of animated GIF frames. Default 1600.")
     p.add_argument("--no-pdf", action="store_true",
                    help="Skip the companion .pdf (by default, a PDF with the same "
                         "stem as --output is written alongside the .pptx).")
@@ -526,7 +692,9 @@ def main():
           embed_svg=not args.no_svg,
           also_pdf=not args.no_pdf,
           pdf_path=pdf_path,
-          keep_notes=args.keep_notes)
+          keep_notes=args.keep_notes,
+          no_anim=args.no_anim,
+          gif_width=args.gif_width)
 
 
 if __name__ == "__main__":

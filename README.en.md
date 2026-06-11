@@ -12,7 +12,9 @@ A 3-page **DeckForge self-intro** mini-deck, produced directly through this skil
 
 | | | |
 |---|---|---|
-| ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |
+| ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.gif) |
+
+Page 3 shows the **animated flow edges** (`flow-anim`) feature as actually produced: the pulse dashes on the pipeline keep flowing in PowerPoint / Keynote slideshow mode (the GIF above is exactly what gets embedded in the slide).
 
 - Combined PDF: [`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
 - Source SVGs (peek at the Bento Grid coordinates): [`examples/sample-deck/`](examples/sample-deck/)
@@ -59,7 +61,7 @@ DeckForge/
 │   └── setup.ps1           ← same, for Windows PowerShell
 └── examples/               ← DeckForge self-intro mini-deck (3 pages)
     ├── DeckForge-demo.pdf  ← combined rendered PDF
-    ├── slide-1.jpg ... 3   ← preview thumbnails
+    ├── slide-1.jpg ... slide-3.gif ← page previews (page 3 is an animated GIF)
     └── sample-deck/        ← source SVG pages (drag into PowerPoint to inspect)
 ```
 

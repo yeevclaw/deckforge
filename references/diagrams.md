@@ -93,12 +93,17 @@ Track changes to this status in the same edit that lands a Designer SVG template
   - Node x positions: `88, 376, 664, 952` (gap 48 between right edge and next left edge).
   - Per-node text: `01 · LABEL_EN` at `y=42` (11px, `#666666`, letter-spacing 2); `label` at `y=92` (28px weight 800 white); `body` at `y=130..150` (14px gray, wrap with `<tspan>`).
   - Arrows: `<line>` between node edges with `marker-end="url(#flowArrow)"`. x1 = node_right + 4, x2 = next_node_left − 4. y=370.
-  - Arrowhead marker (in `<defs>`): `markerWidth=10, refX=9, refY=5, orient=auto`, fill `#666666`.
+  - Arrowhead marker (in `<defs>`): `markerUnits="userSpaceOnUse", markerWidth=12, markerHeight=9, refX=11, refY=4.5, orient=auto`, path `M0,0 L12,4.5 L0,9 Z`, fill `#666666`. (`userSpaceOnUse` keeps the head 12×9px regardless of stroke width — the default strokeWidth units blow a 2px-stroke arrow up to a 20px head, half the connector's length.)
 - **Highlight**: by default the last node uses highlight-color stroke (2px), highlight-color label_en + label text, plus a highlight-color arrow leading INTO it. Override via `highlight_index` (0-indexed).
 - **For 3 nodes**: each node `320w`, x = `88, 472, 856`, gap 64.
 - **For 5 nodes**: each node `192w`, x = `88, 332, 576, 820, 1064`, gap 52, body line cap = 1 line.
 - **For 6+ nodes**: do not render. Split into two pages (3+3) or downgrade to bento `mini_grid`.
 - **Vertical orientation** (`orientation: "vertical"`): nodes stacked, each `360w × 80h` centered on `x=640`, y positions `170, 270, 370, 470, 570` (gap 20). Connect with vertical arrows at `x=640`.
+- **Fan-in / fan-out variant (hub)** — when N sources feed ONE target (or one source feeds N targets), arrowhead crowding is the failure mode. Geometry (canonical here; applies to static pages and to `motion: "hub"` animated pages alike):
+  - **≤3 sources**: connect each directly, but spread the anchor points along the target's edge — **32px between arrowheads preferred, 24px floor**. Three anchors on a 180px node edge: y = center−50, center, center+50.
+  - **≥4 sources**: never land 4+ arrowheads on one edge. Branches **merge into a single trunk** before the target (tributary curves joining at one point, then a straight trunk) — only ONE arrowhead reaches the target. Alternatively drop sources onto a shared bus line.
+  - **Fan-out**: mirror the same rules (one trunk leaving the source, splitting into branches; or ≤3 direct edges from spread anchors).
+  - Keep all flows in roughly the same direction — head-on opposing arrows on parallel paths read as chaos.
 
 ---
 
@@ -657,6 +662,18 @@ Intersection keys: `"all"` = all sets overlap; `"01"` = sets 0 and 1 only; etc. 
 - **Cap**: 4+ sets becomes geometrically infeasible. If the data requires 4+ sets, restructure to `compare_table` or two pages.
 
 ---
+
+## Motion (flow-anim) — what must NEVER animate
+
+A page may animate only when planning sets a `motion` field (decision flow in [prompts/04_planning_draft.md](../prompts/04_planning_draft.md); construction recipes and numeric rules in [prompts/05_designer_svg.md](../prompts/05_designer_svg.md) Step 5.7). Regardless of how tempting, these shapes never carry `flow-anim`:
+
+- **Closed dashed shapes** (alert boxes, dashed borders) — animated, they become marching-ants selection boxes. This is the #1 trap: `dual_alert_panels` dashed boxes are already dashed strokes.
+- **The timeline axis** — events are discrete points in time; the 1040px axis is the single most tempting line in the template library. Resist.
+- **Funnel strokes** — a funnel tells a quantity story, not a flow story (and the stages are fills).
+- **Sequence-diagram message arrows** — discrete calls. Only a genuinely streaming channel qualifies (and that's a `motion` decision in planning, not a designer impulse).
+- **`split_style_duel` bridge capsules** — before/after is a discrete transition.
+- **`hierarchy_tree` / `compare_table` connectors** — too many short segments; dense diagrams stay static.
+- **The `tapered_swoosh`** — it is atmosphere (a gradient fill), not a line; it cannot dash and must not be promoted to a foreground actor.
 
 ## Cross-references
 

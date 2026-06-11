@@ -9,7 +9,9 @@
 
 | | | |
 |---|---|---|
-| ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |
+| ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.gif) |
+
+第 3 頁是**流動邊線動畫**(`flow-anim`)的實際產出:管線上的脈衝虛線在 PowerPoint / Keynote 放映模式中持續流動(上方 GIF 即為投影片實際嵌入的內容)。
 
 
 
@@ -121,7 +123,7 @@ DeckForge/
 │   └── setup.ps1           ← Windows PowerShell 版安裝腳本
 └── examples/               ← DeckForge 自介 mini-deck(3 頁完整產出)
     ├── DeckForge-demo.pdf  ← 成品 PDF
-    ├── slide-1.jpg ... 3   ← 各頁預覽縮圖
+    ├── slide-1.jpg ... slide-3.gif ← 各頁預覽(第 3 頁為動畫 GIF)
     └── sample-deck/        ← 原始 SVG 檔
 ```
 

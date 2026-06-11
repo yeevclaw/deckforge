@@ -262,6 +262,37 @@ When a primitive layout is set, `cards` may be empty or omitted; the primitive's
 
 > **Designer-side note**: all 9 primitives have Phase 4 SVG support (geometry specs in [references/diagrams.md](../references/diagrams.md) + starter templates in `templates/`). Planner can emit any primitive freely; Designer renders directly from the matching `*_data` field.
 
+## Motion pages — 流動動畫(optional `motion` field)
+
+A page may carry an optional `"motion"` field. When set, Phase 4 builds the page as an **animation-first composition** and Phase 5 embeds that slide as a looping GIF — the flowing dashes play in PowerPoint / Keynote slideshow mode. Omit the field for every normal page (the default is static).
+
+**This is a composition decision, not a decoration.** Decide it here in Phase 3, with three questions in order:
+
+1. **Is this page's story a CONTINUOUS flow?** Data, money, traffic, or energy continuously passing through a system — not discrete steps, events, or state changes. If no → no `motion`.
+2. **Is it worth the deck's motion budget?** At most **2–3 motion pages per deck**, reserved for money slides. Every motion page pays a real price: that slide becomes a GIF — **not Convert-to-Shape editable**, animated only in slideshow mode, static in the PDF. If no → no `motion`.
+3. **Yes to both** → set `motion` and pair it with the matching layout:
+
+| `motion` value | Pairs with | Content shape |
+|---|---|---|
+| `"transit_rail"` | `layout: "flow"` | a transformation pipeline with continuous throughput |
+| `"orbit"` | `layout: "cycle"` | a continuously running loop |
+| `"hub"` | `layout: "flow"` + describe sources/target in `visual_notes` | many-to-one convergence or one-to-many distribution of a continuous stream |
+| `"accent_bypass"` | any static layout + describe the exceptional path in `visual_notes` | a static structure where ONE continuous path (fast path, feedback) is itself the message |
+
+Never set `motion` for discrete-step flows, timelines, or funnels — see the "never animate" list in [references/diagrams.md](../references/diagrams.md). Construction recipes and numeric rules live in `prompts/05_designer_svg.md` Step 5.7 (the designer's job, not yours).
+
+```json
+{
+  "page_id": 12,
+  "page_type": "content",
+  "layout": "flow",
+  "motion": "transit_rail",
+  "title": "資料在管線中持續流動，每一站都有明確產出",
+  "flow_data": { "...": "..." },
+  "speaker_notes": "..."
+}
+```
+
 ---
 
 ## Card content rules — **one card, one core point**

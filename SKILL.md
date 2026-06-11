@@ -233,6 +233,8 @@ Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). 
 
 **Bento card page** — uses `cards: []`. Each card supports `is_number_first`, `stat_value`/`stat_caption`/`stat_caption_en`, `heading`/`body`/`icon_hint`/`size_hint`. **Optional `sub_cards: []`** can nest 2–3 mini-cards inside a hero card, but only on layouts with a tall hero region — `single_focus`, `two_col_2_1` (wide slot), or `mixed_grid` (big slot). **Not** allowed on `mini_grid`, `three_col`, or `hero_top` (these layouts don't have enough vertical room).
 
+**Optional `motion` field** — a page whose story is a CONTINUOUS flow (data/money/traffic streaming through a system, not discrete steps) may set `"motion": "transit_rail" | "orbit" | "hub" | "accent_bypass"`. That slide ships as a looping GIF: flowing dashes in slideshow mode, but **not Convert-to-Shape editable**. Budget: ≤2–3 motion pages per deck, money slides only. Decision flow and layout pairings in [prompts/04_planning_draft.md](prompts/04_planning_draft.md) ("Motion pages"); never for timelines or funnels.
+
 Mini_grid example (parallel KPIs, no nesting):
 
 ```json
@@ -341,6 +343,7 @@ Key rules:
 - **Never use emoji as functional icons.** Inline Lucide `<path>` or no icon.
 - **Avoid stock photos.** Use SVG gradients, inline icon `<path>`s, or abstract shapes.
 - **Every text run lives in a real `<text>` element** (not converted to path) — that's what keeps slides editable after Convert to Shape.
+- **Motion pages** (planning has a `motion` field): build per [prompts/05_designer_svg.md](prompts/05_designer_svg.md) Step 5.7 — the animated path is the page's structural spine, marked `class="flow-anim"` on open `<line>`/`<path>` only. **Never** mark a closed dashed shape (animated, it reads as a marching-ants selection box). No `motion` in planning → no `flow-anim` in the SVG.
 
 Save each page as `pages/page_01.svg`, `pages/page_02.svg`, …
 
@@ -403,6 +406,8 @@ Tell the user explicitly what was produced. Example phrasing:
 
 If only 2 files exist (no speaker notes), say so explicitly. If only 1 exists (you passed `--no-pdf` or `--placeholder-only`), say so explicitly and explain why.
 
+**If the deck contains motion pages** (the converter logs `→ slide (animated GIF; not Convert-to-Shape editable)`), the prose MUST also state, per animated page: it animates in PowerPoint / Keynote **slideshow mode**; the edit view shows a static first frame; that slide is **not Convert-to-Shape editable**; the PDF shows it static. Don't let the user discover these trade-offs on their own.
+
 **Why this matters**: the .pdf and .notes.md sit in a Phase-5 working directory that Claude Desktop tears down at session end. If you don't actively attach them, they're permanently lost. This is the single most reported user complaint about DeckForge.
 
 ### Speaker notes — why they go to .notes.md, not into the .pptx
@@ -423,13 +428,15 @@ xattr -d com.apple.quarantine /path/to/deck.pptx
 
 This is a one-liner that strips the quarantine flag. PowerPoint typically handles quarantine more gracefully and isn't affected.
 
-**Editing the result**: in PowerPoint 2016 or newer, right-click any slide's picture → **Convert to Shape**. The SVG decomposes into native PowerPoint shapes and text boxes — every card, title, and icon becomes editable.
+**Editing the result**: in PowerPoint 2016 or newer, right-click any slide's picture → **Convert to Shape**. The SVG decomposes into native PowerPoint shapes and text boxes — every card, title, and icon becomes editable. (Exception: motion pages are embedded as animated GIFs and stay pictures — they cannot be converted.)
 
 **Flags worth knowing**:
 - `--no-pdf` — skip the companion PDF (PPTX-only)
 - `--pdf-output PATH` — explicit PDF path (defaults to `<pptx-stem>.pdf`)
 - `--no-svg` — skip the svgBlip extension; PPTX becomes image-only. Use as escape hatch for viewers that choke on the SVG ext. Requires a working SVG renderer or the script aborts.
 - `--placeholder-only` — force the 1×1 transparent placeholder PNG even if a real renderer is available. Smaller PPTX file but it only displays correctly in PowerPoint 2016+; the companion PDF is automatically skipped.
+- `--no-anim` — disable flow-anim detection; pages marked `flow-anim` render as normal static slides (PNG + svgBlip).
+- `--gif-width N` — width (px) of animated GIF frames. Default 1600.
 
 ---
 

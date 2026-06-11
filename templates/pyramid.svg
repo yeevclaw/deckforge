@@ -49,8 +49,8 @@
 
   <!-- Upward direction arrow on the side -->
   <defs>
-    <marker id="pyramidArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-      <path d="M0,0 L10,5 L0,10 Z" fill="#666666"/>
+    <marker id="pyramidArrow" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto">
+      <path d="M0,0 L12,4.5 L0,9 Z" fill="#666666"/>
     </marker>
   </defs>
   <line x1="120" y1="540" x2="120" y2="280" stroke="#666666" stroke-width="1.5" marker-end="url(#pyramidArrow)"/>

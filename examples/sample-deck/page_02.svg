@@ -76,9 +76,9 @@
       <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
     </g>
   </g>
-  <text x="892" y="483" font-size="24" font-weight="700" fill="#383838">交付即可編輯</text>
+  <text x="892" y="483" font-size="24" font-weight="700" fill="#383838">交付即可編輯，需要時還會動</text>
   <text x="892" y="529" font-size="17" fill="#4A5158">
-    <tspan x="892" dy="0">SVG 組裝 .pptx，<tspan fill="#E8872E" font-weight="700">轉換為圖形</tspan>後</tspan>
-    <tspan x="892" dy="31">每段文字、色彩皆可在 PPT 內編輯。</tspan>
+    <tspan x="892" dy="0">SVG 組裝 .pptx，<tspan fill="#E8872E" font-weight="700">轉換為圖形</tspan>即可編輯；</tspan>
+    <tspan x="892" dy="31">流動性內容可輸出<tspan fill="#E8872E" font-weight="700">會動的頁面</tspan>（見下頁）。</tspan>
   </text>
 </svg>

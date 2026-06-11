@@ -33,8 +33,8 @@
   </g>
 
   <!-- title block -->
-  <text x="120" y="336" font-size="66" font-weight="700" fill="#FFFFFF">DeckForge 簡報生成技能介紹</text>
-  <rect x="120" y="366" width="700" height="50" fill="#FFFFFF"/>
-  <text x="140" y="402" font-size="28" font-weight="700" fill="#3E5BA8">五階段專家工作流 — 從需求訪談到可編輯簡報</text>
-  <text x="120" y="470" font-size="21" fill="#FFFFFF" fill-opacity="0.92">2026/06  DeckForge v0.8.1</text>
+  <text x="120" y="336" font-size="66" font-weight="700" fill="#FFFFFF">簡報的靈魂是內容，不是皮囊</text>
+  <rect x="120" y="366" width="760" height="50" fill="#FFFFFF"/>
+  <text x="140" y="402" font-size="28" font-weight="700" fill="#3E5BA8">DeckForge · 五階段專家工作流，從訪談到可編輯簡報</text>
+  <text x="120" y="470" font-size="21" fill="#FFFFFF" fill-opacity="0.92">2026/06  DeckForge v0.9.0</text>
 </svg>

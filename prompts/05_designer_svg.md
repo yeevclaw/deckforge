@@ -70,7 +70,7 @@ First identify which **layout family** this page's `layout` belongs to, then loo
 
 The reference doc for each family carries the exact coordinates / geometry / color rules; the template provides a runnable starting SVG with sample data you can replace.
 
-**corporate_fresh `flow` pages have four starting templates, not one.** Pick the file matching `design_brief.flow_variant`: `terrace_ascent` → `templates/fresh_flow_terrace.svg`, `river_ribbon` → `templates/fresh_flow_river.svg`, `cascade_fall` → `templates/fresh_flow_cascade.svg`, `dome_arcade` → `templates/fresh_flow.svg` (geometry recipes: design_system.md → "glass_arch_flow variants"). If `flow_variant` is absent from an older planning.json, fall back to `fresh_flow.svg`. Pages with a `motion` field keep their Step 5.7 motion composition and ignore `flow_variant`.
+**corporate_fresh `flow` pages have four starting templates, not one.** Pick the file matching `design_brief.flow_variant`: `terrace_ascent` → `templates/fresh_flow_terrace.svg`, `river_ribbon` → `templates/fresh_flow_river.svg`, `cascade_fall` → `templates/fresh_flow_cascade.svg`, `dome_arcade` → `templates/fresh_flow.svg` (geometry recipes: design_system.md → "glass_arch_flow variants"). If `flow_variant` is absent from an older planning.json, fall back to `river_ribbon` (`fresh_flow_river.svg`) — the family's no-clear-fit default, NOT the dome arcade. Pages with a `motion` field keep their Step 5.7 motion composition and ignore `flow_variant`.
 
 ### Step 2: apply the palette
 

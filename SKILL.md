@@ -235,6 +235,8 @@ Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). 
 
 **Optional `motion` field** — a page whose story is a CONTINUOUS flow (data/money/traffic streaming through a system, not discrete steps) may set `"motion": "transit_rail" | "orbit" | "hub" | "accent_bypass"`. That slide ships as a looping GIF: flowing dashes in slideshow mode, but **not Convert-to-Shape editable**. Budget: ≤2–3 motion pages per deck, money slides only. Decision flow and layout pairings in [prompts/04_planning_draft.md](prompts/04_planning_draft.md) ("Motion pages"); never for timelines or funnels.
 
+**`design_brief.flow_variant` (corporate_fresh decks with static `flow` pages)** — picks which of the four glass flow compositions the whole deck uses (`terrace_ascent` / `river_ribbon` / `cascade_fall` / `dome_arcade`), derived from the story the steps tell. One variant per deck — coherent inside the deck, varied across decks; `dome_arcade` (the original arches + swoosh) is one option of four, not the default. Story-shape triggers and geometry: [references/design_system.md](references/design_system.md) → "glass_arch_flow variants".
+
 Mini_grid example (parallel KPIs, no nesting):
 
 ```json
@@ -319,17 +321,17 @@ For each page in `planning.json`, generate **one self-contained SVG file** with 
 - Diagram primitives spec (information-loss layouts): [references/diagrams.md](references/diagrams.md)
 - Chart anatomy: [references/chart_anatomy.md](references/chart_anatomy.md)
 - Color + typography system: [references/design_system.md](references/design_system.md)
-- SVG templates to start from: [templates/](templates/) — 24 files total:
+- SVG templates to start from: [templates/](templates/) — 27 files total:
   - **Shared assets**: `_base.svg` (filters / gradients / 35 Lucide icons used via `<use>`)
   - **Page-type starters**: `cover.svg`, `toc.svg`
   - **Bento layouts**: `bento_2col.svg` (two_col_50_50 / two_col_2_1), `bento_3col.svg`, `bento_hero.svg` (hero_top), `bento_mixed.svg` (mixed_grid), `bento_mini_grid.svg` (mini_grid — main card + 3–5 mini-cards, dark_apple)
   - **Chart layouts**: `chart_bar.svg`, `chart_line.svg`, `chart_donut.svg`
-  - **corporate_fresh starters** (embed that family's craft recipes — use these, not restyled dark templates, when `palette_hint` is `corporate_fresh`): `fresh_cover.svg` (cover / derive end page), `fresh_3col.svg` (three_col executive summary), `fresh_flow.svg` (flow), `fresh_compare.svg` (compare_table)
+  - **corporate_fresh starters** (embed that family's craft recipes — use these, not restyled dark templates, when `palette_hint` is `corporate_fresh`): `fresh_cover.svg` (cover / derive end page), `fresh_3col.svg` (three_col executive summary), `fresh_compare.svg` (compare_table), and four flow templates — one per `design_brief.flow_variant`: `fresh_flow_terrace.svg` (`terrace_ascent`), `fresh_flow_river.svg` (`river_ribbon`), `fresh_flow_cascade.svg` (`cascade_fall`), `fresh_flow.svg` (`dome_arcade`)
   - **Diagram primitives** (used only when bento would lose structural information — see [references/diagrams.md](references/diagrams.md)): `flow.svg`, `timeline.svg`, `cycle.svg`, `funnel.svg`, `compare_table.svg`, `quadrant_2x2.svg`, `venn.svg`, `hierarchy_tree.svg`, `pyramid.svg`
   - **No dedicated template for**: `single_focus` (just use `bento_hero.svg` and drop the bottom row), `stat_hero` (single huge text, no template needed — see designer prompt geometry), `section_break` / `end` (derive from `cover.svg` with smaller hero text). These page types are simple enough that a template would add no value.
 
 Key rules:
-- **Default style — `corporate_fresh`**: when the user doesn't specify a style, use the corporate-fresh light consulting look (warm light-gray canvas, pastel washes, green gradient structure, white rounded cards, duotone icons, orange bold inline emphasis, full-sentence assertion titles, green→indigo gradient cover/end, glass-arch compositions). `palette_hint: "corporate_fresh"`, `highlight_color: "#E8872E"`, `motif_hint: "fresh_pill_cards"`. Full spec + composition vocabulary: [references/design_system.md](references/design_system.md) → "Corporate fresh family".
+- **Default style — `corporate_fresh`**: when the user doesn't specify a style, use the corporate-fresh light consulting look (warm light-gray canvas, pastel washes, green gradient structure, white rounded cards, duotone icons, orange bold inline emphasis, full-sentence assertion titles, green→indigo gradient cover/end, edge-anchored glass compositions — flow pages varied per deck via `design_brief.flow_variant`). `palette_hint: "corporate_fresh"`, `highlight_color: "#E8872E"`, `motif_hint: "fresh_pill_cards"`. Full spec + composition vocabulary: [references/design_system.md](references/design_system.md) → "Corporate fresh family".
 - **`dark_apple` family on request**: pure black bg + one bold highlight color — the dramatic, data-dense look (giant stat numbers, mini-grids). Pick it when the user asks for a dark/dramatic/Apple-keynote look, or propose it in Phase 1 when the content is overwhelmingly stat-heavy — but never silently override the default.
 - **Pick the palette AND the single highlight color ONCE** at the start of phase 4 (for `dark_apple*`, auto-detect from brand if possible: Xiaomi `#FF6900`, Tesla `#E31937`, etc.). Reuse on every page. **Never use a second accent color.** (`corporate_fresh` replaces the free-choice highlight with its fixed role palette — structure green / icon blue / emphasis orange; using a color outside its role is the same violation.)
 - **Pick one visual motif** (default `fresh_pill_cards`; `apple_dark_cards` for `dark_apple*` decks) and repeat it everywhere.

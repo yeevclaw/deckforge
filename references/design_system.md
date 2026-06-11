@@ -170,7 +170,7 @@ Give the FINAL step's arch a slightly greener pair (`#A1E5DE` / `#B6E8D8` / `#C5
 | `aurora_cover` | cover | gradient + title/bar formula + `aurora_ribbons` background texture (template: `fresh_cover.svg`) |
 | `bento_hero_duo` | one core claim + 2 supports | 60% hero white card (duotone icon + 2-line 32px claim + emphasized body) + two stacked support cards right |
 | `dual_alert_panels` | problems / risks | rose + amber washes left/right, dashed alert boxes grouped under red/amber labels, bottom gradient capsule pointing to the solution |
-| `glass_arch_flow` | 3–5 sequential steps | bottom-bleed two-layer arches + light tapered swoosh behind them + white cards + soft chevrons (template: `fresh_flow.svg`) |
+| `glass_arch_flow` | 3–5 sequential steps | a FAMILY of four variants sharing the glass craft — the planner picks one per deck via `design_brief.flow_variant`; see "glass_arch_flow variants" below |
 | `glass_orbit_loop` | a cycle / iterative loop | dotted `#9BD4B8` orbit ring, 4 glass-circle nodes (dark line icons + labels), tangential direction arrows, center white claim card, side annotation; the orbit ring can carry `flow-anim` (`motion: "orbit"`) |
 | `claim_tree` | hierarchy (thesis → pillars → pages) | apex gradient capsule → thin green S-curve fans → 3 white pillar cards → fading ghost-thumbnail row |
 | `meta_bento` | an inventory / catalog | true bento grid (1 big + 2 medium + N small white cards), each holding a gray `#E3E8E5` wireframe + name + one-line caption |
@@ -179,6 +179,21 @@ Give the FINAL step's arch a slightly greener pair (`#A1E5DE` / `#B6E8D8` / `#C5
 | `cta_end` | closing with an action | cover gradient + aurora ribbons, centered CTA title + translucent mono command chip + link line; "Thanks" demoted to a small corner note |
 
 Three-column dashed-separator pages and compare-table card pages (the `fresh_3col.svg` / `fresh_compare.svg` templates) remain available for plain parallel claims and option comparisons.
+
+#### glass_arch_flow variants — 同一套工藝，四種構圖
+
+`glass_arch_flow` is a **family**: the craft is fixed, the macro geometry is not. Every variant keeps the same invariants — large glass forms are **edge-anchored** (bleeding off a canvas edge; never a complete shape floating mid-canvas), built in **two layers** (outer halo + inner body, gradient dissolving to ≤0.10 alpha at the bleed edge); the directional sweep is **atmosphere, not a line** (ONE continuous filled path with an integrated arrowhead, painted BEFORE the glass forms so its ends tuck behind the first and last); white cards sitting on glass are `fill-opacity 0.88` with no shadow; the final step carries the quiet greener emphasis pair. What varies is the macro composition: silhouette, anchor edge, sweep course, rhythm.
+
+The planner sets `design_brief.flow_variant` **once per deck**; all static `flow` pages in that deck share it (coherence inside the deck, variety across decks). Derive the pick from the story the steps tell — never roll dice, and never default to the same variant out of habit:
+
+| `flow_variant` | Pick when the steps read as… | Geometry in one line | Worked example |
+|---|---|---|---|
+| `terrace_ascent` | capability / maturity built up step by step | bottom-bleed flat-top mesas RISING left→right, step cards inside each mesa, a low horizon swoosh weaving BEHIND the skyline, arrowhead emerging past the final mesa | `templates/fresh_flow_terrace.svg` |
+| `river_ribbon` | a journey / end-to-end experience through stations | ONE wide ultra-light meandering ribbon (filled path, edge-to-edge bleed, integrated arrowhead), numbered ring stations fused ON its centerline, cards alternating above / below | `templates/fresh_flow_river.svg` |
+| `cascade_fall` | a top-down procedure, or steps that need longer prose (3–4 steps) | glass half-discs bleeding off the LEFT edge as a numbered bank (downward chevrons in the overlap lenses), a falling swoosh behind the bank, full-width white rows with round-dot separators | `templates/fresh_flow_cascade.svg` |
+| `dome_arcade` | evenly-weighted parallel stages, classic consulting look | the original: bottom-bleed dome arches + high tapered swoosh through the tops | `templates/fresh_flow.svg` |
+
+`dome_arcade` is **no longer an automatic default** — it is one option of four, chosen on the same story-shape grounds as the others. If a rendered flow page is geometrically congruent with a worked example the planning did not pick (same silhouette, same shape count, positions within ~10%), the designer copied instead of deriving — rebuild it. Worked examples show 4 steps; for 3 or 5 steps keep each variant's silhouette and re-space the step axis evenly (terrace tops keep rising; river stations stay on the centerline; cascade rows divide the content band).
 
 ### Motion pages — flow-anim 載體
 

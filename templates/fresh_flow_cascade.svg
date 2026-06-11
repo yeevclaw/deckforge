@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <!-- two-layer glass bank discs anchored to the LEFT edge: strongest at the bulge,
+         dissolving into the bleed edge -->
+    <linearGradient id="bankHalo" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#A6CDD4" stop-opacity="0.50"/>
+      <stop offset="60%" stop-color="#BCD9D6" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#C8DED8" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="bankDome" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#A6CDD4" stop-opacity="0.62"/>
+      <stop offset="60%" stop-color="#BCD9D6" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#C8DED8" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="bankHaloEnd" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#A1E5DE" stop-opacity="0.50"/>
+      <stop offset="60%" stop-color="#B6E8D8" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#C5EDD8" stop-opacity="0.10"/>
+    </linearGradient>
+    <linearGradient id="bankDomeEnd" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#A1E5DE" stop-opacity="0.62"/>
+      <stop offset="60%" stop-color="#B6E8D8" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#C5EDD8" stop-opacity="0.12"/>
+    </linearGradient>
+    <!-- falling swoosh behind the bank -->
+    <linearGradient id="fallGrad" x1="0" y1="172" x2="0" y2="668" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#CDEBD9" stop-opacity="0.50"/>
+      <stop offset="100%" stop-color="#A8DFC2" stop-opacity="0.72"/>
+    </linearGradient>
+    <radialGradient id="washGreen" cx="94%" cy="96%" r="52%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.40"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="freshShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="10" flood-color="#1E2B27" flood-opacity="0.05"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
+
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">流程頁標題：四步執行程序由上而下逐級交付</text>
+
+  <!-- falling swoosh: ONE continuous filled path (tail → wedge → integrated downward
+       arrowhead), drawn BEFORE the bank discs so its ends tuck behind the first and
+       last disc and the wedge surfaces in the gaps -->
+  <path d="M 48 172
+           C 108 300, 116 470, 76 588
+           L 100 580
+           L 54 668
+           L 12 576
+           L 34 584
+           C 58 470, 64 300, 36 178
+           Z" fill="url(#fallGrad)"/>
+
+  <!-- bank halos (top to bottom) -->
+  <path d="M 0 143 A 70 70 0 0 1 0 283 Z" fill="url(#bankHalo)"/>
+  <path d="M 0 281 A 70 70 0 0 1 0 421 Z" fill="url(#bankHalo)"/>
+  <path d="M 0 419 A 70 70 0 0 1 0 559 Z" fill="url(#bankHalo)"/>
+  <path d="M 0 557 A 70 70 0 0 1 0 697 Z" fill="url(#bankHaloEnd)"/>
+
+  <!-- bank domes -->
+  <path d="M 0 157 A 56 56 0 0 1 0 269 Z" fill="url(#bankDome)"/>
+  <path d="M 0 295 A 56 56 0 0 1 0 407 Z" fill="url(#bankDome)"/>
+  <path d="M 0 433 A 56 56 0 0 1 0 545 Z" fill="url(#bankDome)"/>
+  <path d="M 0 571 A 56 56 0 0 1 0 683 Z" fill="url(#bankDomeEnd)"/>
+
+  <!-- step numbers in the bank -->
+  <text x="30" y="223" font-size="26" font-weight="700" fill="#2E6E63">1</text>
+  <text x="30" y="361" font-size="26" font-weight="700" fill="#2E6E63">2</text>
+  <text x="30" y="499" font-size="26" font-weight="700" fill="#2E6E63">3</text>
+  <text x="30" y="637" font-size="26" font-weight="700" fill="#2E8F68">4</text>
+
+  <!-- soft chevrons pointing down in the disc-overlap lenses -->
+  <path d="M 14 276 L 34 298 L 54 276 Z" fill="#FFFFFF" fill-opacity="0.55"/>
+  <path d="M 14 414 L 34 436 L 54 414 Z" fill="#FFFFFF" fill-opacity="0.55"/>
+  <path d="M 14 552 L 34 574 L 54 552 Z" fill="#FFFFFF" fill-opacity="0.55"/>
+
+  <!-- step 1 -->
+  <g>
+    <rect x="130" y="152" width="1060" height="122" rx="14" fill="#FFFFFF" filter="url(#freshShadow)"/>
+    <g transform="translate(165 191) scale(1.8)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    </g>
+    <text x="240" y="187" font-size="13" font-weight="700" fill="#2E6E63" letter-spacing="2">STEP 1</text>
+    <text x="240" y="221" font-size="22" font-weight="700" fill="#383838">階段名稱一</text>
+    <line x1="470" y1="179" x2="470" y2="247" stroke="#9FB9AE" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="0.1 9"/>
+    <text x="510" y="203" font-size="16" fill="#4A5158">
+      <tspan x="510" dy="0">一到兩行說明這一步做什麼、為何重要，</tspan>
+      <tspan x="510" dy="28">寬卡可以容納更完整的句子與細節。</tspan>
+    </text>
+    <text x="1150" y="219" font-size="16" font-weight="700" fill="#E8872E" text-anchor="end">產出物一</text>
+  </g>
+
+  <!-- step 2 -->
+  <g>
+    <rect x="130" y="290" width="1060" height="122" rx="14" fill="#FFFFFF" filter="url(#freshShadow)"/>
+    <g transform="translate(165 329) scale(1.8)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      <line x1="6" y1="8" x2="9" y2="8"/><line x1="6" y1="12" x2="9" y2="12"/>
+    </g>
+    <text x="240" y="325" font-size="13" font-weight="700" fill="#2E6E63" letter-spacing="2">STEP 2</text>
+    <text x="240" y="359" font-size="22" font-weight="700" fill="#383838">階段名稱二</text>
+    <line x1="470" y1="317" x2="470" y2="385" stroke="#9FB9AE" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="0.1 9"/>
+    <text x="510" y="341" font-size="16" fill="#4A5158">
+      <tspan x="510" dy="0">一到兩行說明這一步做什麼、為何重要，</tspan>
+      <tspan x="510" dy="28">寬卡可以容納更完整的句子與細節。</tspan>
+    </text>
+    <text x="1150" y="357" font-size="16" font-weight="700" fill="#E8872E" text-anchor="end">產出物二</text>
+  </g>
+
+  <!-- step 3 -->
+  <g>
+    <rect x="130" y="428" width="1060" height="122" rx="14" fill="#FFFFFF" filter="url(#freshShadow)"/>
+    <g transform="translate(165 467) scale(1.8)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+    </g>
+    <text x="240" y="463" font-size="13" font-weight="700" fill="#2E6E63" letter-spacing="2">STEP 3</text>
+    <text x="240" y="497" font-size="22" font-weight="700" fill="#383838">階段名稱三</text>
+    <line x1="470" y1="455" x2="470" y2="523" stroke="#9FB9AE" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="0.1 9"/>
+    <text x="510" y="479" font-size="16" fill="#4A5158">
+      <tspan x="510" dy="0">一到兩行說明這一步做什麼、為何重要，</tspan>
+      <tspan x="510" dy="28">寬卡可以容納更完整的句子與細節。</tspan>
+    </text>
+    <text x="1150" y="495" font-size="16" font-weight="700" fill="#E8872E" text-anchor="end">產出物三</text>
+  </g>
+
+  <!-- step 4 -->
+  <g>
+    <rect x="130" y="566" width="1060" height="122" rx="14" fill="#FFFFFF" filter="url(#freshShadow)"/>
+    <g transform="translate(165 605) scale(1.8)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+      <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+    </g>
+    <text x="240" y="601" font-size="13" font-weight="700" fill="#2E8F68" letter-spacing="2">STEP 4</text>
+    <text x="240" y="635" font-size="22" font-weight="700" fill="#383838">階段名稱四</text>
+    <line x1="470" y1="593" x2="470" y2="661" stroke="#9FB9AE" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="0.1 9"/>
+    <text x="510" y="617" font-size="16" fill="#4A5158">
+      <tspan x="510" dy="0">一到兩行說明這一步做什麼、為何重要，</tspan>
+      <tspan x="510" dy="28">寬卡可以容納更完整的句子與細節。</tspan>
+    </text>
+    <text x="1150" y="633" font-size="16" font-weight="700" fill="#E8872E" text-anchor="end">產出物四</text>
+  </g>
+</svg>

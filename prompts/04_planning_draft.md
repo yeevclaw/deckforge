@@ -51,7 +51,8 @@ Output **only** the JSON block, wrapped in `[PPT_PLANNING]` and `[/PPT_PLANNING]
     "palette_hint": "dark_apple | dark_apple_blue | dark_apple_orange | dark_apple_green | dark_apple_red | corporate_fresh | midnight_executive | forest_moss | coral_energy | warm_terracotta | ocean_gradient | charcoal_minimal | teal_trust | berry_cream | sage_calm | cherry_bold",
     "highlight_color": "#FF6900",
     "motif_hint": "apple_dark_cards | fresh_pill_cards | rounded_cards_soft_shadow | left_accent_bar | icon_in_circle | gradient_mesh_bg",
-    "typography_hint": "serif_header_sans_body | sans_only_bold | mono_accent"
+    "typography_hint": "serif_header_sans_body | sans_only_bold | mono_accent",
+    "flow_variant": "terrace_ascent | river_ribbon | cascade_fall | dome_arcade"
   },
   "pages": [
     {
@@ -292,6 +293,14 @@ Never set `motion` for discrete-step flows, timelines, or funnels — see the "n
   "speaker_notes": "..."
 }
 ```
+
+---
+
+## Flow-page composition — `design_brief.flow_variant`（corporate_fresh）
+
+When `palette_hint` is `corporate_fresh` and the deck contains at least one static `flow` page, set `design_brief.flow_variant`. Like `motion`, this is a **composition decision made here, constructively** — the designer executes your pick; they never improvise a different one, and pages must not each pick their own (one variant per deck: coherence inside the deck, variety across decks).
+
+Derive the pick from the story the steps tell — the four options and their story-shape triggers are defined in [references/design_system.md](../references/design_system.md) → "glass_arch_flow variants" (capability built up step by step → `terrace_ascent`; a journey through stations → `river_ribbon`; top-down procedure or longer prose → `cascade_fall`; evenly-weighted parallel stages → `dome_arcade`). `dome_arcade` is one option of four, not the default — pick it for a story reason, not out of habit. Pages carrying a `motion` field keep their motion composition (`transit_pipeline` etc.) and ignore `flow_variant`. Omit the field for non-fresh palettes or decks with no static flow page.
 
 ---
 
@@ -638,6 +647,7 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 - [ ] **Title-only read**: if I read only the part_titles + page titles in order, do they form a coherent argument from setup through conclusion?
 - [ ] **Bento-first discipline**: for every page using a primitive layout (`flow` / `timeline` / `cycle` / `funnel` / `compare_table` / `quadrant_2x2` / `venn` / `hierarchy_tree` / `pyramid`), can I name the specific information-loss signal that justified leaving bento? If not, switch back to bento.
 - [ ] **Primitive ratio**: is the primitive-layout share of content pages ≤ ~40%? If higher, re-check each primitive page for false positives on the loss signals.
+- [ ] **Flow variant** (corporate_fresh with static flow pages only): is `design_brief.flow_variant` set, and can I say in one sentence which story shape justified the pick (not "because it's the usual one")?
 
 Fail any check → revise before emitting.
 

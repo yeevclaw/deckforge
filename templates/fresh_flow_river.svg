@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <!-- the river ribbon: one continuous filled path, bleeding off the left edge,
+         ending in an integrated arrowhead before the right edge -->
+    <linearGradient id="riverGrad" x1="-40" y1="0" x2="1262" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#CDEBD9" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#A8DFC2" stop-opacity="0.62"/>
+    </linearGradient>
+    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
+
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">流程頁標題：一條路徑串起四站，說明旅程保證什麼</text>
+
+  <!-- river ribbon: drawn BEFORE the stations so the rings sit fused on it -->
+  <path d="M -40 385
+           C 80 375, 120 370, 200 370
+           C 320 370, 380 410, 493 410
+           C 610 410, 670 355, 787 355
+           C 900 355, 980 395, 1080 395
+           L 1130 393
+           L 1122 363
+           L 1262 448
+           L 1114 530
+           L 1124 500
+           C 1010 515, 900 480, 787 475
+           C 670 470, 610 530, 493 530
+           C 380 530, 320 490, 200 490
+           C 120 490, 80 498, -40 505
+           Z" fill="url(#riverGrad)"/>
+
+  <!-- station rings on the ribbon centerline (final station larger + greener) -->
+  <g>
+    <circle cx="200" cy="430" r="34" fill="#A6CDD4" fill-opacity="0.30"/>
+    <circle cx="200" cy="430" r="24" fill="#FFFFFF" fill-opacity="0.92" stroke="#4EC487" stroke-width="4"/>
+    <text x="200" y="438" font-size="22" font-weight="700" fill="#2E6E63" text-anchor="middle">1</text>
+  </g>
+  <g>
+    <circle cx="493" cy="470" r="34" fill="#A6CDD4" fill-opacity="0.30"/>
+    <circle cx="493" cy="470" r="24" fill="#FFFFFF" fill-opacity="0.92" stroke="#4EC487" stroke-width="4"/>
+    <text x="493" y="478" font-size="22" font-weight="700" fill="#2E6E63" text-anchor="middle">2</text>
+  </g>
+  <g>
+    <circle cx="787" cy="415" r="34" fill="#A6CDD4" fill-opacity="0.30"/>
+    <circle cx="787" cy="415" r="24" fill="#FFFFFF" fill-opacity="0.92" stroke="#4EC487" stroke-width="4"/>
+    <text x="787" y="423" font-size="22" font-weight="700" fill="#2E6E63" text-anchor="middle">3</text>
+  </g>
+  <g>
+    <circle cx="1080" cy="455" r="40" fill="#A1E5DE" fill-opacity="0.38"/>
+    <circle cx="1080" cy="455" r="28" fill="#FFFFFF" fill-opacity="0.95" stroke="#35A877" stroke-width="5"/>
+    <text x="1080" y="464" font-size="24" font-weight="700" fill="#2E8F68" text-anchor="middle">4</text>
+  </g>
+
+  <!-- step 1: card above the ribbon -->
+  <g>
+    <rect x="80" y="216" width="240" height="170" rx="14" fill="#FFFFFF" fill-opacity="0.92"/>
+    <text x="200" y="252" font-size="15" font-weight="700" fill="#2E6E63" text-anchor="middle" letter-spacing="2">STEP 1</text>
+    <text x="200" y="284" font-size="24" font-weight="700" fill="#383838" text-anchor="middle">階段名稱一</text>
+    <text x="200" y="318" font-size="16" fill="#4A5158" text-anchor="middle">
+      <tspan x="200" dy="0">兩行內說明這一步</tspan>
+      <tspan x="200" dy="26">做什麼、為何重要</tspan>
+    </text>
+    <text x="200" y="372" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">產出物一</text>
+  </g>
+
+  <!-- step 2: card below the ribbon -->
+  <g>
+    <rect x="373" y="518" width="240" height="170" rx="14" fill="#FFFFFF" fill-opacity="0.92"/>
+    <text x="493" y="554" font-size="15" font-weight="700" fill="#2E6E63" text-anchor="middle" letter-spacing="2">STEP 2</text>
+    <text x="493" y="586" font-size="24" font-weight="700" fill="#383838" text-anchor="middle">階段名稱二</text>
+    <text x="493" y="620" font-size="16" fill="#4A5158" text-anchor="middle">
+      <tspan x="493" dy="0">兩行內說明這一步</tspan>
+      <tspan x="493" dy="26">做什麼、為何重要</tspan>
+    </text>
+    <text x="493" y="674" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">產出物二</text>
+  </g>
+
+  <!-- step 3: card above the ribbon -->
+  <g>
+    <rect x="667" y="201" width="240" height="170" rx="14" fill="#FFFFFF" fill-opacity="0.92"/>
+    <text x="787" y="237" font-size="15" font-weight="700" fill="#2E6E63" text-anchor="middle" letter-spacing="2">STEP 3</text>
+    <text x="787" y="269" font-size="24" font-weight="700" fill="#383838" text-anchor="middle">階段名稱三</text>
+    <text x="787" y="303" font-size="16" fill="#4A5158" text-anchor="middle">
+      <tspan x="787" dy="0">兩行內說明這一步</tspan>
+      <tspan x="787" dy="26">做什麼、為何重要</tspan>
+    </text>
+    <text x="787" y="357" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">產出物三</text>
+  </g>
+
+  <!-- step 4: card below the ribbon -->
+  <g>
+    <rect x="960" y="503" width="240" height="170" rx="14" fill="#FFFFFF" fill-opacity="0.92"/>
+    <text x="1080" y="539" font-size="15" font-weight="700" fill="#2E8F68" text-anchor="middle" letter-spacing="2">STEP 4</text>
+    <text x="1080" y="571" font-size="24" font-weight="700" fill="#383838" text-anchor="middle">階段名稱四</text>
+    <text x="1080" y="605" font-size="16" fill="#4A5158" text-anchor="middle">
+      <tspan x="1080" dy="0">兩行內說明這一步</tspan>
+      <tspan x="1080" dy="26">做什麼、為何重要</tspan>
+    </text>
+    <text x="1080" y="659" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">產出物四</text>
+  </g>
+</svg>

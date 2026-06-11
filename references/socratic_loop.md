@@ -32,6 +32,8 @@ Why this matters: a question that is correctly chosen and well-framed can collap
 
 **Rule**: one type per round. Don't ask a Definition question plus a Tradeoff question in the same round — the user will answer the easier one and you've wasted leverage on the harder gap.
 
+**Evidence questions and missing data**: when an Evidence question hits "I don't have that number at hand", don't stall and don't invent — offer collaboration: a targeted single-fact web lookup (when a search tool is available, value + source played back for confirmation) or a `needs-research` tag that Phase 2.5 picks up first. See `prompts/01_needs_research.md` → "When the user doesn't have the evidence".
+
 ---
 
 ## 3. The eleven deck scenarios — and the spine each requires
@@ -70,7 +72,7 @@ The fields in `brief.md` are not interchangeable with the old "audience / goal /
 - `desired_action` → what the audience does *after* the deck
 - `open_assumptions` → things we proceeded with but didn't confirm
 
-If any of `audience.current_belief`, `belief_shift`, `core_thesis`, `desired_action` is empty when you're about to write the file — **loop one more round**. Those four are non-negotiable.
+If any of `audience.current_belief`, `belief_shift`, `core_thesis`, `desired_action` is empty when you're about to write the file — **loop one more round**. Those four are non-negotiable. They must also be **user-confirmed, not merely inferred**: a value you derived from the user's input caps at ⚠️ until you play it back (as a pop-up option, not a dry re-ask) and they confirm it. See the prompt's Between-round reflection contract.
 
 The remaining fields (constraints, source material) can be sketched.
 
@@ -92,7 +94,7 @@ If a user pushes back on a question ("just make the deck already"), **do not aut
 
 **Single source of truth**: stop conditions live in [`prompts/01_needs_research.md` → "Stop conditions"](../prompts/01_needs_research.md). This reference doc deliberately does **not** duplicate them — duplication has drifted in the past (this file used to list 7 fields; the prompt now lists 7 stop conditions with different framing, plus a Between-round reflection contract that gates exit). When in doubt about whether the loop can stop, consult the prompt, not this reference.
 
-Forced stop after **4 rounds**. If 4 rounds didn't produce clarity, switch to **Forced Assumption mode** (a **distinct** mechanism from user-chosen Quick mode — do not conflate). Document your best-guess assumptions in `open_assumptions`, prefix the four non-negotiable fields (`audience.current_belief`, `belief_shift`, `core_thesis`, `desired_action`) with `⚠️` if they remained unclear, and flag the unclear fields prominently at the Phase 1→2 handoff so the user can revise before any outline work. See `prompts/01_needs_research.md` → "Forced Assumption mode" for the full procedure.
+Hard floor at the other end: the exit branch is closed at Round 2's reflection — the earliest legal exit is after the user has answered 2 rounds, and user-chosen Quick mode is the only single-question path. Forced stop after **4 rounds**. If 4 rounds didn't produce clarity, switch to **Forced Assumption mode** (a **distinct** mechanism from user-chosen Quick mode — do not conflate). Document your best-guess assumptions in `open_assumptions`, prefix the four non-negotiable fields (`audience.current_belief`, `belief_shift`, `core_thesis`, `desired_action`) with `⚠️` if they remained unclear, and flag the unclear fields prominently at the Phase 1→2 handoff so the user can revise before any outline work. See `prompts/01_needs_research.md` → "Forced Assumption mode" for the full procedure.
 
 ---
 

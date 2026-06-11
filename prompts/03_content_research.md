@@ -7,6 +7,7 @@ Use this **only when** the topic needs factual grounding (industry data, competi
 ## When to research
 
 ✅ Run research when:
+- `brief.md` tags any proof pillar `needs-research` — Phase 1 named the pillar but had no concrete evidence anchor for it
 - The deck makes claims that can be true or false (market sizes, dates, share prices, names, product specs)
 - The audience is external (investors, customers, public) — facts must hold up
 - The topic is fast-moving (AI, crypto, regulation)
@@ -18,7 +19,7 @@ Use this **only when** the topic needs factual grounding (industry data, competi
 
 ## How to research
 
-Feed each *part title* from the outline (not the deck topic) to your search tool, one at a time. The author of the source article recommends Grok for this; in this skill, use whatever web search tool is available (`WebSearch`, `WebFetch`, or an MCP search tool). Save findings per part.
+Start with any `needs-research` tags carried over from `brief.md`'s proof pillars — those are evidence gaps Phase 1 already identified, and an unsupported pillar undermines the whole pyramid. Then feed each *part title* from the outline (not the deck topic) to your search tool, one at a time. The author of the source article recommends Grok for this; in this skill, use whatever web search tool is available (`WebSearch`, `WebFetch`, or an MCP search tool). Save findings per part.
 
 For each part, gather:
 - 3–5 verified facts (with source URL)

@@ -21,6 +21,9 @@ README.en.md  export-ignore
 # Maintainer tool, not a user-facing runtime asset
 scripts/package.sh export-ignore
 
+# Claude Code guidance for repo development — not a runtime asset
+CLAUDE.md export-ignore
+
 # Pure git metadata
 .gitignore     export-ignore
 .gitattributes export-ignore

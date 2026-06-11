@@ -11,9 +11,6 @@
 |---|---|---|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.gif) |
 
-第 3 頁是**流動邊線動畫**(`flow-anim`)的實際產出:管線上的脈衝虛線在 PowerPoint / Keynote 放映模式中持續流動(上方 GIF 即為投影片實際嵌入的內容)。
-
-
 
 ## 為什麼用 SVG → PPTX(而不是套範本或圖片型 PPT)?
 - SVG 是 PowerPoint 2016+ 原生支援的向量圖格式。右鍵「轉換成圖形」就能把整張投影片拆成可編輯的文字框與形狀,**保留所有編輯性**。

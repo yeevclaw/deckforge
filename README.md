@@ -7,8 +7,6 @@
 
 ## Demo
 
-一份 3 頁 **DeckForge 自介** mini-deck,由本 skill 的 SVG pipeline 直接產出:
-
 | | | |
 |---|---|---|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |

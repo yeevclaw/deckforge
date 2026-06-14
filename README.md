@@ -118,7 +118,7 @@ DeckForge/
 │   ├── package.sh          ← 打包 deckforge.zip 供 Claude Desktop 上傳
 │   ├── setup.sh            ← 一鍵安裝依賴(mac / linux)
 │   └── setup.ps1           ← Windows PowerShell 版安裝腳本
-└── examples/               ← DeckForge 自介 mini-deck(3 頁完整產出)
+└── examples/               ← DeckForge 自介 mini-deck(10 頁完整產出)
     ├── DeckForge-demo.pdf  ← 成品 PDF
     ├── slide-1.jpg ... slide-3.gif ← 各頁預覽(第 3 頁為動畫 GIF)
     └── sample-deck/        ← 原始 SVG 檔

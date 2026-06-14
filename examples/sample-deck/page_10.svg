@@ -27,14 +27,16 @@
     <path d="M -60 680 C 320 580, 700 716, 1020 600
              C 1180 542, 1290 532, 1340 526
              L 1340 720 L -60 720 Z" fill-opacity="0.10"/>
-    <path d="M 560 248 C 800 196, 1040 232, 1340 150
-             L 1340 196
-             C 1050 274, 810 240, 560 286 Z" fill-opacity="0.05"/>
   </g>
 
-  <!-- title block -->
-  <text x="120" y="330" font-size="104" font-weight="800" fill="#FFFFFF" letter-spacing="-2">DeckForge</text>
-  <rect x="124" y="372" width="640" height="52" fill="#FFFFFF"/>
-  <text x="146" y="409" font-size="27" font-weight="700" fill="#3E5BA8">好簡報的靈魂是內容,不是皮囊</text>
-  <text x="124" y="476" font-size="20" fill="#FFFFFF" fill-opacity="0.92">2026 · 產品介紹</text>
+  <!-- closing block -->
+  <text x="120" y="296" font-size="52" font-weight="800" fill="#FFFFFF">一行指令,開始打造你的下一份簡報</text>
+
+  <!-- command band -->
+  <rect x="124" y="344" width="560" height="58" rx="10" fill="#FFFFFF" fill-opacity="0.16"/>
+  <text x="152" y="382" font-size="24" font-weight="700" fill="#FFFFFF" font-family="'SFMono-Regular', Menlo, Consolas, monospace">bash scripts/setup.sh</text>
+
+  <text x="124" y="452" font-size="22" fill="#FFFFFF" fill-opacity="0.95">然後說一句:「幫我做一份關於 X 的簡報」</text>
+
+  <text x="124" y="556" font-size="19" fill="#FFFFFF" fill-opacity="0.85">github.com/yeevclaw/deckforge</text>
 </svg>

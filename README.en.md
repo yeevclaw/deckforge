@@ -8,7 +8,7 @@ Inspired by the methodology shared by *sandun* on linux.do ("应该是目前最�
 
 ## Demo
 
-A 3-page **DeckForge self-intro** mini-deck, produced directly through this skill's SVG pipeline:
+A 10-page **DeckForge self-intro** mini-deck, produced directly through this skill's SVG pipeline:
 
 | | | |
 |---|---|---|
@@ -59,7 +59,7 @@ DeckForge/
 │   ├── package.sh          ← build deckforge.zip for Claude Desktop upload
 │   ├── setup.sh            ← one-line dependency installer (mac / linux)
 │   └── setup.ps1           ← same, for Windows PowerShell
-└── examples/               ← DeckForge self-intro mini-deck (3 pages)
+└── examples/               ← DeckForge self-intro mini-deck (10 pages)
     ├── DeckForge-demo.pdf  ← combined rendered PDF
     ├── slide-1.jpg ... slide-3.gif ← page previews (page 3 is an animated GIF)
     └── sample-deck/        ← source SVG pages (drag into PowerPoint to inspect)

@@ -5,12 +5,12 @@
     <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
     </linearGradient>
-    <radialGradient id="washLav" cx="92%" cy="4%" r="48%">
-      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.55"/>
+    <radialGradient id="washLav" cx="92%" cy="4%" r="46%">
+      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.5"/>
       <stop offset="100%" stop-color="#D9D4F0" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
-      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.5"/>
+    <radialGradient id="washGreen" cx="6%" cy="96%" r="50%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.45"/>
       <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
     </radialGradient>
     <filter id="freshShadow" x="-20%" y="-20%" width="140%" height="140%">
@@ -27,58 +27,24 @@
 
   <!-- title -->
   <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
-  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">DeckForge 把簡報當顧問專案來做：三件事與眾不同</text>
+  <text x="48" y="104" font-size="42" font-weight="800" fill="#383838">目錄</text>
+  <text x="48" y="132" font-size="15" fill="#6B7178" letter-spacing="2">TABLE OF CONTENTS</text>
 
-  <!-- hero card (the core claim) -->
-  <rect x="48" y="150" width="700" height="510" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
-  <!-- duotone icon: interview with speech bubble -->
-  <g transform="translate(108 200)">
-    <g transform="scale(4.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" fill="#D8E4FB"/>
-      <circle cx="9" cy="7" r="4" fill="#D8E4FB"/>
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" fill="none"/>
-    </g>
-    <g stroke="#5E8FEF" stroke-width="2.5" fill="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M66 -8 h28 a7 7 0 0 1 7 7 v13 a7 7 0 0 1 -7 7 h-16 l-9 9 v-9 h-3 a7 7 0 0 1 -7 -7 v-13 a7 7 0 0 1 7 -7 Z"/>
-    </g>
-    <g fill="#5E8FEF">
-      <circle cx="73" cy="5" r="2.3"/><circle cx="80" cy="5" r="2.3"/><circle cx="87" cy="5" r="2.3"/>
-    </g>
-  </g>
-  <text x="108" y="392" font-size="32" font-weight="700" fill="#383838">不是模板填空，</text>
-  <text x="108" y="440" font-size="32" font-weight="700" fill="#383838">是先定論點再做頁面。</text>
-  <text x="108" y="500" font-size="19" fill="#4A5158">
-    <tspan x="108" dy="0">蘇格拉底式訪談先釐清<tspan fill="#E8872E" font-weight="700">觀點轉變</tspan>與核心主張，</tspan>
-    <tspan x="108" dy="35">金字塔原理把主張長成大綱與佐證，</tspan>
-    <tspan x="108" dy="35">每一頁都為<tspan fill="#E8872E" font-weight="700">說服</tspan>而存在。</tspan>
-  </text>
+  <!-- row 1 -->
+  <rect x="48" y="186" width="1184" height="148" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
+  <text x="108" y="290" font-size="84" font-weight="900" fill="#BFE3CB" style="font-variant-numeric: tabular-nums">01</text>
+  <text x="280" y="262" font-size="30" font-weight="700" fill="#383838">為什麼 AI 簡報都長一樣</text>
+  <text x="280" y="300" font-size="18" fill="#6B7178">兩個讓 AI 簡報千篇一律的失敗模式。</text>
 
-  <!-- support card A -->
-  <rect x="772" y="150" width="460" height="243" rx="14" fill="#FFFFFF" filter="url(#freshShadow)"/>
-  <g transform="translate(806 196)">
-    <g transform="scale(2.4)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10" fill="#D8E4FB"/>
-      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="#FFFFFF"/>
-    </g>
-  </g>
-  <text x="892" y="216" font-size="24" font-weight="700" fill="#383838">Bento 版型與雙風格</text>
-  <text x="892" y="262" font-size="17" fill="#4A5158">
-    <tspan x="892" dy="0">八種 Bento 版型 + 深淺<tspan fill="#E8872E" font-weight="700">雙風格</tspan>，</tspan>
-    <tspan x="892" dy="31">全程角色色紀律，杜絕 AI 簡報感。</tspan>
-  </text>
+  <!-- row 2 -->
+  <rect x="48" y="350" width="1184" height="148" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
+  <text x="108" y="454" font-size="84" font-weight="900" fill="#BFE3CB" style="font-variant-numeric: tabular-nums">02</text>
+  <text x="280" y="426" font-size="30" font-weight="700" fill="#383838">DeckForge 的方法:5 階段專家工作流</text>
+  <text x="280" y="464" font-size="18" fill="#6B7178">反詰 → 大綱 → 策劃 → 設計 → 產出,逐步把簡報墊高到位。</text>
 
-  <!-- support card B -->
-  <rect x="772" y="417" width="460" height="243" rx="14" fill="#FFFFFF" filter="url(#freshShadow)"/>
-  <g transform="translate(806 463)">
-    <g transform="scale(2.4)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#D8E4FB"/>
-      <polyline points="14 2 14 8 20 8" fill="#FFFFFF"/>
-      <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
-    </g>
-  </g>
-  <text x="892" y="483" font-size="24" font-weight="700" fill="#383838">交付即可編輯，需要時還會動</text>
-  <text x="892" y="529" font-size="17" fill="#4A5158">
-    <tspan x="892" dy="0">SVG 組裝 .pptx，<tspan fill="#E8872E" font-weight="700">轉換為圖形</tspan>即可編輯；</tspan>
-    <tspan x="892" dy="31">流動性內容可輸出<tspan fill="#E8872E" font-weight="700">會動的頁面</tspan>（見下頁）。</tspan>
-  </text>
+  <!-- row 3 -->
+  <rect x="48" y="514" width="1184" height="148" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
+  <text x="108" y="618" font-size="84" font-weight="900" fill="#BFE3CB" style="font-variant-numeric: tabular-nums">03</text>
+  <text x="280" y="590" font-size="30" font-weight="700" fill="#383838">產出:既好看,又真正可編輯</text>
+  <text x="280" y="628" font-size="18" fill="#6B7178">SVG 雙嵌,PowerPoint 2016+ 可逐元素 Convert to Shape。</text>
 </svg>

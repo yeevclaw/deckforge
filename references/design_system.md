@@ -322,18 +322,21 @@ White rounded cards (rx=14) with a whisper shadow on the light `#F4F4F4` canvas,
 
 ```xml
 <defs>
-  <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
-    <feGaussianBlur in="SourceAlpha" stdDeviation="12"/>
-    <feOffset dx="0" dy="8"/>
-    <feComponentTransfer><feFuncA type="linear" slope="0.06"/></feComponentTransfer>
-    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  <!-- Shadow tinted toward the palette primary (flood-color), not pure black —
+       a faintly hued shadow reads as intentional. Swap flood-color per palette. -->
+  <filter id="cardShadow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="12" result="blur"/>
+    <feOffset in="blur" dx="0" dy="8" result="offsetblur"/>
+    <feFlood flood-color="#1E2761" flood-opacity="0.12" result="tint"/>
+    <feComposite in="tint" in2="offsetblur" operator="in" result="shadow"/>
+    <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
   </filter>
 </defs>
 <rect x="48" y="140" width="582" height="532" rx="16" ry="16"
       fill="#FFFFFF" filter="url(#cardShadow)"/>
 ```
 
-Safe default. Works with any palette. Light, modern, magazine-y.
+Safe default. Works with any palette. Light, modern, magazine-y. (The `corporate_fresh` family keeps its own lighter `freshShadow` whisper — this tinted shadow is only for the `rounded_cards_soft_shadow` motif.)
 
 ### `left_accent_bar`
 
@@ -454,6 +457,7 @@ This family argues in sentences, so its hierarchy is flatter than `dark_apple`'s
 2. **One hero element per card.** Either the big number OR the big text-title, never both at the same size.
 3. **English is decorative.** Bilingual subtitles use one tier smaller and gray-500/600 — they add design polish without competing with the Chinese core.
 4. **Body text is readable but quiet.** `17–19px gray-400` for support copy. Quieter than headings, but **large enough to read when projected** (the v0.7.4 bump targeted this specifically — pre-v0.7.4 sizes were 14–16px which read too small from the back row).
+5. **Aligned figures use tabular numerals.** Any number that sits in a column or a row meant to line up — `mini_grid` stats, `compare_table` values, chart axis/value labels — carries `style="font-variant-numeric: tabular-nums"` so digits share one advance width and align vertically. A lone `stat_hero` number doesn't need it.
 
 ---
 

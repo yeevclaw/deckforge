@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <linearGradient id="recGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#A8E8E0"/><stop offset="100%" stop-color="#80D0F8"/>
+    </linearGradient>
+    <linearGradient id="recCard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EDF9F2"/><stop offset="100%" stop-color="#E6F1FB"/>
+    </linearGradient>
+    <radialGradient id="washGreen" cx="8%" cy="92%" r="48%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="freshShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
+
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">一般 AI 簡報工具 vs DeckForge</text>
+  <text x="48" y="132" font-size="15" fill="#6B7178" letter-spacing="2">GENERIC AI DECKS vs DECKFORGE</text>
+
+  <!-- recommendation capsule over right column -->
+  <rect x="820" y="158" width="288" height="44" rx="14" fill="url(#recGrad)"/>
+  <text x="964" y="187" font-size="20" font-weight="700" fill="#2F3437" text-anchor="middle">這是一套方法論</text>
+
+  <!-- column cards -->
+  <rect x="160" y="214" width="512" height="454" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
+  <rect x="696" y="214" width="536" height="454" rx="16" fill="url(#recCard)" filter="url(#freshShadow)"/>
+
+  <!-- column headers -->
+  <text x="416" y="262" font-size="24" font-weight="700" fill="#6B7178" text-anchor="middle">一般 AI 簡報工具</text>
+  <text x="964" y="262" font-size="26" font-weight="700" fill="#1B8A82" text-anchor="middle">DeckForge</text>
+
+  <!-- dimension labels (left gutter) -->
+  <g font-size="18" font-weight="700" fill="#4A5158" text-anchor="middle">
+    <text x="100" y="343">起點</text>
+    <text x="100" y="408"><tspan x="100" dy="0">內容</tspan><tspan x="100" dy="24">來源</tspan></text>
+    <text x="100" y="485">結構</text>
+    <text x="100" y="551">設計</text>
+    <text x="100" y="604"><tspan x="100" dy="0">可編</tspan><tspan x="100" dy="24">輯性</tspan></text>
+  </g>
+
+  <!-- round-dot row separators -->
+  <g stroke="#9FB9AE" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="0.1 9">
+    <line x1="186" y1="372" x2="646" y2="372"/><line x1="722" y1="372" x2="1208" y2="372"/>
+    <line x1="186" y1="438" x2="646" y2="438"/><line x1="722" y1="438" x2="1208" y2="438"/>
+    <line x1="186" y1="504" x2="646" y2="504"/><line x1="722" y1="504" x2="1208" y2="504"/>
+    <line x1="186" y1="570" x2="646" y2="570"/><line x1="722" y1="570" x2="1208" y2="570"/>
+  </g>
+
+  <!-- left column values -->
+  <g font-size="19" fill="#6B7178">
+    <text x="186" y="345">主題 → 直接套版</text>
+    <text x="186" y="411">把使用者輸入當內容</text>
+    <text x="186" y="477">罐頭條列</text>
+    <text x="186" y="543">回收模板,千篇一律</text>
+    <text x="186" y="609">圖片或鎖死版面</text>
+  </g>
+
+  <!-- right column values (recommended) -->
+  <g font-size="19" fill="#2F3437">
+    <text x="722" y="345">反詰對話挖出<tspan fill="#E8872E" font-weight="700">核心命題</tspan></text>
+    <text x="722" y="411">決定<tspan fill="#E8872E" font-weight="700">觀眾該改變的判斷</tspan></text>
+    <text x="722" y="477">金字塔論證,逐頁防守標題</text>
+    <text x="722" y="543">Bento + 單一強調色 + 防 slop</text>
+    <text x="722" y="609">PowerPoint 原生 <tspan fill="#E8872E" font-weight="700">Convert-to-Shape</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <radialGradient id="washLav" cx="92%" cy="6%" r="46%">
+      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#D9D4F0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washGreen" cx="6%" cy="96%" r="50%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="freshShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
+
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">反詰對話不是成本,它就是產品本身</text>
+  <text x="48" y="132" font-size="15" fill="#6B7178" letter-spacing="2">THE DIALOGUE IS THE PRODUCT</text>
+
+  <!-- hero card -->
+  <rect x="48" y="172" width="1184" height="496" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
+
+  <text x="96" y="246" font-size="26" font-weight="700" fill="#383838">資料說的是「你」腦中有什麼;對話挖的是<tspan fill="#E8872E" font-weight="700">「觀眾」腦中該改變什麼</tspan></text>
+  <text x="96" y="300" font-size="19" fill="#4A5158">
+    <tspan x="96" dy="0">再完整的白皮書、再詳盡的 brief,都換不到這個。簡報真正要決定的,</tspan>
+    <tspan x="96" dy="34">是觀眾看完後腦中該翻轉的那一個判斷——這只能靠反詰一層層挖出來。</tspan>
+  </text>
+
+  <!-- 3 nested sub-cards -->
+  <rect x="96" y="404" width="346" height="232" rx="12" fill="#F1F7F3"/>
+  <rect x="466" y="404" width="346" height="232" rx="12" fill="#F1F7F3"/>
+  <rect x="836" y="404" width="346" height="232" rx="12" fill="#F1F7F3"/>
+
+  <text x="269" y="528" font-size="86" font-weight="800" fill="#E8872E" text-anchor="middle" style="font-variant-numeric: tabular-nums">4</text>
+  <text x="269" y="572" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">個非協商欄位</text>
+  <text x="269" y="600" font-size="13" fill="#6B7178" text-anchor="middle" letter-spacing="1">NON-NEGOTIABLE</text>
+
+  <text x="639" y="528" font-size="86" font-weight="800" fill="#E8872E" text-anchor="middle" style="font-variant-numeric: tabular-nums">2–3</text>
+  <text x="639" y="572" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">輪高槓桿提問</text>
+  <text x="639" y="600" font-size="13" fill="#6B7178" text-anchor="middle" letter-spacing="1">ROUNDS</text>
+
+  <text x="1009" y="528" font-size="86" font-weight="800" fill="#E8872E" text-anchor="middle" style="font-variant-numeric: tabular-nums">1</text>
+  <text x="1009" y="572" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">個核心命題</text>
+  <text x="1009" y="600" font-size="13" fill="#6B7178" text-anchor="middle" letter-spacing="1">CORE THESIS</text>
+</svg>

@@ -5,17 +5,13 @@
     <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
     </linearGradient>
-    <linearGradient id="lineGrad" x1="120" y1="0" x2="1140" y2="0" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#CDEBD9"/>
-      <stop offset="100%" stop-color="#7BCBA4"/>
-    </linearGradient>
-    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
-      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    <radialGradient id="washRose" cx="94%" cy="6%" r="46%">
+      <stop offset="0%" stop-color="#F3D4D4" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#F3D4D4" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="washLav" cx="94%" cy="6%" r="44%">
-      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="#D9D4F0" stop-opacity="0"/>
+    <radialGradient id="washGreen" cx="6%" cy="96%" r="50%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
     </radialGradient>
     <filter id="freshShadow" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
@@ -26,99 +22,42 @@
   </defs>
 
   <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washRose)"/>
   <rect width="1280" height="720" fill="url(#washGreen)"/>
-  <rect width="1280" height="720" fill="url(#washLav)"/>
 
   <!-- title -->
   <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
-  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">五階段工作流：每階段一個檔案查核點，缺一不可</text>
+  <text x="48" y="104" font-size="34" font-weight="700" fill="#383838">AI 簡報工具,通常壞在兩個地方</text>
+  <text x="48" y="134" font-size="15" fill="#6B7178" letter-spacing="2">TWO FAILURE MODES</text>
 
-  <!-- wide panel -->
-  <rect x="48" y="160" width="1184" height="480" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
-
-  <!-- transit line with integrated arrowhead -->
-  <line x1="140" y1="360" x2="1090" y2="360" stroke="url(#lineGrad)" stroke-width="12" stroke-linecap="round"/>
-  <path d="M 1084 338 L 1144 360 L 1084 382 Z" fill="#7BCBA4"/>
-
-  <!-- animated pulse overlay: white dashes flowing along the rail when the
-       page is produced as a GIF (flow-anim); renders as static dashes in
-       PNG/PDF/jpg thumbnails -->
-  <line class="flow-anim" x1="140" y1="360" x2="1078" y2="360"
-        stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"
-        stroke-dasharray="10 18" stroke-opacity="0.9"/>
-
-  <!-- station 1: Socratic interview -->
-  <g>
-    <g transform="translate(143 240)">
-      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" fill="#D8E4FB"/>
-        <circle cx="9" cy="7" r="4" fill="#D8E4FB"/>
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" fill="none"/>
-      </g>
-    </g>
-    <circle cx="170" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
-    <text x="170" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">反詰訪談</text>
-    <text x="170" y="460" font-size="16" fill="#6B7178" text-anchor="middle">釐清觀點轉變</text>
-    <text x="170" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">brief.md</text>
+  <!-- card 1 -->
+  <rect x="48" y="196" width="568" height="468" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
+  <g transform="translate(96 244) scale(3.2)" stroke="#5E8FEF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect width="18" height="7" x="3" y="3" rx="1" fill="#D8E4FB"/>
+    <rect width="9" height="7" x="3" y="14" rx="1" fill="#D8E4FB"/>
+    <rect width="5" height="7" x="16" y="14" rx="1" fill="#FFFFFF"/>
   </g>
+  <text x="96" y="412" font-size="27" font-weight="700" fill="#383838">失敗一:從主題直接跳到版面</text>
+  <text x="96" y="464" font-size="19" fill="#4A5158">
+    <tspan x="96" dy="0">同一套<tspan fill="#E8872E" font-weight="700">回收模板</tspan>、罐頭條列、</tspan>
+    <tspan x="96" dy="36">毫無思考。換了主題,</tspan>
+    <tspan x="96" dy="36">投影片<tspan fill="#E8872E" font-weight="700">卻還是長一樣</tspan>——</tspan>
+    <tspan x="96" dy="36">因為模板從來沒變過。</tspan>
+  </text>
 
-  <!-- station 2: outline -->
-  <g>
-    <g transform="translate(373 240)">
-      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" fill="#D8E4FB"/>
-        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" fill="#FFFFFF"/>
-      </g>
-    </g>
-    <circle cx="400" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
-    <text x="400" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">大綱架構</text>
-    <text x="400" y="460" font-size="16" fill="#6B7178" text-anchor="middle">金字塔原理</text>
-    <text x="400" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">outline.json</text>
+  <!-- card 2 -->
+  <rect x="664" y="196" width="568" height="468" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
+  <g transform="translate(712 244) scale(3.2)" stroke="#5E8FEF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4" fill="#D8E4FB"/>
+    <path d="M14 2v4a2 2 0 0 0 2 2h4" fill="#FFFFFF"/>
+    <path d="M2 15h10"/>
+    <path d="m9 18 3-3-3-3"/>
   </g>
-
-  <!-- station 3: planning -->
-  <g>
-    <g transform="translate(603 240)">
-      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#D8E4FB"/>
-        <polyline points="14 2 14 8 20 8" fill="#FFFFFF"/>
-        <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-      </g>
-    </g>
-    <circle cx="630" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
-    <text x="630" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">策劃稿</text>
-    <text x="630" y="460" font-size="16" fill="#6B7178" text-anchor="middle">每頁一個主張</text>
-    <text x="630" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">planning.json</text>
-  </g>
-
-  <!-- station 4: SVG design -->
-  <g>
-    <g transform="translate(833 240)">
-      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10" fill="#D8E4FB"/>
-        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="#FFFFFF"/>
-      </g>
-    </g>
-    <circle cx="860" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
-    <text x="860" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">SVG 設計</text>
-    <text x="860" y="460" font-size="16" fill="#6B7178" text-anchor="middle">Bento 版型</text>
-    <text x="860" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">pages/*.svg</text>
-  </g>
-
-  <!-- station 5: assemble & deliver -->
-  <g>
-    <g transform="translate(1063 240)">
-      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" fill="none"/>
-        <polyline points="7 10 12 15 17 10" fill="none"/><line x1="12" y1="15" x2="12" y2="3"/>
-      </g>
-    </g>
-    <circle cx="1090" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
-    <text x="1090" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">組裝交付</text>
-    <text x="1090" y="460" font-size="16" fill="#6B7178" text-anchor="middle">全程可編輯</text>
-    <text x="1090" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">.pptx + .pdf</text>
-  </g>
-
-  <!-- footnote -->
-  <text x="640" y="586" font-size="16" fill="#4A5158" text-anchor="middle">跳過任何一階段是品質事故的頭號原因——檔案查核點讓流程可檢視、可重啟</text>
+  <text x="712" y="412" font-size="27" font-weight="700" fill="#383838">失敗二:把你的輸入當成內容</text>
+  <text x="712" y="464" font-size="19" fill="#4A5158">
+    <tspan x="712" dy="0">就算內容更講究,它們仍把</tspan>
+    <tspan x="712" dy="36">使用者的輸入<tspan fill="#E8872E" font-weight="700">當成 deck 內容</tspan>。</tspan>
+    <tspan x="712" dy="36">但你的輸入幾乎不含那個</tspan>
+    <tspan x="712" dy="36"><tspan fill="#E8872E" font-weight="700">必須被改變的判斷</tspan>。</tspan>
+  </text>
 </svg>

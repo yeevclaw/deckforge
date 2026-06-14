@@ -2,11 +2,13 @@
 <!--
   flow-anim demo in the default corporate_fresh style — transit_pipeline
   composition (geometry from examples/sample-deck/page_03.svg).
-  The 12px gradient transit line + integrated arrowhead stay STATIC; the
-  animated element is a thin white pulse overlay (class="flow-anim") running
-  along the line, passing under the station rings. This is the correct way to
-  animate a thick rail — a marker-end on a 12px stroke can never be
-  proportionate, and dashing the rail itself reads as beads, not flow.
+  The 12px gradient transit line stays STATIC and ends ON the last station
+  (決策交付 is the destination, so no trailing arrowhead — see prompts/05
+  Step 5.7's arrival-vs-hand-off rule). The animated element is a thin white
+  pulse overlay (class="flow-anim") running along the line, passing under the
+  station rings. This is the correct way to animate a thick rail — a marker-end
+  on a 12px stroke can never be proportionate, and dashing the rail itself
+  reads as beads, not flow.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
      font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
@@ -45,13 +47,13 @@
   <!-- wide panel -->
   <rect x="48" y="160" width="1184" height="480" rx="16" fill="#FFFFFF" filter="url(#freshShadow)"/>
 
-  <!-- transit line with integrated arrowhead (static) -->
+  <!-- transit line (static). The last station IS the destination (決策交付),
+       so the rail ENDS on it with a round cap — no trailing arrowhead. -->
   <line x1="140" y1="360" x2="1090" y2="360" stroke="url(#lineGrad)" stroke-width="12" stroke-linecap="round"/>
-  <path d="M 1084 338 L 1144 360 L 1084 382 Z" fill="#7BCBA4"/>
 
   <!-- animated pulse overlay: thin white dashes flowing along the rail,
-       drawn after the rail and before the station rings -->
-  <line class="flow-anim" x1="140" y1="360" x2="1078" y2="360"
+       drawn after the rail and before the station rings; ends just inside the last node -->
+  <line class="flow-anim" x1="140" y1="360" x2="1086" y2="360"
         stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"
         stroke-dasharray="10 18" stroke-opacity="0.9"/>
 
@@ -121,7 +123,8 @@
         <polyline points="7 10 12 15 17 10" fill="none"/><line x1="12" y1="15" x2="12" y2="3"/>
       </g>
     </g>
-    <circle cx="1090" cy="360" r="16" fill="#FFFFFF" stroke="#5BBE8C" stroke-width="5"/>
+    <!-- terminus: filled deeper-green disc (closing emphasis) vs the hollow pass-through rings -->
+    <circle cx="1090" cy="360" r="16" fill="#5BBE8C" stroke="#3E9E6E" stroke-width="5"/>
     <text x="1090" y="428" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">決策交付</text>
     <text x="1090" y="460" font-size="16" fill="#6B7178" text-anchor="middle">可執行決策建議</text>
     <text x="1090" y="498" font-size="16" font-weight="700" fill="#E8872E" text-anchor="middle">行動方案</text>

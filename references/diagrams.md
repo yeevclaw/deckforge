@@ -95,6 +95,7 @@ Track changes to this status in the same edit that lands a Designer SVG template
   - Arrows: `<line>` between node edges with `marker-end="url(#flowArrow)"`. x1 = node_right + 4, x2 = next_node_left − 4. y=370.
   - Arrowhead marker (in `<defs>`): `markerUnits="userSpaceOnUse", markerWidth=12, markerHeight=9, refX=11, refY=4.5, orient=auto`, path `M0,0 L12,4.5 L0,9 Z`, fill `#666666`. (`userSpaceOnUse` keeps the head 12×9px regardless of stroke width — the default strokeWidth units blow a 2px-stroke arrow up to a 20px head, half the connector's length.)
 - **Highlight**: by default the last node uses highlight-color stroke (2px), highlight-color label_en + label text, plus a highlight-color arrow leading INTO it. Override via `highlight_index` (0-indexed).
+- **Terminal**: arrows connect node→node only — the last node has **no trailing arrow**, it IS the terminus (a static `flow` is already correct here). The "swallowed last node" failure only appears when a single rail carries a *trailing* head past the final station (the `transit_rail` motion composition); its fix is in [prompts/05 Step 5.7](../prompts/05_designer_svg.md). **Invariant for any flow/rail:** a terminal symbol never overlaps the terminal node, and no head points past the last node when that node is the destination.
 - **For 3 nodes**: each node `320w`, x = `88, 472, 856`, gap 64.
 - **For 5 nodes**: each node `192w`, x = `88, 332, 576, 820, 1064`, gap 52, body line cap = 1 line.
 - **For 6+ nodes**: do not render. Split into two pages (3+3) or downgrade to bento `mini_grid`.

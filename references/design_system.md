@@ -175,14 +175,14 @@ Give the FINAL step's arch a slightly greener pair (`#A1E5DE` / `#B6E8D8` / `#C5
 | `claim_tree` | hierarchy (thesis → pillars → pages) | apex gradient capsule → thin green S-curve fans → 3 white pillar cards → fading ghost-thumbnail row |
 | `meta_bento` | an inventory / catalog | true bento grid (1 big + 2 medium + N small white cards), each holding a gray `#E3E8E5` wireframe + name + one-line caption |
 | `split_style_duel` | two-sided contrast | two large rounded panels (each styled as the thing it depicts, as content thumbnails), bridged by a centered gradient capsule |
-| `transit_pipeline` | a transformation pipeline | one wide white panel, a single gradient transit line (12px, round caps, integrated arrowhead), ring stations + duotone icons above, names/bodies below; the line takes a white `flow-anim` pulse overlay (`motion: "transit_rail"`) |
+| `transit_pipeline` | a transformation pipeline | one wide white panel, a single gradient transit line (12px, round caps; ends on the last station — a trailing head only when the flow hands off downstream, see Step 5.7), ring stations + duotone icons above, names/bodies below; the line takes a white `flow-anim` pulse overlay (`motion: "transit_rail"`) |
 | `cta_end` | closing with an action | cover gradient + aurora ribbons, centered CTA title + translucent mono command chip + link line; "Thanks" demoted to a small corner note |
 
 Three-column dashed-separator pages and compare-table card pages (the `fresh_3col.svg` / `fresh_compare.svg` templates) remain available for plain parallel claims and option comparisons.
 
 #### glass_arch_flow variants — 同一套工藝，四種構圖
 
-`glass_arch_flow` is a **family**: the craft is fixed, the macro geometry is not. Every variant keeps the same invariants — large glass forms are **edge-anchored** (bleeding off a canvas edge; never a complete shape floating mid-canvas), built in **two layers** (outer halo + inner body, gradient dissolving to ≤0.10 alpha at the bleed edge); the directional sweep is **atmosphere, not a line** (ONE continuous filled path with an integrated arrowhead, painted BEFORE the glass forms so its ends tuck behind the first and last); white cards sitting on glass are `fill-opacity 0.88` with no shadow; the final step carries the quiet greener emphasis pair. What varies is the macro composition: silhouette, anchor edge, sweep course, rhythm.
+`glass_arch_flow` is a **family**: the craft is fixed, the macro geometry is not. Every variant keeps the same invariants — large glass forms are **edge-anchored** (bleeding off a canvas edge; never a complete shape floating mid-canvas), built in **two layers** (outer halo + inner body, gradient dissolving to ≤0.10 alpha at the bleed edge); the directional sweep is **atmosphere, not a line** (ONE continuous filled path with an integrated arrowhead, painted BEFORE the glass forms so its ends tuck behind the first and last — this sweep bleeds off-canvas and never lands on a discrete node, so the `transit_rail` terminal rule below does not apply to it); white cards sitting on glass are `fill-opacity 0.88` with no shadow; the final step carries the quiet greener emphasis pair. What varies is the macro composition: silhouette, anchor edge, sweep course, rhythm.
 
 The planner sets `design_brief.flow_variant` **once per deck**; all static `flow` pages in that deck share it (coherence inside the deck, variety across decks). Derive the pick from the story the steps tell — never roll dice, and never default to the same variant out of habit:
 
@@ -200,7 +200,7 @@ The planner sets `design_brief.flow_variant` **once per deck**; all static `flow
 When planning sets a `motion` field, the slide ships as a looping GIF (flowing dashes in slideshow mode; that slide loses Convert-to-Shape). The animated element rides an existing composition — never invent a new one for it:
 
 - **`corporate_fresh`**: `transit_pipeline`'s gradient rail takes a thin **white** pulse overlay (`motion: "transit_rail"`); `glass_orbit_loop`'s dotted ring animates directly (`motion: "orbit"`). The swoosh is atmosphere, not a line — it never animates.
-- **`dark_apple`**: same rail composition with a graphite `#333333` 12px rail, integrated arrowhead and pulse overlay in the deck's **highlight color** — the highlight appears only in the pulses, the arrowhead, and the terminal station ring (single-highlight discipline holds).
+- **`dark_apple`**: same rail composition with a graphite `#333333` 12px rail and a pulse overlay in the deck's **highlight color**. How the rail ends follows the arrival-vs-hand-off rule in Step 5.7 — when the last station is the destination (the usual case) the rail ends ON it with a highlight-color terminal ring and **no trailing head**; a trailing head appears only when the flow hands off downstream. The highlight appears only in the pulses, the terminal ring (and a trailing head if present) — single-highlight discipline holds.
 
 Construction recipes, marking rules, and all numeric baselines: [prompts/05_designer_svg.md](../prompts/05_designer_svg.md) Step 5.7 (canonical). The "never animate" list: [references/diagrams.md](diagrams.md).
 

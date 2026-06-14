@@ -38,17 +38,19 @@
 
 軌道是頁面骨架,橫貫 ≥900px;站環疊在軌道上;動畫掛在**脈衝疊層**,軌道本體靜態。
 
-- `corporate_fresh`:即現有 `transit_pipeline` 構圖 — 12px 漸層軌道 + 一體成形
-  箭頭(靜態),白色脈衝層流動(demo:`flow-anim-demo-fresh/page_01.svg`)
-- `dark_apple`:石墨軌道(`#333333` 12px round cap)+ highlight 色一體箭頭,
-  highlight 色脈衝層(demo:`flow-anim-demo/page_04.svg`)
+- `corporate_fresh`:即現有 `transit_pipeline` 構圖 — 12px 漸層軌道(靜態),
+  白色脈衝層流動(demo:`flow-anim-demo-fresh/page_01.svg`)
+- `dark_apple`:石墨軌道(`#333333` 12px round cap)+ highlight 色脈衝層
+  (demo:`flow-anim-demo/page_04.svg`)
+
+軌道收尾依「抵達 vs 交棒」判斷(canonical:prompts/05 Step 5.7):末站為成果時
+軌道收在該站、**不畫尾巴箭頭**;交棒下游才在留白處收細箭頭。下例為抵達分支:
 
 ```xml
-<!-- 軌道本體:靜態 -->
+<!-- 軌道本體:靜態,收在末站(cx=1090),round cap,無尾巴箭頭 -->
 <line x1="140" y1="360" x2="1090" y2="360" stroke="…" stroke-width="12" stroke-linecap="round"/>
-<path d="M 1084 338 L 1144 360 L 1084 382 Z" fill="…"/>
-<!-- 脈衝層:4px 虛線沿軌道流動,結束在箭頭底之前;繪製順序在軌道之後、站環之前 -->
-<line class="flow-anim" x1="140" y1="360" x2="1078" y2="360"
+<!-- 脈衝層:4px 虛線沿軌道流動,結束在末站之內;繪製順序在軌道之後、站環之前 -->
+<line class="flow-anim" x1="140" y1="360" x2="1086" y2="360"
       stroke="…" stroke-width="4" stroke-linecap="round"
       stroke-dasharray="10 18" stroke-opacity="0.9"/>
 ```

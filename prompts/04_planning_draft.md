@@ -596,6 +596,15 @@ Concrete defaults:
 
 When in doubt — especially for annual-report / KPI / financial / product-metric decks — **prefer number-first**. Numbers create the visceral "this matters" impression that text descriptions can't match. The single most reliable visual upgrade in DeckForge is taking a wall-of-text body and finding the number hidden inside it.
 
+### Content authenticity — write like a human, not a model
+
+Two failure modes make a deck read "AI-generated" even when the pyramid is right:
+
+1. **AI filler words.** Ban 賦能 / 無縫 / 釋放潛能 / 顛覆 / 打造卓越 / 引領未來 (English: *seamless, elevate, unleash, leverage, next-gen, game-changer, revolutionize*). They carry no information. Replace with a concrete verb + the actual fact: 「上線時間從 9 天縮短到 2 天」, not 「無縫優化上線流程」.
+2. **Suspiciously round data.** Real figures are messy — keep the source's precision: `47.2%` not `50%`, `NT$2,840` not `NT$3,000`. Round only when the source is genuinely round. A deck full of clean multiples of 5 reads as invented.
+
+Also: if you must invent a name, use realistic varied ones (never 王小明 / John Doe / Acme); and no exclamation marks in claims — state the result plainly, confidence beats volume.
+
 ## Page type rules
 
 - `cover`: 1 page, layout = `single_focus`. Title (CN big) + title_en (small) + subtitle. No cards needed.
@@ -643,6 +652,7 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 - [ ] Is the `design_brief` palette consistent with the tone in `brief.md`?
 - [ ] Is `design_brief.highlight_color` set to ONE concrete hex value?
 - [ ] Are there 0 placeholders ("Lorem", "xxxx", "TBD", "Insert here")?
+- [ ] **Content authenticity**: 0 AI filler words (賦能/無縫/顛覆 · seamless/elevate/leverage); data keeps source precision (47.2%, not rounded to 50%); no exclamation marks in claims?
 - [ ] **Pyramid alignment**: for every page, do the cards actually defend the page `title` claim (not just relate to it topically)?
 - [ ] **Title-only read**: if I read only the part_titles + page titles in order, do they form a coherent argument from setup through conclusion?
 - [ ] **Bento-first discipline**: for every page using a primitive layout (`flow` / `timeline` / `cycle` / `funnel` / `compare_table` / `quadrant_2x2` / `venn` / `hierarchy_tree` / `pyramid`), can I name the specific information-loss signal that justified leaving bento? If not, switch back to bento.

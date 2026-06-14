@@ -3,9 +3,10 @@
   Motion-first transit rail in dark_apple — the layout is DESIGNED for the
   animation: the rail is the page's structural spine (950px), stations sit on
   it, and the animated element is a highlight-color pulse overlay. The rail
-  itself and its integrated arrowhead stay static.
-  Single-highlight discipline: orange appears only in the pulses, the
-  integrated arrowhead, and the terminal station ring.
+  stays static. The last station IS the destination (決策交付), so the rail
+  ends ON it with a highlight-color terminal ring — no trailing arrowhead.
+  Single-highlight discipline: orange appears only in the pulses and the
+  terminal station ring.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
      font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
@@ -17,13 +18,12 @@
     Motion-first transit rail — the rail IS the layout
   </text>
 
-  <!-- graphite rail with integrated highlight arrowhead (static) -->
+  <!-- graphite rail (static); ends on the last station with a round cap, no trailing head -->
   <line x1="140" y1="400" x2="1090" y2="400" stroke="#333333" stroke-width="12" stroke-linecap="round"/>
-  <path d="M 1084 378 L 1144 400 L 1084 422 Z" fill="#FF6900"/>
 
   <!-- animated pulse overlay: highlight dashes flowing along the rail,
-       drawn after the rail and before the station rings -->
-  <line class="flow-anim" x1="140" y1="400" x2="1078" y2="400"
+       drawn after the rail and before the station rings; ends just inside the last node -->
+  <line class="flow-anim" x1="140" y1="400" x2="1086" y2="400"
         stroke="#FF6900" stroke-width="4" stroke-linecap="round"
         stroke-dasharray="10 18" stroke-opacity="0.9"/>
 

@@ -305,19 +305,34 @@ If `planning.json` specifies a diagram primitive layout — `flow`, `timeline`, 
 
 **Construction recipes by `motion` value** (this section is the canonical home of these rules):
 
-- **`transit_rail`** — the rail is the page's skeleton, spanning ≥900px. The rail itself is STATIC (12px stroke, round caps, integrated arrowhead — never a `marker` on a thick line); the animated element is a thin **pulse overlay** drawn after the rail and before the station rings:
+- **`transit_rail`** — the rail is the page's skeleton, spanning ≥900px. The rail itself is STATIC (12px stroke, round caps); the animated element is a thin **pulse overlay** drawn after the rail and before the station rings. **How the rail ENDS is a semantic choice, not a fixed shape** — the pulse already carries "continuous flow", so the terminal symbol only answers one question about the LAST station: is it an arrival, or a hand-off?
 
-  ```xml
-  <!-- rail: static. corporate_fresh → gradient rail + #7BCBA4 arrowhead (transit_pipeline
-       composition); dark_apple → graphite #333333 rail + highlight-color arrowhead -->
-  <line x1="140" y1="360" x2="1090" y2="360" stroke="…" stroke-width="12" stroke-linecap="round"/>
-  <path d="M 1084 338 L 1144 360 L 1084 382 Z" fill="…"/>
-  <!-- pulse overlay: the ONLY animated element; ends before the arrowhead base.
-       corporate_fresh → #FFFFFF; dark_apple → highlight_color -->
-  <line class="flow-anim" x1="140" y1="360" x2="1078" y2="360"
-        stroke="…" stroke-width="4" stroke-linecap="round"
-        stroke-dasharray="10 18" stroke-opacity="0.9"/>
-  ```
+  - **Arrival / deliverable / end-state** (交付、成果、上線、完成、決策) → the rail **ends AT that station**: round-cap the rail on the last node, draw **no** trailing arrowhead (an arrow pointing past the destination into empty canvas is a semantic error), and give the final ring the closing emphasis (corporate_fresh → deeper-green filled ring; dark_apple → highlight-color ring). This is the common case — most pipelines end in a result.
+
+    ```xml
+    <!-- rail ends ON the last station (cx=1090); the round cap domes cleanly under the ring -->
+    <line x1="140" y1="360" x2="1090" y2="360" stroke="…" stroke-width="12" stroke-linecap="round"/>
+    <!-- pulse overlay: the ONLY animated element; ends just inside the last node.
+         corporate_fresh → #FFFFFF; dark_apple → highlight_color -->
+    <line class="flow-anim" x1="140" y1="360" x2="1086" y2="360"
+          stroke="…" stroke-width="4" stroke-linecap="round"
+          stroke-dasharray="10 18" stroke-opacity="0.9"/>
+    <!-- the final ring carries the closing emphasis — no separate arrowhead -->
+    ```
+
+  - **Hand-off / explicitly ongoing intake** (持續匯入、進入下一階段、feeds X) → the flow continues past the rail: **inset the stations from the rail's right end** to free a clear margin, then end with EITHER a slim integrated head OR the rail tapered to a point. **Reserve ≥40px between the last node and the head's base; head height ≈ rail width (±8 here), never 3–4× it.**
+
+    ```xml
+    <!-- stations inset to 170…1010 (5 stations, step 210), leaving the right margin for the head -->
+    <line x1="140" y1="360" x2="1110" y2="360" stroke="…" stroke-width="12" stroke-linecap="round"/>
+    <!-- slim integrated head: base 1110 (~82px clear of last node), tip 1140, ±8 tall -->
+    <path d="M 1110 352 L 1140 360 L 1110 368 Z" fill="…"/>
+    <line class="flow-anim" x1="140" y1="360" x2="1104" y2="360"
+          stroke="…" stroke-width="4" stroke-linecap="round"
+          stroke-dasharray="10 18" stroke-opacity="0.9"/>
+    ```
+
+  **Hard invariant (both branches): the terminal symbol never overlaps the terminal node, and never a `marker` on a thick line.** Gluing a fat triangle onto the rail's end where a station already sits is the failure the old recipe shipped — a 44px-tall head whose base fell on the last ring and swallowed it. Pick arrival or hand-off by what the last station *means*; the no-collision geometry is the only fixed rule.
 
 - **`orbit`** — animate the closed loop itself: `glass_orbit_loop`'s dashed orbit ring (corporate_fresh) or the cycle arcs (dark_apple). A closed loop counts as ONE animated system; all arcs share the same dasharray and animate together (the rotation reading is the point).
 
@@ -334,7 +349,7 @@ If `planning.json` specifies a diagram primitive layout — `flow`, `timeline`, 
 | dasharray | ONE value per page and per deck: `"8 6"` for edges, `"10 18"` for pulse overlays (mixed values loop with a visible seam) |
 | Budget | ≤ 3 animated paths per page, or one closed-loop / hub system |
 | Arrowheads on animated edges | `markerUnits="userSpaceOnUse"`, 12×9px head (`M0,0 L12,4.5 L0,9`, refX=11, refY=4.5) for 2–2.5px strokes; head length ≈ 4–5× stroke width |
-| Thick lines (≥8px) | no `marker` ever — integrated arrowhead + pulse overlay |
+| Thick lines (≥8px) | no `marker` ever — integrated head + pulse overlay. Draw a trailing head **only when the flow is ongoing / hands off**; if the last station is the destination, end the rail on it with no head. Integrated head height ≈ rail width, base ≥40px clear of the last node — never a fat triangle on the node |
 | Background | prefer flat fills on motion pages — large soft gradients band in the 256-color GIF |
 
 Animation speed and frame count are fixed in the converter (2 dash periods per loop ≈ 29px/s) — nothing to set in the SVG. Direction = the path's drawing direction; to reverse the flow, reverse the path.

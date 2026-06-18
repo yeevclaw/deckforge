@@ -344,7 +344,7 @@ Key rules:
 - **Never** add accent underlines beneath page titles — it's the #1 AI-deck tell.
 - **Never use emoji as functional icons.** Inline Lucide `<path>` or no icon.
 - **Avoid stock photos.** Use SVG gradients, inline icon `<path>`s, or abstract shapes.
-- **Every text run lives in a real `<text>` element** (not converted to path) — that's what keeps slides editable after Convert to Shape.
+- **Every text run lives in a real `<text>` element** (not converted to path). The converter splits each slide into a movable background image + an editable content layer, so text, solid-fill cards, lines and inline icons all stay editable after Convert to Shape; gradients/glass/shadows ride along in the (movable) background image — see [references/editable_mode.md](references/editable_mode.md).
 - **Motion pages** (planning has a `motion` field): build per [prompts/05_designer_svg.md](prompts/05_designer_svg.md) Step 5.7 — the animated path is the page's structural spine, marked `class="flow-anim"` on open `<line>`/`<path>` only. **Never** mark a closed dashed shape (animated, it reads as a marching-ants selection box). No `motion` in planning → no `flow-anim` in the SVG.
 
 Save each page as `pages/page_01.svg`, `pages/page_02.svg`, …

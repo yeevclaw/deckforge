@@ -7,13 +7,19 @@ Pages are ordered by filename (so name them page_01.svg, page_02.svg, ...).
 If a planning.json sits next to the pages dir (or is passed via --planning),
 speaker_notes are attached to each slide.
 
-Each slide's picture is embedded as:
-  1. A rasterized PNG fallback (so Keynote, macOS Preview, Quick Look,
-     PowerPoint <2016, web-mail previewers, etc. all display the slide
-     correctly).
-  2. The original SVG via the PowerPoint 2016+ svgBlip OOXML extension
-     (so PowerPoint 2016+ renders the vector and the user can
-     right-click → "Convert to Shape" to edit every text run).
+By default each slide is split into two stacked pictures:
+  1. A full rasterized PNG render — the movable "background image" that every
+     viewer shows correctly (Keynote, macOS Preview, Quick Look,
+     PowerPoint <2016, web-mail previewers, etc.). It carries the atmosphere
+     (gradient backgrounds, glassmorphism, soft shadows) that PowerPoint can't
+     turn into editable shapes anyway.
+  2. A transparent CONTENT-ONLY layer carrying the original geometry via the
+     PowerPoint 2016+ svgBlip OOXML extension — atmosphere removed, card shadow
+     <filter>s stripped, and <use>/<symbol> icons inlined into real geometry.
+     Right-click → "Convert to Shape" on this layer makes the text, cards,
+     icons and lines individually editable / movable / resizable.
+Pass --no-decompose to embed each slide as a single picture (full render +
+svgBlip) the way older versions did.
 
 The PNG fallback is rendered using whichever SVG renderer is available,
 in this preference order:
@@ -49,6 +55,9 @@ Flags:
                       slideshow mode). Animated slides skip the svgBlip layer,
                       so they are not Convert-to-Shape editable.
   --gif-width N       Width (px) of animated GIF frames. Default 1600.
+  --no-decompose      Embed each slide as one picture (full render + svgBlip)
+                      instead of the default background-image + editable-content
+                      split.
 
 Examples:
   python svg_to_pptx.py --pages-dir pages/ --output deck.pptx
@@ -64,6 +73,7 @@ import re
 import shutil
 import subprocess
 import sys
+from copy import deepcopy
 from pathlib import Path
 
 try:
@@ -92,6 +102,10 @@ except ImportError:
 SVG_EXT_URI = "{96DAC541-7B7A-43D3-8B79-37D633B846F1}"
 SVG_NS = "http://schemas.microsoft.com/office/drawing/2016/SVG/main"
 R_NS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+
+# SVG document namespaces (the slide files themselves, not the OOXML wrappers).
+SVG_DOC_NS = "http://www.w3.org/2000/svg"
+XLINK_NS = "http://www.w3.org/1999/xlink"
 
 # 16:9 standard slide @ 96 dpi == 1280×720 logical
 SLIDE_W_EMU = Emu(int(13.333 * 914400))
@@ -390,6 +404,166 @@ def _inject_svg_ext(pic_elem, svg_rId: str):
     svgBlip.set(f'{{{R_NS}}}embed', svg_rId)
 
 
+# ---------- Editable-content layer (Convert-to-Shape friendly) ----------
+#
+# PowerPoint's "Convert to Shape" only turns a subset of SVG into native,
+# independently movable shapes: plain <text>, <rect>, <circle>, <path>, <line>.
+# Anything using features it can't represent — blur/shadow <filter>s, gradient
+# washes, glassmorphism, and (unreliably) <use>/<symbol> icon references — is
+# rasterized into the converted picture, so the user can't move or resize it.
+#
+# So each slide is built as TWO stacked pictures:
+#   A. the full PNG render (every viewer, incl. Keynote, shows the complete
+#      slide; this is the one movable "background image").
+#   B. a transparent CONTENT-ONLY layer carrying the svgBlip vector — atmosphere
+#      removed (it lives in A), card <filter> shadows stripped (the soft shadow
+#      still shows from A; the card itself becomes a clean editable shape), and
+#      <use>/<symbol> icons inlined into real geometry. Convert-to-Shape on B
+#      yields editable, movable text / cards / icons / lines.
+# B is layered exactly over A, so the slide looks identical; A guarantees the
+# look in every viewer, so a misclassified element is at worst non-editable,
+# never visually wrong.
+
+_PAINTED_TAGS = {"rect", "circle", "ellipse", "path", "polygon", "polyline",
+                 "line", "image"}
+_DEF_CONTAINERS = {"defs", "symbol", "marker", "clipPath", "mask", "pattern",
+                   "linearGradient", "radialGradient", "filter"}
+
+
+def _ln(el) -> str:
+    """Local (namespace-stripped) tag name of an lxml element. Returns "" for
+    comments / processing instructions (whose .tag is not a string)."""
+    if not isinstance(el.tag, str):
+        return ""
+    return etree.QName(el).localname
+
+
+def _covers_canvas(w: str | None, h: str | None) -> bool:
+    """True if a width/height pair spans (almost) the whole 1280×720 canvas."""
+    def big(v, full):
+        if v is None:
+            return False
+        if v.strip() in ("100%",):
+            return True
+        try:
+            return float(v) >= full * 0.95
+        except ValueError:
+            return False
+    return big(w, 1280) and big(h, 720)
+
+
+def _is_atmosphere(el) -> bool:
+    """Decide whether a painted element belongs to the (non-editable) background
+    atmosphere — and so should be dropped from the editable layer and shown only
+    via the full background render. Bias toward True: anything excluded here is
+    still painted by background picture A, so the look never changes; it just
+    won't be vector-editable."""
+    if _ln(el) == "text":
+        return False  # text is always editable content
+    if "atmosphere" in (el.get("class") or ""):
+        return True
+    if (el.get("fill") or "").startswith("url("):
+        return True  # gradient fill → background wash / glow / glass
+    for attr in ("opacity", "fill-opacity"):
+        v = el.get(attr)
+        if v is not None:
+            try:
+                if float(v) < 1.0:
+                    return True  # translucent → decorative layer
+            except ValueError:
+                pass
+    if _ln(el) == "rect":
+        x = (el.get("x") or "0").strip()
+        y = (el.get("y") or "0").strip()
+        if x in ("0", "0.0") and y in ("0", "0.0") \
+                and _covers_canvas(el.get("width"), el.get("height")):
+            return True  # full-canvas background plate
+    return False
+
+
+def _inline_uses(root, symbol_map: dict) -> None:
+    """Replace every <use href="#icon-…"> with the referenced <symbol>'s inlined
+    geometry, so PowerPoint converts it to movable freeform shapes instead of
+    rasterizing the reference. Positioning/scaling from the <use> x/y/width/height
+    and the symbol viewBox is reproduced with a transform; the <use> color is set
+    on the wrapper <g> so the icons' stroke="currentColor" still resolves."""
+    use_tag = f"{{{SVG_DOC_NS}}}use"
+    for use in list(root.iter(use_tag)):
+        href = use.get("href") or use.get(f"{{{XLINK_NS}}}href")
+        if not href or not href.startswith("#"):
+            continue
+        sym = symbol_map.get(href[1:])
+        if sym is None:
+            continue
+        parent = use.getparent()
+        if parent is None:
+            continue
+        g = parent.makeelement(f"{{{SVG_DOC_NS}}}g", {})
+        parts = []
+        x = float(use.get("x") or 0)
+        y = float(use.get("y") or 0)
+        if x or y:
+            parts.append(f"translate({x} {y})")
+        vb = sym.get("viewBox")
+        w, h = use.get("width"), use.get("height")
+        if vb and w and h:
+            try:
+                vbx, vby, vbw, vbh = (float(t) for t in re.split(r"[ ,]+", vb.strip()))
+                sx = float(w) / vbw if vbw else 1.0
+                sy = float(h) / vbh if vbh else 1.0
+                if sx != 1.0 or sy != 1.0:
+                    parts.append(f"scale({sx} {sy})")
+                if vbx or vby:
+                    parts.append(f"translate({-vbx} {-vby})")
+            except (ValueError, ZeroDivisionError):
+                pass
+        if parts:
+            g.set("transform", " ".join(parts))
+        if use.get("color"):
+            g.set("color", use.get("color"))
+        for child in sym:
+            g.append(deepcopy(child))
+        use.addprevious(g)
+        parent.remove(use)
+
+
+def build_editable_layer(svg_bytes: bytes) -> bytes | None:
+    """Return a content-only SVG (atmosphere removed, filters stripped, icons
+    inlined) for the svgBlip editable layer. Returns None if parsing fails or
+    nothing usable remains — the caller then falls back to the single-picture
+    slide so behavior never regresses."""
+    try:
+        root = etree.fromstring(svg_bytes)
+    except etree.XMLSyntaxError:
+        return None
+    symbol_map = {s.get("id"): s for s in root.iter(f"{{{SVG_DOC_NS}}}symbol")
+                  if s.get("id")}
+    _inline_uses(root, symbol_map)
+
+    editable = 0  # editable elements that remain (text + kept painted shapes)
+    for el in list(root.iter()):
+        ln = _ln(el)
+        if any(_ln(a) in _DEF_CONTAINERS for a in el.iterancestors()):
+            continue  # template geometry inside <defs>/<symbol>, never painted directly
+        if ln == "text":
+            editable += 1  # text is always editable; it stays in the layer untouched
+            continue
+        if ln not in _PAINTED_TAGS:
+            continue
+        if _is_atmosphere(el):
+            parent = el.getparent()
+            if parent is not None:
+                parent.remove(el)
+        else:
+            if el.get("filter"):
+                del el.attrib["filter"]  # soft shadow stays in background picture A
+            editable += 1
+
+    if editable == 0:
+        return None  # nothing editable to layer — keep the plain single picture
+    return etree.tostring(root, xml_declaration=True, encoding="utf-8")
+
+
 def add_svg_slide(prs, svg_path: Path, png_path: Path, embed_svg: bool,
                   pic_path: Path | None = None):
     slide = prs.slides.add_slide(prs.slide_layouts[6])  # blank
@@ -401,6 +575,24 @@ def add_svg_slide(prs, svg_path: Path, png_path: Path, embed_svg: bool,
         svg_bytes = svg_path.read_bytes()
         svg_rId = _add_svg_part(slide.part, svg_bytes)
         _inject_svg_ext(pic._element, svg_rId)
+    return slide
+
+
+def add_decomposed_slide(prs, full_png: Path, content_png: Path,
+                         content_svg_bytes: bytes):
+    """Two-picture slide: a full-render background picture (movable/resizable,
+    shows in every viewer) plus a transparent content layer carrying the
+    editable svgBlip vector on top. See the module note above build_editable_layer."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])  # blank
+    # A — full render, the one movable background image. No svgBlip, so
+    #     PowerPoint keeps showing the raster (atmosphere, shadows and all).
+    slide.shapes.add_picture(str(full_png), 0, 0,
+                             width=prs.slide_width, height=prs.slide_height)
+    # B — content-only layer; PowerPoint renders the svgBlip vector over A.
+    pic_b = slide.shapes.add_picture(str(content_png), 0, 0,
+                                     width=prs.slide_width, height=prs.slide_height)
+    svg_rId = _add_svg_part(slide.part, content_svg_bytes)
+    _inject_svg_ext(pic_b._element, svg_rId)
     return slide
 
 
@@ -473,7 +665,8 @@ def build(pages: list[Path], out_path: Path, planning: dict,
           placeholder_only: bool, embed_svg: bool,
           also_pdf: bool, pdf_path: Path | None,
           keep_notes: bool,
-          no_anim: bool = False, gif_width: int = DEFAULT_GIF_WIDTH):
+          no_anim: bool = False, gif_width: int = DEFAULT_GIF_WIDTH,
+          no_decompose: bool = False):
     workdir.mkdir(parents=True, exist_ok=True)
     prs = Presentation()
     prs.slide_width = SLIDE_W_EMU
@@ -531,8 +724,30 @@ def build(pages: list[Path], out_path: Path, planning: dict,
             slide = add_svg_slide(prs, svg_path, png_path, embed_svg=False,
                                   pic_path=gif_path)
         else:
-            print(f"[{i+1}/{len(pages)}] {svg_path.name} → slide", flush=True)
-            slide = add_svg_slide(prs, svg_path, png_path, embed_svg=embed_svg)
+            # Default: split into a movable background picture + an editable
+            # content layer (icons inlined, atmosphere/shadows left to the
+            # background). Falls back to the plain single-picture slide whenever
+            # decomposition isn't applicable or fails, so behavior never regresses.
+            content_svg_bytes = None
+            content_png = None
+            if embed_svg and not no_decompose and png_path is not placeholder_path:
+                content_svg_bytes = build_editable_layer(svg_path.read_bytes())
+                if content_svg_bytes is not None:
+                    content_svg_file = workdir / f"{svg_path.stem}.content.svg"
+                    content_svg_file.write_bytes(content_svg_bytes)
+                    candidate_png = workdir / f"{svg_path.stem}.content.png"
+                    if render_real_png(content_svg_file, candidate_png, width=png_width):
+                        content_png = candidate_png
+                    else:
+                        content_svg_bytes = None  # render failed → plain slide
+            if content_svg_bytes is not None and content_png is not None:
+                print(f"[{i+1}/{len(pages)}] {svg_path.name} → slide "
+                      "(background image + editable content layer)", flush=True)
+                slide = add_decomposed_slide(prs, png_path, content_png,
+                                             content_svg_bytes)
+            else:
+                print(f"[{i+1}/{len(pages)}] {svg_path.name} → slide", flush=True)
+                slide = add_svg_slide(prs, svg_path, png_path, embed_svg=embed_svg)
         slide_objs.append(slide)
 
     # Speaker notes — only if --keep-notes is set. By default we strip notes
@@ -553,7 +768,8 @@ def build(pages: list[Path], out_path: Path, planning: dict,
 
     print(f"✅ Wrote PPTX: {out_path}")
     if embed_svg:
-        print("   (In PowerPoint 2016+: right-click a slide → Convert to Shape to edit.)")
+        print("   (In PowerPoint 2016+: right-click the content layer → Convert to "
+              "Shape to edit text/cards/icons; the background image moves separately.)")
 
     # Save sidecar notes file (regardless of --keep-notes, so notes are always
     # recoverable from a human-readable source).
@@ -642,6 +858,12 @@ def main():
                         "are not Convert-to-Shape editable).")
     p.add_argument("--gif-width", type=int, default=DEFAULT_GIF_WIDTH,
                    help="Width (px) of animated GIF frames. Default 1600.")
+    p.add_argument("--no-decompose", action="store_true",
+                   help="Embed each slide as ONE picture (full render + svgBlip) "
+                        "instead of the default background-image + editable-content-"
+                        "layer split. The split makes icons/cards/lines individually "
+                        "movable after Convert to Shape; use this flag to revert to "
+                        "the older single-picture behavior.")
     p.add_argument("--no-pdf", action="store_true",
                    help="Skip the companion .pdf (by default, a PDF with the same "
                         "stem as --output is written alongside the .pptx).")
@@ -694,7 +916,8 @@ def main():
           pdf_path=pdf_path,
           keep_notes=args.keep_notes,
           no_anim=args.no_anim,
-          gif_width=args.gif_width)
+          gif_width=args.gif_width,
+          no_decompose=args.no_decompose)
 
 
 if __name__ == "__main__":

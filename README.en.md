@@ -123,7 +123,7 @@ The skill is **NOT** a one-shot generator. It deliberately includes review check
 
 ## Why SVG → PPTX (not template-based, not raster)?
 
-- SVG is natively supported by PowerPoint 2016+. Right-click any slide → *Convert to Shape* and the SVG decomposes into editable text boxes and shapes — **every text run, every color, every icon is editable**.
+- SVG is natively supported by PowerPoint 2016+. The converter splits each slide into a movable background image + an editable content layer: right-click → *Convert to Shape* to edit text, cards, lines and icons; gradients, glassmorphism and shadows ride along in the (movable) background image.
 - Layouts can be designed around the *content*, not crammed into a fixed template.
 - Per-deck palette + motif consistency (the skill enforces this).
 - See [`references/editable_mode.md`](references/editable_mode.md) for the editing details.

@@ -14,6 +14,9 @@
     <use href="#icon-trending-up" x="80" y="200" width="24" height="24" color="#FF6900"/>
   The icon's `stroke="currentColor"` picks up the `color` you set on <use>.
   Inside circle motif: wrap in a circle filled with secondary color.
+  (svg_to_pptx.py inlines every <use> into real geometry when it builds the
+   editable content layer, so icons stay movable freeform shapes after
+   PowerPoint's Convert to Shape — see references/editable_mode.md.)
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
   <defs>

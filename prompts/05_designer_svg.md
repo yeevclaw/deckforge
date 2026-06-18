@@ -26,7 +26,7 @@ Your aesthetic anchor depends on the deck's `palette_hint`:
 7. **Single highlight color discipline**: for `dark_apple*` palettes, use ONLY the `design_brief.highlight_color` for emphasis. No secondary or accent colors. Everything else is the dark-mode neutral stack: `#000000` bg, `#1A1A1A` main cards, `#222222` mini cards, `#333333` borders, `#FFFFFF` primary text, `#A0A0A0` secondary text, `#666666` tertiary/English text. **Never invent a second accent color.** For `corporate_fresh`, the equivalent rule is **role discipline**: every color is locked to its role (structure green, icon blue, inline-emphasis orange, alert red/amber — see design_system.md); using a color outside its role is the same violation as inventing a second accent.
 8. **Bento Grid spacing**: main cards have ≥20px outer margin from canvas edge; mini-cards inside a main card have ≥24px gaps and ≥40px main-card inner padding.
 9. **Fonts**: use the canonical system-font stack via `font-family` attribute on the root `<svg>` — `font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif"`. Latin chars resolve to Helvetica (macOS) / Arial (Windows fallback); CJK chars resolve to PingFang TC (macOS) / 微軟正黑體 (Windows) / Noto Sans CJK TC (Linux). Both Latin and CJK use OS-preinstalled fonts — zero recipient install effort. Do not embed web fonts.
-10. **Editability**: every text string must live in a `<text>` element (not rasterized, not converted to paths). PowerPoint will preserve these as editable text runs after Convert to Shape.
+10. **Editability**: every text string must live in a `<text>` element (not rasterized, not converted to paths). The converter splits each slide into a movable background image + an editable content layer, so text, solid-fill cards, lines and inline icons stay editable/movable after Convert to Shape; gradient/translucent/blurred decoration is kept (uneditable but movable) in the background image. Mark purely decorative groups `class="atmosphere"` to force them into the background image.
 11. **No emoji as functional icons.** Emoji are decorative only — never use them as the bullet-point or category indicator. For icons, use inline `<path>` data from a single icon family (Lucide stroke icons preferred). If unsure, omit the icon entirely.
 
 ## Inputs
@@ -237,7 +237,7 @@ Concrete pairings that work:
 
 If you need a 48px heading but only have room for a 24px icon, **drop the icon entirely** rather than ship a mismatched pair. Tip 10 from the Keynote研究所 "15 tips" article: text that overpowers an icon makes the icon look LOW; cut text or scale up the icon, never paint a tiny icon next to a huge text block.
 
-**Icon library** — pick from this allow-list. The icons are pre-defined in `templates/_base.svg` as `<symbol>` elements; reference them via `<use href="#icon-<name>"/>` or inline the path data:
+**Icon library** — pick from this allow-list. The icons are pre-defined in `templates/_base.svg` as `<symbol>` elements; reference them via `<use href="#icon-<name>"/>` or inline the path data. Either works for editability: the converter inlines `<use>` icons into real geometry at build time, so they survive Convert to Shape as movable freeform shapes.
 
 - **Trends/data**: `trending-up`, `trending-down`, `bar-chart`, `pie-chart`, `activity`
 - **Money/business**: `dollar-sign`, `credit-card`, `briefcase`, `building`, `shopping-cart`

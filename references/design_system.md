@@ -171,7 +171,7 @@ Give the FINAL step's arch a slightly greener pair (`#A1E5DE` / `#B6E8D8` / `#C5
 | `bento_hero_duo` | one core claim + 2 supports | 60% hero white card (duotone icon + 2-line 32px claim + emphasized body) + two stacked support cards right |
 | `dual_alert_panels` | problems / risks | rose + amber washes left/right, dashed alert boxes grouped under red/amber labels, bottom gradient capsule pointing to the solution |
 | `glass_arch_flow` | 3–5 sequential steps | a FAMILY of four variants sharing the glass craft — the planner picks one per deck via `design_brief.flow_variant`; see "glass_arch_flow variants" below |
-| `glass_orbit_loop` | a cycle / iterative loop | dotted `#9BD4B8` orbit ring, 4 glass-circle nodes (dark line icons + labels), tangential direction arrows, center white claim card, side annotation; the orbit ring can carry `flow-anim` (`motion: "orbit"`) |
+| `glass_orbit_loop` | a cycle / iterative loop | dotted `#9BD4B8` orbit ring, 4 glass-circle nodes (dark line icons + labels), tangential direction arrows, center white claim card, side annotation; the orbit ring (drawn as open arc segments, not a closed circle) can carry `flow-anim` (`motion: "orbit"`) |
 | `claim_tree` | hierarchy (thesis → pillars → pages) | apex gradient capsule → thin green S-curve fans → 3 white pillar cards → fading ghost-thumbnail row |
 | `meta_bento` | an inventory / catalog | true bento grid (1 big + 2 medium + N small white cards), each holding a gray `#E3E8E5` wireframe + name + one-line caption |
 | `split_style_duel` | two-sided contrast | two large rounded panels (each styled as the thing it depicts, as content thumbnails), bridged by a centered gradient capsule |
@@ -199,7 +199,7 @@ The planner sets `design_brief.flow_variant` **once per deck**; all static `flow
 
 When planning sets a `motion` field, the slide ships as a looping GIF (flowing dashes in slideshow mode; that slide loses Convert-to-Shape). The animated element rides an existing composition — never invent a new one for it:
 
-- **`corporate_fresh`**: `transit_pipeline`'s gradient rail takes a thin **white** pulse overlay (`motion: "transit_rail"`); `glass_orbit_loop`'s dotted ring animates directly (`motion: "orbit"`). The swoosh is atmosphere, not a line — it never animates.
+- **`corporate_fresh`**: `transit_pipeline`'s gradient rail takes a thin **white** pulse overlay (`motion: "transit_rail"`); `glass_orbit_loop`'s dotted ring — drawn as open arc segments, not a closed circle — animates directly (`motion: "orbit"`). The swoosh is atmosphere, not a line — it never animates.
 - **`dark_apple`**: same rail composition with a graphite `#333333` 12px rail and a pulse overlay in the deck's **highlight color**. How the rail ends follows the arrival-vs-hand-off rule in Step 5.7 — when the last station is the destination (the usual case) the rail ends ON it with a highlight-color terminal ring and **no trailing head**; a trailing head appears only when the flow hands off downstream. The highlight appears only in the pulses, the terminal ring (and a trailing head if present) — single-highlight discipline holds.
 
 Construction recipes, marking rules, and all numeric baselines: [prompts/05_designer_svg.md](../prompts/05_designer_svg.md) Step 5.7 (canonical). The "never animate" list: [references/diagrams.md](diagrams.md).
@@ -450,6 +450,8 @@ This family argues in sentences, so its hierarchy is flatter than `dark_apple`'s
 | Inline emphasis run | 18–19px (same as body) | 700 | `#E8872E` |
 | Small annotation / axis label | 15–16px | 400–700 | `#6B7178` |
 | End-page "Thanks" | 52–60px | 300–400 | `#FFFFFF` |
+
+**No giant hero-number row here on purpose.** If a `corporate_fresh` page genuinely hinges on one number, render that number in ink `#383838` or teal `#1B8A82` — **never** the orange `highlight_color`. Orange is inline-emphasis only; a giant orange number is a large-area fill that breaks the role palette. (`dark_apple` is the family that speaks through giant highlight-color numbers; `corporate_fresh` argues in sentences.)
 
 ### Visual hierarchy rules
 

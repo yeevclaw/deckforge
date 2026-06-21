@@ -334,7 +334,7 @@ If `planning.json` specifies a diagram primitive layout — `flow`, `timeline`, 
 
   **Hard invariant (both branches): the terminal symbol never overlaps the terminal node, and never a `marker` on a thick line.** Gluing a fat triangle onto the rail's end where a station already sits is the failure the old recipe shipped — a 44px-tall head whose base fell on the last ring and swallowed it. Pick arrival or hand-off by what the last station *means*; the no-collision geometry is the only fixed rule.
 
-- **`orbit`** — animate the closed loop itself: `glass_orbit_loop`'s dashed orbit ring (corporate_fresh) or the cycle arcs (dark_apple). A closed loop counts as ONE animated system; all arcs share the same dasharray and animate together (the rotation reading is the point).
+- **`orbit`** — animate the loop itself, but build the ring from **open `<path>` arcs laid end-to-end, never a single closed `<circle>`/closed path** (a closed dashed shape animates into marching-ants — see the marking table below and diagrams.md). `glass_orbit_loop`'s ring (corporate_fresh) and the cycle arcs (dark_apple) are both several open arcs around the loop; they count as ONE animated system, share the same dasharray, and animate together so the dashes read as one continuous rotation.
 
 - **`hub`** — fan-in / fan-out geometry is defined in [references/diagrams.md](../references/diagrams.md) (flow primitive, "Fan-in / fan-out variant"): ≤3 sources connect directly to anchors spread along the target's edge; ≥4 sources merge into a trunk first, ONE arrowhead at the target. Branches + trunk all carry `flow-anim` with the same dasharray; flow direction follows each path's drawing direction.
 
@@ -369,6 +369,7 @@ Animation speed and frame count are fixed in the converter (2 dash periods per l
 - **cover**: full-bleed gradient (`x1=0,y1=0 → x2=100%,y2=55%`): `#56BE85 → #5BA7D6 (42%) → #7378E0 (80%) → #878DEB`; `aurora_ribbons` background texture (2–3 smooth translucent white ribbon bands at 0.05–0.10 across the lower half + one soft white corner glow — never hard-edged geometric emblems); CN title 64–72px weight 700 white, left-anchored at x≈120, y≈330; beneath it a solid white bar (height ≈ 48) carrying the subtitle in `#3E5BA8` bold 26–30px; date/author line in white 0.92 at 20–22px.
 - **content**: green gradient pill bar (64×8, rx 4) at (48, 44); full-sentence assertion title at (48, 96), 30–36px weight 700 `#383838`; canvas `#F4F4F4` with 1–2 pastel radial washes; content in white rx=14 cards or icon-topped columns split by dashed `#9BD4B8` separators; orange `#E8872E` bold inline emphasis on the 1–2 phrases per block the audience must retain.
 - **section_break / toc**: rarely used in this family (its decks run dense and short); if needed, style as a content page with an oversized teal heading — do not reuse the dark_apple giant-numeral treatment.
+- **stat_hero / big numbers**: if a page hinges on one number, set it in ink `#383838` or teal `#1B8A82` — **never** the orange highlight (orange is inline-only; a giant orange number breaks the role palette). Skip the dark-mode radial glow behind it; let the white card and whitespace carry it.
 - **end**: same gradient + aurora ribbons as cover, single centered "Thanks" 52–60px white, weight 300–400. Nothing else.
 
 ## SVG patterns to remember

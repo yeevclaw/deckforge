@@ -668,7 +668,7 @@ Intersection keys: `"all"` = all sets overlap; `"01"` = sets 0 and 1 only; etc. 
 
 A page may animate only when planning sets a `motion` field (decision flow in [prompts/04_planning_draft.md](../prompts/04_planning_draft.md); construction recipes and numeric rules in [prompts/05_designer_svg.md](../prompts/05_designer_svg.md) Step 5.7). Regardless of how tempting, these shapes never carry `flow-anim`:
 
-- **Closed dashed shapes** (alert boxes, dashed borders) — animated, they become marching-ants selection boxes. This is the #1 trap: `dual_alert_panels` dashed boxes are already dashed strokes.
+- **Closed dashed shapes** (alert boxes, dashed borders) — animated, they become marching-ants selection boxes. This is the #1 trap: `dual_alert_panels` dashed boxes are already dashed strokes. (An orbit / cycle ring is **not** an exception — build it from open `<path>` arcs, never a closed `<circle>`, so the open-path rule still holds.)
 - **The timeline axis** — events are discrete points in time; the 1040px axis is the single most tempting line in the template library. Resist.
 - **Funnel strokes** — a funnel tells a quantity story, not a flow story (and the stages are fills).
 - **Sequence-diagram message arrows** — discrete calls. Only a genuinely streaming channel qualifies (and that's a `motion` decision in planning, not a designer impulse).

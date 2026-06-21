@@ -32,7 +32,7 @@
 
 兩步:
 
-### 1. 下載 zip + 裝兩個 Python 套件
+### 1. 下載 zip + 裝三個 Python 套件
 
 ```bash
 # 下載最新版 zip
@@ -103,7 +103,7 @@ DeckForge/
 │   ├── pyramid_principle.md ← 金字塔原理跨 Phase 1/2/3 的對照表
 │   ├── socratic_loop.md     ← Phase 1 反詰問題類型 + 11 種情境 spine
 │   └── editable_mode.md    ← PowerPoint Convert to Shape 編輯
-├── templates/              ← 24 個 viewBox 1280×720 SVG 起始檔
+├── templates/              ← 27 個 viewBox 1280×720 SVG(26 起始模板 + `_base.svg` 共用底稿)
 │   ├── _base.svg           ← 共用 filter / 漸層 / 35 個 Lucide icon
 │   ├── cover.svg / toc.svg
 │   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
@@ -111,8 +111,9 @@ DeckForge/
 │   ├── chart_bar.svg / chart_line.svg / chart_donut.svg
 │   ├── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
 │   │   quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← Diagram primitives
-│   └── fresh_cover.svg / fresh_3col.svg / fresh_flow.svg / fresh_compare.svg
-│                           ← corporate_fresh 淺色顧問風起始檔
+│   ├── fresh_cover.svg / fresh_3col.svg / fresh_compare.svg
+│   └── fresh_flow.svg / fresh_flow_terrace.svg / fresh_flow_river.svg / fresh_flow_cascade.svg
+│                           ← corporate_fresh 淺色顧問風起始檔(預設風格;四種 glass flow 變體)
 ├── scripts/
 │   ├── svg_to_pptx.py      ← Phase 5 組裝器(同時產出 .pptx + .pdf)
 │   ├── package.sh          ← 打包 deckforge.zip 供 Claude Desktop 上傳

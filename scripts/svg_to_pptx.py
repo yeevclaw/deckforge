@@ -227,10 +227,35 @@ GIF_TRAVEL_PERIODS = 2  # dash travel per loop, in periods — any integer keeps
 DEFAULT_GIF_WIDTH = 1600
 
 
-def _svg_has_flow_anim(svg_text: str) -> bool:
+def _svg_has_flow_anim_class(svg_text: str) -> bool:
+    """True if any element carries class="flow-anim" (regardless of dasharray)."""
     return re.search(
         r'class\s*=\s*["\'][^"\']*\b' + FLOW_ANIM_CLASS + r'\b', svg_text
     ) is not None
+
+
+def _flow_anim_is_animatable(svg_text: str, name: str) -> bool:
+    """A page becomes a GIF only if some element carries BOTH class="flow-anim"
+    AND a stroke-dasharray — the dashes that actually flow. A flow-anim class with
+    no dasharray animates nothing yet still costs the slide its editable layer (GIF
+    slides skip svgBlip), so we refuse GIF mode, keep the page static and
+    Convert-to-Shape editable, and warn loudly. This enforces the contract in
+    prompts/05_designer_svg.md Step 5.7 ("flow-anim + stroke-dasharray") and stops a
+    stray or mislabeled class from silently turning a whole page into a non-editable
+    GIF."""
+    if not _svg_has_flow_anim_class(svg_text):
+        return False
+    for tag in re.finditer(r"<[^>]*>", svg_text):
+        t = tag.group(0)
+        if re.search(r'class\s*=\s*["\'][^"\']*\b' + FLOW_ANIM_CLASS + r'\b', t) and \
+                re.search(r'stroke-dasharray\s*=\s*["\'][^"\']+["\']', t):
+            return True
+    print(f"[svg_to_pptx] ⚠️  {name}: class=\"flow-anim\" is present but no element "
+          "also carries a stroke-dasharray — nothing would animate. Keeping the slide "
+          "STATIC and Convert-to-Shape editable (no GIF). Add a stroke-dasharray to the "
+          "open <line>/<path> to animate it, or remove the flow-anim class.",
+          file=sys.stderr)
+    return False
 
 
 def _flow_dash_period(svg_text: str) -> float:
@@ -281,6 +306,16 @@ def _lint_flow_anim(svg_text: str, period: float, name: str) -> None:
               f"values {sorted(dasharrays)} — only the first defines the loop "
               "period, the others will show a seam each cycle. Use ONE dasharray "
               "per page.", file=sys.stderr)
+    # Closed shapes animate into marching-ants selection boxes (diagrams.md ban).
+    # An orbit / cycle ring must be built from open <path> arcs, never one closed
+    # <circle>/<rect>/<polygon>, so the dashes read as rotation, not a marquee.
+    for tag in tags:
+        m = re.match(r"<\s*([A-Za-z]+)", tag)
+        if m and m.group(1).lower() in ("circle", "ellipse", "rect", "polygon"):
+            print(f"[svg_to_pptx] ⚠️  {name}: flow-anim on a <{m.group(1)}> (a closed "
+                  "shape) animates into a marching-ants selection box. Use open "
+                  "<line>/<path> arcs instead (an orbit ring = several open arcs). "
+                  "See references/diagrams.md → 'never animate'.", file=sys.stderr)
     # Flowing dashes need room to read as flow: ≥5 periods of visible length.
     min_len = 5 * period
     for tag in tags:
@@ -460,7 +495,12 @@ def _is_atmosphere(el) -> bool:
     won't be vector-editable."""
     if _ln(el) == "text":
         return False  # text is always editable content
+    # Explicit marker is authoritative — on the element OR any ancestor <g>, so a
+    # whole decorative group can be forced into the background image with one class.
+    # See references/editable_mode.md.
     if "atmosphere" in (el.get("class") or ""):
+        return True
+    if any("atmosphere" in (a.get("class") or "") for a in el.iterancestors()):
         return True
     if (el.get("fill") or "").startswith("url("):
         return True  # gradient fill → background wash / glow / glass
@@ -712,7 +752,8 @@ def build(pages: list[Path], out_path: Path, planning: dict,
         # still what the PDF uses.
         gif_path = None
         if not no_anim and png_path is not placeholder_path:
-            if _svg_has_flow_anim(svg_path.read_text(encoding="utf-8")):
+            if _flow_anim_is_animatable(svg_path.read_text(encoding="utf-8"),
+                                        svg_path.name):
                 candidate = workdir / f"{svg_path.stem}.gif"
                 if render_flow_anim_gif(svg_path, candidate, width=gif_width):
                     gif_path = candidate

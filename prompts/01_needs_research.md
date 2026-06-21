@@ -344,7 +344,7 @@ Before exiting Phase 1, write `brief.md` to the working directory. **Phase 2 mus
 # Brief
 
 ## Scenario
-<one of: fundraising / sales / internal-sync / executive-briefing / educational / strategy-review / annual-review / product-launch / keynote / training / other>
+<one of: fundraising / sales / internal-sync / executive-briefing / educational / strategy-review / annual-review / product-launch / keynote / training / crisis-comms / other>
 
 ## Audience
 - **Who**: <name the role, level, and decision power>

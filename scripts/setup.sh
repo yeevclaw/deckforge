@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# DeckForge setup — install the two Python packages Phase 5 needs.
+# DeckForge setup — install the three Python packages Phase 5 needs.
 #
 # Usage:
-#   bash scripts/setup.sh         # install python-pptx + resvg-py
+#   bash scripts/setup.sh         # install python-pptx + resvg-py + img2pdf
 #   bash scripts/setup.sh --yes   # skip the confirmation prompt
 #   bash scripts/setup.sh --minimal   # only python-pptx (decks render blank
 #                                      # in Keynote / macOS Preview without
@@ -17,6 +17,9 @@
 #                              in Keynote, macOS Preview, Quick Look, and older
 #                              PowerPoint. Prebuilt wheels for Python 3.9+ on
 #                              macOS / Linux / Windows.
+#   - img2pdf     (~0.1 MB) ← recommended. Assembles the companion .pdf shipped
+#                              alongside the .pptx. Pure pip, no system deps;
+#                              without it, only the .pptx is produced.
 #
 # Phases 1–4 of the skill are pure Markdown and need none of the above.
 
@@ -29,7 +32,7 @@ for arg in "$@"; do
     --minimal|--no-renderer) WITH_RENDERER=0 ;;
     --yes|-y)                AUTO_YES=1 ;;
     -h|--help)
-      head -n 22 "$0" | tail -n 21 | sed 's/^# \{0,1\}//'
+      head -n 25 "$0" | tail -n 24 | sed 's/^# \{0,1\}//'
       exit 0
       ;;
   esac

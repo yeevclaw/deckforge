@@ -34,16 +34,17 @@ What changes when the user wants speed is *how long each phase takes*, not *whet
 
 ## Before starting — heads-up about Phase 5 dependencies
 
-Phases 1–4 produce SVG files and need **zero Python packages**. Phase 5 (assembling the `.pptx`) needs **two Python packages, both pip-installable with zero system deps**:
+Phases 1–4 produce SVG files and need **zero Python packages**. Phase 5 (assembling the `.pptx` + companion `.pdf`) needs **three Python packages, all pip-installable with zero system deps**:
 
 1. **`python-pptx`** (required, ~1 MB) — builds the .pptx file.
 2. **`resvg-py`** (strongly recommended, ~1 MB) — rasterizes each slide's SVG into a PNG fallback so the deck displays correctly in **Keynote, macOS Preview, Quick Look, and PowerPoint pre-2016**. Without it, those viewers show blank slides (only PowerPoint 2016+ renders correctly via the embedded SVG).
+3. **`img2pdf`** (recommended, ~0.1 MB) — assembles the companion `.pdf` delivered alongside the `.pptx`. Without it the script still builds the `.pptx`, but skips the `.pdf`.
 
 resvg-py is a pip wheel that ships a self-contained Rust binary — no Homebrew, no apt-get, no sudo needed. `cairosvg`, `inkscape`, and `rsvg-convert` also work if any of them is already on the user's system.
 
 If this is the user's first time running the skill, mention this at the start of Phase 1 so they can install in parallel:
 
-> *"This skill runs 5 phases. The first 4 don't need anything installed. The final .pptx assembly needs two pip packages: `python-pptx` and `resvg-py`. Easiest: `bash scripts/setup.sh` from inside the deckforge folder. Or run `pip install python-pptx resvg-py --break-system-packages` directly. While that runs, I'll start Phase 1."*
+> *"This skill runs 5 phases. The first 4 don't need anything installed. The final .pptx assembly needs three pip packages: `python-pptx`, `resvg-py`, and `img2pdf`. Easiest: `bash scripts/setup.sh` from inside the deckforge folder. Or run `pip install python-pptx resvg-py img2pdf --break-system-packages` directly. While that runs, I'll start Phase 1."*
 
 ### Common errors and how to recover
 

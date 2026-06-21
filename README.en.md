@@ -38,7 +38,7 @@ DeckForge/
 │   ├── pyramid_principle.md
 │   ├── socratic_loop.md    ← Phase 1 question types + 11 scenario spines
 │   └── editable_mode.md    ← how Convert-to-Shape editing works
-├── templates/              ← 24 SVG starting points (viewBox 0 0 1280 720)
+├── templates/              ← 27 SVG files (26 starting templates + `_base.svg`), viewBox 0 0 1280 720
 │   ├── _base.svg           ← shared filters / gradients / 35 Lucide icons
 │   ├── cover.svg
 │   ├── toc.svg
@@ -52,8 +52,9 @@ DeckForge/
 │   ├── chart_donut.svg     ← donut chart with center label + legend
 │   ├── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
 │   │   quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← diagram primitives
-│   └── fresh_cover.svg / fresh_3col.svg / fresh_flow.svg / fresh_compare.svg
-│                           ← corporate_fresh light consulting starters
+│   ├── fresh_cover.svg / fresh_3col.svg / fresh_compare.svg
+│   └── fresh_flow.svg / fresh_flow_terrace.svg / fresh_flow_river.svg / fresh_flow_cascade.svg
+│                           ← corporate_fresh light consulting starters (default style; four glass-flow variants)
 ├── scripts/
 │   ├── svg_to_pptx.py      ← SVG → PPTX (embeds svgBlip ext, vectors preserved)
 │   ├── package.sh          ← build deckforge.zip for Claude Desktop upload
@@ -69,7 +70,7 @@ DeckForge/
 
 Two steps:
 
-### 1. Download the zip + install two Python packages
+### 1. Download the zip + install three Python packages
 
 ```bash
 # Download the latest release zip

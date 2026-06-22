@@ -1,4 +1,4 @@
-# DeckForge : 簡報的靈魂是內容不是皮囊
+# DeckForge : 簡報的靈魂是內容,設計讓它被看見
 
 [English](README.en.md) · **繁體中文**
 
@@ -11,6 +11,11 @@
 |---|---|---|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.gif) |
 
+第 3 頁是**流動邊線動畫**(`flow-anim`)的實際產出:管線上的脈衝虛線會在 PowerPoint / Keynote 放映模式持續流動(上面那張 GIF 就是嵌進投影片裡的內容)。
+
+- 合併 PDF:[`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
+- 原始 SVG(可看 Bento Grid 座標):[`examples/sample-deck/`](examples/sample-deck/)
+
 
 ## 為什麼用 SVG → PPTX(而不是套範本或圖片型 PPT)?
 - SVG 是 PowerPoint 2016+ 原生支援的向量圖格式。轉檔器把每頁拆成「可移動的背景圖 + 可編輯內容層」:右鍵「轉換成圖形」即可編輯文字、卡片、線條與圖示;漸層/玻璃態/陰影等氛圍則保留在可整體移動的背景圖中。
@@ -20,7 +25,7 @@
 
 ## 設計理念出處
 - **起點**:linux.do 上 *sandun* 寫的「应该是目前最强的PPT Agent」一文。「頂級 PPT 結構架構師」與 便當網格,皆改寫自原文提示詞並加以延伸。
-- **核心方法論一：蘇格拉底反詰**:透過連續性提問進行辯證的哲學 inquiry 形式。引導對話者自我審視、揭示其觀點中的隱含假設與邏輯漏洞，從而承認無知 並探求客觀真理。。
+- **核心方法論一：蘇格拉底反詰**:透過連續性提問進行辯證的哲學 inquiry 形式。引導對話者自我審視、揭示其觀點中的隱含假設與邏輯漏洞，從而承認無知,並探求客觀真理。
 - **核心方法論二：金字塔原理**:「結論先行，由上往下一層層拆解論點」，讓聽眾或讀者能在最短時間內抓住核心訊息。
 - **SVG 作為最終格式**:SVG 是為了在 PowerPoint 端保留可編輯性,而不是只能輸出靜態圖片。
 - **Bento Grid 設計語言**:Apple 產品頁帶起的便當網格排版。
@@ -115,7 +120,7 @@ DeckForge/
 │   └── fresh_flow.svg / fresh_flow_terrace.svg / fresh_flow_river.svg / fresh_flow_cascade.svg
 │                           ← corporate_fresh 淺色顧問風起始檔(預設風格;四種 glass flow 變體)
 ├── scripts/
-│   ├── svg_to_pptx.py      ← Phase 5 組裝器(同時產出 .pptx + .pdf)
+│   ├── svg_to_pptx.py      ← Phase 5 組裝器:雙層可編輯 + flow-anim GIF;產出 .pptx + .pdf
 │   ├── package.sh          ← 打包 deckforge.zip 供 Claude Desktop 上傳
 │   ├── setup.sh            ← 一鍵安裝依賴(mac / linux)
 │   └── setup.ps1           ← Windows PowerShell 版安裝腳本
@@ -124,6 +129,26 @@ DeckForge/
     ├── slide-1.jpg ... slide-3.gif ← 各頁預覽(第 3 頁為動畫 GIF)
     └── sample-deck/        ← 原始 SVG 檔
 ```
+
+## 給開發者 / fork
+
+想改 skill、貢獻上游,或用 Claude Code CLI:
+
+```bash
+# clone 完整原始碼
+git clone https://github.com/yeevclaw/deckforge.git ~/deckforge
+cd ~/deckforge
+
+# 改完後重新打包成 zip 給 Claude Desktop
+bash scripts/package.sh
+# 產出 ~/deckforge.zip — 在 Customize → Skills 匯入
+
+# 或:用 Claude Code CLI
+git clone https://github.com/yeevclaw/deckforge.git ~/.claude/skills/deckforge
+bash ~/.claude/skills/deckforge/scripts/setup.sh
+```
+
+`scripts/package.sh` 會讀 SKILL.md 的 `name:` 讓 zip 外層資料夾對上 skill 名;並排除 `.git`、`.DS_Store`、`__pycache__` 等雜訊。Windows 用 `scripts/setup.ps1` 取代 `setup.sh`。
 
 ## 授權
 

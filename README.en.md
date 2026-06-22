@@ -1,4 +1,4 @@
-# DeckForge
+# DeckForge — a deck's soul is its content, and design makes it seen
 
 **English** · [繁體中文](README.md)
 
@@ -24,7 +24,8 @@ Page 3 shows the **animated flow edges** (`flow-anim`) feature as actually produ
 ```
 DeckForge/
 ├── SKILL.md                ← skill entry — Claude reads this first
-├── prompts/                ← 5 reusable expert prompts (one per phase)
+├── prompts/                ← 6 phase prompts (one per phase, Phase 0–5)
+│   ├── 00_source_analysis.md   ← Phase 0: source analysis (optional)
 │   ├── 01_needs_research.md
 │   ├── 02_outline_architect.md
 │   ├── 03_content_research.md
@@ -56,7 +57,7 @@ DeckForge/
 │   └── fresh_flow.svg / fresh_flow_terrace.svg / fresh_flow_river.svg / fresh_flow_cascade.svg
 │                           ← corporate_fresh light consulting starters (default style; four glass-flow variants)
 ├── scripts/
-│   ├── svg_to_pptx.py      ← SVG → PPTX (embeds svgBlip ext, vectors preserved)
+│   ├── svg_to_pptx.py      ← Phase 5 assembler: two-layer editable slides + flow-anim GIF; emits .pptx + .pdf
 │   ├── package.sh          ← build deckforge.zip for Claude Desktop upload
 │   ├── setup.sh            ← one-line dependency installer (mac / linux)
 │   └── setup.ps1           ← same, for Windows PowerShell

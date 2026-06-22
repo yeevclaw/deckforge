@@ -10,7 +10,7 @@ This skill turns Claude into a **PPT planning team + designer**, not a template-
 
 ## Core philosophy
 
-> **PPT 的靈魂是內容,不是皮囊。** (A PPT's soul is content, not its skin.)
+> **PPT 的靈魂是內容。** (A PPT's soul is its content.)
 >
 > **而內容的靈魂,是與使用者反詰對話中挖出來的核心命題。** (And the soul of that content is the core thesis excavated through Socratic dialogue with the user.)
 
@@ -347,6 +347,7 @@ Key rules:
 - **Avoid stock photos.** Use SVG gradients, inline icon `<path>`s, or abstract shapes.
 - **Every text run lives in a real `<text>` element** (not converted to path). The converter splits each slide into a movable background image + an editable content layer, so text, solid-fill cards, lines and inline icons all stay editable after Convert to Shape; gradients/glass/shadows ride along in the (movable) background image — see [references/editable_mode.md](references/editable_mode.md).
 - **Motion pages** (planning has a `motion` field): build per [prompts/05_designer_svg.md](prompts/05_designer_svg.md) Step 5.7 — the animated path is the page's structural spine, marked `class="flow-anim"` on open `<line>`/`<path>` only. **Never** mark a closed dashed shape (animated, it reads as a marching-ants selection box). No `motion` in planning → no `flow-anim` in the SVG.
+- **Templates are a floor, not a cage.** The layouts/vocabulary are the default and right on most pages; when a page's content is genuinely served better by a composition none captures, design it freely — but only when you can name what the fixed structures lose (never for variety), never bending the hard floor (viewBox, single highlight color, text in `<text>`, no emoji, no title underline), and never letting form outshout the message. See [prompts/05_designer_svg.md](prompts/05_designer_svg.md) → "How to design".
 
 Save each page as `pages/page_01.svg`, `pages/page_02.svg`, …
 

@@ -58,6 +58,12 @@ Output **only** the SVG file content. Start with `<?xml version="1.0" encoding="
 
 ## How to design
 
+The steps below are the **default path**, and on most pages they are the right answer — the layout families, composition vocabulary, and templates encode hard-won craft and keep a deck coherent. Treat them as a floor, not a cage: **when a page's content would genuinely be served better by a composition none of them captures, you may leave the template behind and design the page freely.** Three conditions make that latitude legitimate rather than an excuse for slop:
+
+1. **Earned by the content, never taken for variety.** Use it only when you can name what the fixed structures *lose or strain* on this specific page — the same "is information lost?" test that decides bento-vs-primitive. "The deck feels repetitive" is not a reason; repetition of a coherent visual language is a feature.
+2. **The craft floor never bends, off-template as much as on.** viewBox `0 0 1280 720`; self-contained (no JS / external refs); every text run in a real `<text>` with inline icons, never emoji; single highlight color / `corporate_fresh` role-color discipline (a free layout is never license for a second accent); no accent underline under the title. A composition that breaks these isn't free, it's broken.
+3. **The freedom must buy a *clearer* page.** Form serves the message; it never outshouts it. If your free composition is busier, denser, or harder to skim than the template would have been, it failed — fall back. Then run the Quality checklist below unchanged.
+
 ### Step 1: pick the layout skeleton
 
 First identify which **layout family** this page's `layout` belongs to, then look it up in the family's reference doc and copy the matching template from [templates/](../templates/) as a starting point:

@@ -434,6 +434,8 @@ Silently run this before emitting:
 
 If any fails → fix before output.
 
+> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 4" (ids P4-01..P4-12). The rendered-slide checks live in "Phase 5 — VISUAL" (P5-01..P5-08), graded after the converter runs. Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
+
 ## Common mistakes to avoid
 
 - Letting long body text overflow the card — SVG won't auto-wrap, you must split into `<tspan>` rows.

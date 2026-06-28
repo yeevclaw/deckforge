@@ -373,7 +373,7 @@ This script:
 
 ### Mandatory delivery checklist — do this every Phase 5
 
-After the script runs successfully, you MUST do this BEFORE telling the user you're done:
+After the script runs successfully, **first run the QA verification loop** (the "QA" section below), then do this delivery checklist BEFORE telling the user you're done:
 
 **Step 1: Read the script's stdout footer.**
 
@@ -444,24 +444,28 @@ This is a one-liner that strips the quarantine flag. PowerPoint typically handle
 
 ---
 
-## QA — DO NOT SKIP
+## QA — the Phase 5 verification loop (run before delivery)
 
-After producing `presentation.pptx`, convert it back to images and visually inspect — the same way the built-in `pptx` skill does:
+This is a **closed verification loop**, not an optional eyeball pass: the converter renders, an **independent grader sub-agent** scores the rendered slides against a rubric, and any failing page is re-rendered and re-graded until the deck is clean. Run it **right after the converter succeeds and before the mandatory delivery checklist above**.
 
+1. **Render** — the converter already wrote one full-render PNG per slide to `<pages-dir>/_renders/page_NN.png`. No extra step.
+2. **Grade** — spawn a fresh grader sub-agent with [prompts/06_visual_grader.md](prompts/06_visual_grader.md). Give it the `_renders/page_NN.png` images, `planning.json`, and [references/rubric.md](references/rubric.md) (it scores the "Phase 5 — VISUAL" section, ids P5-01..P5-08). It returns strict JSON:
+   ```json
+   { "deck_pass": false, "slides": [ { "n": 2, "pass": false, "failures": [ { "rubric_id": "P5-01", "where": "card 3 body", "fix": "split into two <tspan> rows; clipped at card edge" } ] } ] }
+   ```
+   The grader did **not** design the slides — that independence is the point; a same-context self-check rationalizes its own output.
+3. **Pass → deliver.** If `deck_pass` is true, proceed to the mandatory delivery checklist.
+4. **Fail → fix only the failing pages.** For each slide with `pass: false`, go back to Phase 4 and re-render *that* page applying the grader's `fix` notes (the `rubric_id` points at the exact criterion). Re-run the converter, then re-grade.
+5. **Stop rule.** Loop until `deck_pass` is true **or after 2 grading rounds**, whichever comes first. If the cap is hit with failures remaining, **do not silently ship** — deliver the deck but state the unresolved `rubric_id`s and what's wrong, so the user can decide. Never loop past the cap; never hide a known defect.
+
+Verification adds latency and tokens (one sub-agent pass per round, ≤2). It's worth it here because Phase 5 is the visible deliverable, where quality outweighs speed.
+
+**No SVG renderer available?** If the converter fell back to placeholders (it warns on stderr), `_renders/*.png` won't be real images. Grade via the round-trip fallback instead — render the saved `.pptx` back to images the way the built-in `pptx` skill does:
 ```bash
 soffice --headless --convert-to pdf presentation.pptx
-pdftoppm -jpeg -r 100 presentation.pdf slide
-ls -1 "$PWD"/slide-*.jpg
+pdftoppm -jpeg -r 100 presentation.pdf slide   # → slide-1.jpg, slide-2.jpg, …
 ```
-
-Then look at the slides yourself (or use a subagent if available) and check for:
-- Text overflow / cutoff (especially: SVG doesn't auto-wrap, so missing `<tspan>` rows = clipped sentences)
-- Card overlap or near-touching gaps
-- Low-contrast text
-- Inconsistent palette across slides
-- Missing speaker notes where intended
-
-Fix and re-render. Don't declare done until one full clean pass.
+Feed those JPEGs to the grader. (Better fix: install a renderer — `pip install resvg-py --break-system-packages` — then re-run Phase 5.)
 
 ---
 

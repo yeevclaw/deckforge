@@ -92,6 +92,8 @@ Before outputting, silently check:
 - [ ] Is the TOC consistent with the part titles?
 - [ ] Did I use the research, or did I invent facts?
 
+> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 2" (ids P2-01..P2-09). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
+
 If any check fails, revise before outputting.
 
 ## Pyramid alignment with brief.md

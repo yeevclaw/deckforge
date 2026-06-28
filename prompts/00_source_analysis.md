@@ -152,6 +152,8 @@ Before declaring Phase 0 done:
 - [ ] Did I avoid paraphrasing numbers (quoting exactly)?
 - [ ] Is the source tone noted, so the deck can match register?
 
+> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 0" (ids P0-01..P0-06). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
+
 If you got fewer than these counts, **the source has more material** — re-read it. Phase 0 is the only place this material can come from cheaply.
 
 ---

@@ -30,6 +30,9 @@ out/
 # svg_to_pptx.py intermediate PNG renders — can appear anywhere a deck is built
 **/_renders/
 
+# Loop 4 trace corpus — local run samples for references/improvement_loop.md
+traces/
+
 # Reviewer / scratch docs left in the working tree
 DeckForge_改善建議與理由.md
 DeckForge_Phase1_動態蘇格拉底反詰優化建議.md

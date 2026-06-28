@@ -661,6 +661,20 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 
 Fail any check → revise before emitting.
 
+> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 3" (ids P3-01..P3-16, including the title-only read P3-13). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
+
+## Independent content grade — optional, before the Phase 3→4 handoff
+
+The checklist above is a *self*-check: the same reasoning that wrote `planning.json` is grading it, so it tends to rationalize its own choices. For a higher-stakes or content-heavy deck, run one **independent** pass before any SVG is drawn — catching an off-claim card or a layout misuse here is far cheaper than after Phase 4 has rendered 15 pages.
+
+Spawn a fresh sub-agent — the same grader pattern as [prompts/06_visual_grader.md](06_visual_grader.md), but reading JSON instead of rendered images. Give it `planning.json` and [references/rubric.md](../references/rubric.md); have it score the **"Phase 3"** section (P3-01..P3-16) and return strict JSON:
+
+```json
+{ "deck_pass": false, "pages": [ { "page_id": 5, "pass": false, "failures": [ { "rubric_id": "P3-12", "where": "page 5, card 2", "fix": "card cites hardware sales, but the title claims services are the new engine — drop it or move it to a page it actually defends" } ] } ] }
+```
+
+This is **advisory**. The title-only read below stays the primary, mandatory human gate; the grader's findings just feed into it (e.g. surface "the grader flagged page 5's cards as off-claim" inside the handoff pop-up). If it flags pages, fix those entries in `planning.json` and re-grade before the handoff. The pass is cheap (text only, no rendering) — but it's optional; reach for it when the deck is large or the content is intricate, not for a 5-page internal sync.
+
 ## Title-only read QA — required before the Phase 3→4 handoff
 
 The strongest pyramid-principle test: **a reader should be able to scan only the page titles and walk away with the full argument**. Before asking the user to approve the Phase 3→4 handoff, do this:

@@ -18,8 +18,13 @@ examples/ export-ignore
 README.md     export-ignore
 README.en.md  export-ignore
 
-# Maintainer tool, not a user-facing runtime asset
+# Maintainer tools, not user-facing runtime assets
 scripts/package.sh export-ignore
+scripts/check_docs.py export-ignore
+scripts/golden_check.sh export-ignore
+
+# Maintainer process doc under references/, not a runtime asset
+references/improvement_loop.md export-ignore
 
 # Claude Code guidance for repo development — not a runtime asset
 CLAUDE.md export-ignore

@@ -311,6 +311,12 @@ Single_focus + nested sub_cards example (claim + supporting evidence on one page
 
 Why this phase exists: top PPT agencies have a **Planner** role separate from the **Designer**. The Planner decides what + where; the Designer decides how it looks. Mixing these jobs produces the busy, cluttered slides that scream "AI generated".
 
+**Phase 3 content grade (before the handoff)** — `planning.json` carries the deck's whole argument, and the planner's own inline checklist rationalizes its own output the same way the designer's self-check does. So, mirroring the Phase 5 visual loop, run an **independent** content grade before showing the plan to the user. On by default for full decks; skip it in Quick mode or when the user has explicitly asked for speed.
+
+1. **Grade** — spawn a fresh grader sub-agent with [prompts/07_content_grader.md](prompts/07_content_grader.md). Give it `planning.json`, `brief.md`, and [references/rubric.md](references/rubric.md) (it scores the Phase 3 content criteria **P3-11 / P3-12 / P3-13** — AI filler, pyramid alignment, title-only read). It grades whether the plan faithfully carries the **already-approved** thesis into load-bearing cards; it does **not** reopen the Socratic dialogue or second-guess the thesis itself (settled and user-approved in Phase 1). It returns strict JSON: `{ "plan_pass": bool, "title_read": {…}, "pages": [ { "n", "pass", "failures": [ { "rubric_id", "where", "fix" } ] } ] }`. The grader did **not** write the plan — that independence is the point.
+2. **Fail → fix, then re-grade.** Apply each `fix` to `planning.json` (edit the *plan*, never `brief.md`), then re-grade. **Same ≤2-round cap as Phase 5**: stop when `plan_pass` is true or after 2 rounds. If the cap is hit with failures remaining, **do not silently ship the plan** — carry the unresolved `rubric_id`s into the handoff so the user decides.
+3. **Then** run the handoff below, on the graded plan.
+
 **Handoff checkpoint**: after writing `planning.json`, show it to the user — this is the highest-leverage review point in the whole workflow, because design effort hasn't started yet. The handoff pop-up **must include the title-only read** (all part_titles + page titles in sequence) so the user can confirm the pyramid argument reads top-down before any rendering happens. Do not begin Phase 4 until they approve. Fixing the content plan here is cheap; fixing it after 15 SVG pages have been rendered is expensive.
 
 ### Phase 4 — Design (設計稿)
@@ -455,7 +461,7 @@ This is a **closed verification loop**, not an optional eyeball pass: the conver
    ```
    The grader did **not** design the slides — that independence is the point; a same-context self-check rationalizes its own output.
 3. **Pass → deliver.** If `deck_pass` is true, proceed to the mandatory delivery checklist.
-4. **Fail → fix only the failing pages.** For each slide with `pass: false`, go back to Phase 4 and re-render *that* page applying the grader's `fix` notes (the `rubric_id` points at the exact criterion). Re-run the converter, then re-grade.
+4. **Fail → fix only the failing pages.** For each slide with `pass: false`, go back to Phase 4 and re-render *that* page applying the grader's `fix` notes (the `rubric_id` points at the exact criterion). Re-run the converter, then re-grade. A visual fix that **changes text content** (not just position, contrast, or spacing) must preserve the card's load-bearing point — if a fix would drop a proof point to make room, re-run the title-only read (P3-13) on that page before accepting it. A cleaner slide that quietly weakened the argument is not a pass.
 5. **Stop rule.** Loop until `deck_pass` is true **or after 2 grading rounds**, whichever comes first. If the cap is hit with failures remaining, **do not silently ship** — deliver the deck but state the unresolved `rubric_id`s and what's wrong, so the user can decide. Never loop past the cap; never hide a known defect.
 
 Verification adds latency and tokens (one sub-agent pass per round, ≤2). It's worth it here because Phase 5 is the visible deliverable, where quality outweighs speed.

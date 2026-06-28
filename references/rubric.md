@@ -16,10 +16,12 @@ next free number; never recycle.
 - **Self-check (every phase, before emitting).** The same context that produced the
   artifact runs its inline checklist. Fast, but weak: a context rationalizes its own
   output. This is the floor, not the ceiling.
-- **Independent grade (Phase 5, and optionally Phase 3).** A *fresh* sub-agent that
+- **Independent grade (Phase 5 visual + Phase 3 content).** A *fresh* sub-agent that
   did **not** produce the artifact scores it against the relevant section here and
   returns pass/fail + a fix per failure. Independent grading is what closes the
-  verification loop — see `prompts/06_visual_grader.md` and SKILL.md "QA".
+  verification loop — see `prompts/06_visual_grader.md` (Phase 5, the rendered slides)
+  and `prompts/07_content_grader.md` (Phase 3, the content plan: ids P3-11/P3-12/P3-13),
+  wired in SKILL.md "QA" and "Phase 3 content grade".
 
 The **Checker** column says who can decide each criterion:
 - `self` — judgement call, run during the phase's own self-check.
@@ -80,6 +82,9 @@ Mirrors `prompts/02_outline_architect.md` → "Quality checklist".
 ## Phase 3 — `planning.json`
 
 Mirrors `prompts/04_planning_draft.md` → "Quality checklist" + "Title-only read QA".
+**P3-11 / P3-12 / P3-13 are independently graded** at the Phase 3→4 handoff by
+`prompts/07_content_grader.md` (the content analogue of the Phase 5 visual grader); the
+rest stay self-checks.
 
 | id | Criterion | How to check | Checker |
 |---|---|---|---|
@@ -93,9 +98,9 @@ Mirrors `prompts/04_planning_draft.md` → "Quality checklist" + "Title-only rea
 | P3-08 | `design_brief` palette consistent with `brief.md` tone | compare to brief | self |
 | P3-09 | `design_brief.highlight_color` is ONE concrete hex | parse field | machine |
 | P3-10 | Zero placeholders ("Lorem", "xxxx", "TBD", "Insert here") | regex scan | machine |
-| P3-11 | Content authenticity: no AI filler (賦能/無縫/顛覆 · seamless/elevate/leverage), source precision kept, no exclamation marks in claims | regex + read | self |
-| P3-12 | Pyramid alignment: every card materially defends its page `title` claim (on-topic ≠ load-bearing) | per-page card test | self |
-| P3-13 | Title-only read forms a coherent argument (re-run at Phase 3→4 handoff) | read titles in order | self |
+| P3-11 | Content authenticity: no AI filler (賦能/無縫/顛覆 · seamless/elevate/leverage), source precision kept, no exclamation marks in claims | regex + read | self + grader |
+| P3-12 | Pyramid alignment: every card materially defends its page `title` claim (on-topic ≠ load-bearing) | per-page card test | self + grader |
+| P3-13 | Title-only read forms a coherent argument (re-run at Phase 3→4 handoff) | read titles in order | self + grader |
 | P3-14 | Bento-first: every primitive-layout page names its information-loss signal | inspect each primitive page | self |
 | P3-15 | Primitive-layout share of content pages ≤ ~40% | count primitive vs total | machine |
 | P3-16 | `flow_variant` set (corporate_fresh static flow) with a one-sentence story-shape reason | inspect `design_brief.flow_variant` | self |
@@ -150,3 +155,7 @@ whichever comes first. If the cap is hit with failures remaining, **do not silen
 ship**: list the unresolved `rubric_id`s to the user in the delivery message. Verification
 costs latency + tokens; the cap bounds it. Apply it here because Phase 5 is the visible
 deliverable where quality outweighs speed.
+
+The Phase 3 content loop (`prompts/07_content_grader.md`, ids P3-11/P3-12/P3-13) uses the
+same shape — `plan_pass` + per-page `failures` + a deck-level `title_read` — and the same
+≤2-round cap, run before the Phase 3→4 handoff instead of before delivery.

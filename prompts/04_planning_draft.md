@@ -663,17 +663,13 @@ Fail any check → revise before emitting.
 
 > Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 3" (ids P3-01..P3-16, including the title-only read P3-13). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
 
-## Independent content grade — optional, before the Phase 3→4 handoff
+## Independent content grade — before the Phase 3→4 handoff
 
-The checklist above is a *self*-check: the same reasoning that wrote `planning.json` is grading it, so it tends to rationalize its own choices. For a higher-stakes or content-heavy deck, run one **independent** pass before any SVG is drawn — catching an off-claim card or a layout misuse here is far cheaper than after Phase 4 has rendered 15 pages.
+The checklist above is a *self*-check: the same reasoning that wrote `planning.json` is grading it, so it tends to rationalize its own choices. So a **fresh** sub-agent grades the plan independently before any SVG is drawn — the content analogue of the Phase 5 visual grader, catching an off-claim card or an incoherent title-read here, where a fix is far cheaper than after Phase 4 has rendered 15 pages.
 
-Spawn a fresh sub-agent — the same grader pattern as [prompts/06_visual_grader.md](06_visual_grader.md), but reading JSON instead of rendered images. Give it `planning.json` and [references/rubric.md](../references/rubric.md); have it score the **"Phase 3"** section (P3-01..P3-16) and return strict JSON:
+You don't spawn it yourself — SKILL.md → "Phase 3 content grade" orchestrates it once you emit `planning.json`. The grader spec (role, inputs, the strict-JSON `{ plan_pass, title_read, pages[] }` shape) is [prompts/07_content_grader.md](07_content_grader.md); it scores the independence-sensitive content ids **P3-11 / P3-12 / P3-13** (AI filler · pyramid alignment · title-only read) against `brief.md`, and stays inside its boundary — it grades whether your plan *delivers* the approved thesis, never reopens the thesis itself.
 
-```json
-{ "deck_pass": false, "pages": [ { "page_id": 5, "pass": false, "failures": [ { "rubric_id": "P3-12", "where": "page 5, card 2", "fix": "card cites hardware sales, but the title claims services are the new engine — drop it or move it to a page it actually defends" } ] } ] }
-```
-
-This is **advisory**. The title-only read below stays the primary, mandatory human gate; the grader's findings just feed into it (e.g. surface "the grader flagged page 5's cards as off-claim" inside the handoff pop-up). If it flags pages, fix those entries in `planning.json` and re-grade before the handoff. The pass is cheap (text only, no rendering) — but it's optional; reach for it when the deck is large or the content is intricate, not for a 5-page internal sync.
+It's **advisory to the human gate**, not a replacement: the title-only read below stays the primary, mandatory gate, and the grader's findings feed into the handoff pop-up. It runs by default on full, content-heavy decks; skip it in Quick mode or for a small, simple deck (a 5-page internal sync doesn't need it). If it flags pages, fix those entries in `planning.json` and re-grade before the handoff.
 
 ## Title-only read QA — required before the Phase 3→4 handoff
 

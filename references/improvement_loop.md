@@ -17,7 +17,7 @@ working directory:
 
 - `analysis.md` / `brief.md` / `outline.json` / `planning.json` / `pages/*.svg`
 - the produced `.pptx` / `.pdf` / `.notes.md`
-- the Phase 5 grader JSON (from `prompts/06_visual_grader.md`) — what failed + the fix
+- the grader JSON from both fresh-eyes graders — Phase 3 content (`prompts/07_content_grader.md`) and Phase 5 visual (`prompts/06_visual_grader.md`) — what failed + the fix
 - **where the user chose "我要先修改"** at a phase handoff — the cheapest signal that
   the harness produced something the user had to correct
 

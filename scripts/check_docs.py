@@ -103,6 +103,7 @@ RUBRIC_CITING_FILES = [
     "prompts/02_outline_architect.md",
     "prompts/04_planning_draft.md",
     "prompts/05_designer_svg.md",
+    "prompts/07_content_grader.md",
 ]
 
 

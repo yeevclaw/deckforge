@@ -7,6 +7,8 @@ Barbara Minto's Pyramid Principle is one of DeckForge's two load-bearing methodo
 1. **Conclusion first** (結論先行)
    Open every section, every page, with its core claim. Don't bury the lede. Audiences should be able to read just your titles and walk away with the argument.
 
+   Corollary for page bodies: since the title carries the conclusion, the body does not also owe a closing "so-what" sentence. A bottom line that restates the title duplicates the conclusion; keep a bottom line only when it adds a downstream point (consequence / implication / next-page hand-off). The visual check for this lives in Phase 4/5 (`prompts/05_designer_svg.md` Step 6 → "content"; rubric P5-10).
+
 2. **Top supports bottom** (以上統下)
    A higher-level claim is supported by the level below it. Every supporting point must directly defend the parent claim — not "be about the same topic", but actually *make the parent claim more likely to be true*.
 

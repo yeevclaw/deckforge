@@ -234,9 +234,11 @@ Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). 
 
 **Bento card page** — uses `cards: []`. Each card supports `is_number_first`, `stat_value`/`stat_caption`/`stat_caption_en`, `heading`/`body`/`icon_hint`/`size_hint`. **Optional `sub_cards: []`** can nest 2–3 mini-cards inside a hero card, but only on layouts with a tall hero region — `single_focus`, `two_col_2_1` (wide slot), or `mixed_grid` (big slot). **Not** allowed on `mini_grid`, `three_col`, or `hero_top` (these layouts don't have enough vertical room).
 
-**Optional `motion` field** — a page whose story is a CONTINUOUS flow (data/money/traffic streaming through a system, not discrete steps) may set `"motion": "transit_rail" | "orbit" | "hub" | "accent_bypass"`. That slide ships as a looping GIF: flowing dashes in slideshow mode, but **not Convert-to-Shape editable**. Budget: ≤2–3 motion pages per deck, money slides only. Decision flow and layout pairings in [prompts/04_planning_draft.md](prompts/04_planning_draft.md) ("Motion pages"); never for timelines or funnels.
+**Optional `motion` field** — a page with continuous movement — throughput (data/money/traffic streaming through a system) **or a true cycle** (an iterative loop that returns to its start, where the rotation itself is the message) — may set `"motion": "transit_rail" | "orbit" | "hub" | "accent_bypass"`. That slide ships as a looping GIF: flowing dashes in slideshow mode, but **not Convert-to-Shape editable**. Budget: ≤2–3 motion pages per deck, reserved for the highest-leverage pages — a money slide or the deck's one core process/cycle diagram. Decision flow and layout pairings in [prompts/04_planning_draft.md](prompts/04_planning_draft.md) ("Motion pages"); never for discrete-step flows, timelines, or funnels.
 
 **`design_brief.flow_variant` (corporate_fresh decks with static `flow` pages)** — picks which of the four glass flow compositions the whole deck uses (`terrace_ascent` / `river_ribbon` / `cascade_fall` / `dome_arcade`), derived from the story the steps tell. One variant per deck — coherent inside the deck, varied across decks; `dome_arcade` (the original arches + swoosh) is one option of four, not the default — when no story shape clearly fits, default to `river_ribbon`. Story-shape triggers and geometry: [references/design_system.md](references/design_system.md) → "glass_arch_flow variants".
+
+**Optional `card_variant` (per-page, corporate_fresh `three_col` / `mini_grid` / `two_col_50_50` pages)** — picks which composition a page uses from its content sub-shape (`three_col`: `icon_column`/`numbered_steps`/`axis_labeled`/`lead_plus_pair`; `mini_grid`: `even_grid`/`ribbon_row`/`spotlight`; `two_col_50_50`: `balanced`/`before_after`). Per-page, not per-deck (unlike `flow_variant`); absent → the layout's default. It's composition inside the layout, never a layout switch; a same-structure parallel series assigns variants by real sub-shape, never to manufacture variety. Triggers + geometry: [references/design_system.md](references/design_system.md) → the `card_variant` subsections.
 
 Mini_grid example (parallel KPIs, no nesting):
 
@@ -328,12 +330,12 @@ For each page in `planning.json`, generate **one self-contained SVG file** with 
 - Diagram primitives spec (information-loss layouts): [references/diagrams.md](references/diagrams.md)
 - Chart anatomy: [references/chart_anatomy.md](references/chart_anatomy.md)
 - Color + typography system: [references/design_system.md](references/design_system.md)
-- SVG templates to start from: [templates/](templates/) — 27 files total:
+- SVG templates to start from: [templates/](templates/) — 35 files total:
   - **Shared assets**: `_base.svg` (filters / gradients / 35 Lucide icons used via `<use>`)
   - **Page-type starters**: `cover.svg`, `toc.svg`
   - **Bento layouts**: `bento_2col.svg` (two_col_50_50 / two_col_2_1), `bento_3col.svg`, `bento_hero.svg` (hero_top), `bento_mixed.svg` (mixed_grid), `bento_mini_grid.svg` (mini_grid — main card + 3–5 mini-cards, dark_apple)
   - **Chart layouts**: `chart_bar.svg`, `chart_line.svg`, `chart_donut.svg`
-  - **corporate_fresh starters** (embed that family's craft recipes — use these, not restyled dark templates, when `palette_hint` is `corporate_fresh`): `fresh_cover.svg` (cover / derive end page), `fresh_3col.svg` (three_col executive summary), `fresh_compare.svg` (compare_table), and four flow templates — one per `design_brief.flow_variant`: `fresh_flow_terrace.svg` (`terrace_ascent`), `fresh_flow_river.svg` (`river_ribbon`), `fresh_flow_cascade.svg` (`cascade_fall`), `fresh_flow.svg` (`dome_arcade`)
+  - **corporate_fresh starters** (embed that family's craft recipes — use these, not restyled dark templates, when `palette_hint` is `corporate_fresh`): `fresh_cover.svg` (cover / derive end page), four `three_col` `card_variant` templates — one per page's `card_variant`: `fresh_3col.svg` (`icon_column`), `fresh_3col_steps.svg` (`numbered_steps`), `fresh_3col_axis.svg` (`axis_labeled`), `fresh_3col_lead.svg` (`lead_plus_pair`); three `mini_grid` KPI templates: `fresh_mini_grid.svg` (`even_grid`), `fresh_mini_grid_ribbon.svg` (`ribbon_row`), `fresh_mini_grid_spotlight.svg` (`spotlight`); two `two_col_50_50` templates: `fresh_2col.svg` (`balanced`), `fresh_2col_beforeafter.svg` (`before_after`); `fresh_compare.svg` (compare_table), and four flow templates — one per `design_brief.flow_variant`: `fresh_flow_terrace.svg` (`terrace_ascent`), `fresh_flow_river.svg` (`river_ribbon`), `fresh_flow_cascade.svg` (`cascade_fall`), `fresh_flow.svg` (`dome_arcade`)
   - **Diagram primitives** (used only when bento would lose structural information — see [references/diagrams.md](references/diagrams.md)): `flow.svg`, `timeline.svg`, `cycle.svg`, `funnel.svg`, `compare_table.svg`, `quadrant_2x2.svg`, `venn.svg`, `hierarchy_tree.svg`, `pyramid.svg`
   - **No dedicated template for**: `single_focus` (just use `bento_hero.svg` and drop the bottom row), `stat_hero` (single huge text, no template needed — see designer prompt geometry), `section_break` / `end` (derive from `cover.svg` with smaller hero text). These page types are simple enough that a template would add no value.
 
@@ -455,7 +457,7 @@ This is a one-liner that strips the quarantine flag. PowerPoint typically handle
 This is a **closed verification loop**, not an optional eyeball pass: the converter renders, an **independent grader sub-agent** scores the rendered slides against a rubric, and any failing page is re-rendered and re-graded until the deck is clean. Run it **right after the converter succeeds and before the mandatory delivery checklist above**.
 
 1. **Render** — the converter already wrote one full-render PNG per slide to `<pages-dir>/_renders/page_NN.png`. No extra step.
-2. **Grade** — spawn a fresh grader sub-agent with [prompts/06_visual_grader.md](prompts/06_visual_grader.md). Give it the `_renders/page_NN.png` images, `planning.json`, and [references/rubric.md](references/rubric.md) (it scores the "Phase 5 — VISUAL" section, ids P5-01..P5-08). It returns strict JSON:
+2. **Grade** — spawn a fresh grader sub-agent with [prompts/06_visual_grader.md](prompts/06_visual_grader.md). Give it the `_renders/page_NN.png` images, `planning.json`, and [references/rubric.md](references/rubric.md) (it scores the "Phase 5 — VISUAL" section, ids P5-01..P5-08 plus P5-10). It returns strict JSON:
    ```json
    { "deck_pass": false, "slides": [ { "n": 2, "pass": false, "failures": [ { "rubric_id": "P5-01", "where": "card 3 body", "fix": "split into two <tspan> rows; clipped at card edge" } ] } ] }
    ```
@@ -546,7 +548,7 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── chart_bar.svg                 ← vertical bar chart (single highlight color)
 │   ├── chart_line.svg                ← line + area chart for trends
 │   ├── chart_donut.svg               ← donut chart with center label + legend
-│   └── fresh_cover.svg / fresh_3col.svg / fresh_flow.svg / fresh_compare.svg
+│   └── fresh_cover.svg / fresh_3col*.svg / fresh_mini_grid*.svg / fresh_2col*.svg / fresh_flow*.svg / fresh_compare.svg
 │                                     ← corporate_fresh starters (craft recipes embedded)
 ├── scripts/
 │   ├── svg_to_pptx.py                ← SVG → PPTX assembler (with svgBlip ext)

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <!-- card_variant: numbered_steps — three items that read in a weak order (first this,
+       then that). Numbered green badges ride a gently rising connector; chevrons point
+       forward; text is left-aligned. If the order hardens into a strong dependency or a
+       dated sequence, upgrade to layout: "flow" / "timeline" instead. -->
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <radialGradient id="washLav" cx="92%" cy="4%" r="48%">
+      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#D9D4F0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
+
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="106" font-size="45" font-weight="800" fill="#383838">三個步驟，依序推進</text>
+
+  <!-- rising connector: badges sit on it like stations climbing left→right -->
+  <polyline points="96,322 122,316 512,294 902,272 1012,266" fill="none"
+            stroke="#9BD4B8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+
+  <!-- forward chevrons between steps -->
+  <path d="M438 282 l16 16 -16 16" fill="none" stroke="#9BD4B8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M826 260 l16 16 -16 16" fill="none" stroke="#9BD4B8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- step 1 -->
+  <g transform="translate(0 0)">
+    <circle cx="122" cy="316" r="26" fill="#FFFFFF" stroke="#4EC487" stroke-width="3.5"/>
+    <text x="122" y="327" font-size="30" font-weight="800" fill="#2E6E63" text-anchor="middle">1</text>
+    <g transform="translate(162 290)">
+      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" fill="#D8E4FB"/>
+        <circle cx="12" cy="12" r="6" fill="#FFFFFF"/>
+        <circle cx="12" cy="12" r="2" fill="#5E8FEF"/>
+      </g>
+    </g>
+    <text x="96" y="412" font-size="27" font-weight="700" fill="#383838">先想清楚問題</text>
+    <text x="96" y="456" font-size="19" fill="#4A5158">
+      <tspan x="96" dy="0">動手前，先界定<tspan fill="#E8872E" font-weight="700">真正的目標</tspan></tspan>
+      <tspan x="96" dy="34">，以及這份工作的本質。</tspan>
+    </text>
+  </g>
+
+  <!-- step 2 -->
+  <g transform="translate(0 -22)">
+    <circle cx="512" cy="316" r="26" fill="#FFFFFF" stroke="#4EC487" stroke-width="3.5"/>
+    <text x="512" y="327" font-size="30" font-weight="800" fill="#2E6E63" text-anchor="middle">2</text>
+    <g transform="translate(552 290)">
+      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="4" width="16" height="16" rx="2" fill="#D8E4FB"/>
+        <rect x="9" y="9" width="6" height="6" fill="#FFFFFF"/>
+        <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" fill="none"/>
+      </g>
+    </g>
+    <text x="486" y="412" font-size="27" font-weight="700" fill="#383838">選對 AI 平台</text>
+    <text x="486" y="456" font-size="19" fill="#4A5158">
+      <tspan x="486" dy="0">了解不同模型的<tspan fill="#E8872E" font-weight="700">能力與限制</tspan></tspan>
+      <tspan x="486" dy="34">：脈絡、幻覺、知識截止。</tspan>
+    </text>
+  </g>
+
+  <!-- step 3 -->
+  <g transform="translate(0 -44)">
+    <circle cx="902" cy="316" r="26" fill="#FFFFFF" stroke="#4EC487" stroke-width="3.5"/>
+    <text x="902" y="327" font-size="30" font-weight="800" fill="#2E6E63" text-anchor="middle">3</text>
+    <g transform="translate(942 290)">
+      <g transform="scale(2.2)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" fill="#D8E4FB"/>
+        <circle cx="9" cy="7" r="4" fill="#D8E4FB"/>
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" fill="none"/>
+      </g>
+    </g>
+    <text x="876" y="412" font-size="27" font-weight="700" fill="#383838">合理分配任務</text>
+    <text x="876" y="456" font-size="19" fill="#4A5158">
+      <tspan x="876" dy="0">善用人與 AI <tspan fill="#E8872E" font-weight="700">各自的強項</tspan></tspan>
+      <tspan x="876" dy="34">，把工作合理地分配。</tspan>
+    </text>
+  </g>
+</svg>

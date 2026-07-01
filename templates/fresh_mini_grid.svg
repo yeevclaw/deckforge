@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <!-- card_variant: even_grid (mini_grid default) — 3–5 parallel KPIs of comparable weight,
+       each a number-first white card. The corporate_fresh KPI grid (meta_bento is for
+       catalogs with wireframes; this is for numbers). Big numbers in teal #1B8A82, never
+       orange; tabular-nums so digits align. -->
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <radialGradient id="washLav" cx="92%" cy="4%" r="48%">
+      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#D9D4F0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#2A4A3A" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
+
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="106" font-size="45" font-weight="800" fill="#383838">關鍵指標，一目了然</text>
+
+  <!-- four equal KPI cards -->
+  <g style="font-variant-numeric: tabular-nums">
+    <rect x="48"  y="208" width="278" height="384" rx="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
+    <text x="187" y="368" font-size="62" font-weight="800" fill="#1B8A82" text-anchor="middle">47.2%</text>
+    <rect x="157" y="392" width="60" height="4" rx="2" fill="#4EC487"/>
+    <text x="187" y="446" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">營收同比增長</text>
+    <text x="187" y="476" font-size="13" fill="#8A9199" text-anchor="middle" letter-spacing="1">YoY Revenue Growth</text>
+
+    <rect x="350" y="208" width="278" height="384" rx="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
+    <text x="489" y="368" font-size="62" font-weight="800" fill="#1B8A82" text-anchor="middle">15M</text>
+    <rect x="459" y="392" width="60" height="4" rx="2" fill="#4EC487"/>
+    <text x="489" y="446" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">月活躍用戶</text>
+    <text x="489" y="476" font-size="13" fill="#8A9199" text-anchor="middle" letter-spacing="1">Monthly Active Users</text>
+
+    <rect x="652" y="208" width="278" height="384" rx="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
+    <text x="791" y="368" font-size="62" font-weight="800" fill="#1B8A82" text-anchor="middle">3.2億</text>
+    <rect x="761" y="392" width="60" height="4" rx="2" fill="#4EC487"/>
+    <text x="791" y="446" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">年度淨利潤</text>
+    <text x="791" y="476" font-size="13" fill="#8A9199" text-anchor="middle" letter-spacing="1">Annual Net Profit</text>
+
+    <rect x="954" y="208" width="278" height="384" rx="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
+    <text x="1093" y="368" font-size="62" font-weight="800" fill="#1B8A82" text-anchor="middle">#1</text>
+    <rect x="1063" y="392" width="60" height="4" rx="2" fill="#4EC487"/>
+    <text x="1093" y="446" font-size="20" font-weight="700" fill="#383838" text-anchor="middle">細分市場排名</text>
+    <text x="1093" y="476" font-size="13" fill="#8A9199" text-anchor="middle" letter-spacing="1">Category Rank</text>
+  </g>
+</svg>

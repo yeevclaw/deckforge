@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <!-- card_variant: axis_labeled — three columns read against ONE shared dimension axis.
+       Use when several same-structure pages measure their items along the same ruler
+       (e.g. Product / Process / Performance); give the whole series this variant with
+       identical labels so they visually rhyme. -->
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <radialGradient id="washLav" cx="92%" cy="4%" r="48%">
+      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#D9D4F0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
+
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="106" font-size="45" font-weight="800" fill="#383838">沿同一組維度展開</text>
+
+  <!-- shared dimension axis: one light band, three labelled segments -->
+  <rect x="48" y="132" width="1184" height="52" rx="26" fill="#E3F1E9"/>
+  <text x="237" y="165" font-size="16" font-weight="700" fill="#2E6E63" text-anchor="middle" letter-spacing="2.5">PRODUCT · 成果</text>
+  <text x="640" y="165" font-size="16" font-weight="700" fill="#2E6E63" text-anchor="middle" letter-spacing="2.5">PROCESS · 過程</text>
+  <text x="1043" y="165" font-size="16" font-weight="700" fill="#2E6E63" text-anchor="middle" letter-spacing="2.5">PERFORMANCE · 表現</text>
+
+  <!-- dashed separators (run up into the band so it reads as one ruler in three columns) -->
+  <line x1="427" y1="132" x2="427" y2="630" stroke="#9BD4B8" stroke-width="2" stroke-dasharray="3 8"/>
+  <line x1="853" y1="132" x2="853" y2="630" stroke="#9BD4B8" stroke-width="2" stroke-dasharray="3 8"/>
+
+  <!-- column 1 : duotone icon -->
+  <g>
+    <g transform="translate(189 254)">
+      <g transform="scale(4.5)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#D8E4FB"/>
+        <polyline points="14 2 14 8 20 8" fill="#FFFFFF"/>
+        <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+      </g>
+    </g>
+    <text x="237" y="438" font-size="28" font-weight="700" fill="#383838" text-anchor="middle">成果描述</text>
+    <text x="237" y="486" font-size="19" fill="#4A5158" text-anchor="middle">
+      <tspan x="237" dy="0">你要什麼樣的產出：</tspan>
+      <tspan x="237" dy="35"><tspan fill="#E8872E" font-weight="700">內容、格式</tspan>與範圍。</tspan>
+    </text>
+  </g>
+
+  <!-- column 2 : duotone icon -->
+  <g>
+    <g transform="translate(592 252)">
+      <g transform="scale(4.5)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" fill="#D8E4FB"/>
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="#FFFFFF"/>
+      </g>
+    </g>
+    <text x="640" y="438" font-size="28" font-weight="700" fill="#383838" text-anchor="middle">過程描述</text>
+    <text x="640" y="486" font-size="19" fill="#4A5158" text-anchor="middle">
+      <tspan x="640" dy="0">希望 AI 怎麼做：</tspan>
+      <tspan x="640" dy="35">扮演<tspan fill="#E8872E" font-weight="700">角色與步驟</tspan>。</tspan>
+    </text>
+  </g>
+
+  <!-- column 3 : duotone icon -->
+  <g>
+    <g transform="translate(998 254)">
+      <g transform="scale(4.5)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" fill="#D8E4FB"/>
+        <polyline points="22 4 12 14.01 9 11.01" fill="none"/>
+      </g>
+    </g>
+    <text x="1043" y="438" font-size="28" font-weight="700" fill="#383838" text-anchor="middle">表現描述</text>
+    <text x="1043" y="486" font-size="19" fill="#4A5158" text-anchor="middle">
+      <tspan x="1043" dy="0">希望它怎麼互動：</tspan>
+      <tspan x="1043" dy="35"><tspan fill="#E8872E" font-weight="700">語氣、長度</tspan>與細節。</tspan>
+    </text>
+  </g>
+</svg>

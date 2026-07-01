@@ -39,7 +39,7 @@ DeckForge/
 │   ├── pyramid_principle.md
 │   ├── socratic_loop.md    ← Phase 1 question types + 11 scenario spines
 │   └── editable_mode.md    ← how Convert-to-Shape editing works
-├── templates/              ← 27 SVG files (26 starting templates + `_base.svg`), viewBox 0 0 1280 720
+├── templates/              ← 35 SVG files (34 starting templates + `_base.svg`), viewBox 0 0 1280 720
 │   ├── _base.svg           ← shared filters / gradients / 35 Lucide icons
 │   ├── cover.svg
 │   ├── toc.svg

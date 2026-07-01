@@ -195,6 +195,8 @@ Track changes to this status in the same edit that lands a Designer SVG template
 
 **Common confusion**: "需求 → 設計 → 開發 → 部署" is `flow` (terminal output). "規劃 → 執行 → 檢視 → 改進 → 規劃..." is `cycle` (returns to start, that's the point).
 
+**Motion note**: because a true cycle *returns to its start*, the rotation itself can be the message — a core cycle page may carry `motion: "orbit"` (the planner's call, decided in [prompts/04_planning_draft.md](../prompts/04_planning_draft.md) → "Motion pages"; the ring must be built from open `<path>` arcs, never a closed `<circle>`, per Step 5.7). This is the one "iteration, not throughput" shape that still qualifies for motion. Still bound by the deck's 2–3-page motion budget; an animated cycle slide ships as a GIF and loses Convert-to-Shape.
+
 **Schema**:
 ```json
 {

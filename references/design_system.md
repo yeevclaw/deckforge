@@ -178,7 +178,46 @@ Give the FINAL step's arch a slightly greener pair (`#A1E5DE` / `#B6E8D8` / `#C5
 | `transit_pipeline` | a transformation pipeline | one wide white panel, a single gradient transit line (12px, round caps; ends on the last station — a trailing head only when the flow hands off downstream, see Step 5.7), ring stations + duotone icons above, names/bodies below; the line takes a white `flow-anim` pulse overlay (`motion: "transit_rail"`) |
 | `cta_end` | closing with an action | cover gradient + aurora ribbons, centered CTA title + translucent mono command chip + link line; "Thanks" demoted to a small corner note |
 
-Three-column dashed-separator pages and compare-table card pages (the `fresh_3col.svg` / `fresh_compare.svg` templates) remain available for plain parallel claims and option comparisons.
+Several common bento layouts are `card_variant` families — `three_col`, `mini_grid`, and `two_col_50_50` each have multiple fresh compositions chosen **per page** (see the `card_variant` subsections below); compare-table card pages (the `fresh_compare.svg` template) remain available for option comparisons.
+
+#### three_col card_variant — 同一套卡片語言，四種構圖
+
+`three_col` is a **family** too: the card language is fixed — pill bar, `washGreen` corner wash, white-on-canvas columns, `#383838` charcoal titles, `#4A5158` body, orange `#E8872E` inline emphasis, green structure (`#4EC487` / `#9BD4B8`). What varies is the macro composition, picked **per page** (not per deck — `three_col` recurs within a deck) from *that page's* content sub-shape. The planner sets `card_variant`; absent → `icon_column`.
+
+| `card_variant` | Pick when the three items read as… | Geometry in one line | When NOT to use | Template |
+|---|---|---|---|---|
+| `icon_column` | independent parallels — no order, no shared axis | three even columns, duotone icon on top, centered title + body, dashed separators (the original) | — this is the neutral default | `templates/fresh_3col.svg` |
+| `numbered_steps` | a weak order (first → then → then) not strong enough to lose to `flow` | green numbered badges riding a rising connector, forward chevrons, left-aligned text | the order is a hard dependency or dated → use `flow` / `timeline` | `templates/fresh_3col_steps.svg` |
+| `axis_labeled` | measured along ONE shared dimension axis (e.g. Product / Process / Performance) | a shared light-green label band split into three segments by the column separators, content aligned beneath | the three items don't share a common ruler | `templates/fresh_3col_axis.svg` |
+| `lead_plus_pair` | three parallels where ONE leads and two support it | a 60% hero card (big duotone icon + 2-line claim + emphasized body) + two stacked support cards right | the three are co-equal (use `icon_column`) or it's really 2 ideas (use `two_col_2_1`) | `templates/fresh_3col_lead.svg` |
+
+#### mini_grid card_variant — KPI 網格的三種構圖
+
+`mini_grid` is the corporate_fresh KPI grid — for **numbers** (`meta_bento` is the one for catalogs with wireframe thumbnails). It's a `card_variant` family too. Numbers are teal `#1B8A82` (never orange — a giant orange number breaks the role palette) with `tabular-nums` so digits align. Absent → `even_grid`.
+
+| `card_variant` | Pick when the KPIs read as… | Geometry in one line | When NOT to use | Template |
+|---|---|---|---|---|
+| `even_grid` | 3–5 parallel metrics of comparable weight | equal white number-cards in a row, big teal number + caption + EN, short green accent rule | — the neutral default | `templates/fresh_mini_grid.svg` |
+| `ribbon_row` | metrics whose relative magnitudes matter, or that need a longer caption | full-width rows: number left, label + caption middle, a proportion bar right (structure green) | the numbers aren't comparable on one scale | `templates/fresh_mini_grid_ribbon.svg` |
+| `spotlight` | a set where ONE number dominates and the rest break it down | one large lead card + stacked satellite cards | it's a single number with no set → `stat_hero` | `templates/fresh_mini_grid_spotlight.svg` |
+
+#### two_col_50_50 card_variant — 兩欄的兩種構圖
+
+`two_col_50_50` is a `card_variant` family for two-up content. Absent → `balanced`.
+
+| `card_variant` | Pick when the two read as… | Geometry in one line | When NOT to use | Template |
+|---|---|---|---|---|
+| `balanced` | two co-equal options / ideas / pros-vs-cons | two equal white cards, icon + eyebrow + title + body each | — the neutral default | `templates/fresh_2col.svg` |
+| `before_after` | a transformation: current state → new state | two cards with a green directional arrow between; the "after" card carries the green eyebrow + orange payoff | the two are co-equal (use `balanced`) or it's a dramatic style contrast (use `split_style_duel`) | `templates/fresh_2col_beforeafter.svg` |
+
+**Where card_variant stops (and the composition vocabulary takes over).** Only the recurring bento card layouts whose sub-shapes genuinely differ get a `card_variant` family. The rest are already served by a named composition or have no sub-shape to vary — adding variants there would only manufacture overlapping options:
+- **one claim + 2–3 supports** → `bento_hero_duo` (and `three_col`'s `lead_plus_pair`), not a `hero_top` / `two_col_2_1` variant family
+- **inventory / catalog** → `meta_bento`; **two-sided dramatic contrast** → `split_style_duel`
+- **a single number** → `stat_hero`; **one element** → `single_focus`; **charts** → `chart_*`; **diagram primitives** → their own specs
+
+Same discipline as flow: a content-driven family where it earns its keep, never variety for its own sake.
+
+**This is composition, never recolor and never a new layout** — `layout` stays `three_col`, the role palette is untouched, and `card_variant` never bypasses the 4 information-loss signals (if direction / alignment / topology / axis loss fires on the page, switch to the matching primitive instead). **Repetition is still a feature**: a same-structure parallel series (the four D's, N pillars) keeps this one shared card language; assign variants only by each page's real sub-shape — when several pages share one ruler, give them all `axis_labeled` with identical labels (deliberate rhyme, not monotony). Forcing different variants just to look different is the same bug as switching layouts for variety (P3-06).
 
 #### glass_arch_flow variants — 同一套工藝，四種構圖
 
@@ -199,13 +238,13 @@ The planner sets `design_brief.flow_variant` **once per deck**; all static `flow
 
 When planning sets a `motion` field, the slide ships as a looping GIF (flowing dashes in slideshow mode; that slide loses Convert-to-Shape). The animated element rides an existing composition — never invent a new one for it:
 
-- **`corporate_fresh`**: `transit_pipeline`'s gradient rail takes a thin **white** pulse overlay (`motion: "transit_rail"`); `glass_orbit_loop`'s dotted ring — drawn as open arc segments, not a closed circle — animates directly (`motion: "orbit"`). The swoosh is atmosphere, not a line — it never animates.
+- **`corporate_fresh`**: `transit_pipeline`'s gradient rail takes a thin **white** pulse overlay (`motion: "transit_rail"`); `glass_orbit_loop`'s dotted ring — drawn as open arc segments, not a closed circle — animates directly (`motion: "orbit"`). A conceptual cycle (not just a money loop) is an equally valid reason to animate this ring — the qualifying call is the planner's, per the gate in [prompts/04_planning_draft.md](../prompts/04_planning_draft.md) → "Motion pages". The swoosh is atmosphere, not a line — it never animates.
 - **`dark_apple`**: same rail composition with a graphite `#333333` 12px rail and a pulse overlay in the deck's **highlight color**. How the rail ends follows the arrival-vs-hand-off rule in Step 5.7 — when the last station is the destination (the usual case) the rail ends ON it with a highlight-color terminal ring and **no trailing head**; a trailing head appears only when the flow hands off downstream. The highlight appears only in the pulses, the terminal ring (and a trailing head if present) — single-highlight discipline holds.
 
 Construction recipes, marking rules, and all numeric baselines: [prompts/05_designer_svg.md](../prompts/05_designer_svg.md) Step 5.7 (canonical). The "never animate" list: [references/diagrams.md](diagrams.md).
 
 **Style traits** (what makes it read as this family):
-- **Full-sentence assertion titles** — page titles state the conclusion ("新架構兼具現代化與極致安全，無需重建安控"), not the topic ("架構介紹"). 30–36px, weight 700, charcoal, left-aligned after the pill bar.
+- **Full-sentence assertion titles** — page titles state the conclusion ("新架構兼具現代化與極致安全，無需重建安控"), not the topic ("架構介紹"). 30–36px, weight 700, charcoal, left-aligned after the pill bar. Because the title already *is* the page's conclusion, a page does not also need a closing so-what line at the bottom; a bottom line that paraphrases the title is the title said twice. Reserve any bottom line for a genuinely new point (consequence / hand-off) — see [prompts/05_designer_svg.md](../prompts/05_designer_svg.md) Step 6 → "content".
 - **Text density is a feature** — body runs 18–19px / line-height 1.85, 2–4 lines per block, with orange emphasis carrying the skim path. This family tolerates (and expects) more prose than `dark_apple`.
 - **Centered short blocks are allowed** — column/card paragraphs ≤4 lines under an icon may center; longer prose left-aligns. (Per-family exception to the global "never center body text" rule.)
 - **Icons are composed duotone illustrations** — 96–120px, built per the `duotone_icon` recipe (light-blue `#D8E4FB` panels + `#5E8FEF` Lucide skeleton + detail strokes). Icons never carry color variety.

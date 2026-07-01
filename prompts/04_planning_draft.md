@@ -137,10 +137,10 @@ Pick the *minimum* bento layout that fits the content. Don't over-engineer.
 |---|---|---|
 | `single_focus` | One headline element (quote, image) | 1 |
 | `stat_hero` | **One huge number is the message.** Quarter growth, market share, ARR | 1 stat |
-| `mini_grid` | **3–5 parallel stats / features.** Annual-report KPI page. | 3–5 mini-cards in 1 main card (6+ → split into two pages) |
-| `two_col_50_50` | Two parallel ideas, before/after, pros/cons | 2 |
+| `mini_grid` | **3–5 parallel stats / features.** Annual-report KPI page. (corporate_fresh: `card_variant` per page — see design_system.md) | 3–5 mini-cards in 1 main card (6+ → split into two pages) |
+| `two_col_50_50` | Two parallel ideas, before/after, pros/cons (corporate_fresh: `card_variant` per page — see design_system.md) | 2 |
 | `two_col_2_1` | One main idea + 1 supporting fact | 2 (1 large + 1 small) |
-| `three_col` | Three parallel pillars / steps / values | 3 |
+| `three_col` | Three parallel pillars / steps / values (corporate_fresh: pick a `card_variant` per page — see design_system.md → "three_col card_variant") | 3 |
 | `hero_top` | One key claim + 3–4 supporting details | 1 wide + 3–4 small |
 | `mixed_grid` | Asymmetric — let content dictate | 4–6 mixed |
 | `chart_bar` | **Compare 4–10 categories** on one metric (revenue by segment, etc.) | 1 chart, see `chart_data` |
@@ -269,8 +269,8 @@ A page may carry an optional `"motion"` field. When set, Phase 4 builds the page
 
 **This is a composition decision, not a decoration.** Decide it here in Phase 3, with three questions in order:
 
-1. **Is this page's story a CONTINUOUS flow?** Data, money, traffic, or energy continuously passing through a system — not discrete steps, events, or state changes. If no → no `motion`.
-2. **Is it worth the deck's motion budget?** At most **2–3 motion pages per deck**, reserved for money slides. Every motion page pays a real price: that slide becomes a GIF — **not Convert-to-Shape editable**, animated only in slideshow mode, static in the PDF. If no → no `motion`.
+1. **Does the page's story have continuous movement — either throughput or a true cycle?** Two shapes qualify: (a) **throughput** — data, money, traffic, or energy continuously passing *through* a system; (b) a **true cycle** — an iterative loop that returns to its start with no endpoint (描述→生成→明辨→修正…回到起點), where *the rotation itself is the message* even though it iterates rather than throughputs. What does **not** qualify: discrete steps, dated events/timelines, funnels, or one-off state changes. If none of these → no `motion`. (The `cycle` primitive's identity is exactly this loop — diagrams.md → "`cycle` — iterative process with no endpoint".)
+2. **Is it worth the deck's motion budget?** At most **2–3 motion pages per deck**, reserved for the 2–3 highest-leverage pages — a money slide, **or the deck's one core process/cycle diagram**. Every motion page pays a real price: that slide becomes a GIF — **not Convert-to-Shape editable**, animated only in slideshow mode, static in the PDF. If no → no `motion`.
 3. **Yes to both** → set `motion` and pair it with the matching layout:
 
 | `motion` value | Pairs with | Content shape |
@@ -280,7 +280,7 @@ A page may carry an optional `"motion"` field. When set, Phase 4 builds the page
 | `"hub"` | `layout: "flow"` + describe sources/target in `visual_notes` | many-to-one convergence or one-to-many distribution of a continuous stream |
 | `"accent_bypass"` | any static layout + describe the exceptional path in `visual_notes` | a static structure where ONE continuous path (fast path, feedback) is itself the message |
 
-Never set `motion` for discrete-step flows, timelines, or funnels — see the "never animate" list in [references/diagrams.md](../references/diagrams.md). Construction recipes and numeric rules live in `prompts/05_designer_svg.md` Step 5.7 (the designer's job, not yours).
+Never set `motion` for discrete-step flows, timelines, or funnels — but a **true cycle is fair game** (it loops, it isn't a discrete-step flow); see the "never animate" list in [references/diagrams.md](../references/diagrams.md), which deliberately omits cycle. Construction recipes and numeric rules live in `prompts/05_designer_svg.md` Step 5.7 (the designer's job, not yours).
 
 ```json
 {
@@ -301,6 +301,23 @@ Never set `motion` for discrete-step flows, timelines, or funnels — see the "n
 When `palette_hint` is `corporate_fresh` and the deck contains at least one static `flow` page, set `design_brief.flow_variant`. Like `motion`, this is a **composition decision made here, constructively** — the designer executes your pick; they never improvise a different one, and pages must not each pick their own (one variant per deck: coherence inside the deck, variety across decks).
 
 Derive the pick from the story the steps tell — the four options and their story-shape triggers are defined in [references/design_system.md](../references/design_system.md) → "glass_arch_flow variants" (capability built up step by step → `terrace_ascent`; a journey through stations → `river_ribbon`; top-down procedure or longer prose → `cascade_fall`; evenly-weighted parallel stages → `dome_arcade`). `dome_arcade` is one option of four, not the default — pick it for a story reason, not out of habit. When no story shape clearly fits, default to `river_ribbon`. Pages carrying a `motion` field keep their motion composition (`transit_pipeline` etc.) and ignore `flow_variant`. Omit the field for non-fresh palettes or decks with no static flow page.
+
+## Card composition — `card_variant`（corporate_fresh bento card layouts）
+
+When `palette_hint` is `corporate_fresh`, a `three_col`, `mini_grid`, or `two_col_50_50` content page may set an optional **per-page** `"card_variant"`. Unlike `flow_variant` (one per deck), this is per-page — these layouts recur across a deck, so each page gets the composition its *own* content earns. Absent → that layout's neutral default (`three_col`→`icon_column`, `mini_grid`→`even_grid`, `two_col_50_50`→`balanced`). The shared card language never changes; this is composition **inside** the layout, **not** a layout switch, and it never bypasses the 4 information-loss signals.
+
+```json
+{ "page_id": 8, "page_type": "content", "layout": "three_col", "card_variant": "numbered_steps", "title": "…", "cards": [ /* 3 cards */ ] }
+```
+
+Derive the pick from the page's content sub-shape — full triggers + geometry per layout in [references/design_system.md](../references/design_system.md) → the `card_variant` subsections:
+- **`three_col`**: independent parallels → `icon_column`; weak order (first→then→then, not a hard dependency — else `flow`/`timeline`) → `numbered_steps`; one shared dimension axis (e.g. Product/Process/Performance) → `axis_labeled`; one leads + two support → `lead_plus_pair`
+- **`mini_grid`** (KPI numbers): comparable parallel metrics → `even_grid`; relative magnitudes matter / longer captions → `ribbon_row`; one number dominates a set → `spotlight` (a lone number with no set is `stat_hero`)
+- **`two_col_50_50`**: two co-equal ideas / options → `balanced`; a transformation (current → new) → `before_after` (a dramatic style contrast is `split_style_duel`)
+
+`card_variant` covers only these recurring card layouts; one-claim-plus-supports uses `bento_hero_duo`, inventory uses `meta_bento`, etc. — see design_system.md → "Where card_variant stops".
+
+**Same-structure parallel series** (the four D's, N pillars, N criteria — each its own page with near-identical card structure): assign `card_variant` by each page's *real* sub-shape. When the series shares one ruler, give every page `axis_labeled` with identical labels — a deliberate visual rhyme, the legitimate kind of repetition. When the pages' sub-shapes genuinely differ, they naturally land on different variants. **Never flip a variant just to make a page look different from its neighbour** — that's the P3-06 anti-pattern (variety for its own sake) in a new place. Repetition driven by identical content is a feature; difference must be earned by content.
 
 ---
 
@@ -647,7 +664,7 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 - [ ] Is `is_number_first` set correctly on every content card?
 - [ ] For number-first cards, is `stat_value` a real concrete number (not "many", "several", "various")?
 - [ ] Did I pick `stat_hero` or `mini_grid` for data-dense pages?
-- [ ] Are layouts driven by content shape? (Avoid mechanical repetition like 5 `three_col` pages in a row — **but layout choice follows content, not visual variety. Never switch to a primitive layout just to break a streak of bento pages.** Repetition of bento is a feature: shared layout language across the deck.)
+- [ ] Are layouts driven by content shape? (Avoid mechanical repetition like 5 `three_col` pages in a row — **but layout choice follows content, not visual variety. Never switch to a primitive layout just to break a streak of bento pages.** Repetition of bento is a feature: shared layout language across the deck. For a same-structure run of corporate_fresh `three_col` pages, differentiate them the *right* way — a per-page `card_variant` driven by each page's sub-shape, not a layout switch; see the `card_variant` check below.)
 - [ ] Did I write actual speaker notes, not "TBD"?
 - [ ] Is the `design_brief` palette consistent with the tone in `brief.md`?
 - [ ] Is `design_brief.highlight_color` set to ONE concrete hex value?
@@ -658,6 +675,7 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 - [ ] **Bento-first discipline**: for every page using a primitive layout (`flow` / `timeline` / `cycle` / `funnel` / `compare_table` / `quadrant_2x2` / `venn` / `hierarchy_tree` / `pyramid`), can I name the specific information-loss signal that justified leaving bento? If not, switch back to bento.
 - [ ] **Primitive ratio**: is the primitive-layout share of content pages ≤ ~40%? If higher, re-check each primitive page for false positives on the loss signals.
 - [ ] **Flow variant** (corporate_fresh with static flow pages only): is `design_brief.flow_variant` set, and can I say in one sentence which story shape justified the pick? ("no shape clearly fits → `river_ribbon` default" is a valid answer; "because it's the usual one" is not — especially for `dome_arcade`.)
+- [ ] **Card variant** (corporate_fresh `three_col` / `mini_grid` / `two_col_50_50` pages): is `card_variant` set from each page's sub-shape, and can I say in one sentence why? For a same-structure parallel series, are variants assigned by real sub-shape (e.g. a shared-axis `three_col` series → all `axis_labeled` with identical labels), never flipped just to look different?
 
 Fail any check → revise before emitting.
 

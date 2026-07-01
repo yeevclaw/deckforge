@@ -78,6 +78,13 @@ The reference doc for each family carries the exact coordinates / geometry / col
 
 **corporate_fresh `flow` pages have four starting templates, not one.** Pick the file matching `design_brief.flow_variant`: `terrace_ascent` → `templates/fresh_flow_terrace.svg`, `river_ribbon` → `templates/fresh_flow_river.svg`, `cascade_fall` → `templates/fresh_flow_cascade.svg`, `dome_arcade` → `templates/fresh_flow.svg` (geometry recipes: design_system.md → "glass_arch_flow variants"). If `flow_variant` is absent from an older planning.json, fall back to `river_ribbon` (`fresh_flow_river.svg`) — the family's no-clear-fit default, NOT the dome arcade. Pages with a `motion` field keep their Step 5.7 motion composition and ignore `flow_variant`.
 
+**corporate_fresh bento card layouts have `card_variant` starters too** — `card_variant` is **per-page** (not per-deck like `flow_variant`); render the variant planning picked, never a different one; absent → the layout's default (the first in each list):
+- `three_col`: `icon_column` → `templates/fresh_3col.svg`, `numbered_steps` → `templates/fresh_3col_steps.svg`, `axis_labeled` → `templates/fresh_3col_axis.svg`, `lead_plus_pair` → `templates/fresh_3col_lead.svg`
+- `mini_grid` (KPI numbers): `even_grid` → `templates/fresh_mini_grid.svg`, `ribbon_row` → `templates/fresh_mini_grid_ribbon.svg`, `spotlight` → `templates/fresh_mini_grid_spotlight.svg`
+- `two_col_50_50`: `balanced` → `templates/fresh_2col.svg`, `before_after` → `templates/fresh_2col_beforeafter.svg`
+
+Geometry recipes for all of them: design_system.md → the `card_variant` subsections.
+
 ### Step 2: apply the palette
 
 Resolve `palette_hint` to actual colors (full table in [references/design_system.md](../references/design_system.md)). Example:
@@ -340,7 +347,7 @@ If `planning.json` specifies a diagram primitive layout — `flow`, `timeline`, 
 
   **Hard invariant (both branches): the terminal symbol never overlaps the terminal node, and never a `marker` on a thick line.** Gluing a fat triangle onto the rail's end where a station already sits is the failure the old recipe shipped — a 44px-tall head whose base fell on the last ring and swallowed it. Pick arrival or hand-off by what the last station *means*; the no-collision geometry is the only fixed rule.
 
-- **`orbit`** — animate the loop itself, but build the ring from **open `<path>` arcs laid end-to-end, never a single closed `<circle>`/closed path** (a closed dashed shape animates into marching-ants — see the marking table below and diagrams.md). `glass_orbit_loop`'s ring (corporate_fresh) and the cycle arcs (dark_apple) are both several open arcs around the loop; they count as ONE animated system, share the same dasharray, and animate together so the dashes read as one continuous rotation.
+- **`orbit`** — animate the loop itself, but build the ring from **open `<path>` arcs laid end-to-end, never a single closed `<circle>`/closed path** (a closed dashed shape animates into marching-ants — see the marking table below and diagrams.md). `glass_orbit_loop`'s ring (corporate_fresh) and the cycle arcs (dark_apple) are both several open arcs around the loop; they count as ONE animated system, share the same dasharray, and animate together so the dashes read as one continuous rotation. A conceptual loop (描述→生成→明辨→修正, returning to start) animates exactly the same way — the planner decides it qualifies; you render the open-arc ring identically whether the loop is a money cycle or a concept cycle.
 
 - **`hub`** — fan-in / fan-out geometry is defined in [references/diagrams.md](../references/diagrams.md) (flow primitive, "Fan-in / fan-out variant"): ≤3 sources connect directly to anchors spread along the target's edge; ≥4 sources merge into a trunk first, ONE arrowhead at the target. Branches + trunk all carry `flow-anim` with the same dasharray; flow direction follows each path's drawing direction.
 
@@ -366,6 +373,7 @@ Animation speed and frame count are fixed in the converter (2 dash periods per l
 - **toc**: 4–6 numbered mini-cards in a 2×3 or 2×2 grid. Each has a big "01" / "02"… in highlight color (60–80px) + 1-line part title in white.
 - **section_break**: huge part title (80–96px white), small caption (16px gray-400). Optional faint giant numeral in background (opacity 0.08, 320–480px, in highlight color).
 - **content**: render the layout per the `cards` array — **except** for `chart_*` layouts (render from `chart_data`, see Step 5.5) and the 9 diagram primitive layouts (render from the matching `*_data` field, see Step 5.6). Chart and primitive pages may have an empty or omitted `cards` field; accept either without rejecting.
+- **Bottom takeaway line (optional, most pages skip it)**: the page's conclusion is already carried by its assertion title — you do **not** owe every page a closing so-what sentence. Add a bottom line only when it advances a *new* point the title does not already make: a consequence, an implication, or a hand-off to the next page. **Hard invariant: if the line's content maps back to the title — a paraphrase, a restatement, or a tighter synonym of it — delete it.** Example of the failure to avoid: title 「四種能力,彼此依存」 with a bottom line 「四種能力 彼此依存——任一環薄弱…」 — that is the title said twice; cut it. When a bottom line earns its place, set it 14–16px in the body-gray (`#A0A0A0` dark / `#666666` fresh), never in the highlight color, so it reads as a footnote, not a second title. (Graded at rubric P5-10.)
 - **stat_hero**: one card containing one giant number. Number at 100–120px font-weight 900 in highlight color, centered at (640, 380). Caption below at (640, 450), 16px white. Optional EN caption at (640, 475), 12px gray-500. **Optionally place a subtle highlight-color radial glow behind the number** to make it feel lit from within — `<radialGradient>` with stops at `(0%, highlight, alpha=0.10) → (60%, highlight, alpha=0.03) → (100%, alpha=0)`, rendered as an 800×280 rect centered around the number. Single-color discipline preserved (same highlight color, just alpha). If the glow visibly competes with the number, lower max alpha to 0.06. Skip the glow entirely on dense data pages — it only fits when the page is genuinely about one number with breathing room.
 - **mini_grid**: main card (`x=48, y=140, w=1184, h=532, rx=20, fill=#1A1A1A, stroke=#333333`). Inside it, render mini-cards horizontally. For 4 cards: `x = 88, 369, 650, 931`, `y=226, w=257, h=360, rx=12, fill=#222222`. For 3 cards: `x = 130, 511, 892, w=295`. For 5 cards: `x = 88, 311, 534, 757, 980, w=200`. **Keep ≥24px gap between mini-cards.**
 - **end**: "Thank you" centered. Optional contact/CTA below in 14px gray-400. Keep it minimal.
@@ -423,6 +431,7 @@ Silently run this before emitting:
 - [ ] Root is `<svg viewBox="0 0 1280 720" …>`, no scroll/clip beyond it?
 - [ ] All cards have ≥20px gap, outer margin ≥48px?
 - [ ] No accent underline below title?
+- [ ] No bottom takeaway line that just restates the page title? (Most pages need none; keep one only if it adds a new point — Step 6 → "content"; graded at P5-10.)
 - [ ] Palette matches the global `design_brief`?
 - [ ] Motif applied consistently inside the page?
 - [ ] No external network requests (no remote href, no remote font)?
@@ -434,7 +443,7 @@ Silently run this before emitting:
 
 If any fails → fix before output.
 
-> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 4" (ids P4-01..P4-12). The rendered-slide checks live in "Phase 5 — VISUAL" (P5-01..P5-08), graded after the converter runs. Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
+> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 4" (ids P4-01..P4-12). The rendered-slide checks live in "Phase 5 — VISUAL" (P5-01..P5-08 plus P5-10), graded after the converter runs. Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
 
 ## Common mistakes to avoid
 
@@ -464,11 +473,13 @@ If any fails → fix before output.
 
 - **Orange outside body text.** `#E8872E` exists only as bold inline `<tspan>` runs inside paragraphs. An orange heading, icon, or card fill breaks the role discipline.
 - **Topic titles instead of assertion titles.** 「架構介紹」 is wrong; 「新架構無需重建安控，直接繼承既有防護」 is right. The title states the page's conclusion.
+- **A bottom line that restates the assertion title.** Once the title already states the conclusion, a closing sentence that re-says it in other words is noise, not emphasis — and it reads as AI padding. Most pages need no bottom line at all; keep one only when it adds a *new* point (consequence / implication / hand-off). If you can map the bottom line back onto the title, delete the line (see Step 6 → "content"). Per-page judgement, one hard rule: title-echo ⇒ cut.
 - **Reusing the cover gradient on content pages.** The green→indigo gradient belongs to cover/end only. Content pages stay on `#F4F4F4` + pastel washes.
 - **Solid borders where the style wants dashed.** Column separators and alert boxes are dashed; white cards have no border at all (shadow only).
 - **Importing dark_apple drama.** No giant 100px hero numbers, no pure-black anything. Key figures sit inside sentences in orange bold, or as modest 28–36px values in cards.
 - **Skipping the craft recipes.** Complete circles floating mid-canvas, uniform-stroke arc arrows with a triangle glued on, bare 24×24 Lucide icons scaled 4× as hero icons, and dash-style row separators are the four 質感 killers in this family. Use the named recipes in design_system.md → "Craft recipes" (`glass_arch`, `tapered_swoosh`, `duotone_icon`, `aurora_ribbons`, `chunky_chevron`, round-dot separators) — the `templates/fresh_*.svg` starters already embed them. Composition fusion rules that matter most: glass step shapes are anchored to a page edge (never floating complete shapes), and the swoosh is painted BEFORE the glass forms so its endpoints tuck behind the first and last one.
 - **Ignoring `flow_variant`.** Rendering a flow page as the dome arcade when planning picked `terrace_ascent` / `river_ribbon` / `cascade_fall` (or vice versa) means the deck's composition decision was silently overridden — the exact habit that made every deck's flow page look identical. The variant comes from planning.json, not from which template you saw last.
+- **Ignoring `card_variant`.** The same trap on `three_col` / `mini_grid` / `two_col_50_50` pages: rendering the layout's default composition when planning picked another variant (or vice versa) silently overrides the planner's per-page call — the habit that makes a run of same-structure pages (the four D's, N pillars, repeated KPI grids) blur into one. The variant is per-page in planning.json; render the one each page asked for.
 
 ## Why SVG (not HTML, not PNG)
 

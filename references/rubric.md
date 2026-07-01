@@ -104,6 +104,7 @@ rest stay self-checks.
 | P3-14 | Bento-first: every primitive-layout page names its information-loss signal | inspect each primitive page | self |
 | P3-15 | Primitive-layout share of content pages ≤ ~40% | count primitive vs total | machine |
 | P3-16 | `flow_variant` set (corporate_fresh static flow) with a one-sentence story-shape reason | inspect `design_brief.flow_variant` | self |
+| P3-17 | `card_variant` set per corporate_fresh card-variant page (`three_col` / `mini_grid` / `two_col_50_50`) with a one-sentence content-substructure reason; a same-structure parallel series assigns variants by each page's substructure, never for variety | inspect `card_variant` choices | self |
 
 ## Phase 4 — `pages/page_NN.svg`
 
@@ -143,6 +144,7 @@ can only see *after* rasterization — they are invisible in the SVG source.
 | P5-07 | Chart / diagram labels are readable and not clipped | look at chart slides | grader |
 | P5-08 | Each slide has visible hierarchy (hero number / icon / motif) — not a text wall | look at each slide | grader |
 | P5-09 | Speaker notes present where `planning.json` intended (not visual — confirmed against metadata at delivery, not by the image grader) | compare `.notes.md` to planning | self |
+| P5-10 | No bottom takeaway line that restates the page title (a closing sentence paraphrasing the assertion title is the title said twice; most pages should have no bottom line) | look at each slide, compare to the title | grader |
 
 ---
 

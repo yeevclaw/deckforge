@@ -2,9 +2,8 @@
 
 **English** · [繁體中文](README.md)
 
-> A Claude skill that produces **professional, editable PowerPoint decks** by following an expert workflow built on three load-bearing methodologies: **Socratic dialogue** (Phase 1) to surface what the audience must believe after the deck, **pyramid principle** (Phase 1→2→3) to structure the argument, **Bento Grid + a dual-style design system** (Phase 3→4 — corporate-fresh light consulting style by default, dark Apple on request) to render it. Not a one-shot generator — every phase boundary asks for your approval before advancing.
+> A Claude skill that produces **professional, editable PowerPoint decks**. It doesn't stuff your topic into a template — it chains three load-bearing methodologies into one workflow: **Socratic dialogue** (Phase 1) surfaces the one judgment the deck must change, the **pyramid principle** (Phase 1→2→3) structures scattered ideas into a readable argument, and **Bento Grid + a dual-style design system** (Phase 3→4 — corporate-fresh light consulting style by default, dark Apple on request) renders that argument as an editable PPT. Not a one-shot generator — every phase boundary asks for your approval before advancing.
 
-Inspired by the methodology shared by *sandun* on linux.do ("应该是目前最强的PPT Agent，附上完整思路分享"). Output format is **SVG** — the key choice that essay makes — because PowerPoint 2016+ recognizes SVG as native vector graphics, and any user can right-click → *Convert to Shape* to edit every text run and shape.
 
 ## Demo
 
@@ -14,58 +13,26 @@ A 10-page **DeckForge self-intro** mini-deck, produced directly through this ski
 |---|---|---|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.gif) |
 
-Page 3 shows the **animated flow edges** (`flow-anim`) feature as actually produced: the pulse dashes on the pipeline keep flowing in PowerPoint / Keynote slideshow mode (the GIF above is exactly what gets embedded in the slide).
+Page 3 shows the **animated flow edges** (`flow-anim`) feature as actually produced: the pulse dashes on the pipeline keep flowing in PowerPoint / Keynote slideshow mode (the GIF above is exactly what gets embedded in the slide). Animated pages ship as embedded GIFs and only move in slideshow mode; the price is that **those slides are not Convert-to-Shape editable** and render static in the PDF — so each deck caps at 2–3 motion pages, reserved for its most critical process pages.
 
 - Combined PDF: [`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
-- Source SVGs (peek at the Bento Grid coordinates): [`examples/sample-deck/`](examples/sample-deck/)
+- Source SVGs (peek at the Bento Grid coordinates, or drag one into PowerPoint to inspect): [`examples/sample-deck/`](examples/sample-deck/)
 
-## What's inside
 
-```
-DeckForge/
-├── SKILL.md                ← skill entry — Claude reads this first
-├── prompts/                ← 6 phase prompts (one per phase, Phase 0–5)
-│   ├── 00_source_analysis.md   ← Phase 0: source analysis (optional)
-│   ├── 01_needs_research.md
-│   ├── 02_outline_architect.md
-│   ├── 03_content_research.md
-│   ├── 04_planning_draft.md
-│   └── 05_designer_svg.md
-├── references/             ← detailed knowledge bases
-│   ├── bento_grid.md       ← Bento Grid layout system (base layout family)
-│   ├── diagrams.md         ← 9 diagram primitives (used only when bento loses info)
-│   ├── chart_anatomy.md    ← SVG bar / line / donut chart anatomy
-│   ├── design_system.md    ← dark_apple + corporate_fresh light consulting style + 10 traditional palettes
-│   ├── pyramid_principle.md
-│   ├── socratic_loop.md    ← Phase 1 question types + 11 scenario spines
-│   └── editable_mode.md    ← how Convert-to-Shape editing works
-├── templates/              ← 35 SVG files (34 starting templates + `_base.svg`), viewBox 0 0 1280 720
-│   ├── _base.svg           ← shared filters / gradients / 35 Lucide icons
-│   ├── cover.svg
-│   ├── toc.svg
-│   ├── bento_2col.svg      ← two_col_50_50 or two_col_2_1
-│   ├── bento_3col.svg
-│   ├── bento_hero.svg      ← hero_top
-│   ├── bento_mixed.svg     ← mixed_grid
-│   ├── bento_mini_grid.svg ← main card + 3–5 mini-cards (dark_apple)
-│   ├── chart_bar.svg       ← vertical bar chart (single highlight color)
-│   ├── chart_line.svg      ← line + area chart for trends
-│   ├── chart_donut.svg     ← donut chart with center label + legend
-│   ├── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
-│   │   quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← diagram primitives
-│   ├── fresh_cover.svg / fresh_3col.svg / fresh_compare.svg
-│   └── fresh_flow.svg / fresh_flow_terrace.svg / fresh_flow_river.svg / fresh_flow_cascade.svg
-│                           ← corporate_fresh light consulting starters (default style; four glass-flow variants)
-├── scripts/
-│   ├── svg_to_pptx.py      ← Phase 5 assembler: two-layer editable slides + flow-anim GIF; emits .pptx + .pdf
-│   ├── package.sh          ← build deckforge.zip for Claude Desktop upload
-│   ├── setup.sh            ← one-line dependency installer (mac / linux)
-│   └── setup.ps1           ← same, for Windows PowerShell
-└── examples/               ← DeckForge self-intro mini-deck (10 pages)
-    ├── DeckForge-demo.pdf  ← combined rendered PDF
-    ├── slide-1.jpg ... slide-3.gif ← page previews (page 3 is an animated GIF)
-    └── sample-deck/        ← source SVG pages (drag into PowerPoint to inspect)
-```
+## Why SVG → PPTX (not template-based, not raster)?
+
+- SVG is a vector format natively supported by PowerPoint 2016+. The converter splits each slide into a movable background image + an editable content layer: right-click → *Convert to Shape* to edit text, cards, lines and icons; gradients, glassmorphism and shadows ride along in the (movable) background image.
+- Layouts can be designed around the *content*, not crammed into a fixed template.
+- Every deck gets its own palette + visual motif, consistent across all slides (the skill enforces this).
+- See [`references/editable_mode.md`](references/editable_mode.md) for the editing details.
+
+## Credits & methodology
+
+- **Starting point**: the essay "应该是目前最强的PPT Agent,附上完整思路分享" by *sandun* on linux.do. The "top-tier PPT structure architect" and Bento Grid prompts (`prompts/02_outline_architect.md`, `references/bento_grid.md`) are adaptations of his prompts with extensions; SVG as the deliverable format is also that essay's key choice.
+- **Core methodology #1 — Socratic dialogue**: a philosophical form of inquiry through sustained questioning. It leads the interlocutor to examine their own view, exposes the hidden assumptions and logical gaps in it, invites the admission of not-knowing, and pursues objective truth.
+- **Core methodology #2 — Pyramid Principle** (Barbara Minto): "conclusion first, then unpack the supporting points layer by layer top-down," so the audience grasps the core message in the shortest possible time.
+- **SVG as the final format**: chosen to preserve editability inside PowerPoint, rather than shipping static images only.
+- **Bento Grid design language**: the card-grid layout popularized by Apple's product pages.
 
 ## Install (Claude Desktop)
 
@@ -84,15 +51,15 @@ pip install python-pptx resvg-py img2pdf --break-system-packages
 
 > Don't use a terminal? Visit the [releases page](https://github.com/yeevclaw/deckforge/releases/latest), download `deckforge.zip` directly, and run only the `pip install` line in a terminal.
 
-Just three packages — **zero system dependencies**. `resvg-py` bundles a Rust SVG renderer as a pip wheel; no Homebrew, no apt-get, no sudo needed.
+Just three packages — **zero system dependencies**. `resvg-py` bundles a Rust SVG renderer as a pip wheel; no Homebrew, no apt-get, no sudo needed:
 
 - `python-pptx` → assembles the `.pptx`
 - `resvg-py` → rasterizes SVGs to PNG (the fallback Keynote / Preview / older PowerPoint reads)
 - `img2pdf` → assembles the same PNGs into a companion `.pdf`
 
-Phases 1–4 (research / outline / planning / design) are pure Markdown and need no packages. Only Phase 5 uses the above three.
+Phases 1–4 (Socratic dialogue / outline / planning / design) are pure Markdown and need no packages at all; only Phase 5 uses the three above.
 
-> Phase 5 produces **both `.pptx` and `.pdf` by default** — PPTX is the editable artifact for PowerPoint users; PDF is the universal "send to anyone" artifact.
+> Phase 5 produces **both `.pptx` and `.pdf` by default** — PPTX is the editable artifact for PowerPoint users; PDF is the universal artifact for direct sharing / clients / anyone without PowerPoint.
 
 ### 2. Import the zip in Claude Desktop
 
@@ -101,42 +68,83 @@ Phases 1–4 (research / outline / planning / design) are pure Markdown and need
 3. Pick `~/Downloads/deckforge.zip`.
 4. `deckforge` appears under *Personal skills*.
 
-Done. Just ask Claude:
-
-> *Build me a deck about XYZ*
-> *幫我做一份簡報，主題是 XYZ*
+Done. Ask Claude "**Build me a deck about XXX**" and the skill triggers automatically.
 
 > **Updating to a new version**: download the new zip from the releases page, delete the old `deckforge` in Customize → Skills, and Upload a skill again.
 
-## The 5 phases (overview)
+## How to use
 
-| Phase | Output |
-|---|---|
-| 0 — Source analysis (optional) | `analysis.md` (when you provide a source document) |
-| 1 — **Socratic Clarification** | `brief.md` — pop-up dialogue surfaces the deck's real thesis (audience belief shift, core thesis, proof pillars, likely objection, desired action) |
-| 2 — Outline architecture | `outline.json` — pyramid principle, every page title is a claim, MECE-aligned with brief.md's proof pillars |
-| 3 — **Planning draft** | `planning.json` — actual content + Bento Grid layout per page ← *the step most AI tools skip* |
-| 4 — Design | `pages/page_NN.svg` — one vector page per slide |
-| 5 — Produce | `presentation.pptx` + companion `.pdf` (+ `.notes.md` if speaker notes exist) — fully editable in PowerPoint 2016+ via Convert to Shape |
+Tell Claude in Claude Desktop:
 
-Every phase boundary asks for explicit approval before advancing — no silent transitions.
+> Tip: Claude Desktop supports drag-and-drop files. If the deck is based on an existing document (annual report, whitepaper, paper, issue brief), drop the file in together with the topic — the skill runs Phase 0 (source analysis) before outlining, and the result is much better.
 
-The skill is **NOT** a one-shot generator. It deliberately includes review checkpoints (after outline, after planning) so you can fix things cheaply before any design effort is spent.
+- "**Build me a deck about XXX**"
+- "幫我做一份簡報,主題是 XXX"
+- "Make a Series B fundraising pitch"
+- "Client proposal deck, 10 pages"
 
-## Why SVG → PPTX (not template-based, not raster)?
+Claude triggers DeckForge automatically and runs the full workflow:
 
-- SVG is natively supported by PowerPoint 2016+. The converter splits each slide into a movable background image + an editable content layer: right-click → *Convert to Shape* to edit text, cards, lines and icons; gradients, glassmorphism and shadows ride along in the (movable) background image.
-- Layouts can be designed around the *content*, not crammed into a fixed template.
-- Per-deck palette + motif consistency (the skill enforces this).
-- See [`references/editable_mode.md`](references/editable_mode.md) for the editing details.
+| Phase | Output | What you do |
+|---|---|---|
+| 0. Source analysis (optional) | `analysis.md` | Runs automatically when you drop a document; skipped otherwise |
+| 1. **Socratic clarification** | `brief.md` | **Pop-up dialogue** surfaces the judgment the deck must actually change (thesis / belief shift / proof pillars / objection / desired action) |
+| 2. Outline architecture | `outline.json` | Expanded with the **pyramid principle** — every page title is a claim, MECE-aligned with the proof pillars; **reviewing the title sequence** takes 30 seconds to change direction |
+| 3. Planning draft | `planning.json` | **Review each page's content**; rewording costs 1 minute ← *the step most AI tools skip* |
+| 4. SVG design | `pages/page_NN.svg` | One vector page per slide, generated automatically |
+| 5. Produce | `presentation.pptx` + companion `.pdf` (+ `.notes.md` if speaker notes exist) | Assembled automatically; fully editable in PowerPoint 2016+ via Convert to Shape |
 
-## Credits
+Every phase boundary pops up for your approval before advancing — no silent transitions.
 
-- Methodology: *sandun* @ linux.do — original article ("应该是目前最强的PPT Agent，附上完整思路分享")
-- SVG as the deliverable format: also from that article — the choice preserves editability inside PowerPoint.
-- The "顶级的PPT结构架构师" and "便當網格" prompts in `prompts/02_outline_architect.md` and `references/bento_grid.md` are direct adaptations of his prompts, with extensions.
-- Bento Grid design language: popularized by Apple product pages.
-- Pyramid Principle: Barbara Minto.
+The skill is **NOT** a one-shot generator. It deliberately places checkpoints after the outline and after the planning draft, so you can change direction at the cheapest possible cost — before any design effort is spent.
+
+
+## What's inside
+
+```
+DeckForge/
+├── SKILL.md                ← skill entry — Claude reads this first
+├── prompts/                ← 6 phase prompts
+│   ├── 00_source_analysis.md  ← Phase 0: source analysis (optional)
+│   ├── 01_needs_research.md   ← Phase 1: Socratic Clarification Loop
+│   ├── 02_outline_architect.md ← Phase 2: outline
+│   ├── 03_content_research.md ← Phase 2.5: web research (optional)
+│   ├── 04_planning_draft.md   ← Phase 3: planning draft (with extraction examples)
+│   └── 05_designer_svg.md     ← Phase 4: SVG design
+├── references/             ← detailed knowledge bases
+│   ├── bento_grid.md       ← 8 Bento Grid layouts (the default; incl. stat_hero / mini_grid)
+│   ├── diagrams.md         ← 9 diagram primitives (used only when bento loses information)
+│   ├── chart_anatomy.md    ← SVG bar / line / donut chart anatomy
+│   ├── design_system.md    ← dark_apple palette + corporate_fresh light consulting style + 10 traditional palettes
+│   ├── pyramid_principle.md ← pyramid-principle map across Phases 1/2/3
+│   ├── socratic_loop.md    ← Phase 1 question types + 11 scenario spines
+│   └── editable_mode.md    ← how Convert-to-Shape editing works in PowerPoint
+├── templates/              ← 35 SVG files (34 starting templates + `_base.svg`), viewBox 0 0 1280 720
+│   ├── _base.svg           ← shared filters / gradients / 44 Lucide icons
+│   ├── cover.svg / toc.svg
+│   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
+│   ├── bento_mini_grid.svg ← main card + 3–5 mini-cards (dark_apple style)
+│   ├── chart_bar.svg / chart_line.svg / chart_donut.svg
+│   ├── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
+│   │   quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← diagram primitives
+│   ├── fresh_cover.svg / fresh_compare.svg ← corporate_fresh cover & compare-table starters
+│   ├── fresh_3col.svg / fresh_3col_steps.svg / fresh_3col_axis.svg / fresh_3col_lead.svg
+│   │                       ← the 4 three_col card_variant compositions (picked per page by content sub-shape)
+│   ├── fresh_mini_grid.svg / fresh_mini_grid_ribbon.svg / fresh_mini_grid_spotlight.svg
+│   │                       ← the 3 mini_grid KPI-grid card_variant compositions
+│   ├── fresh_2col.svg / fresh_2col_beforeafter.svg ← the 2 two_col_50_50 card_variant compositions
+│   └── fresh_flow.svg / fresh_flow_terrace.svg / fresh_flow_river.svg / fresh_flow_cascade.svg
+│                           ← the 4 glass-flow compositions for static flow pages (one per deck)
+├── scripts/
+│   ├── svg_to_pptx.py      ← Phase 5 assembler: two-layer editable slides + flow-anim GIF; emits .pptx + .pdf
+│   ├── package.sh          ← build deckforge.zip for Claude Desktop upload
+│   ├── setup.sh            ← one-line dependency installer (mac / linux)
+│   └── setup.ps1           ← same, for Windows PowerShell
+└── examples/               ← DeckForge self-intro mini-deck (10 pages, full output)
+    ├── DeckForge-demo.pdf  ← combined rendered PDF
+    ├── slide-1.jpg ... slide-3.gif ← page previews (page 3 is an animated GIF)
+    └── sample-deck/        ← source SVG pages
+```
 
 ## For developers / forks
 

@@ -85,6 +85,8 @@ The reference doc for each family carries the exact coordinates / geometry / col
 
 Geometry recipes for all of them: design_system.md → the `card_variant` subsections.
 
+The variant instruction binds **within** the template system. If a page genuinely earns a free composition under "How to design" above (three conditions), the variant assignment yields together with the template it names — the same holds for `flow_variant` on flow pages. What is never legitimate is the middle ground: staying on-template but rendering a different variant's composition than the one planning picked.
+
 ### Step 2: apply the palette
 
 Resolve `palette_hint` to actual colors (full table in [references/design_system.md](../references/design_system.md)). Example:

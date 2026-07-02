@@ -103,6 +103,7 @@ RUBRIC_CITING_FILES = [
     "prompts/02_outline_architect.md",
     "prompts/04_planning_draft.md",
     "prompts/05_designer_svg.md",
+    "prompts/06_visual_grader.md",
     "prompts/07_content_grader.md",
 ]
 
@@ -122,11 +123,80 @@ def check_rubric_backrefs() -> list[str]:
     return errors
 
 
+# --- Check 5: variant / motion value enums -------------------------------------
+# Same shape as the layout-enum check. card_variant (per layout), flow_variant,
+# and motion each state their allowed values in 4 files; a value renamed or added
+# in one place silently strands the others.
+SPEC_FILES = [
+    "SKILL.md",
+    "prompts/04_planning_draft.md",
+    "prompts/05_designer_svg.md",
+    "references/design_system.md",
+]
+VARIANT_ENUMS = [
+    ("card_variant three_col",
+     ["icon_column", "numbered_steps", "axis_labeled", "lead_plus_pair"], SPEC_FILES),
+    ("card_variant mini_grid",
+     ["even_grid", "ribbon_row", "spotlight"], SPEC_FILES),
+    ("card_variant two_col_50_50",
+     ["balanced", "before_after"], SPEC_FILES),
+    ("flow_variant",
+     ["terrace_ascent", "river_ribbon", "cascade_fall", "dome_arcade"], SPEC_FILES),
+    ("motion",
+     ["transit_rail", "orbit", "hub", "accent_bypass"],
+     ["SKILL.md", "prompts/04_planning_draft.md", "prompts/05_designer_svg.md", "CLAUDE.md"]),
+]
+
+
+def check_variant_enums() -> list[str]:
+    errors: list[str] = []
+    for name, values, files in VARIANT_ENUMS:
+        for rel in files:
+            text = read(rel)
+            missing = [v for v in values if v not in text]
+            if missing:
+                errors.append(f"{rel}: {name} enum missing {missing}.")
+    return errors
+
+
+# --- Check 6: _base.svg icon count ---------------------------------------------
+# Ground truth = number of <symbol> defs in templates/_base.svg. The docs' claim
+# ("NN Lucide icons") was stale for a year before anyone noticed — same failure
+# class as the template count, so guard it the same way.
+ICON_COUNT_FILES = ["SKILL.md", "README.md", "README.en.md"]
+ICON_CLAIM_PATTERNS = [
+    r"(\d+)\s+Lucide icons?",    # SKILL.md, README.en.md
+    r"(\d+)\s*個\s*Lucide icon",  # README.md (zh)
+]
+
+
+def check_icon_count() -> list[str]:
+    errors: list[str] = []
+    truth = len(re.findall(r"<symbol\b", read("templates/_base.svg")))
+    for rel in ICON_COUNT_FILES:
+        text = read(rel)
+        found = [int(m) for pat in ICON_CLAIM_PATTERNS for m in re.findall(pat, text)]
+        if not found:
+            errors.append(
+                f"{rel}: no 'NN Lucide icons' claim found — wording likely changed; "
+                f"update ICON_CLAIM_PATTERNS in check_docs.py or restore the claim."
+            )
+            continue
+        bad = [n for n in found if n != truth]
+        if bad:
+            errors.append(
+                f"{rel}: states {bad} Lucide icons but templates/_base.svg has {truth} <symbol> defs."
+            )
+    return errors
+
+
 CHECKS = [
     ("template count", check_template_count),
     ("layout enum", check_layout_enum),
     ("README parity", check_readme_parity),
     ("rubric back-refs", check_rubric_backrefs),
+    ("variant/motion enums", check_variant_enums),
+    ("icon count", check_icon_count),
 ]
 
 

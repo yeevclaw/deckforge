@@ -35,6 +35,6 @@
   <!-- title block -->
   <text x="120" y="330" font-size="104" font-weight="800" fill="#FFFFFF" letter-spacing="-2">DeckForge</text>
   <rect x="124" y="372" width="640" height="52" fill="#FFFFFF"/>
-  <text x="146" y="409" font-size="27" font-weight="700" fill="#3E5BA8">好簡報的靈魂是內容,不是皮囊</text>
+  <text x="146" y="409" font-size="27" font-weight="700" fill="#3E5BA8">簡報的靈魂是內容,設計讓它被看見</text>
   <text x="124" y="476" font-size="20" fill="#FFFFFF" fill-opacity="0.92">2026 · 產品介紹</text>
 </svg>

@@ -7,31 +7,32 @@
 
 ## Demo
 
+一份 10 頁的 **DeckForge 自我介紹** mini-deck,直接用這個 skill 的 SVG pipeline 產出:
+
 | | | |
 |---|---|---|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.gif) |
 
-第 3 頁是**流動邊線動畫**(`flow-anim`)的實際產出:管線上的脈衝虛線會在 PowerPoint / Keynote 放映模式持續流動(上面那張 GIF 就是嵌進投影片裡的內容)。
+第 3 頁是**流動邊線動畫**(`flow-anim`)的實際產出:管線上的脈衝虛線會在 PowerPoint / Keynote 放映模式持續流動(上面那張 GIF 就是嵌進投影片裡的內容)。動畫頁以 GIF 嵌入,放映時才會動;代價是**該頁不支援 Convert-to-Shape 編輯**,在 PDF 中為靜態——每份 deck 最多 2–3 頁動畫,只留給最關鍵的流程頁。
 
 - 合併 PDF:[`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
-- 原始 SVG(可看 Bento Grid 座標):[`examples/sample-deck/`](examples/sample-deck/)
+- 原始 SVG(可看 Bento Grid 座標,拖進 PowerPoint 可直接檢視):[`examples/sample-deck/`](examples/sample-deck/)
 
 
 ## 為什麼用 SVG → PPTX(而不是套範本或圖片型 PPT)?
+
 - SVG 是 PowerPoint 2016+ 原生支援的向量圖格式。轉檔器把每頁拆成「可移動的背景圖 + 可編輯內容層」:右鍵「轉換成圖形」即可編輯文字、卡片、線條與圖示;漸層/玻璃態/陰影等氛圍則保留在可整體移動的背景圖中。
 - 同時可以根據**內容自由設計版面**,不用把內容塞進固定範本。
 - 每份 deck 都有專屬配色 + 視覺主題,且整份一致(skill 會強制執行)。
 - 編輯細節見 [`references/editable_mode.md`](references/editable_mode.md)。
 
 ## 設計理念出處
-- **起點**:linux.do 上 *sandun* 寫的「应该是目前最强的PPT Agent」一文。「頂級 PPT 結構架構師」與 便當網格,皆改寫自原文提示詞並加以延伸。
-- **核心方法論一：蘇格拉底反詰**:透過連續性提問進行辯證的哲學 inquiry 形式。引導對話者自我審視、揭示其觀點中的隱含假設與邏輯漏洞，從而承認無知,並探求客觀真理。
-- **核心方法論二：金字塔原理**:「結論先行，由上往下一層層拆解論點」，讓聽眾或讀者能在最短時間內抓住核心訊息。
+
+- **起點**:linux.do 上 *sandun* 寫的「应该是目前最强的PPT Agent,附上完整思路分享」一文。「頂級 PPT 結構架構師」與便當網格(`prompts/02_outline_architect.md`、`references/bento_grid.md`),皆改寫自原文提示詞並加以延伸;以 SVG 作為交付格式也是該文的關鍵選擇。
+- **核心方法論一:蘇格拉底反詰**:透過連續性提問進行辯證的哲學 inquiry 形式。引導對話者自我審視、揭示其觀點中的隱含假設與邏輯漏洞,從而承認無知,並探求客觀真理。
+- **核心方法論二:金字塔原理**(Barbara Minto):「結論先行,由上往下一層層拆解論點」,讓聽眾或讀者能在最短時間內抓住核心訊息。
 - **SVG 作為最終格式**:SVG 是為了在 PowerPoint 端保留可編輯性,而不是只能輸出靜態圖片。
 - **Bento Grid 設計語言**:Apple 產品頁帶起的便當網格排版。
-
-
-
 
 ## 安裝(Claude Desktop)
 
@@ -49,7 +50,15 @@ pip install python-pptx resvg-py img2pdf --break-system-packages
 ```
 
 > 不會用命令列?直接到 [releases 頁面](https://github.com/yeevclaw/deckforge/releases/latest)點 `deckforge.zip` 下載,然後在終端機跑那一行 `pip install`。
-> 
+
+只有三個套件,**零系統依賴**——`resvg-py` 是把 Rust SVG 渲染器包成 pip wheel,不需要 Homebrew、apt-get 或 sudo:
+
+- `python-pptx` → 組裝 `.pptx`
+- `resvg-py` → 把 SVG 渲染成 PNG(Keynote / Preview / 舊版 PowerPoint 讀的 fallback)
+- `img2pdf` → 把同一批 PNG 組裝成隨附的 `.pdf`
+
+Phase 1–4(反詰 / 大綱 / 策劃 / 設計)是純 Markdown,完全不需要套件;只有 Phase 5 用到上面三個。
+
 > 預設會**同時產出 `.pptx` 跟 `.pdf` 兩個檔案**——PPTX 給 PowerPoint 編輯用,PDF 給直接分享 / 客戶看 / 沒有 PowerPoint 的人。
 
 ### 2. 在 Claude Desktop 匯入 zip
@@ -80,12 +89,14 @@ Claude 會自動觸發 DeckForge,跑完整流程:
 |---|---|---|
 | 0. 文件分析(可選) | `analysis.md` | 丟文件就自動跑,沒丟就跳過 |
 | 1. **蘇格拉底反詰** | `brief.md` | **跳窗對話**挖出簡報真正要說服的判斷(thesis / belief shift / proof pillars / objection / desired action) |
-| 2. 大綱架構 | `outline.json` | 用**金字塔原理**展開成大綱,**檢視標題序列**改方向只要 30 秒 |
-| 3. 策劃稿 | `planning.json` | **檢視每頁內容**,改文案只要 1 分鐘 |
-| 4. SVG 設計 | `pages/*.svg` | 自動產出每頁向量設計 |
-| 5. 產出 | `presentation.pptx` + `presentation.pdf` | 自動組裝,兩個檔同時出 |
+| 2. 大綱架構 | `outline.json` | 用**金字塔原理**展開成大綱——每頁標題都是一個主張,與 proof pillars MECE 對齊;**檢視標題序列**改方向只要 30 秒 |
+| 3. 策劃稿 | `planning.json` | **檢視每頁內容**,改文案只要 1 分鐘 ← *多數 AI 工具跳過的一步* |
+| 4. SVG 設計 | `pages/page_NN.svg` | 自動產出每頁向量設計 |
+| 5. 產出 | `presentation.pptx` + 隨附 `.pdf`(有講者備註時另出 `.notes.md`) | 自動組裝;PowerPoint 2016+ 右鍵 Convert to Shape 即可完整編輯 |
 
 每個階段結束都會跳窗讓你確認才往下,沒同意不會自動進入下一階段。
+
+這個 skill **不是**一鍵生成器。它刻意在大綱後、策劃後設置檢查點,讓你在任何設計工夫花下去之前,用最便宜的成本改方向。
 
 
 ## 資料夾內容
@@ -109,16 +120,21 @@ DeckForge/
 │   ├── socratic_loop.md     ← Phase 1 反詰問題類型 + 11 種情境 spine
 │   └── editable_mode.md    ← PowerPoint Convert to Shape 編輯
 ├── templates/              ← 35 個 viewBox 1280×720 SVG(34 起始模板 + `_base.svg` 共用底稿)
-│   ├── _base.svg           ← 共用 filter / 漸層 / 35 個 Lucide icon
+│   ├── _base.svg           ← 共用 filter / 漸層 / 44 個 Lucide icon
 │   ├── cover.svg / toc.svg
 │   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
 │   ├── bento_mini_grid.svg ← 主卡內含 3–5 張 mini-card(dark_apple 風格)
 │   ├── chart_bar.svg / chart_line.svg / chart_donut.svg
 │   ├── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
 │   │   quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← Diagram primitives
-│   ├── fresh_cover.svg / fresh_3col.svg / fresh_compare.svg
+│   ├── fresh_cover.svg / fresh_compare.svg ← corporate_fresh 封面與對照表起始檔
+│   ├── fresh_3col.svg / fresh_3col_steps.svg / fresh_3col_axis.svg / fresh_3col_lead.svg
+│   │                       ← three_col 的 4 種 card_variant 構圖(每頁依內容子結構選用)
+│   ├── fresh_mini_grid.svg / fresh_mini_grid_ribbon.svg / fresh_mini_grid_spotlight.svg
+│   │                       ← mini_grid KPI 網格的 3 種 card_variant 構圖
+│   ├── fresh_2col.svg / fresh_2col_beforeafter.svg ← two_col_50_50 的 2 種 card_variant 構圖
 │   └── fresh_flow.svg / fresh_flow_terrace.svg / fresh_flow_river.svg / fresh_flow_cascade.svg
-│                           ← corporate_fresh 淺色顧問風起始檔(預設風格;四種 glass flow 變體)
+│                           ← 靜態 flow 頁的 4 種 glass-flow 構圖(整份 deck 選一種)
 ├── scripts/
 │   ├── svg_to_pptx.py      ← Phase 5 組裝器:雙層可編輯 + flow-anim GIF;產出 .pptx + .pdf
 │   ├── package.sh          ← 打包 deckforge.zip 供 Claude Desktop 上傳

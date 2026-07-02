@@ -298,7 +298,7 @@ Never set `motion` for discrete-step flows, timelines, or funnels — but a **tr
 
 ## Flow-page composition — `design_brief.flow_variant`（corporate_fresh）
 
-When `palette_hint` is `corporate_fresh` and the deck contains at least one static `flow` page, set `design_brief.flow_variant`. Like `motion`, this is a **composition decision made here, constructively** — the designer executes your pick; they never improvise a different one, and pages must not each pick their own (one variant per deck: coherence inside the deck, variety across decks).
+When `palette_hint` is `corporate_fresh` and the deck contains at least one static `flow` page, set `design_brief.flow_variant`. Like `motion`, this is a **composition decision made here, constructively** — the designer executes your pick; they never improvise a different one, and pages must not each pick their own (one variant per deck: coherence inside the deck, variety across decks). The designer's one sanctioned departure is leaving the template behind entirely under the bounded latitude in `prompts/05_designer_svg.md` → "How to design" — never a swap to a different variant.
 
 Derive the pick from the story the steps tell — the four options and their story-shape triggers are defined in [references/design_system.md](../references/design_system.md) → "glass_arch_flow variants" (capability built up step by step → `terrace_ascent`; a journey through stations → `river_ribbon`; top-down procedure or longer prose → `cascade_fall`; evenly-weighted parallel stages → `dome_arcade`). `dome_arcade` is one option of four, not the default — pick it for a story reason, not out of habit. When no story shape clearly fits, default to `river_ribbon`. Pages carrying a `motion` field keep their motion composition (`transit_pipeline` etc.) and ignore `flow_variant`. Omit the field for non-fresh palettes or decks with no static flow page.
 
@@ -679,7 +679,7 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 
 Fail any check → revise before emitting.
 
-> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 3" (ids P3-01..P3-16, including the title-only read P3-13). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
+> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 3" (ids P3-01..P3-17, including the title-only read P3-13). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
 
 ## Independent content grade — before the Phase 3→4 handoff
 

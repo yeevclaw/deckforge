@@ -331,7 +331,7 @@ For each page in `planning.json`, generate **one self-contained SVG file** with 
 - Chart anatomy: [references/chart_anatomy.md](references/chart_anatomy.md)
 - Color + typography system: [references/design_system.md](references/design_system.md)
 - SVG templates to start from: [templates/](templates/) — 35 files total:
-  - **Shared assets**: `_base.svg` (filters / gradients / 35 Lucide icons used via `<use>`)
+  - **Shared assets**: `_base.svg` (filters / gradients / 44 Lucide icons used via `<use>`)
   - **Page-type starters**: `cover.svg`, `toc.svg`
   - **Bento layouts**: `bento_2col.svg` (two_col_50_50 / two_col_2_1), `bento_3col.svg`, `bento_hero.svg` (hero_top), `bento_mixed.svg` (mixed_grid), `bento_mini_grid.svg` (mini_grid — main card + 3–5 mini-cards, dark_apple)
   - **Chart layouts**: `chart_bar.svg`, `chart_line.svg`, `chart_donut.svg`
@@ -487,7 +487,7 @@ User: "Make me an investor pitch deck for our SaaS product."
 
 1. **Phase 1** (Socratic): 2–3 rounds, ~6 pop-up questions total. Detect scenario = fundraising, then ask about belief shift, traction stat, ask amount, and the strongest objection. Write `brief.md`.
 2. **Phase 2**: Read `brief.md`. Generate `outline.json` (probably 12–18 pages). Show to user for sign-off.
-3. **Phase 3**: Read `outline.json`. Generate `planning.json`. Show to user for sign-off.
+3. **Phase 3**: Read `outline.json`. Generate `planning.json`, run the independent content grade (default-on for full decks — see "Phase 3 content grade"), then show to user for sign-off.
 4. **Phase 4**: Read `planning.json`. Render all pages with the deck's style — `corporate_fresh` by default; `dark_apple` (or a brand palette) only if the user picked it in Phase 1.
 5. **Phase 5**: Read `pages/`. Produce `pitch.pptx` + `pitch.pdf` + (if any notes) `pitch.notes.md`. Deliver all files.
 6. QA loop.
@@ -527,7 +527,9 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── 02_outline_architect.md       ← phase 2 master prompt
 │   ├── 03_content_research.md        ← phase 2.5 (optional web research)
 │   ├── 04_planning_draft.md          ← phase 3 master prompt (with extraction examples)
-│   └── 05_designer_svg.md            ← phase 4 master prompt (SVG output)
+│   ├── 05_designer_svg.md            ← phase 4 master prompt (SVG output)
+│   ├── 06_visual_grader.md           ← Phase 5 QA grader sub-agent (spawned in the verification loop; not a phase prompt)
+│   └── 07_content_grader.md          ← Phase 3 content grader sub-agent (spawned before the 3→4 handoff; not a phase prompt)
 ├── references/
 │   ├── bento_grid.md                 ← Bento Grid layout system (8 layouts — the default)
 │   ├── diagrams.md                   ← 9 diagram primitives — used only when bento loses information
@@ -535,9 +537,10 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── design_system.md              ← palettes, typography, motifs
 │   ├── pyramid_principle.md          ← 金字塔原理 quick guide
 │   ├── socratic_loop.md              ← Phase 1 reference: question types + scenario taxonomy
-│   └── editable_mode.md              ← how Convert-to-Shape works in PowerPoint
+│   ├── editable_mode.md              ← how Convert-to-Shape works in PowerPoint
+│   └── rubric.md                     ← gradeable quality bar (stable ids scored by the 06/07 graders)
 ├── templates/                         ← SVG starting points (viewBox 0 0 1280 720)
-│   ├── _base.svg                     ← shared filters / gradients / 35 Lucide icons
+│   ├── _base.svg                     ← shared filters / gradients / 44 Lucide icons
 │   ├── cover.svg
 │   ├── toc.svg
 │   ├── bento_2col.svg                ← 50/50 or 2:1 (switch widths)

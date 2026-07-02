@@ -65,6 +65,8 @@ Card dimensions: ~1200×580 (full canvas minus margins).
 
 **Use when**: before/after, pros/cons, two parallel ideas, side-by-side comparison.
 
+**corporate_fresh**: this layout is a per-page `card_variant` family — `balanced` (two co-equal ideas) / `before_after` (a transformation); triggers + geometry per design_system.md → "two_col_50_50 card_variant".
+
 ---
 
 ### 3. `two_col_2_1` — asymmetric
@@ -96,6 +98,8 @@ Wide card ~2/3, narrow ~1/3.
 **Use when**: three parallel pillars (values, steps, features, comparisons).
 
 **Don't use when**: only 2 items (looks lonely) or 4+ (use mixed_grid).
+
+**corporate_fresh**: this layout is a per-page `card_variant` family — `icon_column` / `numbered_steps` / `axis_labeled` / `lead_plus_pair`; triggers + geometry per design_system.md → "three_col card_variant".
 
 ---
 
@@ -204,6 +208,7 @@ A main card holds **3–5 mini-cards** in a horizontal grid. Each mini-card carr
   - Positions: x = 88, 369, 650, 931 (= 48 + 40 main-pad + i × (257 + 24))
   - `rx=12` (smaller than main card's 20)
 - See `templates/bento_mini_grid.svg` for the ready-made starter.
+- **corporate_fresh**: `mini_grid` is a per-page `card_variant` family — `even_grid` / `ribbon_row` / `spotlight`; triggers + geometry per design_system.md → "mini_grid card_variant" (the KPI starter there is `templates/fresh_mini_grid.svg`, not the dark_apple file above).
 
 **Mini-card content rules** (this is the secret):
 - Each mini-card: ONE big element on top, ONE supporting caption below.

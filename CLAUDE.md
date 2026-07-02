@@ -30,6 +30,9 @@ bash scripts/package.sh
 
 # Visual QA of a produced deck (render back to images and inspect)
 soffice --headless --convert-to pdf deck.pptx && pdftoppm -jpeg -r 100 deck.pdf slide
+
+# Regression-render the three example decks through the converter (run before a release)
+bash scripts/golden_check.sh
 ```
 
 The QA step needs `soffice` (LibreOffice) and `pdftoppm` (poppler) — these are NOT covered by requirements.txt, which only lists the three Phase-5 pip packages. On macOS: `brew install --cask libreoffice` and `brew install poppler`.
@@ -67,7 +70,7 @@ The skill is a phase pipeline where each phase reads the previous phase's file a
 
 ## Editing rules specific to this repo
 
-- **Doc drift is the recurring bug class here.** Rules are intentionally stated in multiple places (e.g. the layout enum appears in SKILL.md, `prompts/04_planning_draft.md`, and the references; design constraints appear in SKILL.md and `prompts/05_designer_svg.md`). Several past releases exist solely to fix drift. When changing a rule, grep for every other file that states it and update them together. The **template count** (currently 35 files incl. `_base.svg`) is one such drift point — it appears in SKILL.md, both READMEs, and the `templates/` bullet above; reconcile with `ls templates/*.svg | wc -l` when adding or removing templates. `scripts/check_docs.py` now asserts the mechanical ones (template count, layout enum, README parity, rubric back-refs) — run it before committing.
+- **Doc drift is the recurring bug class here.** Rules are intentionally stated in multiple places (e.g. the layout enum appears in SKILL.md, `prompts/04_planning_draft.md`, and the references; design constraints appear in SKILL.md and `prompts/05_designer_svg.md`). Several past releases exist solely to fix drift. When changing a rule, grep for every other file that states it and update them together. The **template count** (currently 35 files incl. `_base.svg`) is one such drift point — it appears in SKILL.md, both READMEs, and the `templates/` bullet above; reconcile with `ls templates/*.svg | wc -l` when adding or removing templates. `scripts/check_docs.py` now asserts the mechanical ones (template count, layout enum, README parity, rubric back-refs, variant/motion enums, icon count) — run it before committing.
 - The two README files (`README.md` Chinese, `README.en.md` English) are translations of each other — change both.
 - Core invariants the content enforces (don't weaken them when editing prompts/templates): 1280×720 viewBox; single highlight color per deck, never a second accent; every text run in a real `<text>` element (keeps Convert-to-Shape editability); no accent underline below page titles; no emoji as icons; bento-first, diagram primitives only on information loss.
 - The two Chinese-named `DeckForge_*.md` files in the working tree are gitignored reviewer/scratch docs — leave them alone.

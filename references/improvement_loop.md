@@ -47,6 +47,19 @@ change, the evidence trace, the expected effect — the shape of the hand-writte
 procedure lives in the skill file only (single statement, no drift pair); this file
 keeps the why.
 
+## Change-time verification (the return arrow's guard)
+
+Approved proposals — and any other harness edit: a new template, a prompt change —
+land through the **`/deckforge-verify`** dev skill
+(`.claude/skills/deckforge-verify/`). It pre-registers the edit's expected
+effect, classifies the diff, runs the matching rungs (doc-drift, SVG
+hard-invariant lint, render smoke, grader passes, phase-isolated evals against
+the frozen `evals/` fixtures), and iterates fixes — ≤2 LLM grading rounds,
+unresolved rubric_ids reported, never silently shipped. The ladder lives in the
+skill file only. The loop then closes: traces reveal → analysis proposes → a
+human approves → verify escorts the edit in → the next runs' traces confirm it
+held.
+
 ## Ship gate (human, always)
 
 The analysis sub-agent **proposes**; it never edits prompts. A human reviews the

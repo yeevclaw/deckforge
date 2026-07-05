@@ -15,6 +15,7 @@ Usage (from anywhere):  python scripts/check_docs.py
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -214,6 +215,101 @@ def check_qa_paths() -> list[str]:
     return errors
 
 
+# --- Check 8: evals fixtures stay valid ------------------------------------------
+# evals/brief.md + evals/planning.json are the frozen golden inputs for the
+# change-time verification loop (.claude/skills/deckforge-verify). Planning-schema
+# churn (prompts/04) must break them loudly here, not rot them silently. Asserts
+# only the fields the graders/converter actually read; the full schema lives in
+# prompts/04_planning_draft.md.
+CHART_LAYOUTS = {"chart_bar", "chart_line", "chart_donut"}
+PRIMITIVE_LAYOUTS = {
+    "flow", "timeline", "cycle", "funnel", "compare_table",
+    "quadrant_2x2", "venn", "hierarchy_tree", "pyramid",
+}
+BRIEF_SECTIONS = ["## Core thesis", "## Proof pillars", "## Belief shift"]
+
+
+def _enum_values(name: str) -> list[str]:
+    return next(values for n, values, _ in VARIANT_ENUMS if n == name)
+
+
+def check_evals_fixtures() -> list[str]:
+    errors: list[str] = []
+    try:
+        plan = json.loads(read("evals/planning.json"))
+    except FileNotFoundError:
+        return ["evals/planning.json is missing."]
+    except json.JSONDecodeError as e:
+        return [f"evals/planning.json: invalid JSON ({e})."]
+
+    meta = plan.get("meta", {})
+    missing = [k for k in ("topic", "page_count", "language") if k not in meta]
+    if missing:
+        errors.append(f"evals/planning.json: meta missing {missing}.")
+    pages = plan.get("pages", [])
+    if meta.get("page_count") != len(pages):
+        errors.append(
+            f"evals/planning.json: meta.page_count={meta.get('page_count')} "
+            f"but pages has {len(pages)} entries."
+        )
+
+    db = plan.get("design_brief", {})
+    missing = [k for k in ("palette_hint", "highlight_color", "motif_hint",
+                           "typography_hint", "flow_variant") if k not in db]
+    if missing:
+        errors.append(f"evals/planning.json: design_brief missing {missing}.")
+    if db.get("flow_variant") and db["flow_variant"] not in _enum_values("flow_variant"):
+        errors.append(f"evals/planning.json: flow_variant '{db['flow_variant']}' not in enum.")
+
+    for page in pages:
+        pid = page.get("page_id", "?")
+        missing = [k for k in ("page_id", "page_type", "layout", "title", "speaker_notes")
+                   if k not in page]
+        if missing:
+            errors.append(f"evals/planning.json page {pid}: missing {missing}.")
+        layout = page.get("layout")
+        if layout not in CANONICAL_LAYOUTS:
+            errors.append(f"evals/planning.json page {pid}: layout '{layout}' not in CANONICAL_LAYOUTS.")
+        elif layout in CHART_LAYOUTS:
+            if "chart_data" not in page:
+                errors.append(f"evals/planning.json page {pid}: chart layout without chart_data.")
+        elif layout in PRIMITIVE_LAYOUTS:
+            if f"{layout}_data" not in page:
+                errors.append(f"evals/planning.json page {pid}: primitive layout without {layout}_data.")
+        elif not isinstance(page.get("cards"), list):
+            errors.append(f"evals/planning.json page {pid}: card layout without cards[].")
+        cv = page.get("card_variant")
+        if cv:
+            try:
+                allowed = _enum_values(f"card_variant {layout}")
+            except StopIteration:
+                errors.append(
+                    f"evals/planning.json page {pid}: card_variant set but layout "
+                    f"'{layout}' has no card_variant enum."
+                )
+            else:
+                if cv not in allowed:
+                    errors.append(
+                        f"evals/planning.json page {pid}: card_variant '{cv}' "
+                        f"not in the {layout} enum."
+                    )
+
+    try:
+        brief = read("evals/brief.md")
+    except FileNotFoundError:
+        errors.append("evals/brief.md is missing.")
+        return errors
+    for sec in BRIEF_SECTIONS:
+        if sec not in brief:
+            errors.append(f"evals/brief.md: section '{sec}' missing.")
+    if "## Proof pillars" in brief:
+        section = brief.split("## Proof pillars", 1)[1].split("##", 1)[0]
+        pillars = re.findall(r"(?m)^\d+\.", section)
+        if len(pillars) != 3:
+            errors.append(f"evals/brief.md: expected exactly 3 proof pillars, found {len(pillars)}.")
+    return errors
+
+
 CHECKS = [
     ("template count", check_template_count),
     ("layout enum", check_layout_enum),
@@ -222,6 +318,7 @@ CHECKS = [
     ("variant/motion enums", check_variant_enums),
     ("icon count", check_icon_count),
     ("grader-verdict paths", check_qa_paths),
+    ("evals fixtures", check_evals_fixtures),
 ]
 
 

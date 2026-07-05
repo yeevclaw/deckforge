@@ -24,10 +24,12 @@ python3 scripts/check_docs.py || fail=1
 last_tag="$(git describe --tags --abbrev=0 2>/dev/null || echo HEAD)"
 changed="$( { git diff HEAD --name-only; git diff "$last_tag"..HEAD --name-only 2>/dev/null; } | sort -u)"
 if echo "$changed" | grep -qE '^(scripts/svg_to_pptx\.py|templates/|examples/)'; then
+  echo "── check_svg.py (SVG surface changed) ──"
+  python3 scripts/check_svg.py templates/ examples/*/ || fail=1
   echo "── golden_check.sh (rendering surface changed) ──"
   bash scripts/golden_check.sh || fail=1
 else
-  echo "── golden_check.sh skipped (rendering surface unchanged) ──"
+  echo "── check_svg.py + golden_check.sh skipped (rendering surface unchanged) ──"
 fi
 
 # Loop-4 nudge: unanalyzed traces piling up?

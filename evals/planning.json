@@ -1,0 +1,127 @@
+{
+  "meta": { "topic": "AI 客服中台導入提案", "page_count": 5, "language": "zh-TW" },
+  "design_brief": {
+    "palette_hint": "corporate_fresh",
+    "highlight_color": "#2563EB",
+    "motif_hint": "fresh_pill_cards",
+    "typography_hint": "serif_header_sans_body",
+    "flow_variant": "terrace_ascent"
+  },
+  "pages": [
+    {
+      "page_id": 1,
+      "page_type": "cover",
+      "layout": "single_focus",
+      "title": "讓客服品質與人力規模脫鉤",
+      "title_en": "Decouple Service Quality from Headcount",
+      "subtitle": "AI 客服中台導入提案 · Q3 決策簡報",
+      "cards": [],
+      "visual_notes": "Subtle highlight-color glow at one corner, no competing elements.",
+      "speaker_notes": "今天要回答一個問題：客服品質是不是只能靠加人？pilot 的數據說不是。"
+    },
+    {
+      "page_id": 2,
+      "page_type": "content",
+      "layout": "three_col",
+      "card_variant": "numbered_steps",
+      "title": "三個理由：現在就導入 AI 客服中台",
+      "title_en": "Three Reasons to Move Now",
+      "cards": [
+        {
+          "heading": "成本結構重寫",
+          "body": "單張工單處理成本 NT$180 → NT$62，八個月回收導入成本",
+          "size_hint": "medium"
+        },
+        {
+          "heading": "品質不降反升",
+          "body": "首次解決率 58% → 最高 82%，首次回覆 4.2 小時 → 11 分鐘",
+          "size_hint": "medium"
+        },
+        {
+          "heading": "十二週可落地",
+          "body": "四步導入，不動既有 CRM 與工單系統，資安已過 DLP 審查",
+          "size_hint": "medium"
+        }
+      ],
+      "visual_notes": "Three numbered pillars, equal weight; numbers are the sequence of the argument, not steps in time.",
+      "speaker_notes": "這三根支柱各有一頁數據，先給全景再逐一拆開。"
+    },
+    {
+      "page_id": 3,
+      "page_type": "content",
+      "layout": "mini_grid",
+      "card_variant": "spotlight",
+      "title": "成本：單張工單處理成本降低 66%",
+      "title_en": "Cost per Ticket Down 66%",
+      "cards": [
+        {
+          "is_number_first": true,
+          "stat_value": "-66%",
+          "stat_caption": "單張工單處理成本降幅",
+          "stat_caption_en": "COST PER TICKET",
+          "size_hint": "large"
+        },
+        {
+          "is_number_first": true,
+          "stat_value": "NT$62",
+          "stat_caption": "導入後單張成本（原 NT$180）",
+          "stat_caption_en": "AFTER · WAS NT$180",
+          "size_hint": "small"
+        },
+        {
+          "is_number_first": true,
+          "stat_value": "8 個月",
+          "stat_caption": "導入成本回收期",
+          "stat_caption_en": "PAYBACK PERIOD",
+          "size_hint": "small"
+        },
+        {
+          "is_number_first": true,
+          "stat_value": "38,400 張",
+          "stat_caption": "pilot 三個月實測工單數",
+          "stat_caption_en": "PILOT SAMPLE",
+          "size_hint": "small"
+        }
+      ],
+      "visual_notes": "Spotlight the -66%; the other three metrics support its credibility (price, payback, sample size).",
+      "speaker_notes": "降幅來自三個月、三萬八千張工單的實測，不是廠商簡報數字。"
+    },
+    {
+      "page_id": 4,
+      "page_type": "content",
+      "layout": "chart_bar",
+      "title": "品質：五大管道首次解決率全面突破七成",
+      "title_en": "First-Contact Resolution Above 70% Across All Channels",
+      "chart_data": {
+        "unit": "%",
+        "items": [
+          { "label": "電話", "label_en": "PHONE", "value": 71 },
+          { "label": "線上客服", "label_en": "LIVE CHAT", "value": 82 },
+          { "label": "Email", "label_en": "EMAIL", "value": 74 },
+          { "label": "App 內回報", "label_en": "IN-APP", "value": 79 },
+          { "label": "社群訊息", "label_en": "SOCIAL", "value": 73 }
+        ]
+      },
+      "visual_notes": "Single highlight color; annotate the pre-pilot baseline 58% as a reference line, no per-bar palette.",
+      "speaker_notes": "對照組維持 58%。五個管道全數越過七成，品質降級的疑慮可以放下。"
+    },
+    {
+      "page_id": 5,
+      "page_type": "content",
+      "layout": "flow",
+      "title": "十二週四步導入，不動既有 CRM",
+      "title_en": "Four Steps, Twelve Weeks, Zero CRM Changes",
+      "flow_data": {
+        "orientation": "horizontal",
+        "steps": [
+          { "label": "知識盤點", "label_en": "AUDIT", "body": "第 1–2 週：盤點 FAQ 與工單語料" },
+          { "label": "中台接入", "label_en": "CONNECT", "body": "第 3–5 週：API 接入，CRM 零改動" },
+          { "label": "雙軌試點", "label_en": "PILOT", "body": "第 6–9 週：兩管道雙軌，週報對照" },
+          { "label": "全面上線", "label_en": "SCALE", "body": "第 10–12 週：五管道全量切換" }
+        ]
+      },
+      "visual_notes": "Terrace ascent: the four steps climb toward the go-live plateau; timeline labels stay inside each step body.",
+      "speaker_notes": "每一步都有退出點：試點週報未達標即停損。今天要的決定是核准 Q3 預算立項。"
+    }
+  ]
+}

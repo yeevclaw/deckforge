@@ -12,7 +12,9 @@
 # an API bill. After this passes, do the visual grade from Claude.
 #
 # Scope (be honest about it): this guards RENDERING, not Socratic/planning
-# quality — there are no committed brief/outline/planning golden inputs.
+# quality. Golden brief/planning inputs live in evals/ — the change-time
+# verification loop (.claude/skills/deckforge-verify) runs phase-isolated
+# evals against them when a prompt changes; that's an LLM step, not this one.
 #
 # Usage:  bash scripts/golden_check.sh
 set -uo pipefail

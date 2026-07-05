@@ -190,6 +190,30 @@ def check_icon_count() -> list[str]:
     return errors
 
 
+# --- Check 7: grader-verdict paths ---------------------------------------------
+# SKILL.md tells the graders to persist verdicts to _qa/grade_p{3,5}.json, and the
+# Loop-4 trace tooling (improvement_loop.md, collect_trace.sh, the /deckforge-improve
+# skill) reads them back by the same names. A rename in one place silently breaks
+# the trace corpus.
+QA_PATH_FILES = [
+    "SKILL.md",
+    "references/improvement_loop.md",
+    "scripts/collect_trace.sh",
+    ".claude/skills/deckforge-improve/SKILL.md",
+]
+QA_PATHS = ["_qa/grade_p3.json", "_qa/grade_p5.json"]
+
+
+def check_qa_paths() -> list[str]:
+    errors: list[str] = []
+    for rel in QA_PATH_FILES:
+        text = read(rel)
+        missing = [p for p in QA_PATHS if p not in text]
+        if missing:
+            errors.append(f"{rel}: grader-verdict path(s) missing {missing}.")
+    return errors
+
+
 CHECKS = [
     ("template count", check_template_count),
     ("layout enum", check_layout_enum),
@@ -197,6 +221,7 @@ CHECKS = [
     ("rubric back-refs", check_rubric_backrefs),
     ("variant/motion enums", check_variant_enums),
     ("icon count", check_icon_count),
+    ("grader-verdict paths", check_qa_paths),
 ]
 
 

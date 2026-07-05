@@ -31,8 +31,18 @@ bash scripts/package.sh
 # Visual QA of a produced deck (render back to images and inspect)
 soffice --headless --convert-to pdf deck.pptx && pdftoppm -jpeg -r 100 deck.pdf slide
 
-# Regression-render the three example decks through the converter (run before a release)
+# Regression-render the three example decks through the converter
+# (scripts/preflight.sh runs this automatically when the rendering surface changed)
 bash scripts/golden_check.sh
+
+# Pre-release preflight: doc-drift guard + conditional golden_check + Loop-4 trace nudge
+bash scripts/preflight.sh
+
+# One-time hook install — makes every commit run scripts/check_docs.py
+git config core.hooksPath scripts/githooks
+
+# Retain a deck session's working dir into the Loop-4 trace corpus (see references/improvement_loop.md)
+bash scripts/collect_trace.sh <working-dir> <short-name>
 ```
 
 The QA step needs `soffice` (LibreOffice) and `pdftoppm` (poppler) — these are NOT covered by requirements.txt, which only lists the three Phase-5 pip packages. On macOS: `brew install --cask libreoffice` and `brew install poppler`.
@@ -43,6 +53,7 @@ The QA step needs `soffice` (LibreOffice) and `pdftoppm` (poppler) — these are
 
 Versions are tagged `vX.Y.Z`; commit subjects follow `vX.Y.Z: short subject`. Use `git add <specific files>`, never `git add -A` (scratch review docs sit in the working tree).
 
+0. `bash scripts/preflight.sh` — doc-drift guard, regression-render when the converter/templates/examples changed, and a nudge to run `/deckforge-improve` if unanalyzed traces piled up
 1. Commit → `git tag vX.Y.Z HEAD`
 2. `git push origin main && git push origin vX.Y.Z`
 3. `bash scripts/package.sh`
@@ -57,7 +68,7 @@ The skill is a phase pipeline where each phase reads the previous phase's file a
    Phase 0       Phase 1      Phase 2        Phase 3           Phase 4              Phase 5
 ```
 
-**The harness.** In the LangChain "loop engineering" sense, the *harness* is everything wrapping the model — for DeckForge that's `SKILL.md` + `prompts/*` + `references/*` + `templates/*` + `scripts/svg_to_pptx.py`. Its gradeable quality bar is `references/rubric.md`, scored independently by two fresh-eyes graders — the Phase 3 content grade (`prompts/07_content_grader.md`) and the Phase 5 visual verification loop (`prompts/06_visual_grader.md`); its hill-climbing improvement procedure is `references/improvement_loop.md`. The per-file breakdown:
+**The harness.** In the LangChain "loop engineering" sense, the *harness* is everything wrapping the model — for DeckForge that's `SKILL.md` + `prompts/*` + `references/*` + `templates/*` + `scripts/svg_to_pptx.py`. Its gradeable quality bar is `references/rubric.md`, scored independently by two fresh-eyes graders — the Phase 3 content grade (`prompts/07_content_grader.md`) and the Phase 5 visual verification loop (`prompts/06_visual_grader.md`); its hill-climbing improvement procedure is `references/improvement_loop.md` — executed by the dev-side `/deckforge-improve` skill (`.claude/skills/`) over the `traces/` corpus that `scripts/collect_trace.sh` retains (grader verdicts persist to each run's `_qa/`). The per-file breakdown:
 
 - **`SKILL.md`** — the skill entry point Claude Desktop/Code reads; defines the phase rules, the no-phase-skipping/file-checkpoint contract, handoff approvals, and the Phase 5 delivery checklist. Its frontmatter `name:` is read by `package.sh` to name the zip's wrapper folder.
 - **`prompts/00–05_*.md`** — the per-phase master prompts. **File numbers ≠ phase numbers**: `03_content_research.md` is an optional "Phase 2.5" (writes `research.md` when the topic needs factual grounding), so `04_planning_draft.md` = Phase 3 and `05_designer_svg.md` = Phase 4. The `planning.json` schema and the layout enum live in `prompts/04_planning_draft.md`. `06_visual_grader.md` is **not** a phase prompt — it's the independent visual-QA grader sub-agent spawned in the Phase 5 verification loop (SKILL.md → "QA"). `07_content_grader.md` is its Phase 3 counterpart — the independent content-QA grader (ids P3-11/P3-12/P3-13) spawned before the Phase 3→4 handoff (SKILL.md → "Phase 3 content grade").
@@ -70,7 +81,7 @@ The skill is a phase pipeline where each phase reads the previous phase's file a
 
 ## Editing rules specific to this repo
 
-- **Doc drift is the recurring bug class here.** Rules are intentionally stated in multiple places (e.g. the layout enum appears in SKILL.md, `prompts/04_planning_draft.md`, and the references; design constraints appear in SKILL.md and `prompts/05_designer_svg.md`). Several past releases exist solely to fix drift. When changing a rule, grep for every other file that states it and update them together. The **template count** (currently 35 files incl. `_base.svg`) is one such drift point — it appears in SKILL.md, both READMEs, and the `templates/` bullet above; reconcile with `ls templates/*.svg | wc -l` when adding or removing templates. `scripts/check_docs.py` now asserts the mechanical ones (template count, layout enum, README parity, rubric back-refs, variant/motion enums, icon count) — run it before committing.
+- **Doc drift is the recurring bug class here.** Rules are intentionally stated in multiple places (e.g. the layout enum appears in SKILL.md, `prompts/04_planning_draft.md`, and the references; design constraints appear in SKILL.md and `prompts/05_designer_svg.md`). Several past releases exist solely to fix drift. When changing a rule, grep for every other file that states it and update them together. The **template count** (currently 35 files incl. `_base.svg`) is one such drift point — it appears in SKILL.md, both READMEs, and the `templates/` bullet above; reconcile with `ls templates/*.svg | wc -l` when adding or removing templates. `scripts/check_docs.py` asserts the mechanical ones (template count, layout enum, README parity, rubric back-refs, variant/motion enums, icon count, grader-verdict paths) — the pre-commit hook runs it on every commit (one-time: `git config core.hooksPath scripts/githooks`).
 - The two README files (`README.md` Chinese, `README.en.md` English) are translations of each other — change both.
 - Core invariants the content enforces (don't weaken them when editing prompts/templates): 1280×720 viewBox; single highlight color per deck, never a second accent; every text run in a real `<text>` element (keeps Convert-to-Shape editability); no accent underline below page titles; no emoji as icons; bento-first, diagram primitives only on information loss.
 - The two Chinese-named `DeckForge_*.md` files in the working tree are gitignored reviewer/scratch docs — leave them alone.

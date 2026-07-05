@@ -1,0 +1,6 @@
+#!/bin/sh
+# DeckForge pre-commit — blocks commits that fail the doc-drift guard.
+# Activate once:  git config core.hooksPath scripts/githooks
+# (documented in CLAUDE.md → Commands; scripts/preflight.sh warns when inactive)
+cd "$(git rev-parse --show-toplevel)" || exit 1
+exec python3 scripts/check_docs.py

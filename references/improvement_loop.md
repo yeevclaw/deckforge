@@ -8,7 +8,8 @@ a repeatable procedure instead of an ad-hoc habit.
 
 This is a **maintainer** process (export-ignored; it never ships in the skill zip).
 It is run by a human + an analysis sub-agent on a manual cadence — no trace database,
-no automation, no LLM in CI.
+no LLM in CI. The mechanical half is automated (a pre-commit hook runs
+`scripts/check_docs.py` on every commit); the judgement half stays human-triggered.
 
 ## Traces — the currency (already on disk)
 
@@ -17,7 +18,7 @@ working directory:
 
 - `analysis.md` / `brief.md` / `outline.json` / `planning.json` / `pages/*.svg`
 - the produced `.pptx` / `.pdf` / `.notes.md`
-- the grader JSON from both fresh-eyes graders — Phase 3 content (`prompts/07_content_grader.md`) and Phase 5 visual (`prompts/06_visual_grader.md`) — what failed + the fix
+- `_qa/grade_p3.json` / `_qa/grade_p5.json` — the persisted verdicts from the two fresh-eyes graders, Phase 3 content (`prompts/07_content_grader.md`) and Phase 5 visual (`prompts/06_visual_grader.md`) — what failed + the fix
 - **where the user chose "我要先修改"** at a phase handoff — the cheapest signal that
   the harness produced something the user had to correct
 
@@ -26,26 +27,25 @@ they mark exactly where the harness under-delivered.
 
 ## Retention (thin)
 
-When a run is worth learning from, copy its working dir into `traces/<short-name>/`
-(gitignored — local corpus, one folder per run). No schema, no DB. Keep the ones
-that surprised you; drop the rest.
+When a run is worth learning from, run `bash scripts/collect_trace.sh <working-dir>
+<short-name>` — it copies the dir into `traces/<short-name>/` (gitignored — local
+corpus, one folder per run) and stamps a `meta.md`: date, DeckForge version, and
+blanks for the one signal that lives only in the conversation — the handoff points
+where the user chose 「我要先修改」. No schema, no DB. Keep the ones that surprised
+you; drop the rest.
 
 ## Analysis pass (periodic)
 
-On a cadence you choose (after N decks, or a `/schedule` cron), spawn an **analysis
-sub-agent** over the retained traces:
-
-1. Read the traces + their grader JSONs.
-2. Cluster recurring failure modes — e.g. "users keep editing `belief_shift` at the
-   Phase 1 handoff → Phase 1 under-asks there"; "the Phase 5 grader keeps flagging
-   P5-01 text overflow on `mini_grid` → that template needs more `<tspan>` room".
-3. Emit a **ranked list of proposed harness edits**, each with: which file, what
-   change, the evidence trace, the expected effect. This is exactly the shape of the
-   hand-written `DeckForge_改善建議與理由.md` already in the tree — formalize that
-   habit, don't reinvent it.
-4. Include doc-drift findings: `scripts/check_docs.py` is the mechanical half (a copy
-   that fell out of sync); the analysis pass is the judgement half (a rule that's
-   consistent everywhere but wrong).
+On a cadence you choose — after a few collected traces, or when `scripts/preflight.sh`
+nudges you at release time — run the **`/deckforge-improve`** dev skill
+(`.claude/skills/deckforge-improve/`; needs a repo-root session). It reads the
+retained traces, clusters recurring failure modes, folds in `scripts/check_docs.py`
+findings (the mechanical half — the clustering is the judgement half), and emits a
+ranked proposal file to `traces/_analysis/`, each proposal carrying: which file, what
+change, the evidence trace, the expected effect — the shape of the hand-written
+`DeckForge_改善建議與理由.md`, formalized rather than reinvented. The step-by-step
+procedure lives in the skill file only (single statement, no drift pair); this file
+keeps the why.
 
 ## Ship gate (human, always)
 

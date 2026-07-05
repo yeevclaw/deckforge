@@ -22,12 +22,18 @@ README.en.md  export-ignore
 scripts/package.sh export-ignore
 scripts/check_docs.py export-ignore
 scripts/golden_check.sh export-ignore
+scripts/preflight.sh export-ignore
+scripts/collect_trace.sh export-ignore
+scripts/githooks/ export-ignore
 
 # Maintainer process doc under references/, not a runtime asset
 references/improvement_loop.md export-ignore
 
 # Claude Code guidance for repo development — not a runtime asset
 CLAUDE.md export-ignore
+
+# Dev-side Claude Code skill — the Loop-4 analysis pass (/deckforge-improve)
+.claude/ export-ignore
 
 # Pure git metadata
 .gitignore     export-ignore

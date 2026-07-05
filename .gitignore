@@ -29,6 +29,8 @@ out/
 *.log
 # svg_to_pptx.py intermediate PNG renders — can appear anywhere a deck is built
 **/_renders/
+# grader verdicts persisted by SKILL.md's Phase 3 / Phase 5 QA loops — same class as _renders
+**/_qa/
 
 # Loop 4 trace corpus — local run samples for references/improvement_loop.md
 traces/

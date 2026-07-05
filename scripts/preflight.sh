@@ -34,9 +34,9 @@ fi
 if [ -d traces ]; then
   last_analysis="$(ls -t traces/_analysis/*.md 2>/dev/null | head -1 || true)"
   if [ -n "$last_analysis" ]; then
-    fresh=$(find traces -mindepth 1 -maxdepth 1 -type d ! -name _analysis -newer "$last_analysis" | wc -l | tr -d ' ')
+    fresh=$(find traces -mindepth 1 -maxdepth 1 -type d ! -name '_*' -newer "$last_analysis" | wc -l | tr -d ' ')
   else
-    fresh=$(find traces -mindepth 1 -maxdepth 1 -type d ! -name _analysis | wc -l | tr -d ' ')
+    fresh=$(find traces -mindepth 1 -maxdepth 1 -type d ! -name '_*' | wc -l | tr -d ' ')
   fi
   if [ "$fresh" -ge 3 ]; then
     echo "💡 $fresh trace(s) await analysis — consider running /deckforge-improve before this release."

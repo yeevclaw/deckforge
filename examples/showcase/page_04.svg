@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- page_04 — bento lead_plus_pair: one lead claim (editability) + two support cards. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <radialGradient id="washLav" cx="92%" cy="4%" r="48%">
+      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#D9D4F0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#2A4A3A" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
+
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="106" font-size="40" font-weight="800" fill="#383838">交付的是能逐一元素編輯的 PPT,不是截圖</text>
+
+  <!-- lead card (≈60%) -->
+  <rect x="48" y="168" width="700" height="474" rx="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <g transform="translate(104 212)">
+    <g transform="scale(4.5)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" fill="#D8E4FB"/>
+      <path d="M18.4 2.6a2 2 0 0 1 3 3L12 15l-4 1 1-4Z" fill="#FFFFFF"/>
+    </g>
+  </g>
+  <text x="100" y="392" font-size="32" font-weight="700" fill="#383838">
+    <tspan x="100" dy="0">每個文字、卡片、圖示,</tspan>
+    <tspan x="100" dy="44">都能在 PowerPoint 原生編輯。</tspan>
+  </text>
+  <text x="100" y="502" font-size="19" fill="#4A5158">
+    <tspan x="100" dy="0">右鍵「轉換成圖形」,SVG 內容層就</tspan>
+    <tspan x="100" dy="34">拆成<tspan fill="#E8872E" font-weight="700">可自由移動、改字、換色</tspan>的形狀;</tspan>
+    <tspan x="100" dy="34">漸層與玻璃態則留在可整體移動的背景圖。</tspan>
+  </text>
+
+  <!-- support card A: two-layer decomposition -->
+  <rect x="772" y="168" width="460" height="226" rx="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <g transform="translate(802 198)">
+    <g transform="scale(2.4)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12.8 2.2a2 2 0 0 0-1.6 0L2.6 6.1a1 1 0 0 0 0 1.8l8.6 3.9a2 2 0 0 0 1.6 0l8.6-3.9a1 1 0 0 0 0-1.8Z" fill="#D8E4FB"/>
+      <path d="m22 12.5-9.2 4.2a2 2 0 0 1-1.6 0L2 12.5" fill="none"/>
+      <path d="m22 17.5-9.2 4.2a2 2 0 0 1-1.6 0L2 17.5" fill="none"/>
+    </g>
+  </g>
+  <text x="874" y="240" font-size="22" font-weight="700" fill="#383838">雙層分解</text>
+  <text x="802" y="302" font-size="18" fill="#4A5158">
+    <tspan x="802" dy="0">背景圖承載氛圍、內容層</tspan>
+    <tspan x="802" dy="30">承載可編輯的<tspan fill="#E8872E" font-weight="700">向量物件</tspan>。</tspan>
+  </text>
+
+  <!-- support card B: three files delivered -->
+  <rect x="772" y="416" width="460" height="226" rx="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <g transform="translate(802 446)">
+    <g transform="scale(2.4)" stroke="#5E8FEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" fill="#D8E4FB"/>
+      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" fill="none"/>
+    </g>
+  </g>
+  <text x="874" y="488" font-size="22" font-weight="700" fill="#383838">三檔一次交付</text>
+  <text x="802" y="550" font-size="18" fill="#4A5158">
+    <tspan x="802" dy="0">.pptx + .pdf + 講者備忘,</tspan>
+    <tspan x="802" dy="30"><tspan fill="#E8872E" font-weight="700">不必再各別匯出</tspan>。</tspan>
+  </text>
+</svg>

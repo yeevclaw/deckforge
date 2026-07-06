@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <linearGradient id="coverGrad" x1="0%" y1="0%" x2="100%" y2="55%">
+      <stop offset="0%" stop-color="#56BE85"/>
+      <stop offset="42%" stop-color="#5BA7D6"/>
+      <stop offset="80%" stop-color="#7378E0"/>
+      <stop offset="100%" stop-color="#878DEB"/>
+    </linearGradient>
+    <radialGradient id="glowTR" cx="86%" cy="8%" r="42%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#coverGrad)"/>
+  <rect width="1280" height="720" fill="url(#glowTR)"/>
+
+  <!-- aurora ribbons -->
+  <g fill="#FFFFFF">
+    <path d="M -60 560 C 280 450, 620 620, 940 490
+             C 1130 413, 1250 400, 1340 385
+             L 1340 480
+             C 1250 495, 1150 515, 960 590
+             C 640 716, 300 560, -60 670 Z" fill-opacity="0.07"/>
+    <path d="M -60 680 C 320 580, 700 716, 1020 600
+             C 1180 542, 1290 532, 1340 526
+             L 1340 720 L -60 720 Z" fill-opacity="0.10"/>
+    <path d="M 560 248 C 800 196, 1040 232, 1340 150
+             L 1340 196
+             C 1050 274, 810 240, 560 286 Z" fill-opacity="0.05"/>
+  </g>
+
+  <!-- title block -->
+  <text x="120" y="330" font-size="104" font-weight="800" fill="#FFFFFF" letter-spacing="-2">DeckForge</text>
+  <rect x="124" y="372" width="640" height="52" fill="#FFFFFF"/>
+  <text x="146" y="409" font-size="27" font-weight="700" fill="#3E5BA8">簡報的靈魂是內容,設計讓它被看見</text>
+  <text x="124" y="476" font-size="20" fill="#FFFFFF" fill-opacity="0.92">Claude Skill · 五階段可編輯 PPTX 產生流程</text>
+</svg>

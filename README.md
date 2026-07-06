@@ -7,16 +7,18 @@
 
 ## Demo
 
-一份 10 頁的 **DeckForge 自我介紹** mini-deck,直接用這個 skill 的 SVG pipeline 產出:
+五張特色展示頁,每張示範一種佈局與一項能力,全部由這個 skill 的 SVG pipeline 直接產出(預設 corporate_fresh 淺色顧問風):
 
-| | | |
-|---|---|---|
-| ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.gif) |
+| 封面 · 漸層主視覺 | 顧問圖表 · 瀑布橋 | 玻璃流程 · 五階段 |
+|:--:|:--:|:--:|
+| ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |
+| **可編輯輸出 · 主從卡** | **流動動畫 · 蘇格拉底循環** | **同一份 deck,五種佈局** |
+| ![](examples/slide-4.jpg) | ![](examples/slide-5.gif) | 卡片 · 圖表 · 圖解 · 流程 · 循環——佈局隨內容而變,不套版。 |
 
-第 3 頁是**流動邊線動畫**(`flow-anim`)的實際產出:管線上的脈衝虛線會在 PowerPoint / Keynote 放映模式持續流動(上面那張 GIF 就是嵌進投影片裡的內容)。動畫頁以 GIF 嵌入,放映時才會動;代價是**該頁不支援 Convert-to-Shape 編輯**,在 PDF 中為靜態——每份 deck 最多 2–3 頁動畫,只留給最關鍵的流程頁。
+第 5 張是**流動邊線動畫**(`flow-anim`)的實際產出:環圈上的脈衝虛線會在 PowerPoint / Keynote 放映模式持續繞行(上面那張 GIF 就是嵌進投影片裡的內容)。動畫頁以 GIF 嵌入,放映時才會動;代價是**該頁不支援 Convert-to-Shape 編輯**,在 PDF 中為靜態——每份 deck 最多 2–3 頁動畫,只留給最關鍵的流程或循環頁。
 
-- 合併 PDF:[`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
-- 原始 SVG(可看 Bento Grid 座標,拖進 PowerPoint 可直接檢視):[`examples/sample-deck/`](examples/sample-deck/)
+- 這五頁的原始 SVG(可看 Bento Grid 座標,拖進 PowerPoint 可直接檢視):[`examples/showcase/`](examples/showcase/)
+- 另有完整 10 頁範例 deck 與合併 PDF:[`examples/sample-deck/`](examples/sample-deck/) · [`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
 
 
 ## 為什麼用 SVG → PPTX(而不是套範本或圖片型 PPT)?

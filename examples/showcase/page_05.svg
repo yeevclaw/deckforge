@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  page_05 — glass_orbit_loop, motion:"orbit". The Socratic dialogue loop.
+  Ring = four OPEN <path> arcs (never a closed <circle>) carrying class="flow-anim"
+  + one shared stroke-dasharray "8 6"; the converter embeds this slide as a looping
+  GIF (dashes rotate clockwise in slideshow mode; this slide is NOT Convert-to-Shape
+  editable). Flat fills only — large soft gradients band in the 256-color GIF.
+  Ring center (460,442) r=190; 4 node cards on the compass; center claim card inside;
+  right panel carries the so-what.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <filter id="nodeShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#2A4A3A" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+
+  <!-- title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">好命題不是問出來的,是一輪輪反詰逼出來的</text>
+  <text x="48" y="132" font-size="15" fill="#6B7178" letter-spacing="2">THE SOCRATIC LOOP · 每一輪都逼近那一個核心判斷</text>
+
+  <!-- ring: four open arcs, clockwise, all animated together (one dasharray) -->
+  <g fill="none" stroke="#5FBF95" stroke-width="4.5" stroke-linecap="round">
+    <path class="flow-anim" d="M 460 252 A 190 190 0 0 1 650 442" stroke-dasharray="8 6"/>
+    <path class="flow-anim" d="M 650 442 A 190 190 0 0 1 460 632" stroke-dasharray="8 6"/>
+    <path class="flow-anim" d="M 460 632 A 190 190 0 0 1 270 442" stroke-dasharray="8 6"/>
+    <path class="flow-anim" d="M 270 442 A 190 190 0 0 1 460 252" stroke-dasharray="8 6"/>
+  </g>
+
+  <!-- center claim card -->
+  <rect x="376" y="396" width="168" height="92" rx="14" fill="#FFFFFF" filter="url(#nodeShadow)"/>
+  <text x="460" y="434" font-size="21" font-weight="700" fill="#383838" text-anchor="middle">蘇格拉底反詰</text>
+  <text x="460" y="460" font-size="11" fill="#6B7178" text-anchor="middle" letter-spacing="2">SOCRATIC · LOOP</text>
+
+  <!-- node 1 (top) 提問 -->
+  <g>
+    <rect x="366" y="206" width="188" height="92" rx="14" fill="#FFFFFF" filter="url(#nodeShadow)"/>
+    <circle cx="400" cy="252" r="18" fill="#EAF6EF" stroke="#4EC487" stroke-width="2"/>
+    <text x="400" y="259" font-size="18" font-weight="700" fill="#2E8B57" text-anchor="middle">1</text>
+    <text x="428" y="248" font-size="21" font-weight="700" fill="#383838">提問</text>
+    <text x="428" y="276" font-size="14" fill="#6B7178">逼出真問題</text>
+  </g>
+
+  <!-- node 2 (right) 假設浮現 -->
+  <g>
+    <rect x="556" y="396" width="188" height="92" rx="14" fill="#FFFFFF" filter="url(#nodeShadow)"/>
+    <circle cx="590" cy="442" r="18" fill="#EAF6EF" stroke="#4EC487" stroke-width="2"/>
+    <text x="590" y="449" font-size="18" font-weight="700" fill="#2E8B57" text-anchor="middle">2</text>
+    <text x="618" y="438" font-size="21" font-weight="700" fill="#383838">假設浮現</text>
+    <text x="618" y="466" font-size="14" fill="#6B7178">攤開隱含前提</text>
+  </g>
+
+  <!-- node 3 (bottom) 反詰挑戰 -->
+  <g>
+    <rect x="366" y="586" width="188" height="92" rx="14" fill="#FFFFFF" filter="url(#nodeShadow)"/>
+    <circle cx="400" cy="632" r="18" fill="#EAF6EF" stroke="#4EC487" stroke-width="2"/>
+    <text x="400" y="639" font-size="18" font-weight="700" fill="#2E8B57" text-anchor="middle">3</text>
+    <text x="428" y="628" font-size="21" font-weight="700" fill="#383838">反詰挑戰</text>
+    <text x="428" y="656" font-size="14" fill="#6B7178">戳穿邏輯漏洞</text>
+  </g>
+
+  <!-- node 4 (left) 修正主張 -->
+  <g>
+    <rect x="176" y="396" width="188" height="92" rx="14" fill="#FFFFFF" filter="url(#nodeShadow)"/>
+    <circle cx="210" cy="442" r="18" fill="#EAF6EF" stroke="#4EC487" stroke-width="2"/>
+    <text x="210" y="449" font-size="18" font-weight="700" fill="#2E8B57" text-anchor="middle">4</text>
+    <text x="238" y="438" font-size="21" font-weight="700" fill="#383838">修正主張</text>
+    <text x="238" y="466" font-size="14" fill="#6B7178">收斂出命題</text>
+  </g>
+
+  <!-- right panel: the so-what -->
+  <rect x="792" y="206" width="440" height="472" rx="16" fill="#FFFFFF" filter="url(#nodeShadow)"/>
+  <g transform="translate(824 238)">
+    <g transform="scale(2.6)" stroke="#5E8FEF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10" fill="#D8E4FB"/>
+      <circle cx="12" cy="12" r="6" fill="#FFFFFF"/>
+      <circle cx="12" cy="12" r="2" fill="#5E8FEF"/>
+    </g>
+  </g>
+  <text x="824" y="360" font-size="26" font-weight="700" fill="#383838">
+    <tspan x="824" dy="0">對話挖的,是觀眾腦中</tspan>
+    <tspan x="824" dy="40">該被翻轉的那一個判斷</tspan>
+  </text>
+  <text x="824" y="454" font-size="19" fill="#4A5158">
+    <tspan x="824" dy="0">資料說的是「你」腦中有什麼;</tspan>
+    <tspan x="824" dy="32">反詰一層層追問,直到那個</tspan>
+    <tspan x="824" dy="32"><tspan fill="#E8872E" font-weight="700">必須被改變的判斷</tspan>浮現——</tspan>
+    <tspan x="824" dy="46">這個循環是 DeckForge 的<tspan fill="#E8872E" font-weight="700">核心</tspan>,</tspan>
+    <tspan x="824" dy="32">不是可略過的前置步驟。</tspan>
+  </text>
+</svg>

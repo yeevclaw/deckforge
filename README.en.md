@@ -7,16 +7,18 @@
 
 ## Demo
 
-A 10-page **DeckForge self-intro** mini-deck, produced directly through this skill's SVG pipeline:
+Five showcase slides — each demonstrates one layout and one capability, all produced directly through this skill's SVG pipeline (default corporate-fresh light consulting style):
 
-| | | |
-|---|---|---|
-| ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.gif) |
+| Cover · gradient hero | Consulting chart · waterfall | Glass flow · 5-phase |
+|:--:|:--:|:--:|
+| ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |
+| **Editable output · lead + pair** | **Motion · the Socratic loop** | **One deck, five layouts** |
+| ![](examples/slide-4.jpg) | ![](examples/slide-5.gif) | Cards · charts · diagrams · flows · loops — layout follows content, never a template. |
 
-Page 3 shows the **animated flow edges** (`flow-anim`) feature as actually produced: the pulse dashes on the pipeline keep flowing in PowerPoint / Keynote slideshow mode (the GIF above is exactly what gets embedded in the slide). Animated pages ship as embedded GIFs and only move in slideshow mode; the price is that **those slides are not Convert-to-Shape editable** and render static in the PDF — so each deck caps at 2–3 motion pages, reserved for its most critical process pages.
+Slide 5 shows the **animated flow edges** (`flow-anim`) feature as actually produced: the pulse dashes on the loop keep circling in PowerPoint / Keynote slideshow mode (the GIF above is exactly what gets embedded in the slide). Animated pages ship as embedded GIFs and only move in slideshow mode; the price is that **those slides are not Convert-to-Shape editable** and render static in the PDF — so each deck caps at 2–3 motion pages, reserved for its most critical process or loop pages.
 
-- Combined PDF: [`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
-- Source SVGs (peek at the Bento Grid coordinates, or drag one into PowerPoint to inspect): [`examples/sample-deck/`](examples/sample-deck/)
+- Source SVGs for these five pages (peek at the Bento Grid coordinates, or drag one into PowerPoint to inspect): [`examples/showcase/`](examples/showcase/)
+- Also a full 10-page example deck and combined PDF: [`examples/sample-deck/`](examples/sample-deck/) · [`examples/DeckForge-demo.pdf`](examples/DeckForge-demo.pdf)
 
 
 ## Why SVG → PPTX (not template-based, not raster)?

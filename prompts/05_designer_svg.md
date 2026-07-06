@@ -369,7 +369,7 @@ If `planning.json` specifies a diagram primitive layout — `flow`, `timeline`, 
 | What may carry `flow-anim` | open `<line>` / `<path>` only — **NEVER a closed dashed shape** (an animated dashed rect = marching-ants selection box) |
 | Minimum animated length | ≥ 5 dash periods measured along the path (`"8 6"` → 70px) |
 | dasharray | ONE value per page and per deck: `"8 6"` for edges, `"10 18"` for pulse overlays (mixed values loop with a visible seam) |
-| Budget | ≤ 3 animated paths per page, or one closed-loop / hub system |
+| Budget | ≤ 3 animated paths per page, or one orbit system made of open arcs (a conceptual loop, never a closed dashed shape) / hub system |
 | Arrowheads on animated edges | `markerUnits="userSpaceOnUse"`, 12×9px head (`M0,0 L12,4.5 L0,9`, refX=11, refY=4.5) for 2–2.5px strokes; head length ≈ 4–5× stroke width |
 | Thick lines (≥8px) | no `marker` ever — integrated head + pulse overlay. Draw a trailing head **only when the flow is ongoing / hands off**; if the last station is the destination, end the rail on it with no head. Integrated head height ≈ rail width, base ≥40px clear of the last node — never a fat triangle on the node |
 | Background | prefer flat fills on motion pages — large soft gradients band in the 256-color GIF |

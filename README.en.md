@@ -146,8 +146,9 @@ DeckForge/
 │   └── setup.ps1           ← same, for Windows PowerShell
 └── examples/               ← DeckForge self-intro mini-deck (10 pages, full output)
     ├── DeckForge-demo.pdf  ← combined rendered PDF
-    ├── slide-1.jpg ... slide-3.gif ← page previews (page 3 is an animated GIF)
-    └── sample-deck/        ← source SVG pages
+    ├── slide-1.jpg ... slide-4.jpg + slide-5.gif ← showcase previews (page 5 is an animated GIF)
+    ├── showcase/           ← the 5 showcase slides (SVG sources)
+    └── sample-deck/        ← source SVG pages of the 10-page demo
 ```
 
 ## For developers / forks

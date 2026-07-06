@@ -72,7 +72,8 @@ The base workflow is 5 phases. Add a **Phase 0** when the user supplies a source
 | 0 | **Source analysis** (文件分析) | `analysis.md` | Only when user gives a source document. See [prompts/00_source_analysis.md](prompts/00_source_analysis.md) |
 | 1 | **Socratic clarification** (蘇格拉底反詰) | `brief.md` | **Always** — even when Phase 0 ran. Pop-up choices, not a form. See [prompts/01_needs_research.md](prompts/01_needs_research.md) |
 | 2 | **Outline architecture** (大綱規劃) | `outline.json` | Always — must Read `brief.md` first |
-| 3 | **Planning draft** (策劃稿) | `planning.json` | Always — must Read `outline.json` first |
+| 2.5 | **Content research** (內容調研, optional) | `research.md` | **Only when triggered** — a proof pillar tagged `needs-research`, an external audience, or a fast-moving topic. See [prompts/03_content_research.md](prompts/03_content_research.md) |
+| 3 | **Planning draft** (策劃稿) | `planning.json` | Always — must Read `outline.json` first (+ `research.md` if Phase 2.5 ran) |
 | 4 | **Design** (設計稿) | `pages/page_NN.svg` | Always — must Read `planning.json` first |
 | 5 | **Produce** (產出) | `.pptx` + `.pdf` (+ `.notes.md` if any notes) | Always — must Read `pages/` first |
 
@@ -207,6 +208,17 @@ Save the outline to `outline.json` in the working directory.
 
 **Handoff checkpoint**: after writing `outline.json`, show it to the user (digital sticky notes — easy to add/remove/reorder before any design work happens) and ask via `AskUserQuestion` whether to continue to Phase 3. Do not begin Phase 3 until they approve.
 
+### Phase 2.5 — Content research (內容調研) — conditional gate before Phase 3
+
+**After the Phase 2→3 approval, before writing `planning.json`, check whether research is needed.** This is a gate, not a separate approval pop-up (the one-pop-up-per-boundary rule still holds): the outline is the input research is organized around, so this runs only once the outline is locked.
+
+Run Phase 2.5 (produce `research.md` via [prompts/03_content_research.md](prompts/03_content_research.md)) when **any** trigger fires:
+- `brief.md` tagged one or more proof pillars `needs-research` — Phase 1 named the pillar but had no evidence anchor; leaving the tag unhandled ships an unsupported pillar.
+- The audience is external (investors, customers, public) — claims must hold up.
+- The topic is fast-moving (AI, crypto, regulation, market sizes, named entities).
+
+Skip it when the user supplied all source material (a Phase 0 doc), the topic is purely internal, or the deck is hypothetical/instructional. If a search tool is available and a trigger fires, produce `research.md`; if no search tool is available, don't stall — mark the affected pillars `[unverified]` in the plan and surface that at the Phase 3 handoff. When `research.md` exists, Phase 3 Reads it alongside `outline.json` and pastes the relevant section into the planner prompt's Context block.
+
 ### Phase 3 — Planning draft (策劃稿) — DO NOT SKIP
 
 This is what most AI PPT tools miss. Before any design, decide for **each page**:
@@ -303,9 +315,11 @@ Single_focus + nested sub_cards example (claim + supporting evidence on one page
   "chart_data": {
     "unit": "%",
     "items": [
-      { "label": "智慧家居", "label_en": "SMART HOME", "value": 42 },
-      { "label": "電動車", "label_en": "EV", "value": 75 },
-      { "label": "服務", "label_en": "SERVICES", "value": 50 }
+      { "label": "智慧家居", "label_en": "SMART HOME",  "value": 42 },
+      { "label": "智慧穿戴", "label_en": "WEARABLES",   "value": 60 },
+      { "label": "電動車",   "label_en": "EV",          "value": 75 },
+      { "label": "配件",     "label_en": "ACCESSORIES", "value": 30 },
+      { "label": "服務",     "label_en": "SERVICES",    "value": 50 }
     ]
   },
   "visual_notes": "Single highlight color, no per-bar palette.",
@@ -350,8 +364,8 @@ Key rules:
 - **Pick one visual motif** (default `fresh_pill_cards`; `apple_dark_cards` for `dark_apple*` decks) and repeat it everywhere.
 - **Prefer `stat_hero` and `mini_grid` for data-dense pages.** A page that fits 4 KPI numbers should be a `mini_grid`, not 4 sentences in `two_col_50_50`.
 - **One card, one core point.** If a card body has multiple sentences or a heading + 3 bullets, split it into a mini_grid.
-- **Number-first cards beat text-first cards.** Whenever a key number captures the message, render it at 80–120px in the highlight color.
-- **Bilingual title pattern.** Page titles render as Chinese (big, white) + small English subtitle (gray, decorative).
+- **Number-first cards beat text-first cards.** Whenever a key number captures the message, render it large. **`dark_apple`**: 80–120px in the highlight color. **`corporate_fresh` (default)**: a hinge number is ink `#383838` or teal `#1B8A82` — **never** the orange highlight (orange is body-inline emphasis only; a giant orange number breaks the role palette). See `prompts/05_designer_svg.md` → the `corporate_fresh` `stat_hero` override.
+- **Bilingual title pattern.** **`dark_apple`**: page titles render as Chinese (big, white) + small English subtitle (gray, decorative). **`corporate_fresh` (default)**: the title is a full-sentence assertion in charcoal `#383838` at 30–36px weight 700 (not a white mega-title), with the small English subtitle still gray.
 - **Dramatic typography contrast.** Hero number 80px / body 14px is correct. Title 32px / body 24px is not — too flat.
 - **Cards must have ≥20px (main) or ≥24px (mini) gaps.** Use size to express importance.
 - **Never** add accent underlines beneath page titles — it's the #1 AI-deck tell.
@@ -389,16 +403,19 @@ After the script runs successfully, **first run the QA verification loop** (the 
 
 **Step 1: Read the script's stdout footer.**
 
-The last block the script prints looks like:
+The last block the script prints looks like (it prints **unconditionally**, even when the PDF was skipped — so it always lists exactly the files that exist on disk):
 
 ```
-⚠️  IMPORTANT: 3 files were produced — ALL should be delivered to the user.
-    • /path/to/deck.pptx
-    • /path/to/deck.pdf
-    • /path/to/deck.notes.md
+======================================================================
+⚠️  CRITICAL: 3 file(s) produced. DELIVER ALL OF THEM.
+   The user expects every one of these in their chat / Downloads:
+     • /path/to/deck.pptx
+     • /path/to/deck.pdf
+     • /path/to/deck.notes.md
+======================================================================
 ```
 
-The number `N files` is the count you must deliver. Anything less is a failed Phase 5.
+The number `N file(s)` is the count you must deliver. Anything less is a failed Phase 5.
 
 **Step 2: List the output directory to confirm.**
 
@@ -444,7 +461,7 @@ xattr -d com.apple.quarantine /path/to/deck.pptx
 
 This is a one-liner that strips the quarantine flag. PowerPoint typically handles quarantine more gracefully and isn't affected.
 
-**Editing the result**: in PowerPoint 2016 or newer, right-click any slide's picture → **Convert to Shape**. The SVG decomposes into native PowerPoint shapes and text boxes — every card, title, and icon becomes editable. (Exception: motion pages are embedded as animated GIFs and stay pictures — they cannot be converted.)
+**Editing the result**: in PowerPoint 2016 or newer, right-click any slide's picture → **Convert to Shape**. The SVG decomposes into native PowerPoint shapes and text boxes — **solid-fill** cards, titles, lines, and icons become individually editable. Translucent/glass card bodies and gradient washes ride along in the movable background image (blur and gradients have no editable-vector equivalent) — so on glass-flow pages you edit the text labels, not the card rectangles. Full breakdown of what is / isn't vector-editable: [references/editable_mode.md](references/editable_mode.md). (Exception: motion pages are embedded as animated GIFs and stay pictures — they cannot be converted.)
 
 **Flags worth knowing**:
 - `--no-pdf` — skip the companion PDF (PPTX-only)
@@ -453,6 +470,7 @@ This is a one-liner that strips the quarantine flag. PowerPoint typically handle
 - `--placeholder-only` — force the 1×1 transparent placeholder PNG even if a real renderer is available. Smaller PPTX file but it only displays correctly in PowerPoint 2016+; the companion PDF is automatically skipped.
 - `--no-anim` — disable flow-anim detection; pages marked `flow-anim` render as normal static slides (PNG + svgBlip).
 - `--gif-width N` — width (px) of animated GIF frames. Default 1600.
+- `--no-decompose` — embed each slide as ONE picture (full render + svgBlip) instead of the default background-image + editable-content-layer split. Convert to Shape still edits text but rasterizes the rest into the one picture (the pre-v0.10.0 behavior).
 
 ---
 
@@ -493,8 +511,7 @@ User: "Make me an investor pitch deck for our SaaS product."
 2. **Phase 2**: Read `brief.md`. Generate `outline.json` (probably 12–18 pages). Show to user for sign-off.
 3. **Phase 3**: Read `outline.json`. Generate `planning.json`, run the independent content grade (default-on for full decks — see "Phase 3 content grade"), then show to user for sign-off.
 4. **Phase 4**: Read `planning.json`. Render all pages with the deck's style — `corporate_fresh` by default; `dark_apple` (or a brand palette) only if the user picked it in Phase 1.
-5. **Phase 5**: Read `pages/`. Produce `pitch.pptx` + `pitch.pdf` + (if any notes) `pitch.notes.md`. Deliver all files.
-6. QA loop.
+5. **Phase 5**: Read `pages/`. Produce `pitch.pptx` + `pitch.pdf` + (if any notes) `pitch.notes.md`, run the QA verification loop, **then** deliver all files (QA runs before delivery — see the Phase 5 order above).
 
 ### Recipe B — Quick short deck (10 min)
 
@@ -504,8 +521,7 @@ User: "Quick deck on the Q4 results, 5 slides, internal team."
 2. **Phase 2**: Read `brief.md`. Generate `outline.json` (5 pages, short).
 3. **Phase 3**: Read `outline.json`. Generate `planning.json` quickly — for a 5-page deck this is fast but **still produced as a file**.
 4. **Phase 4**: render.
-5. **Phase 5**: produce + deliver all files.
-6. QA: one quick pass.
+5. **Phase 5**: produce, run the QA verification loop (one quick pass), **then** deliver all files.
 
 Skipping any phase here would actually save no time — `brief.md`, `outline.json`, `planning.json` for a 5-page deck are each a handful of seconds. What you skip is *rounds* and *sign-offs*, not phases.
 
@@ -568,9 +584,12 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── setup.sh                      ← one-line dependency installer (mac/linux)
 │   └── setup.ps1                     ← same, for Windows PowerShell
 └── examples/
-    ├── DeckForge-demo.pdf            ← rendered demo (3 pages)
-    ├── slide-1.jpg ... 3             ← preview thumbnails
-    └── sample-deck/                  ← source SVG pages of the demo
+    ├── DeckForge-demo.pdf            ← rendered demo (10 pages)
+    ├── slide-1.jpg … slide-4.jpg     ← showcase preview thumbnails
+    ├── slide-5.gif                   ← showcase flow-anim slide (animated)
+    ├── showcase/                     ← the 5 showcase slides (SVG sources)
+    ├── sample-deck/                  ← source SVG pages of the 10-page demo
+    └── flow-anim-demo*/ + flow-anim-notes.md  ← flow-anim example pages + notes
 ```
 
 ---

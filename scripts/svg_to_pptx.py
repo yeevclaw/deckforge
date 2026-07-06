@@ -821,45 +821,50 @@ def build(pages: list[Path], out_path: Path, planning: dict,
         print("⚠️  Some slides used the 1×1 placeholder because no SVG renderer was "
               "available. Re-run after installing one for proper Keynote / Preview display.")
 
-    # Emit the companion PDF if requested.
+    # Emit the companion PDF if requested (best-effort — several conditions
+    # legitimately skip it). Whether or not the PDF is produced, the
+    # deliverables footer below always prints, so the caller reads the exact
+    # file set from stdout instead of inferring it from which branch ran.
+    pdf_out = None
     if also_pdf:
         if not _HAS_IMG2PDF:
             print("⚠️  Skipping PDF: img2pdf not installed. To enable, run:",
                   file=sys.stderr)
             print("      pip install img2pdf --break-system-packages",
                   file=sys.stderr)
-            return
-        if placeholder_only:
+        elif placeholder_only:
             # User explicitly chose 1×1 transparent placeholders — a PDF built
             # from those would be entirely blank, so skip rather than mislead.
             print("⚠️  Skipping PDF: --placeholder-only mode produces no real "
                   "PNG renders, so the PDF would be blank.", file=sys.stderr)
-            return
-        if used_placeholder_anywhere:
+        elif used_placeholder_anywhere:
             # Some slides fell back to placeholder because the renderer failed
             # mid-stream — PDF would be partly blank, skip it.
             print("⚠️  Skipping PDF: no real PNG renders are available "
                   "(no SVG renderer installed).", file=sys.stderr)
-            return
-        pdf_out = pdf_path or out_path.with_suffix(".pdf")
-        write_pdf(real_pngs, pdf_out)
-        print(f"✅ Wrote PDF:  {pdf_out}")
-        print()
-        # Aggregate the deliverables — exact count depends on whether speaker
-        # notes were extracted. Notes sidecar is reported separately above.
-        notes_sidecar = out_path.with_suffix(".notes.md")
-        deliverables = [out_path, pdf_out]
-        if notes_sidecar.exists():
-            deliverables.append(notes_sidecar)
-        print()
-        print("=" * 70)
-        print(f"⚠️  CRITICAL: {len(deliverables)} files produced. DELIVER ALL OF THEM.")
-        print(f"   The user expects every one of these in their chat / Downloads:")
-        for p in deliverables:
-            print(f"     • {p}")
-        print("   Delivering only the .pptx and dropping the .pdf/.notes.md")
-        print("   is the #1 DeckForge bug. Do not do this.")
-        print("=" * 70)
+        else:
+            pdf_out = pdf_path or out_path.with_suffix(".pdf")
+            write_pdf(real_pngs, pdf_out)
+            print(f"✅ Wrote PDF:  {pdf_out}")
+
+    # Deliverables footer — printed unconditionally so the caller can read the
+    # exact file set from stdout regardless of whether the PDF was produced.
+    # Only files that actually exist on disk are listed.
+    notes_sidecar = out_path.with_suffix(".notes.md")
+    deliverables = [out_path]
+    if pdf_out is not None and pdf_out.exists():
+        deliverables.append(pdf_out)
+    if notes_sidecar.exists():
+        deliverables.append(notes_sidecar)
+    print()
+    print("=" * 70)
+    print(f"⚠️  CRITICAL: {len(deliverables)} file(s) produced. DELIVER ALL OF THEM.")
+    print("   The user expects every one of these in their chat / Downloads:")
+    for p in deliverables:
+        print(f"     • {p}")
+    print("   Delivering only the .pptx and dropping the .pdf/.notes.md")
+    print("   is the #1 DeckForge bug. Do not do this.")
+    print("=" * 70)
 
 
 def write_pdf(png_paths: list[Path], pdf_path: Path) -> None:

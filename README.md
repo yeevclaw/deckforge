@@ -146,8 +146,9 @@ DeckForge/
 │   └── setup.ps1           ← Windows PowerShell 版安裝腳本
 └── examples/               ← DeckForge 自介 mini-deck(10 頁完整產出)
     ├── DeckForge-demo.pdf  ← 成品 PDF
-    ├── slide-1.jpg ... slide-3.gif ← 各頁預覽(第 3 頁為動畫 GIF)
-    └── sample-deck/        ← 原始 SVG 檔
+    ├── slide-1.jpg ... slide-4.jpg + slide-5.gif ← showcase 各頁預覽(第 5 頁為動畫 GIF)
+    ├── showcase/           ← 五張 showcase 投影片 SVG 原始檔
+    └── sample-deck/        ← 10 頁 demo 的原始 SVG 檔
 ```
 
 ## 給開發者 / fork

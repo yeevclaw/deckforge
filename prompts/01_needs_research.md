@@ -199,7 +199,7 @@ Different occasions need different emphasis surfaced. Detect the scenario early 
 | **Product launch** | Before/after, key features, demo cue, availability | Hero stat, feature trinity, demo screenshots, launch date |
 | **Keynote / conference talk** | Single big idea, story arc, takeaway | Narrative spine, memorable line, no busy slides |
 | **Training / onboarding** | Roles, steps, checkpoints, where to get help | Step-by-step, "you are here", resources |
-| **Crisis comms** | Stakeholders demanding answers fast | Acknowledge → Facts (what's known) → Actions (what's being done) → Timeline → Contact | What's known, what's still being investigated, who decides next, communications cadence |
+| **Crisis comms** | What's known, what's still being investigated, who decides next, communications cadence | Acknowledge → Facts (what's known) → Actions (what's being done) → Timeline → Contact |
 
 After the scenario is locked, ask scenario-specific questions. Example: if user picks **Sales/proposal**, your next-round questions probably target *buyer pain* and *the specific objection that loses deals* — not "tone" or "length".
 
@@ -331,6 +331,8 @@ Question: ⚠️ 4 輪反詰後有以下欄位我用了 best-guess (不是你親
   ○ 再回到反詰多問一輪
        → 我們再多繞一輪
 ```
+
+The 4-round cap binds the **agent's own initiative** — you never open a 5th round on your own. The third option here is a **user-initiated override**: the user, seeing the best-guess fields, may explicitly choose one more round. That's their prerogative, not a cap violation. (If they pick it, run exactly one more round, then return to this same handoff.)
 
 Forced Assumption mode is a safety valve when the dialogue genuinely can't converge. It is **not** an excuse to short-circuit the Socratic loop on rounds 1-3. You only reach it by genuinely running 4 rounds.
 

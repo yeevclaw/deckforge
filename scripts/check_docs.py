@@ -314,6 +314,122 @@ def check_evals_fixtures() -> list[str]:
     return errors
 
 
+# --- Check 9: demo page count --------------------------------------------------
+# Ground truth = number of page_*.svg in examples/sample-deck/ (the demo's source
+# pages). The docs described it as "3 pages" long after it grew to 10 — same
+# stale-number failure class as the template/icon counts, so guard it the same way.
+DEMO_COUNT_PATTERNS = {
+    "SKILL.md": [r"rendered demo \((\d+) pages\)"],
+    "README.md": [r"(\d+)\s*頁完整產出", r"(\d+)\s*頁範例"],
+    "README.en.md": [r"\((\d+) pages, full output\)", r"(\d+)-page example"],
+}
+
+
+def check_demo_page_count() -> list[str]:
+    errors: list[str] = []
+    truth = len(list((ROOT / "examples" / "sample-deck").glob("page_*.svg")))
+    for rel, patterns in DEMO_COUNT_PATTERNS.items():
+        text = read(rel)
+        found = [int(m) for pat in patterns for m in re.findall(pat, text)]
+        if not found:
+            errors.append(
+                f"{rel}: no demo page-count phrasing found — the wording likely "
+                f"changed; update DEMO_COUNT_PATTERNS in check_docs.py."
+            )
+            continue
+        bad = [n for n in found if n != truth]
+        if bad:
+            errors.append(
+                f"{rel}: states demo page count {bad} but examples/sample-deck/ "
+                f"has {truth} page_*.svg."
+            )
+    return errors
+
+
+# --- Check 10: markdown table column integrity ---------------------------------
+# A GFM table row with the wrong cell count silently corrupts which column a value
+# lands in — exactly the crisis-comms row bug (a 4-cell row under a 3-col header
+# mis-fed the coverage sweep). Assert every body row matches its header's width.
+TABLE_GUARD_FILES = [
+    "SKILL.md",
+    "prompts/01_needs_research.md",
+    "prompts/04_planning_draft.md",
+    "prompts/05_designer_svg.md",
+    "references/chart_anatomy.md",
+    "references/design_system.md",
+    "references/rubric.md",
+]
+_SEP_RE = re.compile(r"^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$")
+
+
+def _cell_count(line: str) -> int:
+    s = line.strip()
+    if s.startswith("|"):
+        s = s[1:]
+    if s.endswith("|"):
+        s = s[:-1]
+    # Split on unescaped pipes only (GFM requires literal cell pipes as \|).
+    return len(re.split(r"(?<!\\)\|", s))
+
+
+def check_table_columns() -> list[str]:
+    errors: list[str] = []
+    for rel in TABLE_GUARD_FILES:
+        lines = read(rel).splitlines()
+        in_fence = False
+        i = 0
+        while i < len(lines):
+            stripped = lines[i].lstrip()
+            if stripped.startswith("```") or stripped.startswith("~~~"):
+                in_fence = not in_fence
+                i += 1
+                continue
+            # A table = a header line immediately followed by a separator line.
+            if (not in_fence and i + 1 < len(lines)
+                    and "|" in lines[i] and _SEP_RE.match(lines[i + 1])):
+                width = _cell_count(lines[i])
+                header_lineno = i + 1
+                j = i + 2
+                while j < len(lines) and "|" in lines[j] and lines[j].strip():
+                    if lines[j].lstrip().startswith(("```", "~~~")):
+                        break
+                    got = _cell_count(lines[j])
+                    if got != width:
+                        errors.append(
+                            f"{rel}:{j + 1}: table row has {got} cells but its "
+                            f"header (line {header_lineno}) has {width}."
+                        )
+                    j += 1
+                i = j
+                continue
+            i += 1
+    return errors
+
+
+# --- Check 11: CLI flag parity -------------------------------------------------
+# Every converter flag SKILL documents must exist in svg_to_pptx.py's argparse —
+# so a renamed/removed flag can't leave the docs pointing at a flag that no longer
+# works (--no-decompose was real-but-undocumented; this guards the reverse rot).
+# Direction is docs ⊆ code, not one-to-one: SKILL curates a useful subset, so we
+# do NOT force every argparse flag into the docs. Non-converter flags that appear
+# in SKILL (pip / soffice) are excluded.
+NON_CONVERTER_FLAGS = {"--break-system-packages", "--convert-to", "--headless"}
+
+
+def check_cli_flag_parity() -> list[str]:
+    converter = read("scripts/svg_to_pptx.py")
+    real = set(re.findall(r'add_argument\("(--[a-z][a-z-]+)"', converter))
+    if not real:
+        return ["scripts/svg_to_pptx.py: no argparse long flags found — "
+                "the add_argument phrasing likely changed; update check_docs.py."]
+    documented = set(re.findall(r"(--[a-z][a-z-]+)", read("SKILL.md")))
+    stale = sorted(documented - real - NON_CONVERTER_FLAGS)
+    if stale:
+        return [f"SKILL.md documents converter flag(s) {stale} that svg_to_pptx.py "
+                f"argparse does not define (renamed or removed?)."]
+    return []
+
+
 CHECKS = [
     ("template count", check_template_count),
     ("layout enum", check_layout_enum),
@@ -323,6 +439,9 @@ CHECKS = [
     ("icon count", check_icon_count),
     ("grader-verdict paths", check_qa_paths),
     ("evals fixtures", check_evals_fixtures),
+    ("demo page count", check_demo_page_count),
+    ("table columns", check_table_columns),
+    ("CLI flag parity", check_cli_flag_parity),
 ]
 
 

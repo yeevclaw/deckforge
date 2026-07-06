@@ -92,7 +92,7 @@ rest stay self-checks.
 | P3-02 | Multi-point cards split into mini-cards | inspect cards | self |
 | P3-03 | `is_number_first` set correctly on every card | inspect cards | self |
 | P3-04 | Number-first `stat_value` is a concrete number (not "many"/"several") | inspect values | self |
-| P3-05 | Data-dense pages use `stat_hero` / `mini_grid` | inspect layouts | self |
+| P3-05 | Data-dense pages use `stat_hero` / `mini_grid` (independent numbers) or the matching `chart_*` layout (related numbers) | inspect layouts | self |
 | P3-06 | Layout follows content shape, never switched to a primitive for visual variety | inspect layout choices | self |
 | P3-07 | Real speaker notes, not "TBD" | inspect `speaker_notes` | self |
 | P3-08 | `design_brief` palette consistent with `brief.md` tone | compare to brief | self |
@@ -105,6 +105,7 @@ rest stay self-checks.
 | P3-15 | Primitive-layout share of content pages ≤ ~40% | count primitive vs total | machine |
 | P3-16 | `flow_variant` set (corporate_fresh static flow) with a one-sentence story-shape reason | inspect `design_brief.flow_variant` | self |
 | P3-17 | `card_variant` set per corporate_fresh card-variant page (`three_col` / `mini_grid` / `two_col_50_50`) with a one-sentence content-substructure reason; a same-structure parallel series assigns variants by each page's substructure, never for variety | inspect `card_variant` choices | self |
+| P3-18 | Chart trigger (the relationship test): related numbers (trend / mix shift / A→B bridge / ranking / volume+rate / 2-D share) are planned as the matching `chart_*` layout, never scattered into cards; each chart clears its minimum shape; a quantitative page-title claim is carried by `chart_data.annotations[]` (≤2, labels pre-computed) | inspect data-bearing pages vs `prompts/04_planning_draft.md` → "The chart trigger" | self |
 
 ## Phase 4 — `pages/page_NN.svg`
 
@@ -145,6 +146,7 @@ can only see *after* rasterization — they are invisible in the SVG source.
 | P5-08 | Each slide has visible hierarchy (hero number / icon / motif) — not a text wall | look at each slide | grader |
 | P5-09 | Speaker notes present where `planning.json` intended (not visual — confirmed against metadata at delivery, not by the image grader) | compare `.notes.md` to planning | self |
 | P5-10 | No bottom takeaway line that restates the page title (a closing sentence paraphrasing the assertion title is the title said twice; most pages should have no bottom line) | look at each slide, compare to the title | grader |
+| P5-11 | Chart pages: the chart visually asserts the page title's quantitative claim — at least one analytical element (reference line / difference bracket / CAGR arrow / emphasized bar, segment, or series) marks the claim on the chart; a bare data dump under an assertion title fails. Ink-voice discipline: annotation strokes in neutral ink, ≤2 annotations, decreases gray never red | look at chart slides, compare to the rendered title | grader |
 
 ---
 

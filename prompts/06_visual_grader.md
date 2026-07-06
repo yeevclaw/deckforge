@@ -30,12 +30,15 @@ through.
   whether a page is a chart/diagram — so you can tell "this label is supposed to be here
   but is clipped" from "this slide is fine".
 - **`references/rubric.md`**: grade against the "Phase 5 — VISUAL" section, ids
-  **P5-01 through P5-08, plus P5-10**. (P5-09 is speaker notes — **not** a visual check;
+  **P5-01 through P5-08, plus P5-10 and P5-11**. (P5-09 is speaker notes — **not** a visual check;
   skip it, the caller verifies notes against metadata at delivery. P5-10 needs
   `planning.json`: read each page's `title`, then look at the rendered slide's bottom
   area — if a closing sentence there just re-says the title in other words, fail P5-10
   with a `fix` like "delete the bottom line; it paraphrases the title 「…」, which already
-  carries the conclusion".)
+  carries the conclusion". P5-11 applies to chart pages only: the rendered title is on
+  the slide itself — when it asserts a quantitative claim, check the chart visually marks
+  that claim with an analytical element: a reference line, difference bracket, CAGR
+  arrow, or one emphasized bar/segment/series. Bare data under an assertion title fails.)
 
 ## Task
 
@@ -45,7 +48,7 @@ For **each** rendered page image, in order:
    what rendered, because the defects in this section (overflow, clipping, overlap,
    low contrast) are exactly the ones that are invisible in the source and only appear
    after rasterization.
-2. Test it against P5-01..P5-08 and P5-10. For every criterion it fails, record one `failure`:
+2. Test it against P5-01..P5-08 and P5-10 (plus P5-11 on chart pages). For every criterion it fails, record one `failure`:
    - `rubric_id` — exactly one id (e.g. `"P5-01"`).
    - `where` — where on the slide (e.g. "third card, body text 2nd line").
    - `fix` — a concrete, designer-actionable instruction (e.g. "split the body into two
@@ -76,7 +79,7 @@ Return **only** this JSON object, nothing before or after it:
 
 - `n` is the page number (matches `page_NN`).
 - `deck_pass` is `true` **only if every** slide has `pass: true`.
-- Every `failure` carries exactly one `rubric_id` from P5-01..P5-08 or P5-10.
+- Every `failure` carries exactly one `rubric_id` from P5-01..P5-08, P5-10, or P5-11.
 
 ## How the caller uses your output (context, not your job)
 

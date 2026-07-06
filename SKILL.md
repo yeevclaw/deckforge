@@ -222,8 +222,12 @@ Use the prompt in [prompts/04_planning_draft.md](prompts/04_planning_draft.md). 
   // Bento Grid card layouts (default — try these first):
   "single_focus" | "stat_hero" | "mini_grid" | "two_col_50_50" |
   "two_col_2_1" | "three_col" | "hero_top" | "mixed_grid"
-  // Chart layouts (use chart_data instead of cards):
+  // Chart layouts (use chart_data instead of cards) — basic three:
   | "chart_bar" | "chart_line" | "chart_donut"
+  // …and the consulting five (think-cell-style vocabulary; see
+  // references/chart_anatomy.md → the relationship test + annotation layer):
+  | "chart_hbar" | "chart_stacked_bar" | "chart_waterfall"
+  | "chart_combo" | "chart_mekko"
   // Diagram primitives (use only when bento loses information —
   // direction / alignment / topology / axis loss; see references/diagrams.md):
   | "flow" | "timeline" | "cycle" | "funnel"
@@ -309,7 +313,7 @@ Single_focus + nested sub_cards example (claim + supporting evidence on one page
 }
 ```
 
-`chart_line` uses time-point labels; `chart_donut` items are composition segments (first item full saturation, others fade with alpha 0.55/0.25/0.12 of the same hue). See `prompts/04_planning_draft.md` for the full schema and `references/chart_anatomy.md` for the SVG geometry.
+`chart_line` uses time-point labels; `chart_donut` items are composition segments (first item full saturation, others fade with alpha 0.55/0.25/0.12 of the same hue). The consulting five carry extra fields — `series[]`/`values[]` + `emphasis` (`chart_stacked_bar`, `chart_mekko`), `role: "total"` + signed deltas (`chart_waterfall`), `line_value` per item (`chart_combo`), `width` per item (`chart_mekko`) — and any chart may carry `annotations: []` (`value_line` / `cagr_arrow` / `diff_arrow` / `callout`, ≤2 per chart, labels pre-computed) so the chart *visually asserts the page title's claim*, not just presents data. Planner-side trigger: the **relationship test** (related numbers → chart; independent KPIs → cards), `prompts/04_planning_draft.md` → "The chart trigger". See that prompt for full schemas and `references/chart_anatomy.md` for the SVG geometry.
 
 Why this phase exists: top PPT agencies have a **Planner** role separate from the **Designer**. The Planner decides what + where; the Designer decides how it looks. Mixing these jobs produces the busy, cluttered slides that scream "AI generated".
 
@@ -330,11 +334,11 @@ For each page in `planning.json`, generate **one self-contained SVG file** with 
 - Diagram primitives spec (information-loss layouts): [references/diagrams.md](references/diagrams.md)
 - Chart anatomy: [references/chart_anatomy.md](references/chart_anatomy.md)
 - Color + typography system: [references/design_system.md](references/design_system.md)
-- SVG templates to start from: [templates/](templates/) — 35 files total:
+- SVG templates to start from: [templates/](templates/) — 40 files total:
   - **Shared assets**: `_base.svg` (filters / gradients / 44 Lucide icons used via `<use>`)
   - **Page-type starters**: `cover.svg`, `toc.svg`
   - **Bento layouts**: `bento_2col.svg` (two_col_50_50 / two_col_2_1), `bento_3col.svg`, `bento_hero.svg` (hero_top), `bento_mixed.svg` (mixed_grid), `bento_mini_grid.svg` (mini_grid — main card + 3–5 mini-cards, dark_apple)
-  - **Chart layouts**: `chart_bar.svg`, `chart_line.svg`, `chart_donut.svg`
+  - **Chart layouts**: `chart_bar.svg`, `chart_line.svg`, `chart_donut.svg`, plus the consulting five — `chart_hbar.svg` (ranking), `chart_stacked_bar.svg` (mix shift: totals + segment connectors + emphasis series), `chart_waterfall.svg` (A→B bridge + diff bracket), `chart_combo.svg` (bars + ink rate line + CAGR arrow), `chart_mekko.svg` (2-D market map)
   - **corporate_fresh starters** (embed that family's craft recipes — use these, not restyled dark templates, when `palette_hint` is `corporate_fresh`): `fresh_cover.svg` (cover / derive end page), four `three_col` `card_variant` templates — one per page's `card_variant`: `fresh_3col.svg` (`icon_column`), `fresh_3col_steps.svg` (`numbered_steps`), `fresh_3col_axis.svg` (`axis_labeled`), `fresh_3col_lead.svg` (`lead_plus_pair`); three `mini_grid` KPI templates: `fresh_mini_grid.svg` (`even_grid`), `fresh_mini_grid_ribbon.svg` (`ribbon_row`), `fresh_mini_grid_spotlight.svg` (`spotlight`); two `two_col_50_50` templates: `fresh_2col.svg` (`balanced`), `fresh_2col_beforeafter.svg` (`before_after`); `fresh_compare.svg` (compare_table), and four flow templates — one per `design_brief.flow_variant`: `fresh_flow_terrace.svg` (`terrace_ascent`), `fresh_flow_river.svg` (`river_ribbon`), `fresh_flow_cascade.svg` (`cascade_fall`), `fresh_flow.svg` (`dome_arcade`)
   - **Diagram primitives** (used only when bento would lose structural information — see [references/diagrams.md](references/diagrams.md)): `flow.svg`, `timeline.svg`, `cycle.svg`, `funnel.svg`, `compare_table.svg`, `quadrant_2x2.svg`, `venn.svg`, `hierarchy_tree.svg`, `pyramid.svg`
   - **No dedicated template for**: `single_focus` (just use `bento_hero.svg` and drop the bottom row), `stat_hero` (single huge text, no template needed — see designer prompt geometry), `section_break` / `end` (derive from `cover.svg` with smaller hero text). These page types are simple enough that a template would add no value.
@@ -457,7 +461,7 @@ This is a one-liner that strips the quarantine flag. PowerPoint typically handle
 This is a **closed verification loop**, not an optional eyeball pass: the converter renders, an **independent grader sub-agent** scores the rendered slides against a rubric, and any failing page is re-rendered and re-graded until the deck is clean. Run it **right after the converter succeeds and before the mandatory delivery checklist above**.
 
 1. **Render** — the converter already wrote one full-render PNG per slide to `<pages-dir>/_renders/page_NN.png`. No extra step.
-2. **Grade** — spawn a fresh grader sub-agent with [prompts/06_visual_grader.md](prompts/06_visual_grader.md). Give it the `_renders/page_NN.png` images, `planning.json`, and [references/rubric.md](references/rubric.md) (it scores the "Phase 5 — VISUAL" section, ids P5-01..P5-08 plus P5-10). It returns strict JSON:
+2. **Grade** — spawn a fresh grader sub-agent with [prompts/06_visual_grader.md](prompts/06_visual_grader.md). Give it the `_renders/page_NN.png` images, `planning.json`, and [references/rubric.md](references/rubric.md) (it scores the "Phase 5 — VISUAL" section, ids P5-01..P5-08, P5-10, and P5-11 on chart pages). It returns strict JSON:
    ```json
    { "deck_pass": false, "slides": [ { "n": 2, "pass": false, "failures": [ { "rubric_id": "P5-01", "where": "card 3 body", "fix": "split into two <tspan> rows; clipped at card edge" } ] } ] }
    ```
@@ -551,6 +555,11 @@ deckforge/                            ← (or whatever you name the skill folder
 │   ├── chart_bar.svg                 ← vertical bar chart (single highlight color)
 │   ├── chart_line.svg                ← line + area chart for trends
 │   ├── chart_donut.svg               ← donut chart with center label + legend
+│   ├── chart_hbar.svg                ← horizontal ranking bars (leader emphasized)
+│   ├── chart_stacked_bar.svg         ← stacked columns: totals + segment connectors
+│   ├── chart_waterfall.svg           ← A→B bridge with level connectors + diff bracket
+│   ├── chart_combo.svg               ← bars + ink rate line + CAGR arrow
+│   ├── chart_mekko.svg               ← 2-D market map (width × share)
 │   └── fresh_cover.svg / fresh_3col*.svg / fresh_mini_grid*.svg / fresh_2col*.svg / fresh_flow*.svg / fresh_compare.svg
 │                                     ← corporate_fresh starters (craft recipes embedded)
 ├── scripts/

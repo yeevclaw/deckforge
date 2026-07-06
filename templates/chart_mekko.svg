@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  chart_mekko.svg — two-dimensional market map (1280×720, dark_apple).
+  Replace #FF6900 with the deck's highlight color.
+  Column width = category share of the whole market (45/30/25% of 1000px, adjacent, 2px insets).
+  Column stacking = player share within the category (100% of 420px height, 4px gaps).
+  Series: 公司A (emphasis, full hue) / 公司B (0.45) / 其他 (0.18). Series labels left of column 1.
+  Inside translate(152, 190). Headers above each column carry the category + its width share.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">公司A在智慧家居與訂閱服務握有過半份額</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Company A Holds &gt;50% in Smart Home and Services
+  </text>
+
+  <!-- Plot area -->
+  <g transform="translate(152, 190)">
+    <!-- Column headers: category + width share -->
+    <text x="225" y="-22" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">智慧家居 · 45%</text>
+    <text x="600" y="-22" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">智慧穿戴 · 30%</text>
+    <text x="875" y="-22" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">訂閱服務 · 25%</text>
+
+    <!-- Column 1 (x 0–450): 公司A 52 / 公司B 28 / 其他 20 -->
+    <rect x="2" y="0"   width="446" height="216" fill="#FF6900"/>
+    <rect x="2" y="220" width="446" height="114" fill="#FF6900" fill-opacity="0.45"/>
+    <rect x="2" y="338" width="446" height="82"  fill="#FF6900" fill-opacity="0.18"/>
+
+    <!-- Column 2 (x 450–750): 26 / 44 / 30 -->
+    <rect x="452" y="0"   width="296" height="107" fill="#FF6900"/>
+    <rect x="452" y="111" width="296" height="183" fill="#FF6900" fill-opacity="0.45"/>
+    <rect x="452" y="298" width="296" height="122" fill="#FF6900" fill-opacity="0.18"/>
+
+    <!-- Column 3 (x 750–1000): 61 / 22 / 17 -->
+    <rect x="752" y="0"   width="246" height="254" fill="#FF6900"/>
+    <rect x="752" y="258" width="246" height="90"  fill="#FF6900" fill-opacity="0.45"/>
+    <rect x="752" y="352" width="246" height="68"  fill="#FF6900" fill-opacity="0.18"/>
+
+    <!-- In-segment share labels (only where segment ≥30px tall). On the full-hue
+         emphasis segments the label is near-black ink #111111 (white on the highlight
+         fails AA contrast); light grays stay on the low-alpha segments. -->
+    <text x="225" y="115" font-size="18" font-weight="700" fill="#111111" text-anchor="middle" style="font-variant-numeric: tabular-nums">52%</text>
+    <text x="225" y="283" font-size="15" font-weight="600" fill="#E8E8E8" text-anchor="middle" style="font-variant-numeric: tabular-nums">28%</text>
+    <text x="225" y="384" font-size="14" fill="#C8C8C8" text-anchor="middle" style="font-variant-numeric: tabular-nums">20%</text>
+    <text x="600" y="60"  font-size="16" font-weight="700" fill="#111111" text-anchor="middle" style="font-variant-numeric: tabular-nums">26%</text>
+    <text x="600" y="209" font-size="16" font-weight="600" fill="#E8E8E8" text-anchor="middle" style="font-variant-numeric: tabular-nums">44%</text>
+    <text x="600" y="365" font-size="14" fill="#C8C8C8" text-anchor="middle" style="font-variant-numeric: tabular-nums">30%</text>
+    <text x="875" y="133" font-size="18" font-weight="700" fill="#111111" text-anchor="middle" style="font-variant-numeric: tabular-nums">61%</text>
+    <text x="875" y="309" font-size="15" font-weight="600" fill="#E8E8E8" text-anchor="middle" style="font-variant-numeric: tabular-nums">22%</text>
+    <text x="875" y="392" font-size="14" fill="#C8C8C8" text-anchor="middle" style="font-variant-numeric: tabular-nums">17%</text>
+
+    <!-- Series labels, left of column 1 at segment mid-heights -->
+    <text x="-14" y="112" font-size="13" fill="#A0A0A0" text-anchor="end">公司A</text>
+    <text x="-14" y="281" font-size="13" fill="#A0A0A0" text-anchor="end">公司B</text>
+    <text x="-14" y="382" font-size="13" fill="#A0A0A0" text-anchor="end">其他</text>
+  </g>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

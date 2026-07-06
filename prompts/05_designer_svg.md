@@ -71,7 +71,7 @@ First identify which **layout family** this page's `layout` belongs to, then loo
 | Layout family | `layout` values | Reference doc | Renders from |
 |---|---|---|---|
 | **Bento** (default) | `single_focus` / `stat_hero` / `mini_grid` / `two_col_50_50` / `two_col_2_1` / `three_col` / `hero_top` / `mixed_grid` | [references/bento_grid.md](../references/bento_grid.md) | `cards[]` |
-| **Chart** | `chart_bar` / `chart_line` / `chart_donut` | [references/chart_anatomy.md](../references/chart_anatomy.md) | `chart_data` |
+| **Chart** | `chart_bar` / `chart_line` / `chart_donut` / `chart_hbar` / `chart_stacked_bar` / `chart_waterfall` / `chart_combo` / `chart_mekko` | [references/chart_anatomy.md](../references/chart_anatomy.md) | `chart_data` |
 | **Diagram primitive** | `flow` / `timeline` / `cycle` / `funnel` / `compare_table` / `quadrant_2x2` / `venn` / `hierarchy_tree` / `pyramid` | [references/diagrams.md](../references/diagrams.md) | matching `*_data` field (e.g. `flow_data`, `cycle_data`) — NOT `cards` |
 
 The reference doc for each family carries the exact coordinates / geometry / color rules; the template provides a runnable starting SVG with sample data you can replace.
@@ -268,13 +268,20 @@ If you need a 48px heading but only have room for a 24px icon, **drop the icon e
 
 ### Step 5.5: charts when the data has shape
 
-If `planning.json` specifies a chart layout (`chart_bar`, `chart_line`, `chart_donut`), follow [references/chart_anatomy.md](../references/chart_anatomy.md) precisely:
+If `planning.json` specifies a chart layout, follow [references/chart_anatomy.md](../references/chart_anatomy.md) precisely:
 
 - **`chart_bar`** — vertical bars for category comparisons (4–10 items). Single highlight color, gridlines `#333333`, value labels above bars, CN + EN x-axis labels. Starter: `templates/chart_bar.svg`.
-- **`chart_line`** — line + area fill for trends (4+ time points). 3px stroke, 7px dots, value labels above each dot. Starter: `templates/chart_line.svg`.
+- **`chart_line`** — line + area fill for trends (4+ time points). 3px stroke, 7px dots, value labels above each dot. Multi-series: emphasis line full hue, others `stroke-opacity 0.45`, direct labels at line ends, no legend. Starter: `templates/chart_line.svg`.
 - **`chart_donut`** — donut chart for composition (2–5 segments). One segment full opacity, others at 0.55 / 0.25 / 0.12 alpha of the same hue. Center: big highlight-color percentage + caption. Legend on the right. Starter: `templates/chart_donut.svg`.
+- **`chart_hbar`** — horizontal ranking bars (4–8 items, planner pre-sorted). Leader (or the claim's bar) full hue, rest at 0.45; value labels at bar ends; right-aligned CN + EN labels in the left gutter. Starter: `templates/chart_hbar.svg`.
+- **`chart_stacked_bar`** — stacked columns from `series[]` × `items[].values[]`. Always draw the three signature marks: totals above columns (absolute mode), 1px segment connectors between adjacent columns, `emphasis` series at full hue (others 0.45 / 0.18). Series names left of the first column; segment values inside segments ≥24px tall only. Starter: `templates/chart_stacked_bar.svg`.
+- **`chart_waterfall`** — A→B bridge. Run the cumulative-level math from chart_anatomy.md; totals as full columns (`#3A3A3C` dark / `#383838` fresh), increases in highlight, **decreases in neutral gray (`#6E6E73` / `#AEB4BA`) — never red**; dashed level connectors; signed delta labels. Starter: `templates/chart_waterfall.svg`.
+- **`chart_combo`** — bars (`value`) + ink line (`line_value`, `#FFFFFF` dark / `#383838` fresh — never a second hue). No right axis: direct value labels on both series; line named at its right end; small top-right legend for the two units. Starter: `templates/chart_combo.svg`.
+- **`chart_mekko`** — column widths from `items[].width` (% of 1000px, adjacent), 100% vertical stack from `values[]`. Headers above columns carry category + width share; in-segment % labels only where the segment is ≥30px tall; `emphasis` series full hue. Starter: `templates/chart_mekko.svg`.
 
-**Single-highlight-color discipline applies to charts too** — never paint each segment a different color. Use alpha variations of the deck's highlight color.
+**Single-highlight-color discipline applies to charts too** — never paint each segment a different color. Use alpha variations of the deck's highlight color. Two further chart rules from chart_anatomy.md: **data speaks color, analysis speaks ink** (annotations/totals/connectors in `#FFFFFF`–`#CCCCCC` on dark, `#383838` on fresh), and **bars start at zero** (axis-break squiggle for one outlier, never a truncated axis).
+
+**Annotations — the chart states the claim.** Render every `chart_data.annotations[]` entry per the geometry recipes in chart_anatomy.md → "Annotation layer" (`value_line` / `cagr_arrow` / `diff_arrow` / `callout`; labels come pre-computed from planning — draw them, don't re-derive). If planning omitted `annotations` and the page title makes a quantitative claim that maps directly onto the data (a growth between two labeled points, a threshold every bar clears, a start↔end gap), **add the one matching annotation** — that judgment is expected of you, the same latitude discipline as "How to design". Hard cap ≤2 annotations per chart. The single most claim-bearing label's text may take the highlight hue on **dark_apple decks only** (AA-safe on black); on corporate_fresh the label stays ink `#383838` bold — orange on white is ≈2.65:1 and fails AA, so orange keeps to its inline-body-emphasis role. Annotation strokes always stay ink.
 
 ### Step 5.6: diagram primitives when bento would lose information
 
@@ -442,10 +449,11 @@ Silently run this before emitting:
 - [ ] No leftover placeholders (Lorem, xxx, TBD)?
 - [ ] Every text run lives in a real `<text>` element (not converted to path)?
 - [ ] Motion page only: `flow-anim` only on open `<line>`/`<path>` (never closed shapes), one dasharray, ≤3 animated paths or one closed system? (Step 5.7)
+- [ ] Chart page only: bars start at zero; decreases neutral gray, never red; annotations ≤2, ink strokes, labels pre-computed; the title's quantitative claim visually asserted on the chart (annotation or emphasized element — graded at P5-11)?
 
 If any fails → fix before output.
 
-> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 4" (ids P4-01..P4-12). The rendered-slide checks live in "Phase 5 — VISUAL" (P5-01..P5-08 plus P5-10), graded after the converter runs. Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
+> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 4" (ids P4-01..P4-12). The rendered-slide checks live in "Phase 5 — VISUAL" (P5-01..P5-08, P5-10, P5-11), graded after the converter runs. Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
 
 ## Common mistakes to avoid
 

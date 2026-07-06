@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  chart_hbar.svg — horizontal ranking bars on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Rows: bar height 48, row pitch 82, plot width 800 = max value, inside translate(300, 190).
+  Emphasis discipline: leader bar full hue, the rest fill-opacity 0.45.
+  Left gutter (~250px) holds right-aligned CN + EN category labels.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">線上商城成為第一大營收通路</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Online Store Is Now the #1 Revenue Channel
+  </text>
+
+  <!-- Plot area -->
+  <g transform="translate(300, 190)">
+    <!-- Unit tag -->
+    <text x="0" y="-18" font-size="12" fill="#A0A0A0">單位:NT$億</text>
+
+    <!-- Baseline -->
+    <line x1="0" y1="-6" x2="0" y2="382" stroke="#333333" stroke-width="1"/>
+
+    <!-- Bars: 142 / 98 / 76 / 41 / 22 → widths 800 / 552 / 428 / 231 / 124 -->
+    <rect x="0" y="0"   width="800" height="48" fill="#FF6900" rx="6"/>
+    <rect x="0" y="82"  width="552" height="48" fill="#FF6900" fill-opacity="0.45" rx="6"/>
+    <rect x="0" y="164" width="428" height="48" fill="#FF6900" fill-opacity="0.45" rx="6"/>
+    <rect x="0" y="246" width="231" height="48" fill="#FF6900" fill-opacity="0.45" rx="6"/>
+    <rect x="0" y="328" width="124" height="48" fill="#FF6900" fill-opacity="0.45" rx="6"/>
+
+    <!-- Value labels at bar ends -->
+    <text x="814" y="31" font-size="16" font-weight="700" fill="#FF6900" style="font-variant-numeric: tabular-nums">142</text>
+    <text x="566" y="113" font-size="16" font-weight="700" fill="#FF6900" style="font-variant-numeric: tabular-nums">98</text>
+    <text x="442" y="195" font-size="16" font-weight="700" fill="#FF6900" style="font-variant-numeric: tabular-nums">76</text>
+    <text x="245" y="277" font-size="16" font-weight="700" fill="#FF6900" style="font-variant-numeric: tabular-nums">41</text>
+    <text x="138" y="359" font-size="16" font-weight="700" fill="#FF6900" style="font-variant-numeric: tabular-nums">22</text>
+
+    <!-- Category labels (CN + EN), right-aligned against the baseline -->
+    <text x="-18" y="30"  font-size="15" fill="#FFFFFF" text-anchor="end">線上商城</text>
+    <text x="-18" y="47"  font-size="10" fill="#666666" text-anchor="end" letter-spacing="1">ONLINE STORE</text>
+    <text x="-18" y="112" font-size="15" fill="#FFFFFF" text-anchor="end">直營門市</text>
+    <text x="-18" y="129" font-size="10" fill="#666666" text-anchor="end" letter-spacing="1">RETAIL</text>
+    <text x="-18" y="194" font-size="15" fill="#FFFFFF" text-anchor="end">經銷夥伴</text>
+    <text x="-18" y="211" font-size="10" fill="#666666" text-anchor="end" letter-spacing="1">RESELLERS</text>
+    <text x="-18" y="276" font-size="15" fill="#FFFFFF" text-anchor="end">電話訂購</text>
+    <text x="-18" y="293" font-size="10" fill="#666666" text-anchor="end" letter-spacing="1">PHONE</text>
+    <text x="-18" y="358" font-size="15" fill="#FFFFFF" text-anchor="end">其他通路</text>
+    <text x="-18" y="375" font-size="10" fill="#666666" text-anchor="end" letter-spacing="1">OTHERS</text>
+  </g>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

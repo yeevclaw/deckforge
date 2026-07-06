@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  chart_combo.svg — bars (volume) + ink line (rate) with CAGR arrow (1280×720, dark_apple).
+  Replace #FF6900 with the deck's highlight color.
+  Bars: 營收 120/180/240/310 NT$億 · scale 1.2px/unit · w=120 at x=60/300/540/780.
+  Line: 毛利率 18/21/24/26% on its own scale (15–30% → y 400–0), ink voice (#FFFFFF), named at its right end.
+  No right axis — direct value labels carry both scales. Legend top-right names the units.
+  cagr_arrow annotation over the bars asserts the growth claim: +37.2% CAGR.
+  Inside translate(152, 200).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">營收三年增至 2.6 倍,毛利率同步擴張</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Revenue Grows 2.6× as Margins Expand
+  </text>
+
+  <!-- Plot area -->
+  <g transform="translate(152, 200)">
+    <!-- Legend (the combo exception: two different-unit metrics) -->
+    <rect x="900" y="-38" width="14" height="14" fill="#FF6900"/>
+    <text x="922" y="-26" font-size="12" fill="#A0A0A0">營收 NT$億</text>
+    <line x1="900" y1="-8" x2="914" y2="-8" stroke="#FFFFFF" stroke-width="3"/>
+    <text x="922" y="-4" font-size="12" fill="#A0A0A0">毛利率 %</text>
+
+    <!-- Baseline -->
+    <line x1="0" y1="400" x2="1000" y2="400" stroke="#333333" stroke-width="1"/>
+
+    <!-- Bars -->
+    <rect x="60"  y="256" width="120" height="144" fill="#FF6900" rx="6"/>
+    <rect x="300" y="184" width="120" height="216" fill="#FF6900" rx="6"/>
+    <rect x="540" y="112" width="120" height="288" fill="#FF6900" rx="6"/>
+    <rect x="780" y="28"  width="120" height="372" fill="#FF6900" rx="6"/>
+
+    <!-- Bar value labels -->
+    <text x="120" y="244" font-size="15" font-weight="700" fill="#FF6900" text-anchor="middle" style="font-variant-numeric: tabular-nums">120</text>
+    <text x="360" y="172" font-size="15" font-weight="700" fill="#FF6900" text-anchor="middle" style="font-variant-numeric: tabular-nums">180</text>
+    <text x="600" y="100" font-size="15" font-weight="700" fill="#FF6900" text-anchor="middle" style="font-variant-numeric: tabular-nums">240</text>
+    <text x="840" y="16"  font-size="15" font-weight="700" fill="#FF6900" text-anchor="middle" style="font-variant-numeric: tabular-nums">310</text>
+
+    <!-- Rate line (ink voice) + dots -->
+    <polyline points="120,320 360,240 600,160 840,107"
+              fill="none" stroke="#FFFFFF" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="120" cy="320" r="6" fill="#FFFFFF"/>
+    <circle cx="360" cy="240" r="6" fill="#FFFFFF"/>
+    <circle cx="600" cy="160" r="6" fill="#FFFFFF"/>
+    <circle cx="840" cy="107" r="6" fill="#FFFFFF"/>
+
+    <!-- Line value labels sit ON the full-hue bars, so they flip to near-black ink
+         #111111 (white on the highlight fails AA). The line NAME sits fully clear of
+         the last bar (bar right edge 900 + 14), back on black — so it stays white. -->
+    <text x="120" y="304" font-size="13" font-weight="700" fill="#111111" text-anchor="middle" style="font-variant-numeric: tabular-nums">18%</text>
+    <text x="360" y="224" font-size="13" font-weight="700" fill="#111111" text-anchor="middle" style="font-variant-numeric: tabular-nums">21%</text>
+    <text x="600" y="144" font-size="13" font-weight="700" fill="#111111" text-anchor="middle" style="font-variant-numeric: tabular-nums">24%</text>
+    <text x="840" y="91"  font-size="13" font-weight="700" fill="#111111" text-anchor="middle" style="font-variant-numeric: tabular-nums">26%</text>
+    <text x="914" y="112" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="start">毛利率</text>
+
+    <!-- cagr_arrow annotation (ink stroke; claim-bearing label in the hue) -->
+    <path d="M 120,218 Q 480,-56 840,-12" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+    <polygon points="848,-10 834,-18 836,-2" fill="#FFFFFF"/>
+    <text x="600" y="-24" font-size="15" font-weight="700" fill="#FF6900" text-anchor="middle">+37.2% CAGR</text>
+
+    <!-- X-axis labels -->
+    <text x="120" y="430" font-size="13" fill="#FFFFFF" text-anchor="middle">2022</text>
+    <text x="360" y="430" font-size="13" fill="#FFFFFF" text-anchor="middle">2023</text>
+    <text x="600" y="430" font-size="13" fill="#FFFFFF" text-anchor="middle">2024</text>
+    <text x="840" y="430" font-size="13" fill="#FFFFFF" text-anchor="middle">2025</text>
+  </g>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  chart_stacked_bar.svg — stacked columns with totals + segment connectors (1280×720, dark_apple).
+  Replace #FF6900 with the deck's highlight color.
+  Absolute mode: 2023 total 180 (硬體140/服務25/其他15) · 2024 total 240 (165/55/20) · 2025 total 310 (190/95/25).
+  Scale 1.25px per unit, baseline y=400. Columns w=160 at x=130/420/710, inside translate(152, 200).
+  Emphasis series (服務) at full hue; 硬體 0.45; 其他 0.18. Series labels left of first column.
+  The three signature marks: totals above columns, 1px segment connectors, emphasis series.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">營收結構三年轉向服務主導</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Revenue Mix Shifts Toward Services
+  </text>
+
+  <!-- Plot area -->
+  <g transform="translate(152, 200)">
+    <!-- Unit tag -->
+    <text x="0" y="-6" font-size="12" fill="#A0A0A0">單位:NT$億</text>
+
+    <!-- Baseline -->
+    <line x1="0" y1="400" x2="1000" y2="400" stroke="#333333" stroke-width="1"/>
+
+    <!-- 2023 column: 硬體 140 / 服務 25 / 其他 15 -->
+    <rect x="130" y="225" width="160" height="175" fill="#FF6900" fill-opacity="0.45"/>
+    <rect x="130" y="194" width="160" height="31"  fill="#FF6900"/>
+    <rect x="130" y="175" width="160" height="19"  fill="#FF6900" fill-opacity="0.18"/>
+
+    <!-- 2024 column: 硬體 165 / 服務 55 / 其他 20 -->
+    <rect x="420" y="194" width="160" height="206" fill="#FF6900" fill-opacity="0.45"/>
+    <rect x="420" y="125" width="160" height="69"  fill="#FF6900"/>
+    <rect x="420" y="100" width="160" height="25"  fill="#FF6900" fill-opacity="0.18"/>
+
+    <!-- 2025 column: 硬體 190 / 服務 95 / 其他 25 -->
+    <rect x="710" y="162" width="160" height="238" fill="#FF6900" fill-opacity="0.45"/>
+    <rect x="710" y="43"  width="160" height="119" fill="#FF6900"/>
+    <rect x="710" y="12"  width="160" height="31"  fill="#FF6900" fill-opacity="0.18"/>
+
+    <!-- Segment connectors (ink voice, 1px) -->
+    <line x1="290" y1="225" x2="420" y2="194" stroke="#555555" stroke-width="1"/>
+    <line x1="290" y1="194" x2="420" y2="125" stroke="#555555" stroke-width="1"/>
+    <line x1="290" y1="175" x2="420" y2="100" stroke="#555555" stroke-width="1"/>
+    <line x1="580" y1="194" x2="710" y2="162" stroke="#555555" stroke-width="1"/>
+    <line x1="580" y1="125" x2="710" y2="43"  stroke="#555555" stroke-width="1"/>
+    <line x1="580" y1="100" x2="710" y2="12"  stroke="#555555" stroke-width="1"/>
+
+    <!-- Totals above each column (ink voice) -->
+    <text x="210" y="163" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle" style="font-variant-numeric: tabular-nums">180</text>
+    <text x="500" y="88"  font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle" style="font-variant-numeric: tabular-nums">240</text>
+    <text x="790" y="0"   font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle" style="font-variant-numeric: tabular-nums">310</text>
+
+    <!-- Series labels, left of first column at segment mid-heights -->
+    <text x="112" y="316" font-size="13" fill="#A0A0A0" text-anchor="end">硬體</text>
+    <text x="112" y="214" font-size="13" fill="#A0A0A0" text-anchor="end">服務</text>
+    <text x="112" y="188" font-size="13" fill="#A0A0A0" text-anchor="end">其他</text>
+
+    <!-- Segment value labels. On the full-hue emphasis segments the label flips to
+         near-black ink #111111 (white on the highlight fails AA contrast); light gray
+         stays on the low-alpha segments. A segment <24px tall (2023 其他) gets its value
+         just outside with a short leader — series labeling stays complete. -->
+    <text x="210" y="317" font-size="14" font-weight="600" fill="#E8E8E8" text-anchor="middle" style="font-variant-numeric: tabular-nums">140</text>
+    <text x="210" y="214" font-size="14" font-weight="600" fill="#111111" text-anchor="middle" style="font-variant-numeric: tabular-nums">25</text>
+    <line x1="291" y1="184" x2="295" y2="184" stroke="#555555" stroke-width="1"/>
+    <text x="298" y="188" font-size="12" fill="#C8C8C8" text-anchor="start" style="font-variant-numeric: tabular-nums">15</text>
+    <text x="500" y="301" font-size="14" font-weight="600" fill="#E8E8E8" text-anchor="middle" style="font-variant-numeric: tabular-nums">165</text>
+    <text x="500" y="164" font-size="14" font-weight="600" fill="#111111" text-anchor="middle" style="font-variant-numeric: tabular-nums">55</text>
+    <text x="500" y="117" font-size="14" font-weight="600" fill="#C8C8C8" text-anchor="middle" style="font-variant-numeric: tabular-nums">20</text>
+    <text x="790" y="285" font-size="14" font-weight="600" fill="#E8E8E8" text-anchor="middle" style="font-variant-numeric: tabular-nums">190</text>
+    <text x="790" y="107" font-size="14" font-weight="600" fill="#111111" text-anchor="middle" style="font-variant-numeric: tabular-nums">95</text>
+    <text x="790" y="32"  font-size="14" font-weight="600" fill="#C8C8C8" text-anchor="middle" style="font-variant-numeric: tabular-nums">25</text>
+
+    <!-- Category labels -->
+    <text x="210" y="430" font-size="13" fill="#FFFFFF" text-anchor="middle">2023</text>
+    <text x="500" y="430" font-size="13" fill="#FFFFFF" text-anchor="middle">2024</text>
+    <text x="790" y="430" font-size="13" fill="#FFFFFF" text-anchor="middle">2025</text>
+  </g>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

@@ -35,7 +35,7 @@ not its filename). Union when multiple classes match.
 |---|---|
 | anything | `python3 scripts/check_docs.py` |
 | a script under `scripts/` | run the changed script itself green |
-| `templates/` or any page SVG | `python3 scripts/check_svg.py <changed files>` → `bash scripts/render_smoke.sh <out> <changed files>` → **one visual-grade pass** over the PNGs (fresh 06 sub-agent; P5-01..P5-08, skip P5-10 — no plan) |
+| `templates/` or any page SVG | `python3 scripts/check_svg.py <changed files>` → `bash scripts/render_smoke.sh <out> <changed files>` → **one visual-grade pass** over the PNGs (fresh 06 sub-agent; P5-01..P5-08, plus P5-11 on chart pages, skip P5-10 — no plan) |
 | `scripts/svg_to_pptx.py` or `examples/` | `bash scripts/golden_check.sh`; **plus**, only if the change is to render/decompose logic AND the expected effect is pixel-visible: render 3 `examples/sample-deck` pages via render_smoke → one 06 pass |
 | `prompts/04_planning_draft.md`, `references/pyramid_principle.md`, SKILL.md Phase-3 rules | **Phase-3 eval**: fresh sub-agent runs the planner per 04 on `evals/brief.md` → fresh 07 sub-agent grades the produced plan against `evals/brief.md` + rubric (P3-11/12/13) |
 | `prompts/05_designer_svg.md`, design references (`design_system` / `bento_grid` / `diagrams` / `chart_anatomy`), template-family rules | **Phase-4 eval**: fresh sub-agent runs the designer per 05 on the **relevant subset** of `evals/planning.json` pages → render_smoke → fresh 06 pass. Subset map: flow/glass rules → flow page; chart_anatomy → chart_bar page; global card/typography rules → three_col + mini_grid; unmappable → three_col alone. **Never all 5 pages.** |

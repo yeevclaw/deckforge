@@ -146,8 +146,30 @@ Pick the *minimum* bento layout that fits the content. Don't over-engineer.
 | `chart_bar` | **Compare 4–10 categories** on one metric (revenue by segment, etc.) | 1 chart, see `chart_data` |
 | `chart_line` | **Trend over 4+ time points** (quarterly growth, monthly users) | 1 chart, see `chart_data` |
 | `chart_donut` | **Composition** — 2–5 segments of a whole | 1 chart, see `chart_data` |
+| `chart_hbar` | **Ranking** — who leads, 4–8 items sorted (or long category labels) | 1 chart, see `chart_data` |
+| `chart_stacked_bar` | **Mix shift** — composition across categories/time, 2–5 columns × 2–4 segments | 1 chart, see `chart_data` |
+| `chart_waterfall` | **A→B bridge** — what explains the change (2 totals + 2+ deltas) | 1 chart, see `chart_data` |
+| `chart_combo` | **Volume + rate** — two coupled metrics, bars + line (營收+毛利率) | 1 chart, see `chart_data` |
+| `chart_mekko` | **2-D share map** — segment size × player share within each | 1 chart, see `chart_data` |
 
-**Prefer `stat_hero` and `mini_grid` for data-dense content.** Reach for `chart_*` when the data has actual shape (curve / distribution / ranking) — don't force a chart when 3 cards would read faster. See [references/bento_grid.md](../references/bento_grid.md) and [references/chart_anatomy.md](../references/chart_anatomy.md).
+### The chart trigger — the relationship test
+
+For every data-bearing page, before writing cards, ask: **do these numbers relate to each other** — through time, share-of-a-whole, cause of a delta, rank on one metric, or a volume coupled to its rate? **Related numbers get the matching chart.** Splitting them into cards destroys exactly the relationship the audience needs (a mix shift written as three cards「8% → 27%…」passes the card-fit test and still fails the audience — the *shift* is the message, and only a chart shows it). Only independently meaningful, parallel numbers stay on cards: `stat_hero` for one dominant number, `mini_grid` for 3–5 unrelated KPIs.
+
+Mirror of the primitive information-loss signals, for data:
+
+| Data shape (what the numbers do together) | Layout |
+|---|---|
+| Trend — one metric over 4+ time points | `chart_line` |
+| Category comparison — one metric across 4–10 items | `chart_bar` |
+| Ranking — the order / the leader is the point | `chart_hbar` |
+| Composition of one whole — 2–5 segments | `chart_donut` |
+| Mix shift — composition moving across categories or time | `chart_stacked_bar` |
+| Bridge — what explains the change from A to B | `chart_waterfall` |
+| Volume + its rate, coupled | `chart_combo` |
+| Two-dimensional share map — segment size × player share | `chart_mekko` |
+
+Sparse data escapes back to cards (minimum shapes in [references/chart_anatomy.md](../references/chart_anatomy.md) → "When the data is sparse"): a 2-bar chart is two cards, a 1-delta waterfall is a `before_after` pair. See [references/bento_grid.md](../references/bento_grid.md) and [references/chart_anatomy.md](../references/chart_anatomy.md).
 
 If a bento attempt would *drop structural information the audience needs* (direction, alignment, topology, axis), switch to a primitive layout instead — see [Primitive layouts](#primitive-layouts--used-only-when-bento-would-lose-information) below and [references/diagrams.md](../references/diagrams.md).
 
@@ -177,13 +199,79 @@ Chart pages use a different schema than card pages. Instead of `cards`, they car
 }
 ```
 
-For `chart_line`, `items[].label` represents time points ("Q1 2024", "Q2 2024", …). For `chart_donut`, the items are composition segments (the first item is the dominant one rendered at full saturation, others fade with alpha 0.55, 0.25, 0.12 of the same hue).
+For `chart_line`, `items[].label` represents time points ("Q1 2024", "Q2 2024", …). For `chart_donut`, the items are composition segments (the first item is the dominant one rendered at full saturation, others fade with alpha 0.55, 0.25, 0.12 of the same hue). `chart_hbar` uses the same `items` shape as `chart_bar`, **pre-sorted descending** (keep natural order only when the sequence itself is the point).
+
+The consulting five carry a few extra fields (full geometry in [references/chart_anatomy.md](../references/chart_anatomy.md)):
+
+```json
+// chart_stacked_bar — series[] names the segments; each item carries values[] parallel to series[]
+"chart_data": {
+  "unit": "NT$億",
+  "series": ["硬體", "服務", "其他"],
+  "emphasis": "服務",
+  "items": [
+    { "label": "2023", "values": [140, 25, 15] },
+    { "label": "2024", "values": [165, 55, 20] },
+    { "label": "2025", "values": [190, 95, 25] }
+  ]
+}
+
+// chart_waterfall — first & last items are totals; deltas are signed; role marks totals/subtotals
+"chart_data": {
+  "unit": "NT$億",
+  "items": [
+    { "label": "2023營收", "value": 180, "role": "total" },
+    { "label": "智慧家居", "value": 55 },
+    { "label": "訂閱服務", "value": 70 },
+    { "label": "海外市場", "value": 30 },
+    { "label": "配件調整", "value": -25 },
+    { "label": "2025營收", "value": 310, "role": "total" }
+  ],
+  "annotations": [ { "type": "diff_arrow", "from": "2023營收", "to": "2025營收", "label": "+72%" } ]
+}
+
+// chart_combo — one bar metric + one line metric per item; name and unit each
+"chart_data": {
+  "bar_name": "營收", "unit": "NT$億",
+  "line_name": "毛利率", "line_unit": "%",
+  "items": [
+    { "label": "2022", "value": 120, "line_value": 18 },
+    { "label": "2023", "value": 180, "line_value": 21 },
+    { "label": "2024", "value": 240, "line_value": 24 },
+    { "label": "2025", "value": 310, "line_value": 26 }
+  ],
+  "annotations": [ { "type": "cagr_arrow", "from": "2022", "to": "2025", "label": "+37.2% CAGR" } ]
+}
+
+// chart_mekko — items are columns (width = % of whole market); values[] = 100%-stack within
+"chart_data": {
+  "unit": "%",
+  "series": ["公司A", "公司B", "其他"],
+  "emphasis": "公司A",
+  "items": [
+    { "label": "智慧家居", "width": 45, "values": [52, 28, 20] },
+    { "label": "智慧穿戴", "width": 30, "values": [26, 44, 30] },
+    { "label": "訂閱服務", "width": 25, "values": [61, 22, 17] }
+  ]
+}
+```
+
+### Annotations — the chart states the claim (圖表自帶分析)
+
+Any chart may carry an optional `annotations: []` (types: `value_line` / `cagr_arrow` / `diff_arrow` / `callout`; applicability matrix in chart_anatomy.md). `from`/`to`/`at` reference `items[].label` strings exactly; `label` is **required and you compute it** (CAGR = `(end/start)^(1/periods) − 1` — the designer draws, never invents math).
+
+**The claim rule**: when the page `title`'s claim is quantitative — 翻倍、全面突破七成、貢獻近八成增長 — plan the annotation that visually asserts it: a threshold every bar clears → `value_line`; growth across the series → `cagr_arrow`; the gap between two items or start↔end → `diff_arrow`; an event explaining a kink → `callout`. A chart whose title asserts a number the chart never marks is a half-finished page. **Cap: ≤2 annotations per chart** — one is a claim, three are noise.
+
+```json
+"annotations": [ { "type": "value_line", "value": 70, "label": "目標 70%" } ]
+```
 
 **Chart layout rules**:
 1. Always set `unit` (`"%"`, `"NT$億"`, `"M users"`, …) — used as the y-axis suffix or center caption.
-2. `value` must be a real number. No placeholders. No commas/units inside the value.
+2. `value` must be a real number. No placeholders. No commas/units inside the value. (`chart_waterfall` deltas are signed; only its `role: "total"` items are absolute levels.)
 3. `label` short (≤6 Chinese chars), `label_en` short ALL-CAPS English (decorative). Both optional but recommended.
-4. Don't mix layout types inside one chart. Two metrics on the same page → two charts (use `two_col_50_50` with each side as `chart_bar` is not currently supported; create two pages instead).
+4. Don't mix layout types inside one chart. Two metrics on the same page → two charts (use `two_col_50_50` with each side as `chart_bar` is not currently supported; create two pages instead). The one sanctioned two-metric canvas is `chart_combo`, strictly for a volume + its rate.
+5. `series` ≤4 entries (`chart_stacked_bar` / `chart_mekko`); more → merge the smallest into 其他. `emphasis` names the story-bearing series (defaults to the first).
 
 ## Primitive layouts — used only when bento would lose information
 
@@ -663,7 +751,8 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 - [ ] Did I split any "multi-point" cards into mini-cards?
 - [ ] Is `is_number_first` set correctly on every content card?
 - [ ] For number-first cards, is `stat_value` a real concrete number (not "many", "several", "various")?
-- [ ] Did I pick `stat_hero` or `mini_grid` for data-dense pages?
+- [ ] Did I pick `stat_hero` or `mini_grid` for data-dense pages of **independent** numbers — and the matching `chart_*` layout wherever the numbers relate (the relationship test)?
+- [ ] **Chart trigger**: no page scatters related numbers (trend / mix shift / bridge / ranking / volume+rate / 2-D share) across cards; every chart clears its minimum shape (no 2-bar charts); where the page title makes a quantitative claim, `chart_data.annotations[]` carries it (≤2 per chart, labels pre-computed)?
 - [ ] Are layouts driven by content shape? (Avoid mechanical repetition like 5 `three_col` pages in a row — **but layout choice follows content, not visual variety. Never switch to a primitive layout just to break a streak of bento pages.** Repetition of bento is a feature: shared layout language across the deck. For a same-structure run of corporate_fresh `three_col` pages, differentiate them the *right* way — a per-page `card_variant` driven by each page's sub-shape, not a layout switch; see the `card_variant` check below.)
 - [ ] Did I write actual speaker notes, not "TBD"?
 - [ ] Is the `design_brief` palette consistent with the tone in `brief.md`?
@@ -679,7 +768,7 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 
 Fail any check → revise before emitting.
 
-> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 3" (ids P3-01..P3-17, including the title-only read P3-13). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
+> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 3" (ids P3-01..P3-18, including the title-only read P3-13 and the chart trigger P3-18). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
 
 ## Independent content grade — before the Phase 3→4 handoff
 

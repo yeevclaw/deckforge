@@ -6,10 +6,10 @@ This skill produces SVG-based slides on purpose: **PowerPoint 2016+ natively sup
 
 To get the best of both, `svg_to_pptx.py` (by default) builds **each slide as two stacked pictures**:
 
-1. **Background image** — a full PNG render of the whole slide. It carries the atmosphere PowerPoint can't vectorize anyway (gradient backgrounds, glassmorphism, soft drop shadows, glows). Every viewer shows it correctly (Keynote, Preview, Quick Look, PowerPoint <2016). It is **one movable / resizable picture** — you can reposition or scale it, you just can't edit its internals.
-2. **Content layer** — a transparent layer carrying the original geometry via the `svgBlip` extension, with the atmosphere removed (it lives in the background image), card shadow `<filter>`s stripped (the soft shadow still shows from the background image; the card itself becomes a clean editable shape), and `<use>`/`<symbol>` icons **inlined into real geometry**. *Convert to Shape* on this layer makes text, cards, icons and lines individually editable / movable / resizable.
+1. **Background image** — an **atmosphere-only** PNG render: gradient backgrounds, glassmorphism, glows, full-canvas plates, plus **shadow-only ghosts** of the content cards' soft `<filter>` shadows. Content elements (text, solid cards, lines, icons) are **not** baked into it. It is **one movable / resizable picture** — you can reposition or scale it, you just can't edit its internals.
+2. **Content layer** — a transparent layer carrying the original geometry via the `svgBlip` extension, with the atmosphere removed (it lives in the background image), card shadow `<filter>`s stripped (the shadow ghost stays in the background image; the card itself becomes a clean editable shape), and `<use>`/`<symbol>` icons **inlined into real geometry**. *Convert to Shape* on this layer makes text, cards, icons and lines individually editable / movable / resizable.
 
-The content layer sits exactly over the background image, so the slide looks identical to a single-picture render. Because the background image always carries the full look, a misclassified element is at worst non-editable — never visually wrong.
+The two layers are **complementary**: every element is painted exactly once, and stacking them reproduces the original page pixel-for-pixel. Because the content lives only in the content layer, moving or deleting a converted shape never reveals a baked copy underneath — the one thing that stays behind is a card's soft shadow, which rides in the background image (PowerPoint has no editable-vector equivalent of a blur).
 
 Pass `--no-decompose` to fall back to the older single-picture model (full render + `svgBlip` on one picture).
 
@@ -31,7 +31,7 @@ Pass `--no-decompose` to fall back to the older single-picture model (full rende
 | `<rect rx="…">` / `<circle>` / `<path>` with a **solid** fill | Native shape (fill/border editable, movable, resizable) |
 | `<line>` (incl. dashed) | Line shape (movable, resizable) |
 | Inlined icon geometry | Freeform-shape group — movable, resizable, recolorable |
-| Card with a shadow `<filter>` | The card becomes a clean editable shape; its **soft shadow** stays in the background image |
+| Card with a shadow `<filter>` | The card becomes a clean editable shape; its **soft shadow** stays in the background image (move the card and the shadow stays put) |
 
 ## What is NOT vector-editable (lives in the background image)
 

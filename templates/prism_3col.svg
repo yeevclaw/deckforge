@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  prism_3col.svg — IT_prism three_col, card_variant: icon_column (default).
+  Mirrors fresh_3col's macro composition (three open columns, icon on top,
+  centered heading + body, dashed separators) in the prism role palette:
+  #EFF0F3 canvas + washLav/washMint pair + corner_bloom, slate assertion title
+  (no pill bar, no underline), progress_ticks top-right, prism_icon slate
+  line-work over #E4E8EF panels, inline emphasis = ink bold + #DDF5E8 band.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="prismShadow" x="-25%" y="-25%" width="150%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur"/>
+      <feOffset in="blur" dx="0" dy="5" result="off"/>
+      <feComponentTransfer in="off" result="shadow">
+        <feFuncA type="linear" slope="0.05"/>
+      </feComponentTransfer>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- canvas + diagonal wash pair + corner bloom -->
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+
+  <!-- progress_ticks -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- title: full-sentence assertion, slate, no pill bar, no underline -->
+  <text x="48" y="88" font-size="34" font-weight="700" fill="#344252">標題是一句完整的主張，不是名詞短語</text>
+  <text x="48" y="118" font-size="16" fill="#4C5A6B">副標說明文字（可省略）</text>
+
+  <!-- dashed separators -->
+  <line x1="427" y1="240" x2="427" y2="630" stroke="#C9CFD9" stroke-width="2" stroke-dasharray="2 7"/>
+  <line x1="853" y1="240" x2="853" y2="630" stroke="#C9CFD9" stroke-width="2" stroke-dasharray="2 7"/>
+
+  <!-- column 1 : prism_icon (users) -->
+  <g>
+    <rect x="177" y="240" width="120" height="120" rx="16" fill="#E4E8EF" filter="url(#prismShadow)"/>
+    <g transform="translate(195 258) scale(3.5)" fill="none" stroke="#344252" stroke-width="0.57"
+       stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+      <path d="M4 1.5v3M2.5 3h3"/>
+    </g>
+    <text x="237" y="430" font-size="28" font-weight="700" fill="#344252" text-anchor="middle">結論一：短主張</text>
+    <rect x="196" y="493" width="101" height="30" rx="4" fill="#DDF5E8"/>
+    <text x="237" y="480" font-size="19" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="237" dy="0">兩到三行支撐句，每行</tspan>
+      <tspan x="237" dy="35">關鍵詞用<tspan font-weight="700" fill="#344252">亮綠底粗體</tspan>標示，</tspan>
+      <tspan x="237" dy="35">其餘維持灰色內文。</tspan>
+    </text>
+  </g>
+
+  <!-- column 2 : prism_icon (compass) -->
+  <g>
+    <rect x="580" y="240" width="120" height="120" rx="16" fill="#E4E8EF" filter="url(#prismShadow)"/>
+    <g transform="translate(598 258) scale(3.5)" fill="none" stroke="#344252" stroke-width="0.57"
+       stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+      <path d="M12 2.2v1.8M21.8 12h-1.8M12 21.8v-1.8"/>
+    </g>
+    <text x="640" y="430" font-size="28" font-weight="700" fill="#344252" text-anchor="middle">結論二：短主張</text>
+    <rect x="627" y="493" width="82" height="30" rx="4" fill="#DDF5E8"/>
+    <text x="640" y="480" font-size="19" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="640" dy="0">支撐句直接寫證據，</tspan>
+      <tspan x="640" dy="35">一段最多<tspan font-weight="700" fill="#344252">兩處強調</tspan>，</tspan>
+      <tspan x="640" dy="35">行高一點八五倍。</tspan>
+    </text>
+  </g>
+
+  <!-- column 3 : prism_icon (file-text) -->
+  <g>
+    <rect x="983" y="240" width="120" height="120" rx="16" fill="#E4E8EF" filter="url(#prismShadow)"/>
+    <g transform="translate(1001 258) scale(3.5)" fill="none" stroke="#344252" stroke-width="0.57"
+       stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <path d="M16 13H8M16 17H8M10 9H8"/>
+    </g>
+    <text x="1043" y="430" font-size="28" font-weight="700" fill="#344252" text-anchor="middle">結論三：短主張</text>
+    <rect x="1011" y="493" width="63" height="30" rx="4" fill="#DDF5E8"/>
+    <text x="1043" y="480" font-size="19" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="1043" dy="0">欄寬內每行約十二字，</tspan>
+      <tspan x="1043" dy="35">短段落<tspan font-weight="700" fill="#344252">可置中</tspan>對齊，</tspan>
+      <tspan x="1043" dy="35">長段落改為靠左。</tspan>
+    </text>
+  </g>
+</svg>

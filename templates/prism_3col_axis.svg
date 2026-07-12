@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  prism_3col_axis.svg — IT_prism three_col, card_variant: axis_labeled.
+  Three columns read against ONE shared dimension axis. Use when several
+  same-structure pages measure their items along the same ruler (e.g.
+  Product / Process / Performance); give the whole series this variant with
+  identical labels so they visually rhyme. Prism style: light-green #DDF5E8
+  label band with ink segment labels, #C9CFD9 dashed separators running up
+  into the band, prism_icon slate line-work, highlight-band emphasis.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="prismShadow" x="-25%" y="-25%" width="150%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur"/>
+      <feOffset in="blur" dx="0" dy="5" result="off"/>
+      <feComponentTransfer in="off" result="shadow">
+        <feFuncA type="linear" slope="0.05"/>
+      </feComponentTransfer>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- canvas + diagonal wash pair + corner bloom -->
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+
+  <!-- progress_ticks -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- title: full-sentence assertion, slate, no pill bar, no underline -->
+  <text x="48" y="88" font-size="34" font-weight="700" fill="#344252">沿同一組維度展開</text>
+  <text x="48" y="118" font-size="16" fill="#4C5A6B">副標說明文字（可省略）</text>
+
+  <!-- shared dimension axis: one light-green band, three ink-labelled segments -->
+  <rect x="48" y="132" width="1184" height="52" rx="26" fill="#DDF5E8"/>
+  <text x="237" y="165" font-size="16" font-weight="700" fill="#344252" text-anchor="middle" letter-spacing="2.5">PRODUCT · 成果</text>
+  <text x="640" y="165" font-size="16" font-weight="700" fill="#344252" text-anchor="middle" letter-spacing="2.5">PROCESS · 過程</text>
+  <text x="1043" y="165" font-size="16" font-weight="700" fill="#344252" text-anchor="middle" letter-spacing="2.5">PERFORMANCE · 表現</text>
+
+  <!-- dashed separators (run up into the band so it reads as one ruler in three columns) -->
+  <line x1="427" y1="132" x2="427" y2="630" stroke="#C9CFD9" stroke-width="2" stroke-dasharray="2 7"/>
+  <line x1="853" y1="132" x2="853" y2="630" stroke="#C9CFD9" stroke-width="2" stroke-dasharray="2 7"/>
+
+  <!-- column 1 : prism_icon (file-text) -->
+  <g>
+    <rect x="177" y="248" width="120" height="120" rx="16" fill="#E4E8EF" filter="url(#prismShadow)"/>
+    <g transform="translate(195 266) scale(3.5)" fill="none" stroke="#344252" stroke-width="0.57"
+       stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <path d="M16 13H8M16 17H8M10 9H8"/>
+    </g>
+    <text x="237" y="438" font-size="28" font-weight="700" fill="#344252" text-anchor="middle">成果描述</text>
+    <rect x="148" y="499" width="101" height="30" rx="4" fill="#DDF5E8"/>
+    <text x="237" y="486" font-size="19" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="237" dy="0">你要什麼樣的產出：</tspan>
+      <tspan x="237" dy="35"><tspan font-weight="700" fill="#344252">內容、格式</tspan>與範圍。</tspan>
+    </text>
+  </g>
+
+  <!-- column 2 : prism_icon (compass) -->
+  <g>
+    <rect x="580" y="248" width="120" height="120" rx="16" fill="#E4E8EF" filter="url(#prismShadow)"/>
+    <g transform="translate(598 266) scale(3.5)" fill="none" stroke="#344252" stroke-width="0.57"
+       stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+      <path d="M12 2.2v1.8M21.8 12h-1.8M12 21.8v-1.8"/>
+    </g>
+    <text x="640" y="438" font-size="28" font-weight="700" fill="#344252" text-anchor="middle">過程描述</text>
+    <rect x="599" y="499" width="101" height="30" rx="4" fill="#DDF5E8"/>
+    <text x="640" y="486" font-size="19" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="640" dy="0">希望 AI 怎麼做：</tspan>
+      <tspan x="640" dy="35">扮演<tspan font-weight="700" fill="#344252">角色與步驟</tspan>。</tspan>
+    </text>
+  </g>
+
+  <!-- column 3 : prism_icon (check-circle) -->
+  <g>
+    <rect x="983" y="248" width="120" height="120" rx="16" fill="#E4E8EF" filter="url(#prismShadow)"/>
+    <g transform="translate(1001 266) scale(3.5)" fill="none" stroke="#344252" stroke-width="0.57"
+       stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+      <polyline points="22 4 12 14.01 9 11.01"/>
+    </g>
+    <text x="1043" y="438" font-size="28" font-weight="700" fill="#344252" text-anchor="middle">表現描述</text>
+    <rect x="954" y="499" width="101" height="30" rx="4" fill="#DDF5E8"/>
+    <text x="1043" y="486" font-size="19" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="1043" dy="0">希望它怎麼互動：</tspan>
+      <tspan x="1043" dy="35"><tspan font-weight="700" fill="#344252">語氣、長度</tspan>與細節。</tspan>
+    </text>
+  </g>
+</svg>

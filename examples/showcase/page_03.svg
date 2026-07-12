@@ -2,138 +2,182 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
      font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
   <defs>
-    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
-    </linearGradient>
-    <linearGradient id="mesaHalo" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#A6CDD4" stop-opacity="0.50"/>
-      <stop offset="60%" stop-color="#BCD9D6" stop-opacity="0.22"/>
-      <stop offset="100%" stop-color="#C8DED8" stop-opacity="0.05"/>
-    </linearGradient>
-    <linearGradient id="mesaBody" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#A6CDD4" stop-opacity="0.62"/>
-      <stop offset="60%" stop-color="#BCD9D6" stop-opacity="0.28"/>
-      <stop offset="100%" stop-color="#C8DED8" stop-opacity="0.08"/>
-    </linearGradient>
-    <linearGradient id="mesaHaloEnd" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#A1E5DE" stop-opacity="0.50"/>
-      <stop offset="60%" stop-color="#B6E8D8" stop-opacity="0.24"/>
-      <stop offset="100%" stop-color="#C5EDD8" stop-opacity="0.10"/>
-    </linearGradient>
-    <linearGradient id="mesaBodyEnd" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#A1E5DE" stop-opacity="0.62"/>
-      <stop offset="60%" stop-color="#B6E8D8" stop-opacity="0.30"/>
-      <stop offset="100%" stop-color="#C5EDD8" stop-opacity="0.12"/>
-    </linearGradient>
-    <linearGradient id="swooshGrad" x1="90" y1="0" x2="1232" y2="0" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#CDEBD9" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#A8DFC2" stop-opacity="0.9"/>
-    </linearGradient>
-    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
-      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
     </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <!-- prism blur_bloom masses: outer halo + inner body, mint/lavender alternating -->
+    <linearGradient id="massHaloMint" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B9EBD2" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#B9EBD2" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#B9EBD2" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="massBodyMint" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B9EBD2" stop-opacity="0.60"/>
+      <stop offset="60%" stop-color="#B9EBD2" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#B9EBD2" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="massHaloLav" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DCD9F6" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#DCD9F6" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#DCD9F6" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="massBodyLav" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DCD9F6" stop-opacity="0.60"/>
+      <stop offset="60%" stop-color="#DCD9F6" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#DCD9F6" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="massHaloEnd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A8ECC8" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#A8ECC8" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#A8ECC8" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="massBodyEnd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A8ECC8" stop-opacity="0.60"/>
+      <stop offset="60%" stop-color="#A8ECC8" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#A8ECC8" stop-opacity="0.10"/>
+    </linearGradient>
+    <linearGradient id="sweepGrad" x1="90" y1="0" x2="1232" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#C4EEDA" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#9BE4BE" stop-opacity="0.85"/>
+    </linearGradient>
   </defs>
 
-  <rect width="1280" height="720" fill="#F4F4F4"/>
-  <rect width="1280" height="720" fill="url(#washGreen)"/>
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
 
-  <!-- title -->
-  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
-  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">五個階段,逐步把一份簡報墊高到位</text>
-  <text x="48" y="132" font-size="15" fill="#6B7178" letter-spacing="2">THE FIVE-PHASE WORKFLOW · 階段不可跳過,每階段交出一個檔案</text>
+  <!-- corner_bloom top-right: green radial + white dashed rotated square -->
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
 
-  <!-- low horizon swoosh (drawn before the mesas) -->
-  <path d="M 90 612 Q 600 560 1170 450 L 1160 426 L 1258 466 L 1142 508 L 1158 478 Q 610 600 96 648 Z" fill="url(#swooshGrad)"/>
+  <!-- progress_ticks -->
+  <g>
+    <rect x="948" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
 
-  <!-- outer halos -->
-  <path d="M 7 720 L 7 470 Q 7 430 47 430 L 227 430 Q 267 430 267 470 L 267 720 Z" fill="url(#mesaHalo)"/>
-  <path d="M 259 720 L 259 435 Q 259 395 299 395 L 479 395 Q 519 395 519 435 L 519 720 Z" fill="url(#mesaHalo)"/>
-  <path d="M 510 720 L 510 400 Q 510 360 550 360 L 730 360 Q 770 360 770 400 L 770 720 Z" fill="url(#mesaHalo)"/>
-  <path d="M 761 720 L 761 365 Q 761 325 801 325 L 981 325 Q 1021 325 1021 365 L 1021 720 Z" fill="url(#mesaHalo)"/>
-  <path d="M 1013 720 L 1013 330 Q 1013 290 1053 290 L 1233 290 Q 1273 290 1273 330 L 1273 720 Z" fill="url(#mesaHaloEnd)"/>
+  <!-- title: slate assertion, no pill bar -->
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#344252">五個階段,逐步把一份簡報墊高到位</text>
+  <text x="48" y="132" font-size="15" fill="#4C5A6B" letter-spacing="2">THE FIVE-PHASE WORKFLOW · 階段不可跳過,每階段交出一個檔案</text>
+
+  <!-- mint sweep: one continuous path, painted before the masses -->
+  <path d="M 90 612 Q 600 560 1170 450 L 1160 426 L 1258 466 L 1142 508 L 1158 478 Q 610 600 96 648 Z" fill="url(#sweepGrad)"/>
+
+  <!-- outer halos (mint / lavender alternating, final greener) -->
+  <path d="M 7 720 L 7 470 Q 7 430 47 430 L 227 430 Q 267 430 267 470 L 267 720 Z" fill="url(#massHaloMint)"/>
+  <path d="M 259 720 L 259 435 Q 259 395 299 395 L 479 395 Q 519 395 519 435 L 519 720 Z" fill="url(#massHaloLav)"/>
+  <path d="M 510 720 L 510 400 Q 510 360 550 360 L 730 360 Q 770 360 770 400 L 770 720 Z" fill="url(#massHaloMint)"/>
+  <path d="M 761 720 L 761 365 Q 761 325 801 325 L 981 325 Q 1021 325 1021 365 L 1021 720 Z" fill="url(#massHaloLav)"/>
+  <path d="M 1013 720 L 1013 330 Q 1013 290 1053 290 L 1233 290 Q 1273 290 1273 330 L 1273 720 Z" fill="url(#massHaloEnd)"/>
 
   <!-- inner bodies -->
-  <path d="M 35 720 L 35 470 Q 35 434 71 434 L 203 434 Q 239 434 239 470 L 239 720 Z" fill="url(#mesaBody)"/>
-  <path d="M 287 720 L 287 435 Q 287 399 323 399 L 455 399 Q 491 399 491 435 L 491 720 Z" fill="url(#mesaBody)"/>
-  <path d="M 538 720 L 538 400 Q 538 364 574 364 L 706 364 Q 742 364 742 400 L 742 720 Z" fill="url(#mesaBody)"/>
-  <path d="M 789 720 L 789 365 Q 789 329 825 329 L 957 329 Q 993 329 993 365 L 993 720 Z" fill="url(#mesaBody)"/>
-  <path d="M 1041 720 L 1041 330 Q 1041 294 1077 294 L 1209 294 Q 1245 294 1245 330 L 1245 720 Z" fill="url(#mesaBodyEnd)"/>
+  <path d="M 35 720 L 35 470 Q 35 434 71 434 L 203 434 Q 239 434 239 470 L 239 720 Z" fill="url(#massBodyMint)"/>
+  <path d="M 287 720 L 287 435 Q 287 399 323 399 L 455 399 Q 491 399 491 435 L 491 720 Z" fill="url(#massBodyLav)"/>
+  <path d="M 538 720 L 538 400 Q 538 364 574 364 L 706 364 Q 742 364 742 400 L 742 720 Z" fill="url(#massBodyMint)"/>
+  <path d="M 789 720 L 789 365 Q 789 329 825 329 L 957 329 Q 993 329 993 365 L 993 720 Z" fill="url(#massBodyLav)"/>
+  <path d="M 1041 720 L 1041 330 Q 1041 294 1077 294 L 1209 294 Q 1245 294 1245 330 L 1245 720 Z" fill="url(#massBodyEnd)"/>
 
   <!-- step 1 (cx 137, top 430) -->
   <g>
-    <text x="137" y="374" font-size="22" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 1</text>
-    <text x="137" y="412" font-size="27" font-weight="700" fill="#383838" text-anchor="middle">反詰對話</text>
+    <rect x="93" y="352" width="88" height="30" rx="15" fill="#344252"/>
+    <text x="137" y="373" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">Phase 1</text>
+    <text x="137" y="412" font-size="27" font-weight="700" fill="#344252" text-anchor="middle">反詰對話</text>
     <rect x="48" y="458" width="178" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
-    <g transform="translate(108 482) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="101" y="475" width="72" height="72" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(108 482) scale(2.4)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
       <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
     </g>
-    <text x="137" y="578" font-size="16" fill="#4A5158" text-anchor="middle">
+    <text x="137" y="578" font-size="16" fill="#4C5A6B" text-anchor="middle">
       <tspan x="137" dy="0">蘇格拉底式提問</tspan><tspan x="137" dy="28">挖出核心命題</tspan>
     </text>
-    <text x="137" y="658" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">brief.md</text>
+    <rect x="87" y="636" width="100" height="30" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="137" y="656" font-size="15" font-weight="600" fill="#344252" text-anchor="middle">brief.md</text>
   </g>
 
   <!-- step 2 (cx 389, top 395) -->
   <g>
-    <text x="389" y="339" font-size="22" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 2</text>
-    <text x="389" y="377" font-size="27" font-weight="700" fill="#383838" text-anchor="middle">大綱架構</text>
+    <rect x="345" y="317" width="88" height="30" rx="15" fill="#344252"/>
+    <text x="389" y="338" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">Phase 2</text>
+    <text x="389" y="377" font-size="27" font-weight="700" fill="#344252" text-anchor="middle">大綱架構</text>
     <rect x="300" y="423" width="178" height="267" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
-    <g transform="translate(360 447) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="353" y="440" width="72" height="72" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(360 447) scale(2.4)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 12h-8"/><path d="M21 6H8"/><path d="M21 18h-8"/>
       <path d="M3 6v4c0 1.1.9 2 2 2h3"/><path d="M3 10v6c0 1.1.9 2 2 2h3"/>
     </g>
-    <text x="389" y="543" font-size="16" fill="#4A5158" text-anchor="middle">
+    <text x="389" y="543" font-size="16" fill="#4C5A6B" text-anchor="middle">
       <tspan x="389" dy="0">金字塔原理</tspan><tspan x="389" dy="28">排出論證骨架</tspan>
     </text>
-    <text x="389" y="623" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">outline.json</text>
+    <rect x="325" y="601" width="128" height="30" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="389" y="621" font-size="15" font-weight="600" fill="#344252" text-anchor="middle">outline.json</text>
   </g>
 
   <!-- step 3 (cx 640, top 360) -->
   <g>
-    <text x="640" y="304" font-size="22" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 3</text>
-    <text x="640" y="342" font-size="27" font-weight="700" fill="#383838" text-anchor="middle">策劃稿</text>
+    <rect x="596" y="282" width="88" height="30" rx="15" fill="#344252"/>
+    <text x="640" y="303" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">Phase 3</text>
+    <text x="640" y="342" font-size="27" font-weight="700" fill="#344252" text-anchor="middle">策劃稿</text>
     <rect x="551" y="388" width="178" height="302" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
-    <g transform="translate(611 412) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="604" y="405" width="72" height="72" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(611 412) scale(2.4)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
       <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
       <path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/>
     </g>
-    <text x="640" y="508" font-size="16" fill="#4A5158" text-anchor="middle">
+    <text x="640" y="508" font-size="16" fill="#4C5A6B" text-anchor="middle">
       <tspan x="640" dy="0">每頁定內容</tspan><tspan x="640" dy="28">與版型</tspan>
     </text>
-    <text x="640" y="588" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">planning.json</text>
+    <rect x="572" y="566" width="136" height="30" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="640" y="586" font-size="15" font-weight="600" fill="#344252" text-anchor="middle">planning.json</text>
   </g>
 
   <!-- step 4 (cx 891, top 325) -->
   <g>
-    <text x="891" y="269" font-size="22" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 4</text>
-    <text x="891" y="307" font-size="27" font-weight="700" fill="#383838" text-anchor="middle">設計稿</text>
+    <rect x="847" y="247" width="88" height="30" rx="15" fill="#344252"/>
+    <text x="891" y="268" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">Phase 4</text>
+    <text x="891" y="307" font-size="27" font-weight="700" fill="#344252" text-anchor="middle">設計稿</text>
     <rect x="802" y="353" width="178" height="337" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
-    <g transform="translate(862 377) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="855" y="370" width="72" height="72" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(862 377) scale(2.4)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/>
       <rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>
     </g>
-    <text x="891" y="473" font-size="16" fill="#4A5158" text-anchor="middle">
+    <text x="891" y="473" font-size="16" fill="#4C5A6B" text-anchor="middle">
       <tspan x="891" dy="0">Bento 版面</tspan><tspan x="891" dy="28">逐頁繪 SVG</tspan>
     </text>
-    <text x="891" y="553" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">page_NN.svg</text>
+    <rect x="830" y="531" width="122" height="30" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="891" y="551" font-size="15" font-weight="600" fill="#344252" text-anchor="middle">page_NN.svg</text>
   </g>
 
   <!-- step 5 (cx 1143, top 290, greener end) -->
   <g>
-    <text x="1143" y="234" font-size="22" font-weight="700" fill="#2E6E63" text-anchor="middle">Phase 5</text>
-    <text x="1143" y="272" font-size="27" font-weight="700" fill="#383838" text-anchor="middle">產出</text>
+    <rect x="1099" y="212" width="88" height="30" rx="15" fill="#344252"/>
+    <text x="1143" y="233" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">Phase 5</text>
+    <text x="1143" y="272" font-size="27" font-weight="700" fill="#344252" text-anchor="middle">產出</text>
     <rect x="1054" y="318" width="178" height="372" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
-    <g transform="translate(1114 342) scale(2.4)" stroke="#3F4A52" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="1107" y="335" width="72" height="72" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(1114 342) scale(2.4)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path d="m16 16 2 2 4-4"/>
       <path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/>
       <path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/>
     </g>
-    <text x="1143" y="438" font-size="16" fill="#4A5158" text-anchor="middle">
+    <text x="1143" y="438" font-size="16" fill="#4C5A6B" text-anchor="middle">
       <tspan x="1143" dy="0">組裝可編輯</tspan><tspan x="1143" dy="28">.pptx + .pdf</tspan>
     </text>
-    <text x="1143" y="518" font-size="17" font-weight="700" fill="#E8872E" text-anchor="middle">deck.pptx</text>
+    <rect x="1089" y="496" width="108" height="30" rx="6" fill="#344252"/>
+    <text x="1143" y="516" font-size="15" font-weight="600" fill="#FFFFFF" text-anchor="middle">deck.pptx</text>
   </g>
 </svg>

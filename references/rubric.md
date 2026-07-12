@@ -103,8 +103,8 @@ rest stay self-checks.
 | P3-13 | Title-only read forms a coherent argument (re-run at Phase 3→4 handoff) | read titles in order | self + grader |
 | P3-14 | Bento-first: every primitive-layout page names its information-loss signal | inspect each primitive page | self |
 | P3-15 | Primitive-layout share of content pages ≤ ~40% | count primitive vs total | machine |
-| P3-16 | `flow_variant` set (corporate_fresh static flow) with a one-sentence story-shape reason | inspect `design_brief.flow_variant` | self |
-| P3-17 | `card_variant` set per corporate_fresh card-variant page (`three_col` / `mini_grid` / `two_col_50_50`) with a one-sentence content-substructure reason; a same-structure parallel series assigns variants by each page's substructure, never for variety | inspect `card_variant` choices | self |
+| P3-16 | `flow_variant` set (light-family IT_prism / corporate_fresh static flow) with a one-sentence story-shape reason | inspect `design_brief.flow_variant` | self |
+| P3-17 | `card_variant` set per light-family (IT_prism / corporate_fresh) card-variant page (`three_col` / `mini_grid` / `two_col_50_50`) with a one-sentence content-substructure reason; a same-structure parallel series assigns variants by each page's substructure, never for variety | inspect `card_variant` choices | self |
 | P3-18 | Chart trigger (the relationship test): related numbers (trend / mix shift / A→B bridge / ranking / volume+rate / 2-D share) are planned as the matching `chart_*` layout, never scattered into cards; each chart clears its minimum shape; a quantitative page-title claim is carried by `chart_data.annotations[]` (≤2, labels pre-computed) | inspect data-bearing pages vs `prompts/04_planning_draft.md` → "The chart trigger" | self |
 
 ## Phase 4 — `pages/page_NN.svg`
@@ -125,7 +125,7 @@ decidable from the SVG source — a grader or a small scan can assert them direc
 | P4-09 | No leftover placeholders (Lorem, xxx, TBD) | regex scan | machine |
 | P4-10 | Every text run lives in a real `<text>` element (not path-converted) | scan for `<text>`, no text-as-path | machine |
 | P4-11 | Motion page only: `flow-anim` on open `<line>`/`<path>` only, one `stroke-dasharray`, ≤3 animated paths (or one closed system) | `svg_to_pptx.py` flow-anim lint | machine |
-| P4-12 | Single highlight-color discipline (dark_apple: only highlight for emphasis; corporate_fresh: role-locked green/blue/orange) | color-role scan | self |
+| P4-12 | Single highlight-color discipline (dark_apple: only highlight for emphasis; IT_prism: single green accent in shapes only — never a text fill — with slate as structure and cover hues never on content pages; corporate_fresh: role-locked green/blue/orange) | color-role scan | self |
 
 ## Phase 5 — VISUAL (the rendered slide)
 

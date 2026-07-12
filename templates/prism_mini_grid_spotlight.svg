@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <!-- card_variant: spotlight (mini_grid) — IT_prism 版。A KPI SET where one number dominates
+       and the rest are breakdown/supporting metrics. One large lead card + stacked satellites.
+       The lead card's eyebrow rides a slate_anchor header band (the page's one dark focus
+       device). Numbers SLATE #344252 (never green), tabular-nums; inline emphasis = ink bold
+       on a #DDF5E8 band painted first. -->
+  <defs>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="prismShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- canvas + wash pair + corner bloom -->
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+
+  <!-- progress ticks (top-right page-position indicator) -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- assertion title — slate, no pill bar, no underline -->
+  <text x="48" y="90" font-size="36" font-weight="700" fill="#344252">一個總量，三項拆解</text>
+
+  <g style="font-variant-numeric: tabular-nums">
+    <!-- lead KPI with slate_anchor header band -->
+    <rect x="48" y="180" width="540" height="460" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+    <path d="M 48 248 L 48 194 A 14 14 0 0 1 62 180 L 574 180 A 14 14 0 0 1 588 194 L 588 248 Z" fill="#344252"/>
+    <text x="318" y="222" font-size="17" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">2024 全年總營收</text>
+    <text x="318" y="424" font-size="108" font-weight="800" fill="#344252" text-anchor="middle">$24.8億</text>
+    <rect x="278" y="458" width="80" height="5" rx="2.5" fill="#58D494"/>
+    <rect x="234" y="493" width="94" height="27" rx="4" fill="#DDF5E8"/>
+    <text x="318" y="512" font-size="20" fill="#4C5A6B" text-anchor="middle">同比 <tspan font-weight="700" fill="#344252">增長 31%</tspan>，創歷史新高</text>
+
+    <!-- satellite 1 -->
+    <rect x="612" y="180" width="620" height="140" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+    <text x="660" y="263" font-size="40" font-weight="800" fill="#344252">$13.1億</text>
+    <text x="858" y="246" font-size="21" font-weight="700" fill="#344252">核心產品線</text>
+    <text x="858" y="276" font-size="15" fill="#6B7686">53% of total · Core products</text>
+
+    <!-- satellite 2 -->
+    <rect x="612" y="340" width="620" height="140" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+    <text x="660" y="423" font-size="40" font-weight="800" fill="#344252">$7.4億</text>
+    <text x="858" y="406" font-size="21" font-weight="700" fill="#344252">訂閱服務</text>
+    <text x="858" y="436" font-size="15" fill="#6B7686">30% of total · Subscription</text>
+
+    <!-- satellite 3 -->
+    <rect x="612" y="500" width="620" height="140" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+    <text x="660" y="583" font-size="40" font-weight="800" fill="#344252">$4.3億</text>
+    <text x="858" y="566" font-size="21" font-weight="700" fill="#344252">新興市場</text>
+    <text x="858" y="596" font-size="15" fill="#6B7686">17% of total · Emerging</text>
+  </g>
+</svg>

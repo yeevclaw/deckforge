@@ -1,40 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  page_01 — IT_prism reeded-glass cover. Blurred color blobs (lavender circle /
+  cyan haze / mint block) behind a vertical fluted white-line panel on the right
+  ~55%; clear left column carries the slate chip + slate title + tagline/date
+  lines. Cover hues (#C9C6FF/#8AEBD2/#B8EEFF) are cover/end-only — they never
+  appear on content pages.
+-->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
      font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
   <defs>
-    <linearGradient id="coverGrad" x1="0%" y1="0%" x2="100%" y2="55%">
-      <stop offset="0%" stop-color="#56BE85"/>
-      <stop offset="42%" stop-color="#5BA7D6"/>
-      <stop offset="80%" stop-color="#7378E0"/>
-      <stop offset="100%" stop-color="#878DEB"/>
+    <filter id="blobBlur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="46"/>
+    </filter>
+    <filter id="hazeBlur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="70"/>
+    </filter>
+    <linearGradient id="baseTint" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F4F3FB"/>
+      <stop offset="55%" stop-color="#FAFAFC"/>
+      <stop offset="100%" stop-color="#F0F8F4"/>
     </linearGradient>
-    <radialGradient id="glowTR" cx="86%" cy="8%" r="42%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.16"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
   </defs>
 
-  <rect width="1280" height="720" fill="url(#coverGrad)"/>
-  <rect width="1280" height="720" fill="url(#glowTR)"/>
+  <!-- Near-white base with a whisper of lavender→mint -->
+  <rect width="1280" height="720" fill="url(#baseTint)"/>
 
-  <!-- aurora ribbons -->
-  <g fill="#FFFFFF">
-    <path d="M -60 560 C 280 450, 620 620, 940 490
-             C 1130 413, 1250 400, 1340 385
-             L 1340 480
-             C 1250 495, 1150 515, 960 590
-             C 640 716, 300 560, -60 670 Z" fill-opacity="0.07"/>
-    <path d="M -60 680 C 320 580, 700 716, 1020 600
-             C 1180 542, 1290 532, 1340 526
-             L 1340 720 L -60 720 Z" fill-opacity="0.10"/>
-    <path d="M 560 248 C 800 196, 1040 232, 1340 150
-             L 1340 196
-             C 1050 274, 810 240, 560 286 Z" fill-opacity="0.05"/>
+  <!-- Blurred color blobs (behind the fluted panel) -->
+  <circle cx="1128" cy="340" r="188" fill="#C9C6FF" filter="url(#blobBlur)"/>
+  <rect x="700" y="150" width="360" height="260" rx="130" fill="#B8EEFF" fill-opacity="0.85" filter="url(#hazeBlur)"/>
+  <rect x="762" y="408" width="330" height="232" rx="18" fill="#8AEBD2" filter="url(#blobBlur)"/>
+
+  <!-- Fluted glass panel: white veil + vertical reed lines -->
+  <rect x="620" y="0" width="660" height="720" fill="#FFFFFF" fill-opacity="0.30"/>
+  <g>
+    <line x1="626" y1="0" x2="626" y2="720" stroke="#FFFFFF" stroke-opacity="0.62" stroke-width="1.6"/>
+    <line x1="644" y1="0" x2="644" y2="720" stroke="#FFFFFF" stroke-opacity="0.38" stroke-width="1.0"/>
+    <line x1="662" y1="0" x2="662" y2="720" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="1.4"/>
+    <line x1="680" y1="0" x2="680" y2="720" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.0"/>
+    <line x1="698" y1="0" x2="698" y2="720" stroke="#FFFFFF" stroke-opacity="0.62" stroke-width="1.6"/>
+    <line x1="716" y1="0" x2="716" y2="720" stroke="#FFFFFF" stroke-opacity="0.38" stroke-width="1.0"/>
+    <line x1="734" y1="0" x2="734" y2="720" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="1.4"/>
+    <line x1="752" y1="0" x2="752" y2="720" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.0"/>
+    <line x1="770" y1="0" x2="770" y2="720" stroke="#FFFFFF" stroke-opacity="0.62" stroke-width="1.6"/>
+    <line x1="788" y1="0" x2="788" y2="720" stroke="#FFFFFF" stroke-opacity="0.38" stroke-width="1.0"/>
+    <line x1="806" y1="0" x2="806" y2="720" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="1.4"/>
+    <line x1="824" y1="0" x2="824" y2="720" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.0"/>
+    <line x1="842" y1="0" x2="842" y2="720" stroke="#FFFFFF" stroke-opacity="0.62" stroke-width="1.6"/>
+    <line x1="860" y1="0" x2="860" y2="720" stroke="#FFFFFF" stroke-opacity="0.38" stroke-width="1.0"/>
+    <line x1="878" y1="0" x2="878" y2="720" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="1.4"/>
+    <line x1="896" y1="0" x2="896" y2="720" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.0"/>
+    <line x1="914" y1="0" x2="914" y2="720" stroke="#FFFFFF" stroke-opacity="0.62" stroke-width="1.6"/>
+    <line x1="932" y1="0" x2="932" y2="720" stroke="#FFFFFF" stroke-opacity="0.38" stroke-width="1.0"/>
+    <line x1="950" y1="0" x2="950" y2="720" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="1.4"/>
+    <line x1="968" y1="0" x2="968" y2="720" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.0"/>
+    <line x1="986" y1="0" x2="986" y2="720" stroke="#FFFFFF" stroke-opacity="0.62" stroke-width="1.6"/>
+    <line x1="1004" y1="0" x2="1004" y2="720" stroke="#FFFFFF" stroke-opacity="0.38" stroke-width="1.0"/>
+    <line x1="1022" y1="0" x2="1022" y2="720" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="1.4"/>
+    <line x1="1040" y1="0" x2="1040" y2="720" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.0"/>
+    <line x1="1058" y1="0" x2="1058" y2="720" stroke="#FFFFFF" stroke-opacity="0.62" stroke-width="1.6"/>
+    <line x1="1076" y1="0" x2="1076" y2="720" stroke="#FFFFFF" stroke-opacity="0.38" stroke-width="1.0"/>
+    <line x1="1094" y1="0" x2="1094" y2="720" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="1.4"/>
+    <line x1="1112" y1="0" x2="1112" y2="720" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.0"/>
+    <line x1="1130" y1="0" x2="1130" y2="720" stroke="#FFFFFF" stroke-opacity="0.62" stroke-width="1.6"/>
+    <line x1="1148" y1="0" x2="1148" y2="720" stroke="#FFFFFF" stroke-opacity="0.38" stroke-width="1.0"/>
+    <line x1="1166" y1="0" x2="1166" y2="720" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="1.4"/>
+    <line x1="1184" y1="0" x2="1184" y2="720" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.0"/>
+    <line x1="1202" y1="0" x2="1202" y2="720" stroke="#FFFFFF" stroke-opacity="0.62" stroke-width="1.6"/>
+    <line x1="1220" y1="0" x2="1220" y2="720" stroke="#FFFFFF" stroke-opacity="0.38" stroke-width="1.0"/>
+    <line x1="1238" y1="0" x2="1238" y2="720" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="1.4"/>
+    <line x1="1256" y1="0" x2="1256" y2="720" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.0"/>
+    <line x1="1274" y1="0" x2="1274" y2="720" stroke="#FFFFFF" stroke-opacity="0.62" stroke-width="1.6"/>
   </g>
+  <!-- Soft left edge of the panel -->
+  <rect x="612" y="0" width="10" height="720" fill="#FFFFFF" fill-opacity="0.5"/>
 
-  <!-- title block -->
-  <text x="120" y="330" font-size="104" font-weight="800" fill="#FFFFFF" letter-spacing="-2">DeckForge</text>
-  <rect x="124" y="372" width="640" height="52" fill="#FFFFFF"/>
-  <text x="146" y="409" font-size="27" font-weight="700" fill="#3E5BA8">簡報的靈魂是內容,設計讓它被看見</text>
-  <text x="124" y="476" font-size="20" fill="#FFFFFF" fill-opacity="0.92">Claude Skill · 五階段可編輯 PPTX 產生流程</text>
+  <!-- Left column: chip + title + tagline + date line -->
+  <rect x="124" y="196" width="148" height="44" rx="6" fill="#344252"/>
+  <text x="198" y="225" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">Claude Skill</text>
+
+  <text x="120" y="352" font-size="100" font-weight="800" fill="#344252" letter-spacing="-2">DeckForge</text>
+  <text x="124" y="412" font-size="27" font-weight="500" fill="#4C5A6B">簡報的靈魂是內容,設計讓它被看見</text>
+  <text x="124" y="470" font-size="20" fill="#4C5A6B" letter-spacing="1">Claude Skill · 五階段可編輯 PPTX 產生流程</text>
 </svg>

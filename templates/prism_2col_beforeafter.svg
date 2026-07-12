@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <!-- card_variant: before_after (two_col_50_50) — IT_prism 版。A transformation: current
+       state → new state, with a green #58D494 directional arrow between. The "after" card's
+       eyebrow is ink bold on a #DDF5E8 band; the payoff phrase is ink bold + a 3px green
+       underline bar. Icons are prism_icon slate line-work — never blue. Use for migrations /
+       process 改造; for two co-equal options use balanced. -->
+  <defs>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="prismShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- canvas + wash pair + corner bloom -->
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+
+  <!-- progress ticks (top-right page-position indicator) -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- assertion title — slate, no pill bar, no underline -->
+  <text x="48" y="90" font-size="36" font-weight="700" fill="#344252">從人工到自動，一步到位</text>
+
+  <!-- BEFORE card -->
+  <rect x="48" y="190" width="540" height="440" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+  <g transform="translate(100 230)">
+    <rect x="0" y="0" width="88" height="88" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(8 8) scale(3)" fill="none" stroke="#344252" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+      <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+      <line x1="16" y1="13" x2="8" y2="13"/>
+      <line x1="16" y1="17" x2="8" y2="17"/>
+    </g>
+  </g>
+  <text x="100" y="392" font-size="14" font-weight="700" fill="#6B7686" letter-spacing="2">BEFORE · 現況</text>
+  <text x="100" y="434" font-size="28" font-weight="700" fill="#344252">人工逐筆對帳</text>
+  <text x="100" y="480" font-size="19" fill="#4C5A6B">
+    <tspan x="100" dy="0">每月耗時三天，</tspan>
+    <tspan x="100" dy="34">易出錯、難追溯。</tspan>
+  </text>
+
+  <!-- transition arrow — the green directional device -->
+  <circle cx="640" cy="410" r="30" fill="#58D494"/>
+  <path d="M627 410 h20 M642 399 l11 11 -11 11" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- AFTER card -->
+  <rect x="692" y="190" width="540" height="440" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+  <g transform="translate(744 230)">
+    <rect x="0" y="0" width="88" height="88" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(8 8) scale(3)" fill="none" stroke="#344252" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+      <polyline points="22 4 12 14.01 9 11.01"/>
+    </g>
+  </g>
+  <rect x="738" y="375" width="134" height="23" rx="4" fill="#DDF5E8"/>
+  <text x="744" y="392" font-size="14" font-weight="700" fill="#344252" letter-spacing="2">AFTER · 自動化</text>
+  <text x="744" y="434" font-size="28" font-weight="700" fill="#344252">系統即時勾稽</text>
+  <rect x="744" y="487" width="95" height="3" fill="#58D494"/>
+  <text x="744" y="480" font-size="19" fill="#4C5A6B">
+    <tspan x="744" dy="0"><tspan font-weight="700" fill="#344252">分鐘級完成</tspan>，</tspan>
+    <tspan x="744" dy="34">全程留痕、可回溯。</tspan>
+  </text>
+</svg>

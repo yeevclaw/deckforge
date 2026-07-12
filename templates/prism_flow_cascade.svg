@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  prism_flow_cascade.svg — IT_prism flow, cascade_fall variant (1280×720).
+  Macro silhouette mirrors fresh_flow_cascade.svg: glass half-discs bleeding off
+  the LEFT edge as a numbered bank (soft downward chevrons in the overlap lenses),
+  a falling sweep behind the bank, full-width white rows. Craft is prism
+  blur_bloom: two-layer mint/lavender discs (outer halo + inner body) alternating
+  for depth, final disc slightly greener (#A8ECC8) as the quiet closing emphasis.
+  Sweep = ONE continuous filled path in mint, painted BEFORE the discs. Bank
+  numbers are slate circle badges with WHITE numbers (never green badges — white
+  on green fails AA). Rows sit on plain canvas → white + prismShadow. Green never
+  fills <text>; outputs ride green tag pills, the final row the ONE slate_anchor chip.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <!-- two-layer blur_bloom bank discs anchored to the LEFT edge: strongest at the
+         bulge, dissolving to ≤0.10 into the bleed edge; mint and lavender alternate -->
+    <linearGradient id="bankHaloMint" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#B9EBD2" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#B9EBD2" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#B9EBD2" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="bankBodyMint" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#B9EBD2" stop-opacity="0.60"/>
+      <stop offset="60%" stop-color="#B9EBD2" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#B9EBD2" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="bankHaloLav" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#DCD9F6" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#DCD9F6" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#DCD9F6" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="bankBodyLav" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#DCD9F6" stop-opacity="0.60"/>
+      <stop offset="60%" stop-color="#DCD9F6" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#DCD9F6" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="bankHaloEnd" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#A8ECC8" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#A8ECC8" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#A8ECC8" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="bankBodyEnd" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#A8ECC8" stop-opacity="0.60"/>
+      <stop offset="60%" stop-color="#A8ECC8" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#A8ECC8" stop-opacity="0.10"/>
+    </linearGradient>
+    <!-- falling mint sweep behind the bank -->
+    <linearGradient id="fallGrad" x1="0" y1="172" x2="0" y2="668" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#C4EEDA" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#9BE4BE" stop-opacity="0.72"/>
+    </linearGradient>
+    <filter id="prismShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="10" flood-color="#344252" flood-opacity="0.05"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+
+  <!-- corner_bloom top-right: green radial + white dashed rotated square -->
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+
+  <!-- progress_ticks -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- assertion title: slate, no pill, no underline -->
+  <text x="48" y="88" font-size="34" font-weight="700" fill="#344252">流程頁標題：四步執行程序由上而下逐級交付</text>
+
+  <!-- falling sweep: ONE continuous filled path (tail → wedge → integrated downward
+       arrowhead), drawn BEFORE the bank discs so its ends tuck behind the first and
+       last disc and the wedge surfaces in the gaps -->
+  <path d="M 48 172
+           C 108 300, 116 470, 76 588
+           L 100 580
+           L 54 668
+           L 12 576
+           L 34 584
+           C 58 470, 64 300, 36 178
+           Z" fill="url(#fallGrad)"/>
+
+  <!-- bank halos (top to bottom, mint / lav alternating, final greener) -->
+  <path d="M 0 143 A 70 70 0 0 1 0 283 Z" fill="url(#bankHaloMint)"/>
+  <path d="M 0 281 A 70 70 0 0 1 0 421 Z" fill="url(#bankHaloLav)"/>
+  <path d="M 0 419 A 70 70 0 0 1 0 559 Z" fill="url(#bankHaloMint)"/>
+  <path d="M 0 557 A 70 70 0 0 1 0 697 Z" fill="url(#bankHaloEnd)"/>
+
+  <!-- bank bodies -->
+  <path d="M 0 157 A 56 56 0 0 1 0 269 Z" fill="url(#bankBodyMint)"/>
+  <path d="M 0 295 A 56 56 0 0 1 0 407 Z" fill="url(#bankBodyLav)"/>
+  <path d="M 0 433 A 56 56 0 0 1 0 545 Z" fill="url(#bankBodyMint)"/>
+  <path d="M 0 571 A 56 56 0 0 1 0 683 Z" fill="url(#bankBodyEnd)"/>
+
+  <!-- slate number badges in the bank (white numbers on slate) -->
+  <g>
+    <circle cx="32" cy="213" r="16" fill="#344252"/>
+    <text x="32" y="219" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
+    <circle cx="32" cy="351" r="16" fill="#344252"/>
+    <text x="32" y="357" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
+    <circle cx="32" cy="489" r="16" fill="#344252"/>
+    <text x="32" y="495" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+    <circle cx="32" cy="627" r="16" fill="#344252"/>
+    <text x="32" y="633" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">4</text>
+  </g>
+
+  <!-- soft chevrons pointing down in the disc-overlap lenses -->
+  <path d="M 14 276 L 34 298 L 54 276 Z" fill="#FFFFFF" fill-opacity="0.55"/>
+  <path d="M 14 414 L 34 436 L 54 414 Z" fill="#FFFFFF" fill-opacity="0.55"/>
+  <path d="M 14 552 L 34 574 L 54 552 Z" fill="#FFFFFF" fill-opacity="0.55"/>
+
+  <!-- step 1 -->
+  <g>
+    <rect x="130" y="152" width="1060" height="122" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+    <rect x="158" y="184" width="58" height="58" rx="10" fill="#E4E8EF"/>
+    <g transform="translate(165 191) scale(1.8)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    </g>
+    <text x="240" y="187" font-size="13" font-weight="700" fill="#6B7686" letter-spacing="2">STEP 1</text>
+    <text x="240" y="221" font-size="22" font-weight="700" fill="#344252">階段名稱一</text>
+    <line x1="470" y1="179" x2="470" y2="247" stroke="#C9CFD9" stroke-width="2" stroke-dasharray="2 7"/>
+    <text x="510" y="203" font-size="15" fill="#4C5A6B">
+      <tspan x="510" dy="0">一到兩行說明這一步做什麼、為何重要，</tspan>
+      <tspan x="510" dy="26">寬卡可以容納更完整的句子與細節。</tspan>
+    </text>
+    <rect x="1046" y="198" width="110" height="30" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="1101" y="218" font-size="14" font-weight="600" fill="#344252" text-anchor="middle">產出物一</text>
+  </g>
+
+  <!-- step 2 -->
+  <g>
+    <rect x="130" y="290" width="1060" height="122" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+    <rect x="158" y="322" width="58" height="58" rx="10" fill="#E4E8EF"/>
+    <g transform="translate(165 329) scale(1.8)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      <line x1="6" y1="8" x2="9" y2="8"/><line x1="6" y1="12" x2="9" y2="12"/>
+    </g>
+    <text x="240" y="325" font-size="13" font-weight="700" fill="#6B7686" letter-spacing="2">STEP 2</text>
+    <text x="240" y="359" font-size="22" font-weight="700" fill="#344252">階段名稱二</text>
+    <line x1="470" y1="317" x2="470" y2="385" stroke="#C9CFD9" stroke-width="2" stroke-dasharray="2 7"/>
+    <text x="510" y="341" font-size="15" fill="#4C5A6B">
+      <tspan x="510" dy="0">一到兩行說明這一步做什麼、為何重要，</tspan>
+      <tspan x="510" dy="26">寬卡可以容納更完整的句子與細節。</tspan>
+    </text>
+    <rect x="1046" y="336" width="110" height="30" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="1101" y="356" font-size="14" font-weight="600" fill="#344252" text-anchor="middle">產出物二</text>
+  </g>
+
+  <!-- step 3 -->
+  <g>
+    <rect x="130" y="428" width="1060" height="122" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+    <rect x="158" y="460" width="58" height="58" rx="10" fill="#E4E8EF"/>
+    <g transform="translate(165 467) scale(1.8)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+    </g>
+    <text x="240" y="463" font-size="13" font-weight="700" fill="#6B7686" letter-spacing="2">STEP 3</text>
+    <text x="240" y="497" font-size="22" font-weight="700" fill="#344252">階段名稱三</text>
+    <line x1="470" y1="455" x2="470" y2="523" stroke="#C9CFD9" stroke-width="2" stroke-dasharray="2 7"/>
+    <text x="510" y="479" font-size="15" fill="#4C5A6B">
+      <tspan x="510" dy="0">一到兩行說明這一步做什麼、為何重要，</tspan>
+      <tspan x="510" dy="26">寬卡可以容納更完整的句子與細節。</tspan>
+    </text>
+    <rect x="1046" y="474" width="110" height="30" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="1101" y="494" font-size="14" font-weight="600" fill="#344252" text-anchor="middle">產出物三</text>
+  </g>
+
+  <!-- step 4 (final: slate_anchor chip as the quiet emphasis) -->
+  <g>
+    <rect x="130" y="566" width="1060" height="122" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+    <rect x="158" y="598" width="58" height="58" rx="10" fill="#E4E8EF"/>
+    <g transform="translate(165 605) scale(1.8)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+      <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+    </g>
+    <text x="240" y="601" font-size="13" font-weight="700" fill="#6B7686" letter-spacing="2">STEP 4</text>
+    <text x="240" y="635" font-size="22" font-weight="700" fill="#344252">階段名稱四</text>
+    <line x1="470" y1="593" x2="470" y2="661" stroke="#C9CFD9" stroke-width="2" stroke-dasharray="2 7"/>
+    <text x="510" y="617" font-size="15" fill="#4C5A6B">
+      <tspan x="510" dy="0">一到兩行說明這一步做什麼、為何重要，</tspan>
+      <tspan x="510" dy="26">寬卡可以容納更完整的句子與細節。</tspan>
+    </text>
+    <rect x="1046" y="612" width="110" height="30" rx="6" fill="#344252"/>
+    <text x="1101" y="632" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="middle">產出物四</text>
+  </g>
+
+  <text x="1200" y="710" font-size="12" fill="#6B7686" text-anchor="end">08 / 12</text>
+</svg>

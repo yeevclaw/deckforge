@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  prism_cover.svg — IT_prism reeded-glass cover (1280×720).
+  Recipe: reeded_glass (design_system.md → IT prism family). Blurred color blobs
+  (lavender circle / mint block / cyan haze) behind a fluted white-line panel on the
+  right ~55%; clear left column carries the slate chip + slate title + date line.
+  Slate text on light — never white-on-gradient, never green title text.
+  End page: same recipe, centered CTA. Cover hues (#C9C6FF/#8AEBD2/#B8EEFF) are
+  cover/end-only — they never appear on content pages.
+-->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
      font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+
   <defs>
     <filter id="blobBlur" x="-60%" y="-60%" width="220%" height="220%">
       <feGaussianBlur stdDeviation="46"/>
@@ -67,12 +77,12 @@
   <!-- Soft left edge of the panel -->
   <rect x="612" y="0" width="10" height="720" fill="#FFFFFF" fill-opacity="0.5"/>
 
-  <!-- Left column: chip + title + subtitle + date -->
+  <!-- Left column: chip + title + date -->
   <rect x="64" y="226" width="128" height="44" rx="6" fill="#344252"/>
-  <text x="128" y="255" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">產品介紹</text>
+  <text x="128" y="255" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">提案簡報</text>
 
-  <text x="64" y="352" font-size="64" font-weight="700" fill="#344252" letter-spacing="-1">DeckForge</text>
-  <text x="64" y="410" font-size="26" font-weight="500" fill="#4C5A6B">簡報的靈魂是內容,設計讓它被看見</text>
+  <text x="64" y="352" font-size="60" font-weight="700" fill="#344252">簡報主標題文字</text>
+  <text x="64" y="410" font-size="26" font-weight="500" fill="#4C5A6B">副標題說明文字一行</text>
 
-  <text x="64" y="470" font-size="19" fill="#4C5A6B" letter-spacing="1">2026 · 產品介紹</text>
+  <text x="64" y="470" font-size="19" fill="#4C5A6B" letter-spacing="1">2026.00.00　|　部門名稱</text>
 </svg>

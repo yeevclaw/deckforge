@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  prism_3col_steps.svg — IT_prism three_col, card_variant: numbered_steps.
+  Three items that read in a weak order (first this, then that). Slate badges
+  with WHITE numbers (white on green fails AA) ride a gently rising green
+  connector; green chevrons point forward; text is left-aligned. If the order
+  hardens into a strong dependency or a dated sequence, upgrade to
+  layout: "flow" / "timeline" instead. Prism style: #EFF0F3 canvas + washes +
+  corner_bloom, slate assertion title, progress_ticks, highlight-band emphasis.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="prismShadow" x="-25%" y="-25%" width="150%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur"/>
+      <feOffset in="blur" dx="0" dy="5" result="off"/>
+      <feComponentTransfer in="off" result="shadow">
+        <feFuncA type="linear" slope="0.05"/>
+      </feComponentTransfer>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- canvas + diagonal wash pair + corner bloom -->
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+
+  <!-- progress_ticks -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- title: full-sentence assertion, slate, no pill bar, no underline -->
+  <text x="48" y="88" font-size="34" font-weight="700" fill="#344252">三個步驟，依序推進</text>
+  <text x="48" y="118" font-size="16" fill="#4C5A6B">副標說明文字（可省略）</text>
+
+  <!-- rising connector: badges sit on it like stations climbing left→right -->
+  <polyline points="96,322 122,316 512,294 902,272 1012,266" fill="none"
+            stroke="#9BD9BE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+
+  <!-- forward chevrons between steps -->
+  <path d="M438 282 l16 16 -16 16" fill="none" stroke="#58D494" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M826 260 l16 16 -16 16" fill="none" stroke="#58D494" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- step 1 -->
+  <g transform="translate(0 0)">
+    <circle cx="122" cy="316" r="26" fill="#344252"/>
+    <text x="122" y="327" font-size="30" font-weight="800" fill="#FFFFFF" text-anchor="middle">1</text>
+    <rect x="154" y="272" width="96" height="96" rx="14" fill="#E4E8EF" filter="url(#prismShadow)"/>
+    <g transform="translate(166 284) scale(3)" fill="none" stroke="#344252" stroke-width="0.67"
+       stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <circle cx="12" cy="12" r="6"/>
+      <circle cx="12" cy="12" r="2"/>
+      <path d="M12 0.6v1.6M23.4 12h-1.6M12 23.4v-1.6"/>
+    </g>
+    <text x="96" y="412" font-size="27" font-weight="700" fill="#344252">先想清楚問題</text>
+    <rect x="226" y="434" width="101" height="30" rx="4" fill="#DDF5E8"/>
+    <text x="96" y="456" font-size="19" fill="#4C5A6B">
+      <tspan x="96" dy="0">動手前，先界定<tspan font-weight="700" fill="#344252">真正的目標</tspan>，</tspan>
+      <tspan x="96" dy="34">以及這份工作的本質。</tspan>
+    </text>
+  </g>
+
+  <!-- step 2 -->
+  <g transform="translate(0 -22)">
+    <circle cx="512" cy="316" r="26" fill="#344252"/>
+    <text x="512" y="327" font-size="30" font-weight="800" fill="#FFFFFF" text-anchor="middle">2</text>
+    <rect x="544" y="272" width="96" height="96" rx="14" fill="#E4E8EF" filter="url(#prismShadow)"/>
+    <g transform="translate(556 284) scale(3)" fill="none" stroke="#344252" stroke-width="0.67"
+       stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="4" width="16" height="16" rx="2"/>
+      <rect x="9" y="9" width="6" height="6"/>
+      <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/>
+    </g>
+    <text x="486" y="412" font-size="27" font-weight="700" fill="#344252">選對 AI 平台</text>
+    <rect x="616" y="434" width="101" height="30" rx="4" fill="#DDF5E8"/>
+    <text x="486" y="456" font-size="19" fill="#4C5A6B">
+      <tspan x="486" dy="0">了解不同模型的<tspan font-weight="700" fill="#344252">能力與限制</tspan>：</tspan>
+      <tspan x="486" dy="34">脈絡、幻覺、知識截止。</tspan>
+    </text>
+  </g>
+
+  <!-- step 3 -->
+  <g transform="translate(0 -44)">
+    <circle cx="902" cy="316" r="26" fill="#344252"/>
+    <text x="902" y="327" font-size="30" font-weight="800" fill="#FFFFFF" text-anchor="middle">3</text>
+    <rect x="934" y="272" width="96" height="96" rx="14" fill="#E4E8EF" filter="url(#prismShadow)"/>
+    <g transform="translate(946 284) scale(3)" fill="none" stroke="#344252" stroke-width="0.67"
+       stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+      <path d="M4 1.5v3M2.5 3h3"/>
+    </g>
+    <text x="876" y="412" font-size="27" font-weight="700" fill="#344252">合理分配任務</text>
+    <rect x="978" y="434" width="101" height="30" rx="4" fill="#DDF5E8"/>
+    <text x="876" y="456" font-size="19" fill="#4C5A6B">
+      <tspan x="876" dy="0">善用人與 AI <tspan font-weight="700" fill="#344252">各自的強項</tspan>，</tspan>
+      <tspan x="876" dy="34">把工作合理地分配。</tspan>
+    </text>
+  </g>
+</svg>

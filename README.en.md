@@ -2,14 +2,14 @@
 
 **English** · [繁體中文](README.md)
 
-> A Claude skill that produces **professional, editable PowerPoint decks**. It doesn't stuff your topic into a template — it chains three load-bearing methodologies into one workflow: **Socratic dialogue** (Phase 1) surfaces the one judgment the deck must change, the **pyramid principle** (Phase 1→2→3) structures scattered ideas into a readable argument, and **Bento Grid + a dual-style design system** (Phase 3→4 — corporate-fresh light consulting style by default, dark Apple on request) renders that argument as an editable PPT. Not a one-shot generator — every phase boundary asks for your approval before advancing.
+> A Claude skill that produces **professional, editable PowerPoint decks**. It doesn't stuff your topic into a template — it chains three load-bearing methodologies into one workflow: **Socratic dialogue** (Phase 1) surfaces the one judgment the deck must change, the **pyramid principle** (Phase 1→2→3) structures scattered ideas into a readable argument, and **Bento Grid + a three-family design system** (Phase 3→4 — IT_prism cool light style by default, with corporate-fresh warm consulting and dark Apple on request) renders that argument as an editable PPT. Not a one-shot generator — every phase boundary asks for your approval before advancing.
 
 
 ## Demo
 
-Five showcase slides — each demonstrates one layout and one capability, all produced directly through this skill's SVG pipeline (default corporate-fresh light consulting style):
+Five showcase slides — each demonstrates one layout and one capability, all produced directly through this skill's SVG pipeline (default IT_prism cool light style):
 
-| Cover · gradient hero | Consulting chart · waterfall | Glass flow · 5-phase |
+| Cover · reeded glass | Consulting chart · waterfall | Glass flow · 5-phase |
 |:--:|:--:|:--:|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |
 | **Editable output · lead + pair** | **Motion · the Socratic loop** | **One deck, five layouts** |
@@ -117,11 +117,11 @@ DeckForge/
 │   ├── bento_grid.md       ← 8 Bento Grid layouts (the default; incl. stat_hero / mini_grid)
 │   ├── diagrams.md         ← 9 diagram primitives (used only when bento loses information)
 │   ├── chart_anatomy.md    ← 10 SVG chart types: the basic three + the consulting five (waterfall / stacked / hbar / combo / mekko) + two specialized (radar assessment / gantt schedule) + the annotation layer (CAGR arrows, difference brackets, reference lines — the chart carries its own analysis)
-│   ├── design_system.md    ← dark_apple palette + corporate_fresh light consulting style + 10 traditional palettes
+│   ├── design_system.md    ← IT_prism cool light style (default) + corporate_fresh warm consulting + dark_apple palette + 10 traditional palettes
 │   ├── pyramid_principle.md ← pyramid-principle map across Phases 1/2/3
 │   ├── socratic_loop.md    ← Phase 1 question types + 11 scenario spines
 │   └── editable_mode.md    ← how Convert-to-Shape editing works in PowerPoint
-├── templates/              ← 42 SVG files (41 starting templates + `_base.svg`), viewBox 0 0 1280 720
+├── templates/              ← 57 SVG files (56 starting templates + `_base.svg`), viewBox 0 0 1280 720
 │   ├── _base.svg           ← shared filters / gradients / 44 Lucide icons
 │   ├── cover.svg / toc.svg
 │   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
@@ -132,6 +132,9 @@ DeckForge/
 │   ├── chart_radar.svg / chart_gantt.svg ← two specialized: assessment radar / project schedule
 │   ├── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
 │   │   quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← diagram primitives
+│   ├── prism_cover.svg / prism_compare.svg ← IT_prism (default family) reeded-glass cover & compare-table starters
+│   ├── prism_3col*.svg (4) / prism_mini_grid*.svg (3) / prism_2col*.svg (2) ← IT_prism card_variant families
+│   ├── prism_flow*.svg (4)                 ← the IT_prism flow_variant compositions
 │   ├── fresh_cover.svg / fresh_compare.svg ← corporate_fresh cover & compare-table starters
 │   ├── fresh_3col.svg / fresh_3col_steps.svg / fresh_3col_axis.svg / fresh_3col_lead.svg
 │   │                       ← the 4 three_col card_variant compositions (picked per page by content sub-shape)

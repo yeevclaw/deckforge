@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  prism_flow_river.svg — IT_prism flow, river_ribbon variant (1280×720).
+  Macro silhouette mirrors fresh_flow_river.svg: ONE wide ultra-light meandering
+  ribbon (single filled path, edge-to-edge bleed, integrated arrowhead), numbered
+  ring stations fused ON its centerline, cards alternating above/below. Craft is
+  prism: the ribbon is the mint sweep (#C4EEDA → #9BE4BE); station lenses are
+  lavender blur tones for depth, the final station's lens slightly greener
+  (#A8ECC8). Ring stations are white rings with slate strokes and slate numbers —
+  the green lives in the ribbon itself, never in a badge fill or a <text> fill.
+  The final step carries the ONE slate_anchor chip.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <!-- the river ribbon: one continuous filled path, bleeding off the left edge,
+         ending in an integrated arrowhead before the right edge — kept ultra-light -->
+    <linearGradient id="riverGrad" x1="-40" y1="0" x2="1262" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#C4EEDA" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#9BE4BE" stop-opacity="0.68"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+
+  <!-- corner_bloom top-right: green radial + white dashed rotated square -->
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+
+  <!-- progress_ticks -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- assertion title: slate, no pill, no underline -->
+  <text x="48" y="88" font-size="34" font-weight="700" fill="#344252">流程頁標題：一條路徑串起四站，說明旅程保證什麼</text>
+
+  <!-- river ribbon: drawn BEFORE the stations so the rings sit fused on it -->
+  <path d="M -40 385
+           C 80 375, 120 370, 200 370
+           C 320 370, 380 410, 493 410
+           C 610 410, 670 355, 787 355
+           C 900 355, 980 395, 1080 395
+           L 1130 393
+           L 1122 363
+           L 1262 448
+           L 1114 530
+           L 1124 500
+           C 1010 515, 900 480, 787 475
+           C 670 470, 610 530, 493 530
+           C 380 530, 320 490, 200 490
+           C 120 490, 80 498, -40 505
+           Z" fill="url(#riverGrad)"/>
+
+  <!-- station rings on the ribbon centerline: white ring, slate stroke, slate
+       number; lavender lens beneath for depth (final station larger + greener) -->
+  <g>
+    <circle cx="200" cy="430" r="34" fill="#DCD9F6" fill-opacity="0.5"/>
+    <circle cx="200" cy="430" r="24" fill="#FFFFFF" fill-opacity="0.95" stroke="#344252" stroke-width="3.5"/>
+    <text x="200" y="438" font-size="22" font-weight="700" fill="#344252" text-anchor="middle">1</text>
+  </g>
+  <g>
+    <circle cx="493" cy="470" r="34" fill="#DCD9F6" fill-opacity="0.5"/>
+    <circle cx="493" cy="470" r="24" fill="#FFFFFF" fill-opacity="0.95" stroke="#344252" stroke-width="3.5"/>
+    <text x="493" y="478" font-size="22" font-weight="700" fill="#344252" text-anchor="middle">2</text>
+  </g>
+  <g>
+    <circle cx="787" cy="415" r="34" fill="#DCD9F6" fill-opacity="0.5"/>
+    <circle cx="787" cy="415" r="24" fill="#FFFFFF" fill-opacity="0.95" stroke="#344252" stroke-width="3.5"/>
+    <text x="787" y="423" font-size="22" font-weight="700" fill="#344252" text-anchor="middle">3</text>
+  </g>
+  <g>
+    <circle cx="1080" cy="455" r="40" fill="#A8ECC8" fill-opacity="0.55"/>
+    <circle cx="1080" cy="455" r="28" fill="#FFFFFF" fill-opacity="0.97" stroke="#344252" stroke-width="4.5"/>
+    <text x="1080" y="464" font-size="24" font-weight="700" fill="#344252" text-anchor="middle">4</text>
+  </g>
+
+  <!-- step 1: card above the ribbon -->
+  <g>
+    <rect x="80" y="216" width="240" height="170" rx="14" fill="#FFFFFF" fill-opacity="0.92"/>
+    <text x="200" y="250" font-size="13" font-weight="700" fill="#6B7686" text-anchor="middle" letter-spacing="2">STEP 1</text>
+    <text x="200" y="283" font-size="24" font-weight="700" fill="#344252" text-anchor="middle">階段名稱一</text>
+    <text x="200" y="315" font-size="15" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="200" dy="0">兩行內說明這一步</tspan>
+      <tspan x="200" dy="25">做什麼、為何重要</tspan>
+    </text>
+    <rect x="148" y="352" width="104" height="26" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="200" y="370" font-size="14" font-weight="600" fill="#344252" text-anchor="middle">產出物一</text>
+  </g>
+
+  <!-- step 2: card below the ribbon -->
+  <g>
+    <rect x="373" y="518" width="240" height="170" rx="14" fill="#FFFFFF" fill-opacity="0.92"/>
+    <text x="493" y="552" font-size="13" font-weight="700" fill="#6B7686" text-anchor="middle" letter-spacing="2">STEP 2</text>
+    <text x="493" y="585" font-size="24" font-weight="700" fill="#344252" text-anchor="middle">階段名稱二</text>
+    <text x="493" y="617" font-size="15" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="493" dy="0">兩行內說明這一步</tspan>
+      <tspan x="493" dy="25">做什麼、為何重要</tspan>
+    </text>
+    <rect x="441" y="654" width="104" height="26" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="493" y="672" font-size="14" font-weight="600" fill="#344252" text-anchor="middle">產出物二</text>
+  </g>
+
+  <!-- step 3: card above the ribbon -->
+  <g>
+    <rect x="667" y="201" width="240" height="170" rx="14" fill="#FFFFFF" fill-opacity="0.92"/>
+    <text x="787" y="235" font-size="13" font-weight="700" fill="#6B7686" text-anchor="middle" letter-spacing="2">STEP 3</text>
+    <text x="787" y="268" font-size="24" font-weight="700" fill="#344252" text-anchor="middle">階段名稱三</text>
+    <text x="787" y="300" font-size="15" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="787" dy="0">兩行內說明這一步</tspan>
+      <tspan x="787" dy="25">做什麼、為何重要</tspan>
+    </text>
+    <rect x="735" y="337" width="104" height="26" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="787" y="355" font-size="14" font-weight="600" fill="#344252" text-anchor="middle">產出物三</text>
+  </g>
+
+  <!-- step 4: card below the ribbon (final: slate_anchor chip as the quiet emphasis) -->
+  <g>
+    <rect x="960" y="503" width="240" height="170" rx="14" fill="#FFFFFF" fill-opacity="0.92"/>
+    <text x="1080" y="537" font-size="13" font-weight="700" fill="#6B7686" text-anchor="middle" letter-spacing="2">STEP 4</text>
+    <text x="1080" y="570" font-size="24" font-weight="700" fill="#344252" text-anchor="middle">階段名稱四</text>
+    <text x="1080" y="602" font-size="15" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="1080" dy="0">兩行內說明這一步</tspan>
+      <tspan x="1080" dy="25">做什麼、為何重要</tspan>
+    </text>
+    <rect x="1028" y="639" width="104" height="26" rx="6" fill="#344252"/>
+    <text x="1080" y="657" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="middle">產出物四</text>
+  </g>
+
+  <text x="1200" y="710" font-size="12" fill="#6B7686" text-anchor="end">07 / 12</text>
+</svg>

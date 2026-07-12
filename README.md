@@ -2,14 +2,14 @@
 
 [English](README.en.md) · **繁體中文**
 
-> 一個 Claude skill,專門用來產出**高品質、可在 PowerPoint 編輯的簡報**。不是把你的主題丟進範本套版,而是用三套方法論串起整個流程:**蘇格拉底反詰**(Phase 1)挖出簡報真正要說服的判斷、**金字塔原理**(Phase 1→2→3)把零碎想法結構成可讀的論證、**Bento Grid + 雙風格設計系統**(Phase 3→4,預設 corporate_fresh 淺色顧問風,可改選暗黑 Apple 風)把論證渲染成可編輯 PPT。不是一鍵生成——每個階段邊界都會跳窗讓你確認才往下。
+> 一個 Claude skill,專門用來產出**高品質、可在 PowerPoint 編輯的簡報**。不是把你的主題丟進範本套版,而是用三套方法論串起整個流程:**蘇格拉底反詰**(Phase 1)挖出簡報真正要說服的判斷、**金字塔原理**(Phase 1→2→3)把零碎想法結構成可讀的論證、**Bento Grid + 三家族設計系統**(Phase 3→4,預設 IT_prism 冷調淺色風,另有 corporate_fresh 暖調顧問風、暗黑 Apple 風可選)把論證渲染成可編輯 PPT。不是一鍵生成——每個階段邊界都會跳窗讓你確認才往下。
 
 
 ## Demo
 
-五張特色展示頁,每張示範一種佈局與一項能力,全部由這個 skill 的 SVG pipeline 直接產出(預設 corporate_fresh 淺色顧問風):
+五張特色展示頁,每張示範一種佈局與一項能力,全部由這個 skill 的 SVG pipeline 直接產出(預設 IT_prism 冷調淺色風):
 
-| 封面 · 漸層主視覺 | 顧問圖表 · 瀑布橋 | 玻璃流程 · 五階段 |
+| 封面 · 長虹玻璃 | 顧問圖表 · 瀑布橋 | 玻璃流程 · 五階段 |
 |:--:|:--:|:--:|
 | ![](examples/slide-1.jpg) | ![](examples/slide-2.jpg) | ![](examples/slide-3.jpg) |
 | **可編輯輸出 · 主從卡** | **流動動畫 · 蘇格拉底循環** | **同一份 deck,五種佈局** |
@@ -117,11 +117,11 @@ DeckForge/
 │   ├── bento_grid.md       ← Bento Grid 8 種版型(預設;含 stat_hero / mini_grid)
 │   ├── diagrams.md         ← 9 種 diagram primitives(只在 Bento 會丟資訊時切換)
 │   ├── chart_anatomy.md    ← 10 種 SVG 圖表:基本三型 + 顧問五型(waterfall / stacked / hbar / combo / mekko)+ 專門二型(radar 多維評估 / gantt 甘特排程)+ annotation 層(CAGR 箭頭、差異括號、基準線——圖表自帶分析)
-│   ├── design_system.md    ← dark_apple palette + corporate_fresh 淺色顧問風 + 10 種傳統 palette
+│   ├── design_system.md    ← IT_prism 冷調淺色風(預設)+ corporate_fresh 暖調顧問風 + dark_apple palette + 10 種傳統 palette
 │   ├── pyramid_principle.md ← 金字塔原理跨 Phase 1/2/3 的對照表
 │   ├── socratic_loop.md     ← Phase 1 反詰問題類型 + 11 種情境 spine
 │   └── editable_mode.md    ← PowerPoint Convert to Shape 編輯
-├── templates/              ← 42 個 viewBox 1280×720 SVG(41 起始模板 + `_base.svg` 共用底稿)
+├── templates/              ← 57 個 viewBox 1280×720 SVG(56 起始模板 + `_base.svg` 共用底稿)
 │   ├── _base.svg           ← 共用 filter / 漸層 / 44 個 Lucide icon
 │   ├── cover.svg / toc.svg
 │   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
@@ -132,6 +132,9 @@ DeckForge/
 │   ├── chart_radar.svg / chart_gantt.svg ← 專門二型:多維評估雷達 / 甘特排程
 │   ├── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
 │   │   quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← Diagram primitives
+│   ├── prism_cover.svg / prism_compare.svg ← IT_prism(預設家族)長虹玻璃封面與對照表起始檔
+│   ├── prism_3col*.svg (4) / prism_mini_grid*.svg (3) / prism_2col*.svg (2) ← IT_prism 的 card_variant 家族
+│   ├── prism_flow*.svg (4)                 ← IT_prism 的 flow_variant 四構圖
 │   ├── fresh_cover.svg / fresh_compare.svg ← corporate_fresh 封面與對照表起始檔
 │   ├── fresh_3col.svg / fresh_3col_steps.svg / fresh_3col_axis.svg / fresh_3col_lead.svg
 │   │                       ← three_col 的 4 種 card_variant 構圖(每頁依內容子結構選用)

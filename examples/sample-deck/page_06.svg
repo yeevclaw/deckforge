@@ -2,65 +2,88 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
      font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
   <defs>
-    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
-    </linearGradient>
-    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
-      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="washYel" cx="94%" cy="6%" r="44%">
-      <stop offset="0%" stop-color="#F6ECC4" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#F6ECC4" stop-opacity="0"/>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
     </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="prismShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
 
-  <rect width="1280" height="720" fill="#F4F4F4"/>
-  <rect width="1280" height="720" fill="url(#washYel)"/>
-  <rect width="1280" height="720" fill="url(#washGreen)"/>
+  <!-- canvas + wash pair + corner bloom -->
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
 
-  <!-- title -->
-  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
-  <text x="48" y="104" font-size="34" font-weight="700" fill="#383838">設計品味是內建的,不是靠運氣</text>
-  <text x="48" y="134" font-size="15" fill="#6B7178" letter-spacing="2">TASTE, BUILT IN</text>
+  <!-- progress ticks -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- title — slate assertion, no pill bar, no underline -->
+  <text x="48" y="104" font-size="34" font-weight="700" fill="#344252">設計品味是內建的,不是靠運氣</text>
+  <text x="48" y="134" font-size="15" fill="#4C5A6B" letter-spacing="2">TASTE, BUILT IN</text>
 
   <!-- dashed separators -->
-  <line x1="427" y1="250" x2="427" y2="630" stroke="#9BD4B8" stroke-width="2" stroke-dasharray="3 8"/>
-  <line x1="853" y1="250" x2="853" y2="630" stroke="#9BD4B8" stroke-width="2" stroke-dasharray="3 8"/>
+  <line x1="427" y1="250" x2="427" y2="630" stroke="#C9CFD9" stroke-width="2" stroke-dasharray="3 8"/>
+  <line x1="853" y1="250" x2="853" y2="630" stroke="#C9CFD9" stroke-width="2" stroke-dasharray="3 8"/>
 
   <!-- column 1: Bento first -->
-  <g transform="translate(183 262) scale(4.5)" stroke="#5E8FEF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <rect width="7" height="7" x="3" y="3" rx="1" fill="#D8E4FB"/>
-    <rect width="7" height="7" x="14" y="3" rx="1" fill="#FFFFFF"/>
-    <rect width="7" height="7" x="14" y="14" rx="1" fill="#D8E4FB"/>
-    <rect width="7" height="7" x="3" y="14" rx="1" fill="#FFFFFF"/>
+  <rect x="177" y="256" width="120" height="120" rx="16" fill="#E4E8EF" filter="url(#prismShadow)"/>
+  <g transform="translate(183 262) scale(4.5)" stroke="#344252" stroke-width="0.45" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect width="7" height="7" x="3" y="3" rx="1"/>
+    <rect width="7" height="7" x="14" y="3" rx="1"/>
+    <rect width="7" height="7" x="14" y="14" rx="1"/>
+    <rect width="7" height="7" x="3" y="14" rx="1"/>
   </g>
-  <text x="237" y="448" font-size="28" font-weight="700" fill="#383838" text-anchor="middle">Bento 優先</text>
-  <text x="237" y="500" font-size="19" fill="#4A5158" text-anchor="middle">
+  <text x="237" y="448" font-size="28" font-weight="700" fill="#344252" text-anchor="middle">Bento 優先</text>
+  <rect x="203" y="516" width="120" height="26" rx="4" fill="#DDF5E8"/>
+  <text x="237" y="500" font-size="19" fill="#4C5A6B" text-anchor="middle">
     <tspan x="237" dy="0">8 種 Bento 版面為預設;</tspan>
-    <tspan x="237" dy="35">只有當會<tspan fill="#E8872E" font-weight="700">遺失結構資訊</tspan>時,</tspan>
+    <tspan x="237" dy="35">只有當會<tspan font-weight="700" fill="#344252">遺失結構資訊</tspan>時,</tspan>
     <tspan x="237" dy="35">才換成圖表或圖解原語。</tspan>
   </text>
 
   <!-- column 2: single highlight -->
-  <g transform="translate(586 262) scale(4.5)" stroke="#5E8FEF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" fill="#D8E4FB"/>
+  <rect x="580" y="256" width="120" height="120" rx="16" fill="#E4E8EF" filter="url(#prismShadow)"/>
+  <g transform="translate(586 262) scale(4.5)" stroke="#344252" stroke-width="0.45" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>
   </g>
-  <text x="640" y="448" font-size="28" font-weight="700" fill="#383838" text-anchor="middle">單一強調色</text>
-  <text x="640" y="500" font-size="19" fill="#4A5158" text-anchor="middle">
-    <tspan x="640" dy="0">整份 deck <tspan fill="#E8872E" font-weight="700">一個強調色</tspan>,</tspan>
+  <text x="640" y="448" font-size="28" font-weight="700" fill="#344252" text-anchor="middle">單一強調色</text>
+  <rect x="631" y="481" width="101" height="26" rx="4" fill="#DDF5E8"/>
+  <text x="640" y="500" font-size="19" fill="#4C5A6B" text-anchor="middle">
+    <tspan x="640" dy="0">整份 deck <tspan font-weight="700" fill="#344252">一個強調色</tspan>,</tspan>
     <tspan x="640" dy="35">絕不出現第二個 accent。</tspan>
     <tspan x="640" dy="35">標題下方永遠沒有底線。</tspan>
   </text>
 
   <!-- column 3: anti-slop -->
-  <g transform="translate(989 262) scale(4.5)" stroke="#5E8FEF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" fill="#D8E4FB"/>
-    <path d="m9 12 2 2 4-4" fill="none"/>
+  <rect x="983" y="256" width="120" height="120" rx="16" fill="#E4E8EF" filter="url(#prismShadow)"/>
+  <g transform="translate(989 262) scale(4.5)" stroke="#344252" stroke-width="0.45" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+    <path d="m9 12 2 2 4-4"/>
   </g>
-  <text x="1043" y="448" font-size="28" font-weight="700" fill="#383838" text-anchor="middle">防 slop 規則</text>
-  <text x="1043" y="500" font-size="19" fill="#4A5158" text-anchor="middle">
-    <tspan x="1043" dy="0">禁 AI 套話、<tspan fill="#E8872E" font-weight="700">保留數據精度</tspan></tspan>
+  <text x="1043" y="448" font-size="28" font-weight="700" fill="#344252" text-anchor="middle">防 slop 規則</text>
+  <rect x="1035" y="481" width="120" height="26" rx="4" fill="#DDF5E8"/>
+  <text x="1043" y="500" font-size="19" fill="#4C5A6B" text-anchor="middle">
+    <tspan x="1043" dy="0">禁 AI 套話、<tspan font-weight="700" fill="#344252">保留數據精度</tspan></tspan>
     <tspan x="1043" dy="35">(47.2% 不寫成 50%),</tspan>
     <tspan x="1043" dy="35">對齊數字用 tabular-nums。</tspan>
   </text>

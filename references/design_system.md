@@ -4,7 +4,7 @@ This is the lookup table the Designer prompt uses to resolve `palette_hint`, `mo
 
 ## Palettes
 
-DeckForge ships three **palette families**: the corporate-fresh light style (**the default** — consulting-deck look: light canvas, green gradient structure, orange inline emphasis), dark Apple-style (single highlight color on black — pick on request, or propose it for overwhelmingly stat-heavy decks), and traditional light themes.
+DeckForge ships four **palette families**: the IT-prism light style (**the default** — cool lavender-mint canvas, single green accent, slate structure), the corporate-fresh light style (on request — warm consulting look: green gradient structure, orange inline emphasis), dark Apple-style (single highlight color on black — pick on request, or propose it for overwhelmingly stat-heavy decks), and traditional light themes.
 
 ### Dark Apple family (on request — the dark, data-dense pick)
 
@@ -27,9 +27,162 @@ All `dark_apple_*` variants share the same neutrals:
 - Secondary text on dark: `#A0A0A0` (gray-400 equivalent)
 - Tertiary / English subtitle text: `#666666` (gray-500/600)
 
-### Corporate fresh family (`corporate_fresh`) — THE DEFAULT style
+### IT prism family (`IT_prism`) — THE DEFAULT style
 
-**DeckForge's default: whenever the user doesn't specify a style, use this family** (`palette_hint: "corporate_fresh"`, `highlight_color: "#E8872E"`, `motif_hint: "fresh_pill_cards"`).
+**DeckForge's default: whenever the user doesn't specify a style, use this family** (`palette_hint: "IT_prism"`, `highlight_color: "#58D494"`, `motif_hint: "prism_panel_cards"`).
+
+Cool light style modeled on a 2026 bank-IT external template system: a lavender-tinted light canvas with a soft diagonal lavender→mint wash, white panel cards with a whisper shadow, **one green accent** (`#58D494`) that lives in shapes only, and **slate** (`#344252`) carrying every structural voice — titles, card headers, hinge numbers, icons, dark anchor blocks. Covers and end pages get the family's signature **reeded glass** (vertical fluted-glass panel over gaussian-blurred color blobs); content pages get a quiet **corner bloom** top-right. Like `corporate_fresh` it argues in full-sentence assertion titles and well-set prose — but where fresh is warm (orange emphasis, pastel washes), prism is cool, technical, and quieter.
+
+**Role palette — colors are assigned to fixed roles, never mixed freely:**
+
+All values below were pixel-sampled from the reference template's own 顏色配置參考 page and cross-validated across its swatches — don't "round" them toward adjacent hues.
+
+| Role | Color | Used for — and nothing else |
+|---|---|---|
+| Canvas | `#EFF0F3` cool light gray | page background on all content pages |
+| Canvas washes | lavender `#EEEEFD` (top-left) → mint `#E7F9F1` (bottom-right) | the diagonal soft wash pair (radial blobs, opacity ≤ 0.55); at most one of each per page |
+| Ink / slate | `#344252` | titles, card headings, hinge numbers, icon strokes, slate anchor blocks (white text on slate is fine — 10.3:1) |
+| Body text | `#4C5A6B`; secondary `#6B7686` | paragraphs, captions — `#6B7686` is a **white-card token** (4.6:1 on white, only 4.0:1 on the wash, fails AA); any text sitting directly on the canvas/wash (page eyebrow, cover date line, footer) uses `#4C5A6B` (6.2:1) |
+| **Accent green** | `#58D494`; light tier `#83E0B4`; separators `#9BD9BE` | **shapes only** — tag pills, underline bars, progress ticks, connectors, proportion bars, chart data fills, structure shapes. **Never a text fill, never a hinge number** (green on white ≈1.9:1, fails AA) |
+| Emphasis highlight band | `#DDF5E8` light green | the rectangle painted BEHIND an ink-bold key phrase (the family's inline-emphasis device) |
+| Gridline | `#DFE2E9` | chart gridlines, hairline rules |
+| Card | `#FFFFFF` + whisper shadow (`prismShadow`: blur 10, offset 0/5, alpha 0.05) | content cards |
+| Muted gray | `#909091` fills, `#DDE1E8` inactive ticks | table content fills, inactive progress ticks |
+| Cover/end atmosphere | lavender-purple `#C9C6FF` circle / mint `#8AEBD2` block / cyan `#B8EEFF` haze; deep tones indigo `#848BF2`, sky `#4AB7F9` | reeded-glass cover & end pages ONLY — **none of these hues ever appears on a content page** (same rule as fresh's cover gradient) |
+
+**Emphasis discipline (this family's equivalent of single-highlight discipline):** green is the only accent and it is a **shape voice, not a text voice**. A key phrase inside body text is marked by ink `#344252` bold **plus a green device** — a `#DDF5E8` highlight band painted behind it, a 3px `#58D494` underline bar beneath it, or a green-bordered tag pill around it (`stroke="#58D494"`, `fill="#EFFBF4"`, ink text). If green shows up as a `fill` on a `<text>` element, as a hinge number, or as a heading color, the style is broken. Slate carries structure and meaning-anchors; green carries pointing; indigo/sky/lavender stay on the cover.
+
+**Signature components:**
+
+```xml
+<!-- Assertion title (every content page) — slate, no pill bar, no underline -->
+<text x="48" y="88" font-size="34" font-weight="700" fill="#344252">標題是一句完整的主張，不是名詞短語</text>
+<text x="48" y="118" font-size="16" fill="#4C5A6B">副標說明文字（可省略）— 直接坐在畫布上，用 #4C5A6B 不用 #6B7686</text>
+
+<!-- progress_ticks — top-right page-position indicator (content pages) -->
+<g>
+  <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+  <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+</g>
+
+<!-- White panel card -->
+<rect x="…" y="…" width="…" height="…" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+<!-- prismShadow: feGaussianBlur stdDeviation 10, offset (0,5), alpha slope 0.05 -->
+
+<!-- slate_anchor — the dark contrast device (card header band / KPI block / hub circle) -->
+<rect x="…" y="…" width="…" height="44" rx="10" fill="#344252"/>
+<text x="…" y="…" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">標題文字</text>
+
+<!-- Green tag pill (inline label) — green border, ink text -->
+<rect x="…" y="…" width="88" height="28" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+<text x="…" y="…" font-size="14" font-weight="600" fill="#344252" text-anchor="middle">標籤文字</text>
+
+<!-- Inline emphasis: highlight band BEHIND ink-bold text (band first, text on top) -->
+<rect x="236" y="304" width="188" height="30" rx="4" fill="#DDF5E8"/>
+<text x="48" y="326" font-size="19" fill="#4C5A6B">現行流程
+  <tspan font-weight="700" fill="#344252">人工覆核佔六成工時</tspan>，且錯誤率隨量增。</text>
+
+<!-- Dashed column separator -->
+<line x1="640" y1="220" x2="640" y2="600" stroke="#C9CFD9" stroke-width="2" stroke-dasharray="2 7"/>
+```
+
+**Craft recipes — where the 質感 comes from.** This family's glass vocabulary is **reeded (fluted) glass + gaussian-blurred color blobs — NOT `corporate_fresh`'s dome arches / tapered swoosh / aurora ribbons**; borrowing those makes a prism page read as a recolored fresh page. Starter templates `templates/prism_*.svg` already embed the recipes below.
+
+*`reeded_glass`* — the cover/end signature. Behind: 2–3 large gaussian-blurred color blobs (lavender `#C9C6FF` circle, mint `#8AEBD2` rounded block, cyan `#B8EEFF` haze) on a near-white base. In front: a vertical fluted-glass panel built from evenly-spaced 1px white vertical lines (α 0.5–0.7, spacing ~18px) over a white veil (`fill="#FFFFFF"` α 0.28–0.4), so the blobs smear into soft vertical streaks. The panel occupies the right ~55% of the canvas; the title block sits on the clear left side:
+
+```xml
+<defs><filter id="blobBlur" x="-60%" y="-60%" width="220%" height="220%">
+  <feGaussianBlur stdDeviation="46"/></filter></defs>
+<circle cx="1120" cy="330" r="180" fill="#C9C6FF" filter="url(#blobBlur)"/>
+<rect x="760" y="400" width="320" height="230" rx="18" fill="#8AEBD2" filter="url(#blobBlur)"/>
+<rect x="620" y="0" width="660" height="720" fill="#FFFFFF" fill-opacity="0.32"/>
+<g stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="1.5">
+  <line x1="638" y1="0" x2="638" y2="720"/>  <!-- repeat every ~18px across the panel -->
+</g>
+```
+
+*`corner_bloom`* — the content-page atmosphere: ONE soft green radial bloom bleeding off the top-right corner (`#7CDDAB` → transparent, peak α ≤ 0.5) plus a faint white dashed rotated-square outline riding the bloom (`stroke="#FFFFFF"` α 0.5, `stroke-dasharray="5 5"`, rotated ~12°, partially off-canvas). Quiet, identical corner signature on every content page:
+
+```xml
+<defs><radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+  <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+  <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+</radialGradient></defs>
+<rect width="1280" height="720" fill="url(#bloomTR)"/>
+<rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+      stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+```
+
+*`slate_anchor`* — the focus device (prism's counterpart of fresh's teal): the ONE element the page pivots on goes dark — a slate card-header band, a slate KPI block, the hub-center circle, the "current phase" chip. White text on slate. At most 1–2 slate anchors per page; more and the page turns heavy.
+
+*`progress_ticks`* — the top-right page-position indicator on content pages: N horizontal ticks (64×10, rx 2), current = green `#58D494`, rest = `#DDE1E8`. N = the deck's section count (3–5); omit on cover/end.
+
+*`blur_bloom`* — soft content-page color mass (used sparingly, e.g. behind a hero panel or as a flow mass): a gaussian-blurred mint/lavender rounded shape at α ≤ 0.35, always **edge-anchored** (bleeding off a canvas edge, never a complete floating shape). This replaces fresh's `tapered_swoosh` as the atmosphere device.
+
+*`prism_icon`* — icons are slate line-work: Lucide skeleton scaled to 72–96px in `#344252` 2px strokes over a light cool panel (`#E4E8EF` rounded rect) with 2–3 extra detail strokes. Never blue (`#5E8FEF` is fresh's voice — blue on a prism content page breaks the cover-only rule), never green fills.
+
+**Composition vocabulary.** The bento/diagram compositions carry over from `corporate_fresh` (same macro geometry — hero duo, orbit loop, transit pipeline, claim tree, meta bento, split duel), rendered with the prism role palette and the recipes above instead of the fresh craft: glass masses are `blur_bloom` shapes, connectors/rails are green `#58D494`/`#9BD9BE`, icons are `prism_icon` slate, emphasis anchors are `slate_anchor`. Compositions with a dedicated prism starter:
+
+| Composition | Content shape it fits | Template |
+|---|---|---|
+| `prism_reeded_cover` | cover / end | `templates/prism_cover.svg` (end page: same recipe, centered CTA) |
+| `prism_panel_cards` | the family's default card language | all `prism_*` bento starters below |
+| flow family | 3–5 sequential steps | four variants — see the flow_variant table below |
+| compare table | options × dimensions | `templates/prism_compare.svg` |
+
+#### three_col card_variant — prism 版(值與 fresh 相同,per-page)
+
+Card language: white panels, slate titles `#344252`, body `#4C5A6B`, green structure (`#58D494` / `#9BD9BE`), slate icons, highlight-band emphasis. The variant semantics and pick-rules are identical to the `corporate_fresh` tables below — same values, same per-page discipline, same "never for variety" rule; only the template files differ:
+
+| `card_variant` | Template |
+|---|---|
+| `icon_column` (default) | `templates/prism_3col.svg` |
+| `numbered_steps` | `templates/prism_3col_steps.svg` |
+| `axis_labeled` | `templates/prism_3col_axis.svg` |
+| `lead_plus_pair` | `templates/prism_3col_lead.svg` |
+
+#### mini_grid card_variant — prism 版
+
+Numbers are **slate `#344252`** (never green — a green number is a text fill of the accent, the family's cardinal sin) with `tabular-nums`. Proportion bars and accent rules are green.
+
+| `card_variant` | Template |
+|---|---|
+| `even_grid` (default) | `templates/prism_mini_grid.svg` |
+| `ribbon_row` | `templates/prism_mini_grid_ribbon.svg` |
+| `spotlight` | `templates/prism_mini_grid_spotlight.svg` |
+
+#### two_col_50_50 card_variant — prism 版
+
+| `card_variant` | Template |
+|---|---|
+| `balanced` (default) | `templates/prism_2col.svg` |
+| `before_after` | `templates/prism_2col_beforeafter.svg` |
+
+#### flow_variant — prism 版(值與 fresh 相同,per-deck)
+
+Same four macro silhouettes and pick-rules as the `glass_arch_flow` variants below, same invariants (edge-anchored two-layer masses dissolving to ≤0.10 at the bleed edge; the sweep is ONE continuous filled path painted before the masses) — but the masses are prism `blur_bloom` shapes in mint/lavender (`#B9EBD2` / `#DCD9F6` tones) and the sweep is mint (`#C4EEDA` α0.5 → `#9BE4BE` α0.85). No dome-arch gradients, no fresh swoosh hues. **Tie-breaker when no story shape fits: `river_ribbon`** (same as fresh).
+
+| `flow_variant` | Template |
+|---|---|
+| `terrace_ascent` | `templates/prism_flow_terrace.svg` |
+| `river_ribbon` | `templates/prism_flow_river.svg` |
+| `cascade_fall` | `templates/prism_flow_cascade.svg` |
+| `dome_arcade` | `templates/prism_flow.svg` (soft-dome silhouette in prism blur_bloom, not fresh's arch gradients) |
+
+**Motion pages (`IT_prism`)**: `transit_pipeline`'s rail is a green gradient (`#58D494 → #83E0B4`, 12px round caps) and takes a thin **white** pulse overlay (`motion: "transit_rail"`); the orbit ring is dotted `#9BD9BE` **open arc segments** (never a closed circle) and animates directly (`motion: "orbit"`). Same gates and recipes as the fresh bullet in "Motion pages — flow-anim 載體" below.
+
+**Style traits** (what makes it read as this family):
+- **Full-sentence assertion titles** — slate `#344252`, 30–36px weight 700, left-aligned at x=48. No pill bar (that's fresh's mark), no accent underline (global invariant). The top-right `progress_ticks` + `corner_bloom` carry the page signature instead.
+- **Cover formula** — reeded glass right, clear left column: a small slate chip (`#344252` rect, white 14px label, e.g. 提案簡報), slate title 56–64px weight 700, a date/department line in `#4C5A6B` (on-canvas text — the lighter `#6B7686` fails AA on the wash), all on the near-white left side. **Slate text on light — never white-on-gradient, never green title text.** End page mirrors the cover with a centered short CTA.
+- **Text density is a feature** — body 18–19px / line-height 1.85, the highlight band carrying the skim path.
+- **Hinge numbers are slate** — a page that pivots on one number renders it 48–72px weight 800 in `#344252` (or white on a `slate_anchor` block). Never green (fails AA), never any cover hue.
+- **Tables** — slate header band (`#344252`, white text), white body rows, `#DFE2E9` hairlines, green tag pills for status marks.
+- **Diagram affinity** — primitives keep their geometry; connectors/strokes `#9BD9BE`, the single highlighted element `#58D494` fill or `slate_anchor`, node icons slate.
+
+### Corporate fresh family (`corporate_fresh`) — on request
+
+Pick this family when the user asks for it (`palette_hint: "corporate_fresh"`, `highlight_color: "#E8872E"`, `motif_hint: "fresh_pill_cards"`).
 
 Light consulting-deck style modeled on top-tier bank/consulting internal decks: warm light-gray canvas with soft pastel radial washes, a green→indigo gradient reserved for cover/end pages, white rounded cards, dashed separators, blue line-icons, and **orange bold inline emphasis** inside body text. Where `dark_apple` speaks through one highlight color and giant numbers, `corporate_fresh` speaks through **full-sentence assertion titles and dense, well-set body text** — executive briefings, internal proposals, and decks that argue in prose rather than in statistics.
 
@@ -341,6 +494,27 @@ Dark gray cards on pure black, subtle 1px borders. The highlight color appears o
 
 The look: minimal, modern, premium. Card boundaries do the work; shadow is replaced by border + slight value separation (`#1A1A1A` cards on `#000000` page).
 
+### `prism_panel_cards` (default for `IT_prism` — the default style)
+
+White rounded panel cards (rx=14) with the `prismShadow` whisper on the cool `#EFF0F3` canvas, the diagonal lavender→mint wash, the green `corner_bloom` + white dashed geometry top-right, `progress_ticks` at the top-right corner, slate assertion titles, and `slate_anchor` dark blocks as the focus device. SVG snippets live in the `IT_prism` palette section above. The look: cool, technical, quiet; structure in slate, pointing in green, atmosphere in blurred lavender/mint.
+
+```xml
+<!-- Canvas with the diagonal wash pair + corner bloom -->
+<defs>
+  <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+    <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+    <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="1280" height="720" fill="#EFF0F3"/>
+<rect width="1280" height="720" fill="url(#washLav)"/>
+<rect width="1280" height="720" fill="url(#washMint)"/>
+```
+
 ### `fresh_pill_cards` (default for `corporate_fresh`)
 
 White rounded cards (rx=14) with a whisper shadow on the light `#F4F4F4` canvas, the green gradient pill bar above every page title, pastel radial washes in the canvas corners, and dashed green separators between columns. SVG snippets live in the `corporate_fresh` palette section above. The look: airy, premium consulting; structure drawn in green, content in charcoal/gray with orange inline emphasis.
@@ -472,6 +646,25 @@ Use **dramatic** size contrast. The point of the design system is to create a cl
 | Compare_table cell value | **19px** | 700 | white or highlight | primary |
 | Compare_table dimension label | **17px** | 500 | gray-400 | text |
 | Captions / footnotes | 11–13px | 400, opacity 0.6 | gray-600 | text-muted |
+
+### Sizes — `IT_prism` family (1280×720 canvas)
+
+Same sentence-driven hierarchy as `corporate_fresh` (this family also argues in prose), with the prism color roles:
+
+| Element | Size | Weight | Color |
+|---|---|---|---|
+| Cover chip label | 14–16px | 600 | `#FFFFFF` on `#344252` chip |
+| Cover title (CN) | 56–64px | 700 | `#344252` |
+| Cover date/department | 18–20px | 400 | `#4C5A6B` (sits on the wash — not `#6B7686`) |
+| Page title (full-sentence assertion) | 30–36px | 700 | `#344252` |
+| Column / card heading | 24–32px | 700 | `#344252` (or `#FFFFFF` on a `slate_anchor` band) |
+| Step or option label | 20–24px | 700 | `#344252` |
+| **Hinge number** (page pivots on it) | 48–72px | 800 | **`#344252` slate — never green, never a cover hue** |
+| Mini-card stat number | 44–60px | 800 | `#344252`, `tabular-nums` |
+| Body text | 18–19px | 400, line-height 1.85 | `#4C5A6B` |
+| Inline emphasis run | 18–19px (same as body) | 700 | `#344252` ink + green device (band / underline / pill) |
+| Small annotation / axis label | 15–16px | 400–700 | `#6B7686` (on white cards; on the canvas itself use `#4C5A6B`) |
+| End-page CTA | 44–56px | 700 | `#344252` |
 
 ### Sizes — `corporate_fresh` family (1280×720 canvas)
 

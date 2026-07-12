@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  prism_3col_lead.svg — IT_prism three_col, card_variant: lead_plus_pair.
+  Three parallel items where ONE clearly leads and two support it. A 60% hero
+  card carries the lead claim; two stacked cards hold the supports. Prism
+  style: white rx=14 panels with the prismShadow whisper; the hero carries the
+  page's ONE slate_anchor device (slate eyebrow chip, white text); icons are
+  prism_icon slate line-work; emphasis = ink bold over a #DDF5E8 band.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="prismShadow" x="-25%" y="-25%" width="150%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur"/>
+      <feOffset in="blur" dx="0" dy="5" result="off"/>
+      <feComponentTransfer in="off" result="shadow">
+        <feFuncA type="linear" slope="0.05"/>
+      </feComponentTransfer>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- canvas + diagonal wash pair + corner bloom -->
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+
+  <!-- progress_ticks -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- title: full-sentence assertion, slate, no pill bar, no underline -->
+  <text x="48" y="88" font-size="34" font-weight="700" fill="#344252">一個主軸，兩項支撐</text>
+  <text x="48" y="118" font-size="16" fill="#4C5A6B">副標說明文字（可省略）</text>
+
+  <!-- lead card (≈60%) -->
+  <rect x="48" y="168" width="700" height="474" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+  <!-- the ONE slate_anchor on this page: eyebrow chip -->
+  <rect x="100" y="206" width="128" height="36" rx="6" fill="#344252"/>
+  <text x="164" y="230" font-size="15" font-weight="600" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">核心主張</text>
+  <!-- prism_icon (users) -->
+  <rect x="100" y="262" width="110" height="110" rx="16" fill="#E4E8EF" filter="url(#prismShadow)"/>
+  <g transform="translate(115 277) scale(3.33)" fill="none" stroke="#344252" stroke-width="0.6"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    <path d="M4 1.5v3M2.5 3h3"/>
+  </g>
+  <text x="100" y="402" font-size="32" font-weight="700" fill="#344252">
+    <tspan x="100" dy="0">你的專業與判斷，</tspan>
+    <tspan x="100" dy="44">始終是協作的地基。</tspan>
+  </text>
+  <rect x="97" y="518" width="158" height="30" rx="4" fill="#DDF5E8"/>
+  <text x="100" y="506" font-size="19" fill="#4C5A6B">
+    <tspan x="100" dy="0">AI 再強，也只是放大你的判斷；</tspan>
+    <tspan x="100" dy="34"><tspan font-weight="700" fill="#344252">專業仍在你這一端</tspan>，由你決定</tspan>
+    <tspan x="100" dy="34">什麼可信、什麼該改、什麼該退回。</tspan>
+  </text>
+
+  <!-- support card A -->
+  <rect x="772" y="168" width="460" height="226" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+  <rect x="802" y="198" width="64" height="64" rx="12" fill="#E4E8EF"/>
+  <g transform="translate(810 206) scale(2)" fill="none" stroke="#344252" stroke-width="1"
+     stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+    <path d="M12 2.2v1.8M21.8 12h-1.8"/>
+  </g>
+  <text x="886" y="240" font-size="22" font-weight="700" fill="#344252">效果穩定、可複製</text>
+  <rect x="907" y="311" width="60" height="28" rx="4" fill="#DDF5E8"/>
+  <text x="802" y="302" font-size="18" fill="#4C5A6B">
+    <tspan x="802" dy="0">有意識地與 AI 協作，</tspan>
+    <tspan x="802" dy="30">結果不再只是<tspan font-weight="700" fill="#344252">碰運氣</tspan>。</tspan>
+  </text>
+
+  <!-- support card B -->
+  <rect x="772" y="416" width="460" height="226" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+  <rect x="802" y="446" width="64" height="64" rx="12" fill="#E4E8EF"/>
+  <g transform="translate(810 454) scale(2)" fill="none" stroke="#344252" stroke-width="1"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+    <polyline points="14 2 14 8 20 8"/>
+    <path d="M16 13H8M16 17H8"/>
+  </g>
+  <text x="886" y="488" font-size="22" font-weight="700" fill="#344252">跨工具、不過時</text>
+  <rect x="907" y="559" width="42" height="28" rx="4" fill="#DDF5E8"/>
+  <text x="802" y="550" font-size="18" fill="#4C5A6B">
+    <tspan x="802" dy="0">原則綁在判斷上，</tspan>
+    <tspan x="802" dy="30">換了模型一樣<tspan font-weight="700" fill="#344252">通用</tspan>。</tspan>
+  </text>
+</svg>

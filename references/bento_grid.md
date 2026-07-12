@@ -2,7 +2,7 @@
 
 The Bento Grid (便當網格) is a flexible card-based layout system, originally inspired by Japanese bento boxes and popularized by Apple's product pages. It's the **base** layout language for content pages — used by default unless a page genuinely needs to express direction / alignment / topology / axis structure that bento would flatten, in which case Phase 3 switches to a diagram primitive (see [diagrams.md](diagrams.md)).
 
-**Styling note**: the coordinates in this document are style-agnostic; the example fills are dark_apple (`#1A1A1A` / `#222222` cards on black). On `corporate_fresh` decks (the default style), keep the geometry but render cards as white rx=14–16 with the whisper shadow on the `#F4F4F4` canvas, per design_system.md → "Corporate fresh family".
+**Styling note**: the coordinates in this document are style-agnostic; the example fills are dark_apple (`#1A1A1A` / `#222222` cards on black). On `IT_prism` decks (the default style), keep the geometry but render cards as white rx=14 with the whisper shadow on the `#EFF0F3` canvas, per design_system.md → "IT prism family"; on `corporate_fresh` decks, white rx=14–16 on the `#F4F4F4` canvas per "Corporate fresh family".
 
 Why Bento Grid?
 
@@ -65,7 +65,7 @@ Card dimensions: ~1200×580 (full canvas minus margins).
 
 **Use when**: before/after, pros/cons, two parallel ideas, side-by-side comparison.
 
-**corporate_fresh**: this layout is a per-page `card_variant` family — `balanced` (two co-equal ideas) / `before_after` (a transformation); triggers + geometry per design_system.md → "two_col_50_50 card_variant".
+**Light families (IT_prism / corporate_fresh)**: this layout is a per-page `card_variant` family — `balanced` (two co-equal ideas) / `before_after` (a transformation); triggers + geometry per design_system.md → "two_col_50_50 card_variant" (prism uses the `prism_2col*` templates).
 
 ---
 
@@ -99,7 +99,7 @@ Wide card ~2/3, narrow ~1/3.
 
 **Don't use when**: only 2 items (looks lonely) or 4+ (use mixed_grid).
 
-**corporate_fresh**: this layout is a per-page `card_variant` family — `icon_column` / `numbered_steps` / `axis_labeled` / `lead_plus_pair`; triggers + geometry per design_system.md → "three_col card_variant".
+**Light families (IT_prism / corporate_fresh)**: this layout is a per-page `card_variant` family — `icon_column` / `numbered_steps` / `axis_labeled` / `lead_plus_pair`; triggers + geometry per design_system.md → "three_col card_variant" (prism uses the `prism_3col*` templates).
 
 ---
 
@@ -208,7 +208,7 @@ A main card holds **3–5 mini-cards** in a horizontal grid. Each mini-card carr
   - Positions: x = 88, 369, 650, 931 (= 48 + 40 main-pad + i × (257 + 24))
   - `rx=12` (smaller than main card's 20)
 - See `templates/bento_mini_grid.svg` for the ready-made starter.
-- **corporate_fresh**: `mini_grid` is a per-page `card_variant` family — `even_grid` / `ribbon_row` / `spotlight`; triggers + geometry per design_system.md → "mini_grid card_variant" (the KPI starter there is `templates/fresh_mini_grid.svg`, not the dark_apple file above).
+- **Light families (IT_prism / corporate_fresh)**: `mini_grid` is a per-page `card_variant` family — `even_grid` / `ribbon_row` / `spotlight`; triggers + geometry per design_system.md → "mini_grid card_variant" (the KPI starters there are `templates/prism_mini_grid.svg` / `templates/fresh_mini_grid.svg`, not the dark_apple file above).
 
 **Mini-card content rules** (this is the secret):
 - Each mini-card: ONE big element on top, ONE supporting caption below.

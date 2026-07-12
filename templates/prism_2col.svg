@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <!-- card_variant: balanced (two_col_50_50 default) — IT_prism 版。Two co-equal parallel
+       ideas / options / pros-vs-cons, each a white panel card with icon + eyebrow + title +
+       body. Icons are prism_icon slate line-work (#344252 2px strokes over an #E4E8EF panel
+       — never blue); inline emphasis = ink bold on a #DDF5E8 band painted first. -->
+  <defs>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="prismShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- canvas + wash pair + corner bloom -->
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+
+  <!-- progress ticks (top-right page-position indicator) -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- assertion title — slate, no pill bar, no underline -->
+  <text x="48" y="90" font-size="36" font-weight="700" fill="#344252">兩條路徑，各有取捨</text>
+
+  <!-- card A -->
+  <rect x="48" y="180" width="568" height="460" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+  <g transform="translate(104 228)">
+    <rect x="0" y="0" width="96" height="96" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(12 12) scale(3)" fill="none" stroke="#344252" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="8" rx="2"/>
+      <rect x="2" y="14" width="20" height="8" rx="2"/>
+      <line x1="6" y1="6" x2="6.01" y2="6"/>
+      <line x1="6" y1="18" x2="6.01" y2="18"/>
+      <line x1="10" y1="6" x2="10.01" y2="6"/>
+      <line x1="10" y1="18" x2="10.01" y2="18"/>
+    </g>
+  </g>
+  <text x="104" y="412" font-size="14" font-weight="700" fill="#6B7686" letter-spacing="2">OPTION A · 本地優先</text>
+  <text x="104" y="452" font-size="28" font-weight="700" fill="#344252">自建機房，完全掌控</text>
+  <rect x="120" y="513" width="101" height="27" rx="4" fill="#DDF5E8"/>
+  <text x="104" y="500" font-size="19" fill="#4C5A6B">
+    <tspan x="104" dy="0">資料不出場、合規最穩，</tspan>
+    <tspan x="104" dy="34">但<tspan font-weight="700" fill="#344252">前期投入高</tspan>、擴張慢。</tspan>
+  </text>
+
+  <!-- card B -->
+  <rect x="664" y="180" width="568" height="460" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+  <g transform="translate(720 228)">
+    <rect x="0" y="0" width="96" height="96" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(12 12) scale(3)" fill="none" stroke="#344252" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/>
+      <path d="M12 12v9"/>
+      <path d="m16 16-4-4-4 4"/>
+    </g>
+  </g>
+  <text x="720" y="412" font-size="14" font-weight="700" fill="#6B7686" letter-spacing="2">OPTION B · 雲端優先</text>
+  <text x="720" y="452" font-size="28" font-weight="700" fill="#344252">託管上雲，彈性擴張</text>
+  <rect x="755" y="513" width="82" height="27" rx="4" fill="#DDF5E8"/>
+  <text x="720" y="500" font-size="19" fill="#4C5A6B">
+    <tspan x="720" dy="0">隨用隨開、上線最快，</tspan>
+    <tspan x="720" dy="34">但須<tspan font-weight="700" fill="#344252">嚴管權限</tspan>與成本。</tspan>
+  </text>
+</svg>

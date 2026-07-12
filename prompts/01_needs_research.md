@@ -379,7 +379,7 @@ a bare slogan.)
 - **Tone**: <serious / playful / data-heavy / story-driven / hybrid>
 - **Language**: <zh-TW / en / bilingual / other>
 - **Brand**: <colors, fonts, taboo items, must-mention items>
-- **Visual style hint**: <corporate_fresh (default when unspecified) / dark_apple / clean minimal / bold corporate / tech-futuristic / warm humanistic / academic>
+- **Visual style hint**: <IT_prism (default when unspecified) / corporate_fresh / dark_apple / clean minimal / bold corporate / tech-futuristic / warm humanistic / academic>
 
 ## Open assumptions
 - <things we did not confirm but are proceeding with — Phase 2/3 may revisit>

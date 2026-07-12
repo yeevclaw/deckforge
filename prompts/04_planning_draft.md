@@ -48,7 +48,7 @@ Output **only** the JSON block, wrapped in `[PPT_PLANNING]` and `[/PPT_PLANNING]
 {
   "meta": { "topic": "...", "page_count": 15, "language": "zh-TW" },
   "design_brief": {
-    "palette_hint": "dark_apple | dark_apple_blue | dark_apple_orange | dark_apple_green | dark_apple_red | corporate_fresh | midnight_executive | forest_moss | coral_energy | warm_terracotta | ocean_gradient | charcoal_minimal | teal_trust | berry_cream | sage_calm | cherry_bold",
+    "palette_hint": "IT_prism | dark_apple | dark_apple_blue | dark_apple_orange | dark_apple_green | dark_apple_red | corporate_fresh | midnight_executive | forest_moss | coral_energy | warm_terracotta | ocean_gradient | charcoal_minimal | teal_trust | berry_cream | sage_calm | cherry_bold",
     "highlight_color": "#FF6900",
     "motif_hint": "apple_dark_cards | fresh_pill_cards | rounded_cards_soft_shadow | left_accent_bar | icon_in_circle | gradient_mesh_bg",
     "typography_hint": "serif_header_sans_body | sans_only_bold | mono_accent",
@@ -137,10 +137,10 @@ Pick the *minimum* bento layout that fits the content. Don't over-engineer.
 |---|---|---|
 | `single_focus` | One headline element (quote, image) | 1 |
 | `stat_hero` | **One huge number is the message.** Quarter growth, market share, ARR | 1 stat |
-| `mini_grid` | **3–5 parallel stats / features.** Annual-report KPI page. (corporate_fresh: `card_variant` per page — see design_system.md) | 3–5 mini-cards in 1 main card (6+ → split into two pages) |
-| `two_col_50_50` | Two parallel ideas, before/after, pros/cons (corporate_fresh: `card_variant` per page — see design_system.md) | 2 |
+| `mini_grid` | **3–5 parallel stats / features.** Annual-report KPI page. (light families IT_prism / corporate_fresh: `card_variant` per page — see design_system.md) | 3–5 mini-cards in 1 main card (6+ → split into two pages) |
+| `two_col_50_50` | Two parallel ideas, before/after, pros/cons (light families IT_prism / corporate_fresh: `card_variant` per page — see design_system.md) | 2 |
 | `two_col_2_1` | One main idea + 1 supporting fact | 2 (1 large + 1 small) |
-| `three_col` | Three parallel pillars / steps / values (corporate_fresh: pick a `card_variant` per page — see design_system.md → "three_col card_variant") | 3 |
+| `three_col` | Three parallel pillars / steps / values (light families IT_prism / corporate_fresh: pick a `card_variant` per page — see design_system.md → "three_col card_variant") | 3 |
 | `hero_top` | One key claim + 3–4 supporting details | 1 wide + 3–4 small |
 | `mixed_grid` | Asymmetric — let content dictate | 4–6 mixed |
 | `chart_bar` | **Compare 4–10 categories** on one metric (revenue by segment, etc.) | 1 chart, see `chart_data` |
@@ -421,15 +421,15 @@ Never set `motion` for discrete-step flows, timelines, or funnels — but a **tr
 
 ---
 
-## Flow-page composition — `design_brief.flow_variant`（corporate_fresh）
+## Flow-page composition — `design_brief.flow_variant`（light families: IT_prism / corporate_fresh）
 
-When `palette_hint` is `corporate_fresh` and the deck contains at least one static `flow` page, set `design_brief.flow_variant`. Like `motion`, this is a **composition decision made here, constructively** — the designer executes your pick; they never improvise a different one, and pages must not each pick their own (one variant per deck: coherence inside the deck, variety across decks). The designer's one sanctioned departure is leaving the template behind entirely under the bounded latitude in `prompts/05_designer_svg.md` → "How to design" — never a swap to a different variant.
+When `palette_hint` is `IT_prism` or `corporate_fresh` and the deck contains at least one static `flow` page, set `design_brief.flow_variant`. Like `motion`, this is a **composition decision made here, constructively** — the designer executes your pick; they never improvise a different one, and pages must not each pick their own (one variant per deck: coherence inside the deck, variety across decks). The designer's one sanctioned departure is leaving the template behind entirely under the bounded latitude in `prompts/05_designer_svg.md` → "How to design" — never a swap to a different variant.
 
 Derive the pick from the story the steps tell — the four options and their story-shape triggers are defined in [references/design_system.md](../references/design_system.md) → "glass_arch_flow variants" (capability built up step by step → `terrace_ascent`; a journey through stations → `river_ribbon`; top-down procedure or longer prose → `cascade_fall`; evenly-weighted parallel stages → `dome_arcade`). `dome_arcade` is one option of four, not the default — pick it for a story reason, not out of habit. When no story shape clearly fits, default to `river_ribbon`. Pages carrying a `motion` field keep their motion composition (`transit_pipeline` etc.) and ignore `flow_variant`. Omit the field for non-fresh palettes or decks with no static flow page.
 
-## Card composition — `card_variant`（corporate_fresh bento card layouts）
+## Card composition — `card_variant`（light-family bento card layouts: IT_prism / corporate_fresh）
 
-When `palette_hint` is `corporate_fresh`, a `three_col`, `mini_grid`, or `two_col_50_50` content page may set an optional **per-page** `"card_variant"`. Unlike `flow_variant` (one per deck), this is per-page — these layouts recur across a deck, so each page gets the composition its *own* content earns. Absent → that layout's neutral default (`three_col`→`icon_column`, `mini_grid`→`even_grid`, `two_col_50_50`→`balanced`). The shared card language never changes; this is composition **inside** the layout, **not** a layout switch, and it never bypasses the 4 information-loss signals.
+When `palette_hint` is `IT_prism` or `corporate_fresh`, a `three_col`, `mini_grid`, or `two_col_50_50` content page may set an optional **per-page** `"card_variant"`. Unlike `flow_variant` (one per deck), this is per-page — these layouts recur across a deck, so each page gets the composition its *own* content earns. Absent → that layout's neutral default (`three_col`→`icon_column`, `mini_grid`→`even_grid`, `two_col_50_50`→`balanced`). The shared card language never changes; this is composition **inside** the layout, **not** a layout switch, and it never bypasses the 4 information-loss signals.
 
 ```json
 { "page_id": 8, "page_type": "content", "layout": "three_col", "card_variant": "numbered_steps", "title": "…", "cards": [ /* 3 cards */ ] }
@@ -769,7 +769,7 @@ Skip `title_en` only when the deck is entirely Chinese for a Chinese-only audien
 
 ## Highlight color selection
 
-**Default when the user didn't specify a style** (no visual style hint in `brief.md`): `palette_hint: "corporate_fresh"`, `highlight_color: "#E8872E"`, `motif_hint: "fresh_pill_cards"` — see the exception paragraph below; the hex menu that follows applies to `dark_apple*` decks.
+**Default when the user didn't specify a style** (no visual style hint in `brief.md`): `palette_hint: "IT_prism"`, `highlight_color: "#58D494"`, `motif_hint: "prism_panel_cards"` — see the exception paragraphs below; the hex menu that follows applies to `dark_apple*` decks.
 
 For `dark_apple*` decks, set `design_brief.highlight_color` to the actual hex value for the single highlight color used across the entire deck. If the brand has a known color (e.g. Xiaomi `#FF6900`, Tesla `#E31937`, Anthropic `#D97757`), use that. Otherwise pick one of:
 - `#FF6900` Xiaomi orange (default energetic)
@@ -779,6 +779,8 @@ For `dark_apple*` decks, set `design_brief.highlight_color` to the actual hex va
 - `#FF3B30` Apple red (bold / statement)
 
 **One color carries the entire deck.** Don't switch highlights between sections. See [references/design_system.md](../references/design_system.md).
+
+Exception — `IT_prism` (the default): this family uses a **fixed role palette** instead of a single free-choice highlight — one green accent `#58D494` that lives in **shapes only** (never a text fill, never a hinge number), slate `#344252` as the structure/ink voice (not a second accent, same standing as ink), and the cover atmosphere hues (lavender/mint/cyan/indigo/sky) confined to cover + end pages, never content pages. Set `highlight_color` to `#58D494` and don't substitute brand colors into the roles; the discipline is per-role, not per-deck. Pair it with `motif_hint: "prism_panel_cards"`.
 
 Exception — `corporate_fresh`: this family uses a **fixed role palette** instead of a single free-choice highlight (structure green `#3DB377`, icon blue `#5E8FEF`, inline-emphasis orange `#E8872E`). Set `highlight_color` to `#E8872E` (the emphasis role) and don't substitute brand colors into the roles; the discipline is per-role, not per-deck. Pair it with `motif_hint: "fresh_pill_cards"`.
 
@@ -790,7 +792,7 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 - [ ] For number-first cards, is `stat_value` a real concrete number (not "many", "several", "various")?
 - [ ] Did I pick `stat_hero` or `mini_grid` for data-dense pages of **independent** numbers — and the matching `chart_*` layout wherever the numbers relate (the relationship test)?
 - [ ] **Chart trigger**: no page scatters related numbers (trend / mix shift / bridge / ranking / volume+rate / 2-D share) across cards; every chart clears its minimum shape (no 2-bar charts); where the page title makes a quantitative claim, `chart_data.annotations[]` carries it (≤2 per chart, labels pre-computed)?
-- [ ] Are layouts driven by content shape? (Avoid mechanical repetition like 5 `three_col` pages in a row — **but layout choice follows content, not visual variety. Never switch to a primitive layout just to break a streak of bento pages.** Repetition of bento is a feature: shared layout language across the deck. For a same-structure run of corporate_fresh `three_col` pages, differentiate them the *right* way — a per-page `card_variant` driven by each page's sub-shape, not a layout switch; see the `card_variant` check below.)
+- [ ] Are layouts driven by content shape? (Avoid mechanical repetition like 5 `three_col` pages in a row — **but layout choice follows content, not visual variety. Never switch to a primitive layout just to break a streak of bento pages.** Repetition of bento is a feature: shared layout language across the deck. For a same-structure run of light-family (IT_prism / corporate_fresh) `three_col` pages, differentiate them the *right* way — a per-page `card_variant` driven by each page's sub-shape, not a layout switch; see the `card_variant` check below.)
 - [ ] Did I write actual speaker notes, not "TBD"?
 - [ ] Is the `design_brief` palette consistent with the tone in `brief.md`?
 - [ ] Is `design_brief.highlight_color` set to ONE concrete hex value?
@@ -800,8 +802,8 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 - [ ] **Title-only read**: if I read only the part_titles + page titles in order, do they form a coherent argument from setup through conclusion?
 - [ ] **Bento-first discipline**: for every page using a primitive layout (`flow` / `timeline` / `cycle` / `funnel` / `compare_table` / `quadrant_2x2` / `venn` / `hierarchy_tree` / `pyramid`), can I name the specific information-loss signal that justified leaving bento? If not, switch back to bento.
 - [ ] **Primitive ratio**: is the primitive-layout share of content pages ≤ ~40%? If higher, re-check each primitive page for false positives on the loss signals.
-- [ ] **Flow variant** (corporate_fresh with static flow pages only): is `design_brief.flow_variant` set, and can I say in one sentence which story shape justified the pick? ("no shape clearly fits → `river_ribbon` default" is a valid answer; "because it's the usual one" is not — especially for `dome_arcade`.)
-- [ ] **Card variant** (corporate_fresh `three_col` / `mini_grid` / `two_col_50_50` pages): is `card_variant` set from each page's sub-shape, and can I say in one sentence why? For a same-structure parallel series, are variants assigned by real sub-shape (e.g. a shared-axis `three_col` series → all `axis_labeled` with identical labels), never flipped just to look different?
+- [ ] **Flow variant** (light families IT_prism / corporate_fresh with static flow pages only): is `design_brief.flow_variant` set, and can I say in one sentence which story shape justified the pick? ("no shape clearly fits → `river_ribbon` default" is a valid answer; "because it's the usual one" is not — especially for `dome_arcade`.)
+- [ ] **Card variant** (light-family IT_prism / corporate_fresh `three_col` / `mini_grid` / `two_col_50_50` pages): is `card_variant` set from each page's sub-shape, and can I say in one sentence why? For a same-structure parallel series, are variants assigned by real sub-shape (e.g. a shared-axis `three_col` series → all `axis_labeled` with identical labels), never flipped just to look different?
 
 Fail any check → revise before emitting.
 

@@ -38,7 +38,7 @@ Pass `--no-decompose` to fall back to the older single-picture model (full rende
 These are rasterized into the movable background picture — you can move/resize the whole background, but not edit them individually:
 
 - **`<filter>` effects** — soft drop shadows, glassmorphism blur, glows. Blur is raster by nature; PowerPoint has no editable-vector equivalent.
-- **Gradient fills used as backgrounds / washes / glows** (`fill="url(#…)"`) and any **translucent shape** (`opacity`/`fill-opacity` < 1) — e.g. glass arches, Venn overlaps, and the `corporate_fresh` glass-flow cards (the white step cards at `fill-opacity` 0.88 sitting on the arches). The **text** on such a card lives in `<text>` and **stays editable**; only the translucent card body itself rides in the background image, so on glass-flow pages you edit the labels, not the card rectangles.
+- **Gradient fills used as backgrounds / washes / glows** (`fill="url(#…)"`) and any **translucent shape** (`opacity`/`fill-opacity` < 1) — e.g. glass arches, Venn overlaps, the `IT_prism` reeded-glass cover / blur-bloom masses, and the light-family glass-flow cards (the white step cards at `fill-opacity` 0.88 sitting on the arches or blur-bloom masses). The **text** on such a card lives in `<text>` and **stays editable**; only the translucent card body itself rides in the background image, so on glass-flow pages you edit the labels, not the card rectangles.
 - **Full-canvas background plates.**
 
 This is the intentional trade: the premium look (shadows, glass, gradients) is preserved exactly, and those atmospheric layers are still movable/resizable as one background picture — just not vector-editable. Mark a decorative group `class="atmosphere"` to force it into the background image explicitly.

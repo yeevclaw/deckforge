@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  prism_flow.svg — IT_prism flow, dome_arcade variant (1280×720).
+  Macro silhouette mirrors fresh_flow.svg: bottom-bleed soft dome masses, sweep
+  through the tops, white cards fused on the masses. Craft is prism blur_bloom:
+  two-layer mint/lavender masses (outer halo + inner body) alternating for depth,
+  final dome slightly greener (#A8ECC8) as the quiet closing emphasis.
+  Sweep = ONE continuous filled path (tail → wedge → integrated arrowhead) in mint,
+  painted BEFORE the masses so its ends tuck behind the first and last dome.
+  Badges are slate circles with WHITE numbers (never green badges — white on green
+  fails AA). Green never fills <text>; outputs ride green-bordered tag pills, the
+  final step carries the ONE slate_anchor chip.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <defs>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <!-- two-layer blur_bloom domes: outer halo + inner body, bleeding off the bottom,
+         dissolving to ≤0.10 at the bleed edge; mint and lavender alternate -->
+    <linearGradient id="massHaloMint" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B9EBD2" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#B9EBD2" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#B9EBD2" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="massBodyMint" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B9EBD2" stop-opacity="0.60"/>
+      <stop offset="60%" stop-color="#B9EBD2" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#B9EBD2" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="massHaloLav" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DCD9F6" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#DCD9F6" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#DCD9F6" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="massBodyLav" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DCD9F6" stop-opacity="0.60"/>
+      <stop offset="60%" stop-color="#DCD9F6" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#DCD9F6" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="massHaloEnd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A8ECC8" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#A8ECC8" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#A8ECC8" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="massBodyEnd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A8ECC8" stop-opacity="0.60"/>
+      <stop offset="60%" stop-color="#A8ECC8" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#A8ECC8" stop-opacity="0.10"/>
+    </linearGradient>
+    <!-- mint sweep gradient along the path -->
+    <linearGradient id="sweepGrad" x1="180" y1="0" x2="1042" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#C4EEDA" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#9BE4BE" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+
+  <!-- corner_bloom top-right: green radial + white dashed rotated square -->
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+
+  <!-- progress_ticks -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- assertion title: slate, no pill, no underline -->
+  <text x="48" y="88" font-size="34" font-weight="700" fill="#344252">流程頁標題：用一句主張說明這個流程保證了什麼</text>
+
+  <!-- mint sweep: ONE continuous path (tail flick → wedge → integrated arrowhead),
+       drawn BEFORE the domes so its endpoints tuck behind the first and last mass -->
+  <path d="M 180 196
+           Q 480 122 950 172
+           L 938 148
+           L 1042 206
+           L 920 238
+           L 940 210
+           Q 470 180 190 232
+           Z" fill="url(#sweepGrad)"/>
+
+  <!-- outer halos (left to right, mint / lav alternating, final greener) -->
+  <path d="M 20 720 L 20 380 A 150 150 0 0 1 320 380 L 320 720 Z" fill="url(#massHaloMint)"/>
+  <path d="M 255 720 L 255 380 A 150 150 0 0 1 555 380 L 555 720 Z" fill="url(#massHaloLav)"/>
+  <path d="M 490 720 L 490 380 A 150 150 0 0 1 790 380 L 790 720 Z" fill="url(#massHaloMint)"/>
+  <path d="M 725 720 L 725 380 A 150 150 0 0 1 1025 380 L 1025 720 Z" fill="url(#massHaloLav)"/>
+  <path d="M 960 720 L 960 380 A 150 150 0 0 1 1260 380 L 1260 720 Z" fill="url(#massHaloEnd)"/>
+
+  <!-- inner bodies (left to right) -->
+  <path d="M 45 720 L 45 383 A 125 125 0 0 1 295 383 L 295 720 Z" fill="url(#massBodyMint)"/>
+  <path d="M 280 720 L 280 383 A 125 125 0 0 1 530 383 L 530 720 Z" fill="url(#massBodyLav)"/>
+  <path d="M 515 720 L 515 383 A 125 125 0 0 1 765 383 L 765 720 Z" fill="url(#massBodyMint)"/>
+  <path d="M 750 720 L 750 383 A 125 125 0 0 1 1000 383 L 1000 720 Z" fill="url(#massBodyLav)"/>
+  <path d="M 985 720 L 985 383 A 125 125 0 0 1 1235 383 L 1235 720 Z" fill="url(#massBodyEnd)"/>
+
+  <!-- step 1 -->
+  <g>
+    <circle cx="170" cy="282" r="16" fill="#344252"/>
+    <text x="170" y="288" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
+    <text x="170" y="330" font-size="24" font-weight="700" fill="#344252" text-anchor="middle">階段名稱一</text>
+    <rect x="75" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
+    <rect x="134" y="388" width="72" height="72" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(141 395) scale(2.4)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    </g>
+    <text x="170" y="500" font-size="15" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="170" dy="0">兩行內說明這一步</tspan>
+      <tspan x="170" dy="26">做什麼、為何重要</tspan>
+    </text>
+    <rect x="115" y="546" width="110" height="30" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="170" y="566" font-size="14" font-weight="600" fill="#344252" text-anchor="middle">產出物一</text>
+  </g>
+
+  <!-- step 2 -->
+  <g>
+    <circle cx="405" cy="282" r="16" fill="#344252"/>
+    <text x="405" y="288" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
+    <text x="405" y="330" font-size="24" font-weight="700" fill="#344252" text-anchor="middle">階段名稱二</text>
+    <rect x="310" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
+    <rect x="369" y="388" width="72" height="72" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(376 395) scale(2.4)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      <line x1="6" y1="8" x2="9" y2="8"/><line x1="6" y1="12" x2="9" y2="12"/>
+    </g>
+    <text x="405" y="500" font-size="15" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="405" dy="0">兩行內說明這一步</tspan>
+      <tspan x="405" dy="26">做什麼、為何重要</tspan>
+    </text>
+    <rect x="350" y="546" width="110" height="30" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="405" y="566" font-size="14" font-weight="600" fill="#344252" text-anchor="middle">產出物二</text>
+  </g>
+
+  <!-- step 3 -->
+  <g>
+    <circle cx="640" cy="282" r="16" fill="#344252"/>
+    <text x="640" y="288" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+    <text x="640" y="330" font-size="24" font-weight="700" fill="#344252" text-anchor="middle">階段名稱三</text>
+    <rect x="545" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
+    <rect x="604" y="388" width="72" height="72" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(611 395) scale(2.4)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+    </g>
+    <text x="640" y="500" font-size="15" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="640" dy="0">兩行內說明這一步</tspan>
+      <tspan x="640" dy="26">做什麼、為何重要</tspan>
+    </text>
+    <rect x="585" y="546" width="110" height="30" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="640" y="566" font-size="14" font-weight="600" fill="#344252" text-anchor="middle">產出物三</text>
+  </g>
+
+  <!-- step 4 -->
+  <g>
+    <circle cx="875" cy="282" r="16" fill="#344252"/>
+    <text x="875" y="288" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">4</text>
+    <text x="875" y="330" font-size="24" font-weight="700" fill="#344252" text-anchor="middle">階段名稱四</text>
+    <rect x="780" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
+    <rect x="839" y="388" width="72" height="72" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(846 395) scale(2.4)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+      <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+    </g>
+    <text x="875" y="500" font-size="15" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="875" dy="0">兩行內說明這一步</tspan>
+      <tspan x="875" dy="26">做什麼、為何重要</tspan>
+    </text>
+    <rect x="820" y="546" width="110" height="30" rx="6" fill="#EFFBF4" stroke="#58D494" stroke-width="1.5"/>
+    <text x="875" y="566" font-size="14" font-weight="600" fill="#344252" text-anchor="middle">產出物四</text>
+  </g>
+
+  <!-- step 5 (final: slate_anchor chip as the quiet emphasis) -->
+  <g>
+    <circle cx="1110" cy="282" r="16" fill="#344252"/>
+    <text x="1110" y="288" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">5</text>
+    <text x="1110" y="330" font-size="24" font-weight="700" fill="#344252" text-anchor="middle">階段名稱五</text>
+    <rect x="1015" y="368" width="190" height="232" rx="14" fill="#FFFFFF" fill-opacity="0.88"/>
+    <rect x="1074" y="388" width="72" height="72" rx="14" fill="#E4E8EF"/>
+    <g transform="translate(1081 395) scale(2.4)" stroke="#344252" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+    </g>
+    <text x="1110" y="500" font-size="15" fill="#4C5A6B" text-anchor="middle">
+      <tspan x="1110" dy="0">兩行內說明這一步</tspan>
+      <tspan x="1110" dy="26">做什麼、為何重要</tspan>
+    </text>
+    <rect x="1055" y="546" width="110" height="30" rx="6" fill="#344252"/>
+    <text x="1110" y="566" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="middle">產出物五</text>
+  </g>
+
+  <!-- soft white chevrons in the dome-overlap lenses -->
+  <g fill="#FFFFFF" fill-opacity="0.55">
+    <path d="M 259 429 L 315 484 L 259 539 Z"/>
+    <path d="M 494 429 L 550 484 L 494 539 Z"/>
+    <path d="M 729 429 L 785 484 L 729 539 Z"/>
+    <path d="M 964 429 L 1020 484 L 964 539 Z"/>
+  </g>
+
+  <text x="1200" y="710" font-size="12" fill="#6B7686" text-anchor="end">05 / 12</text>
+</svg>

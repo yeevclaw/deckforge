@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <!-- compare table — IT_prism 版。Options × dimensions. Column headers ride slate #344252
+       bands with white text (the family's table voice); row separators are #DFE2E9 hairlines;
+       the recommended column is marked by a green-bordered tag pill (stroke #58D494, fill
+       #EFFBF4, ink text) — never teal headings. Inline emphasis = ink bold on a #DDF5E8 band. -->
+  <defs>
+    <radialGradient id="washLav" cx="8%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="#EEEEFD" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#EEEEFD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washMint" cx="92%" cy="92%" r="55%">
+      <stop offset="0%" stop-color="#E7F9F1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E7F9F1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloomTR" cx="78%" cy="4%" r="34%">
+      <stop offset="0%" stop-color="#7CDDAB" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#7CDDAB" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="prismShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- canvas + wash pair + corner bloom -->
+  <rect width="1280" height="720" fill="#EFF0F3"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washMint)"/>
+  <rect width="1280" height="720" fill="url(#bloomTR)"/>
+  <rect x="960" y="-80" width="220" height="220" fill="none" stroke="#FFFFFF"
+        stroke-opacity="0.5" stroke-dasharray="5 5" transform="rotate(12 1070 30)"/>
+
+  <!-- progress ticks (top-right page-position indicator) -->
+  <g>
+    <rect x="1022" y="46" width="64" height="10" rx="2" fill="#58D494"/>
+    <rect x="1096" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+    <rect x="1170" y="46" width="64" height="10" rx="2" fill="#DDE1E8"/>
+  </g>
+
+  <!-- assertion title — slate, no pill bar, no underline -->
+  <text x="48" y="88" font-size="34" font-weight="700" fill="#344252">比較頁標題：直接寫出推薦結論與比較範圍</text>
+
+  <!-- recommended-column tag pill (green border, ink text) -->
+  <rect x="880" y="120" width="330" height="48" rx="14" fill="#EFFBF4" stroke="#58D494" stroke-width="2"/>
+  <text x="1045" y="152" font-size="22" font-weight="700" fill="#344252" text-anchor="middle">推薦方案</text>
+
+  <!-- vertical dimension labels -->
+  <g font-size="22" font-weight="700" fill="#4C5A6B" text-anchor="middle">
+    <text x="92" y="313"><tspan x="92" dy="0">維</tspan><tspan x="92" dy="26">度</tspan><tspan x="92" dy="26">一</tspan></text>
+    <text x="92" y="445"><tspan x="92" dy="0">維</tspan><tspan x="92" dy="26">度</tspan><tspan x="92" dy="26">二</tspan></text>
+    <text x="92" y="575"><tspan x="92" dy="0">維</tspan><tspan x="92" dy="26">度</tspan><tspan x="92" dy="26">三</tspan></text>
+  </g>
+
+  <!-- column cards -->
+  <rect x="130" y="180" width="345" height="488" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+  <rect x="505" y="180" width="345" height="488" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+  <rect x="880" y="180" width="330" height="488" rx="14" fill="#FFFFFF" filter="url(#prismShadow)"/>
+
+  <!-- slate header bands (white text on slate) -->
+  <path d="M 130 252 L 130 194 A 14 14 0 0 1 144 180 L 461 180 A 14 14 0 0 1 475 194 L 475 252 Z" fill="#344252"/>
+  <path d="M 505 252 L 505 194 A 14 14 0 0 1 519 180 L 836 180 A 14 14 0 0 1 850 194 L 850 252 Z" fill="#344252"/>
+  <path d="M 880 252 L 880 194 A 14 14 0 0 1 894 180 L 1196 180 A 14 14 0 0 1 1210 194 L 1210 252 Z" fill="#344252"/>
+  <g text-anchor="middle">
+    <text x="302" y="212" font-size="15" font-weight="600" fill="#FFFFFF" fill-opacity="0.75" letter-spacing="2">方案一</text>
+    <text x="302" y="242" font-size="24" font-weight="700" fill="#FFFFFF">選項 A 名稱</text>
+    <text x="677" y="212" font-size="15" font-weight="600" fill="#FFFFFF" fill-opacity="0.75" letter-spacing="2">方案二</text>
+    <text x="677" y="242" font-size="24" font-weight="700" fill="#FFFFFF">選項 B 名稱</text>
+    <text x="1045" y="212" font-size="15" font-weight="600" fill="#FFFFFF" fill-opacity="0.75" letter-spacing="2">方案三</text>
+    <text x="1045" y="242" font-size="24" font-weight="700" fill="#FFFFFF">選項 C 名稱</text>
+  </g>
+
+  <!-- hairline row separators -->
+  <g stroke="#DFE2E9" stroke-width="1">
+    <line x1="160" y1="402" x2="445" y2="402"/>
+    <line x1="535" y1="402" x2="820" y2="402"/>
+    <line x1="910" y1="402" x2="1180" y2="402"/>
+    <line x1="160" y1="532" x2="445" y2="532"/>
+    <line x1="535" y1="532" x2="820" y2="532"/>
+    <line x1="910" y1="532" x2="1180" y2="532"/>
+  </g>
+
+  <!-- column 1 rows -->
+  <g>
+    <text x="158" y="318" font-size="22" font-weight="700" fill="#344252">維度一的判斷</text>
+    <text x="158" y="350" font-size="18" fill="#6B7686"><tspan x="158" dy="0">一到兩行說明，</tspan><tspan x="158" dy="30">寫具體事實。</tspan></text>
+    <text x="158" y="448" font-size="22" font-weight="700" fill="#344252">維度二的判斷</text>
+    <text x="158" y="480" font-size="18" fill="#6B7686"><tspan x="158" dy="0">一到兩行說明，</tspan><tspan x="158" dy="30">寫具體事實。</tspan></text>
+    <text x="158" y="578" font-size="22" font-weight="700" fill="#344252">維度三的判斷</text>
+    <text x="158" y="610" font-size="18" fill="#6B7686"><tspan x="158" dy="0">一到兩行說明，</tspan><tspan x="158" dy="30">寫具體事實。</tspan></text>
+  </g>
+
+  <!-- column 2 rows -->
+  <g>
+    <text x="533" y="318" font-size="22" font-weight="700" fill="#344252">維度一的判斷</text>
+    <text x="533" y="350" font-size="18" fill="#6B7686"><tspan x="533" dy="0">一到兩行說明，</tspan><tspan x="533" dy="30">寫具體事實。</tspan></text>
+    <text x="533" y="448" font-size="22" font-weight="700" fill="#344252">維度二的判斷</text>
+    <text x="533" y="480" font-size="18" fill="#6B7686"><tspan x="533" dy="0">一到兩行說明，</tspan><tspan x="533" dy="30">寫具體事實。</tspan></text>
+    <text x="533" y="578" font-size="22" font-weight="700" fill="#344252">維度三的判斷</text>
+    <text x="533" y="610" font-size="18" fill="#6B7686"><tspan x="533" dy="0">一到兩行說明，</tspan><tspan x="533" dy="30">寫具體事實。</tspan></text>
+  </g>
+
+  <!-- column 3 rows (recommended) — emphasis bands painted before the text -->
+  <rect x="906" y="363" width="58" height="23" rx="3" fill="#DDF5E8"/>
+  <rect x="960" y="463" width="76" height="23" rx="3" fill="#DDF5E8"/>
+  <g>
+    <text x="908" y="318" font-size="22" font-weight="700" fill="#344252">維度一的判斷</text>
+    <text x="908" y="350" font-size="18" fill="#4C5A6B"><tspan x="908" dy="0">推薦欄的說明中</tspan><tspan x="908" dy="30"><tspan font-weight="700" fill="#344252">關鍵詞</tspan>加淺綠底。</tspan></text>
+    <text x="908" y="448" font-size="22" font-weight="700" fill="#344252">維度二的判斷</text>
+    <text x="908" y="480" font-size="18" fill="#4C5A6B"><tspan x="908" dy="0">重點以<tspan font-weight="700" fill="#344252">墨色粗體</tspan></tspan><tspan x="908" dy="30">加淺綠底標示。</tspan></text>
+    <text x="908" y="578" font-size="22" font-weight="700" fill="#344252">維度三的判斷</text>
+    <text x="908" y="610" font-size="18" fill="#4C5A6B"><tspan x="908" dy="0">每格至多一處強調，</tspan><tspan x="908" dy="30">綠只做形狀記號。</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  chart_radar.svg — 6-axis assessment radar on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Center (640,410), outer radius 205, 5 concentric grid rings (0–5 scale).
+  Single series + center aggregate score. Multi-series overlay (≤3): see
+  references/chart_anatomy.md → chart_radar. Grid/spokes = gridline gray, data
+  polygon = highlight (stroke full + fill 0.15 + vertex dots).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">服務能力多維評估</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Capability Assessment — Radar Profile
+  </text>
+
+  <!-- Grid rings (concentric hexagons, 20/40/60/80/100%) -->
+  <polygon points="640,369 675.5,389.5 675.5,430.5 640,451 604.5,430.5 604.5,389.5" fill="none" stroke="#333333" stroke-width="1"/>
+  <polygon points="640,328 711,369 711,451 640,492 569,451 569,369" fill="none" stroke="#333333" stroke-width="1"/>
+  <polygon points="640,287 746.5,348.5 746.5,471.5 640,533 533.5,471.5 533.5,348.5" fill="none" stroke="#333333" stroke-width="1"/>
+  <polygon points="640,246 782,328 782,492 640,574 498,492 498,328" fill="none" stroke="#333333" stroke-width="1"/>
+  <polygon points="640,205 817.5,307.5 817.5,512.5 640,615 462.5,512.5 462.5,307.5" fill="none" stroke="#333333" stroke-width="1.5"/>
+
+  <!-- Axis spokes (center → outer vertices) -->
+  <line x1="640" y1="410" x2="640"   y2="205"   stroke="#333333" stroke-width="1"/>
+  <line x1="640" y1="410" x2="817.5" y2="307.5" stroke="#333333" stroke-width="1"/>
+  <line x1="640" y1="410" x2="817.5" y2="512.5" stroke="#333333" stroke-width="1"/>
+  <line x1="640" y1="410" x2="640"   y2="615"   stroke="#333333" stroke-width="1"/>
+  <line x1="640" y1="410" x2="462.5" y2="512.5" stroke="#333333" stroke-width="1"/>
+  <line x1="640" y1="410" x2="462.5" y2="307.5" stroke="#333333" stroke-width="1"/>
+
+  <!-- Data polygon (values 4.5 / 4.0 / 3.0 / 3.5 / 4.2 / 2.8 on a 0–5 scale) -->
+  <polygon points="640,225.5 782,328 746.5,471.5 640,553.5 490.9,496.1 540.6,352.6"
+           fill="#FF6900" fill-opacity="0.15" stroke="#FF6900" stroke-width="2.5"
+           stroke-linejoin="round"/>
+
+  <!-- Vertex dots -->
+  <circle cx="640"   cy="225.5" r="5" fill="#FF6900"/>
+  <circle cx="782"   cy="328"   r="5" fill="#FF6900"/>
+  <circle cx="746.5" cy="471.5" r="5" fill="#FF6900"/>
+  <circle cx="640"   cy="553.5" r="5" fill="#FF6900"/>
+  <circle cx="490.9" cy="496.1" r="5" fill="#FF6900"/>
+  <circle cx="540.6" cy="352.6" r="5" fill="#FF6900"/>
+
+  <!-- Vertex value labels (highlight hue) -->
+  <text x="640"   y="213.5" font-size="13" font-weight="700" fill="#FF6900" text-anchor="middle" style="font-variant-numeric: tabular-nums">4.5</text>
+  <text x="796"   y="320"   font-size="13" font-weight="700" fill="#FF6900" text-anchor="start"  style="font-variant-numeric: tabular-nums">4.0</text>
+  <text x="760.5" y="483.5" font-size="13" font-weight="700" fill="#FF6900" text-anchor="start"  style="font-variant-numeric: tabular-nums">3.0</text>
+  <text x="640"   y="575.5" font-size="13" font-weight="700" fill="#FF6900" text-anchor="middle" style="font-variant-numeric: tabular-nums">3.5</text>
+  <text x="476.9" y="508.1" font-size="13" font-weight="700" fill="#FF6900" text-anchor="end"    style="font-variant-numeric: tabular-nums">4.2</text>
+  <text x="526.6" y="346.6" font-size="13" font-weight="700" fill="#FF6900" text-anchor="end"    style="font-variant-numeric: tabular-nums">2.8</text>
+
+  <!-- Axis names (perimeter, r+28) -->
+  <text x="640"   y="177"   font-size="15" fill="#FFFFFF" text-anchor="middle">解決問題</text>
+  <text x="841.8" y="293.5" font-size="15" fill="#FFFFFF" text-anchor="start">回應速度</text>
+  <text x="841.8" y="526.5" font-size="15" fill="#FFFFFF" text-anchor="start">介面易用</text>
+  <text x="640"   y="643"   font-size="15" fill="#FFFFFF" text-anchor="middle">整體滿意</text>
+  <text x="438.2" y="526.5" font-size="15" fill="#FFFFFF" text-anchor="end">資訊清楚</text>
+  <text x="438.2" y="293.5" font-size="15" fill="#FFFFFF" text-anchor="end">值得信賴</text>
+
+  <!-- Center aggregate score (average of the six axes) -->
+  <text x="640" y="402" font-size="52" font-weight="900" fill="#FFFFFF" text-anchor="middle" style="font-variant-numeric: tabular-nums">3.7</text>
+  <text x="640" y="430" font-size="14" fill="#A0A0A0" text-anchor="middle" letter-spacing="1">整體評分</text>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

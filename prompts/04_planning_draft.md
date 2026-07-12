@@ -151,6 +151,8 @@ Pick the *minimum* bento layout that fits the content. Don't over-engineer.
 | `chart_waterfall` | **A→B bridge** — what explains the change (2 totals + 2+ deltas) | 1 chart, see `chart_data` |
 | `chart_combo` | **Volume + rate** — two coupled metrics, bars + line (營收+毛利率) | 1 chart, see `chart_data` |
 | `chart_mekko` | **2-D share map** — segment size × player share within each | 1 chart, see `chart_data` |
+| `chart_radar` | **Multi-axis profile** — one entity rated across 3–8 criteria (satisfaction, capability) | 1 chart, see `chart_data` |
+| `chart_gantt` | **Project schedule** — task durations across a time grid (roadmap, rollout) | 1 chart, see `chart_data` |
 
 ### The chart trigger — the relationship test
 
@@ -168,6 +170,8 @@ Mirror of the primitive information-loss signals, for data:
 | Bridge — what explains the change from A to B | `chart_waterfall` |
 | Volume + its rate, coupled | `chart_combo` |
 | Two-dimensional share map — segment size × player share | `chart_mekko` |
+| Multi-axis rating profile — one entity across 3–8 criteria (shape is the message) | `chart_radar` |
+| Schedule — task durations across time (start/end per workstream; a bare list of dates → `timeline`) | `chart_gantt` |
 
 Sparse data escapes back to cards (minimum shapes in [references/chart_anatomy.md](../references/chart_anatomy.md) → "When the data is sparse"): a 2-bar chart is two cards, a 1-delta waterfall is a `before_after` pair. See [references/bento_grid.md](../references/bento_grid.md) and [references/chart_anatomy.md](../references/chart_anatomy.md).
 
@@ -252,6 +256,39 @@ The consulting five carry a few extra fields (full geometry in [references/chart
     { "label": "智慧家居", "width": 45, "values": [52, 28, 20] },
     { "label": "智慧穿戴", "width": 30, "values": [26, 44, 30] },
     { "label": "訂閱服務", "width": 25, "values": [61, 22, 17] }
+  ]
+}
+
+// chart_radar — items are the axes (3–8); value on a 0…max scale. Single series, or
+// series[] + items[].values[] parallel to it for 2–3 overlaid profiles. center_label optional.
+"chart_data": {
+  "max": 5, "center_label": "3.7", "center_caption": "整體評分",
+  "items": [
+    { "label": "解決問題", "value": 4.5 },
+    { "label": "回應速度", "value": 4.0 },
+    { "label": "介面易用", "value": 3.0 },
+    { "label": "整體滿意", "value": 3.5 },
+    { "label": "資訊清楚", "value": 4.2 },
+    { "label": "值得信賴", "value": 2.8 }
+  ]
+}
+
+// chart_gantt — items are tasks; start/end are 1-based period indices; periods[] labels the grid.
+// emphasis names the full-hue phase (others 0.45); annotations carry the today line + milestones.
+"chart_data": {
+  "periods": ["1","2","3","4","5","6","7","8","9","10","11","12"],
+  "emphasis": "開發實作",
+  "items": [
+    { "label": "需求盤點", "start": 1,  "end": 2 },
+    { "label": "系統設計", "start": 2,  "end": 4 },
+    { "label": "開發實作", "start": 4,  "end": 8 },
+    { "label": "測試驗收", "start": 8,  "end": 10 },
+    { "label": "試營運",   "start": 9,  "end": 11 },
+    { "label": "正式上線", "start": 11, "end": 12 }
+  ],
+  "annotations": [
+    { "type": "value_line", "at": "7", "label": "現在" },
+    { "type": "callout", "at": "測試驗收", "label": "驗收" }
   ]
 }
 ```

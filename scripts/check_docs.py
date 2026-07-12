@@ -64,12 +64,13 @@ def check_template_count() -> list[str]:
 # --- Check 2: layout enum ----------------------------------------------------
 # CANONICAL is the checker's expected layout set. When you add/remove a layout,
 # update this list AND every doc below; the check then flags any doc you forgot.
-# (8 bento + 8 chart + 9 diagram primitives = 25.)
+# (8 bento + 10 chart + 9 diagram primitives = 27.)
 CANONICAL_LAYOUTS = [
     "single_focus", "stat_hero", "mini_grid", "two_col_50_50", "two_col_2_1",
     "three_col", "hero_top", "mixed_grid",
     "chart_bar", "chart_line", "chart_donut",
     "chart_hbar", "chart_stacked_bar", "chart_waterfall", "chart_combo", "chart_mekko",
+    "chart_radar", "chart_gantt",
     "flow", "timeline", "cycle", "funnel", "compare_table",
     "quadrant_2x2", "venn", "hierarchy_tree", "pyramid",
 ]
@@ -225,6 +226,7 @@ def check_qa_paths() -> list[str]:
 CHART_LAYOUTS = {
     "chart_bar", "chart_line", "chart_donut",
     "chart_hbar", "chart_stacked_bar", "chart_waterfall", "chart_combo", "chart_mekko",
+    "chart_radar", "chart_gantt",
 }
 PRIMITIVE_LAYOUTS = {
     "flow", "timeline", "cycle", "funnel", "compare_table",

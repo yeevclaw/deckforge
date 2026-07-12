@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  chart_gantt.svg — 6-workstream project schedule on dark_apple style (1280×720).
+  Replace #FF6900 with the deck's highlight color.
+  Row-label gutter x=88–300; time grid 12 columns x=310–1192 (col width 73.5).
+  Bars = task duration spans; emphasis phase at full hue, others at 0.45.
+  today reference line + milestone diamond speak ink (analysis, not data).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+
+  <rect width="1280" height="720" fill="#000000"/>
+
+  <!-- Page title -->
+  <text x="48" y="86" font-size="44" font-weight="800" fill="#FFFFFF">導入專案時程規劃</text>
+  <text x="48" y="114" font-size="16" font-weight="500" fill="#A0A0A0" letter-spacing="1">
+    Project Roadmap — 12-Month Schedule
+  </text>
+
+  <!-- Month gridlines (13 boundaries) -->
+  <line x1="310"    y1="200" x2="310"    y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="383.5"  y1="200" x2="383.5"  y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="457"    y1="200" x2="457"    y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="530.5"  y1="200" x2="530.5"  y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="604"    y1="200" x2="604"    y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="677.5"  y1="200" x2="677.5"  y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="751"    y1="200" x2="751"    y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="824.5"  y1="200" x2="824.5"  y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="898"    y1="200" x2="898"    y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="971.5"  y1="200" x2="971.5"  y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="1045"   y1="200" x2="1045"   y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="1118.5" y1="200" x2="1118.5" y2="478" stroke="#333333" stroke-width="1"/>
+  <line x1="1192"   y1="200" x2="1192"   y2="478" stroke="#333333" stroke-width="1.5"/>
+
+  <!-- Header line + gutter head + month labels -->
+  <line x1="88" y1="200" x2="1192" y2="200" stroke="#333333" stroke-width="1.5"/>
+  <text x="295" y="190" font-size="13" fill="#666666" text-anchor="end" letter-spacing="1">工作項目 / MONTH</text>
+  <text x="346.75"  y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">1</text>
+  <text x="420.25"  y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">2</text>
+  <text x="493.75"  y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">3</text>
+  <text x="567.25"  y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">4</text>
+  <text x="640.75"  y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">5</text>
+  <text x="714.25"  y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">6</text>
+  <text x="787.75"  y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">7</text>
+  <text x="861.25"  y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">8</text>
+  <text x="934.75"  y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">9</text>
+  <text x="1008.25" y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">10</text>
+  <text x="1081.75" y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">11</text>
+  <text x="1155.25" y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">12</text>
+
+  <!-- Task bars (emphasis = 開發實作, others 0.45) -->
+  <rect x="310"   y="210" width="147"   height="28" rx="6" fill="#FF6900" fill-opacity="0.45"/>
+  <rect x="383.5" y="256" width="220.5" height="28" rx="6" fill="#FF6900" fill-opacity="0.45"/>
+  <rect x="530.5" y="302" width="367.5" height="28" rx="6" fill="#FF6900"/>
+  <rect x="824.5" y="348" width="220.5" height="28" rx="6" fill="#FF6900" fill-opacity="0.45"/>
+  <rect x="898"   y="394" width="220.5" height="28" rx="6" fill="#FF6900" fill-opacity="0.45"/>
+  <rect x="1045"  y="440" width="147"   height="28" rx="6" fill="#FF6900" fill-opacity="0.45"/>
+
+  <!-- Row labels (right-aligned in the gutter) -->
+  <text x="295" y="229" font-size="15" fill="#FFFFFF" text-anchor="end">需求盤點</text>
+  <text x="295" y="275" font-size="15" fill="#FFFFFF" text-anchor="end">系統設計</text>
+  <text x="295" y="321" font-size="15" fill="#FFFFFF" text-anchor="end">開發實作</text>
+  <text x="295" y="367" font-size="15" fill="#FFFFFF" text-anchor="end">測試驗收</text>
+  <text x="295" y="413" font-size="15" fill="#FFFFFF" text-anchor="end">試營運</text>
+  <text x="295" y="459" font-size="15" fill="#FFFFFF" text-anchor="end">正式上線</text>
+
+  <!-- today reference line (ink annotation, on the M7/M8 boundary) -->
+  <line x1="824.5" y1="200" x2="824.5" y2="478" stroke="#CCCCCC" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="824.5" y="192" font-size="13" font-weight="600" fill="#CCCCCC" text-anchor="middle">現在</text>
+
+  <!-- milestone diamond (ink) at end of 測試驗收 -->
+  <polygon points="1045,354 1053,362 1045,370 1037,362" fill="#FFFFFF"/>
+  <text x="1060" y="366" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="start">驗收</text>
+
+  <!-- Footer page number -->
+  <text x="1200" y="710" font-size="12" fill="#666666" text-anchor="end">N / N</text>
+</svg>

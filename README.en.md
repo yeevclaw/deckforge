@@ -116,12 +116,12 @@ DeckForge/
 ├── references/             ← detailed knowledge bases
 │   ├── bento_grid.md       ← 8 Bento Grid layouts (the default; incl. stat_hero / mini_grid)
 │   ├── diagrams.md         ← 9 diagram primitives (used only when bento loses information)
-│   ├── chart_anatomy.md    ← 8 SVG chart types: the basic three + the consulting five (waterfall / stacked / hbar / combo / mekko) + the annotation layer (CAGR arrows, difference brackets, reference lines — the chart carries its own analysis)
+│   ├── chart_anatomy.md    ← 10 SVG chart types: the basic three + the consulting five (waterfall / stacked / hbar / combo / mekko) + two specialized (radar assessment / gantt schedule) + the annotation layer (CAGR arrows, difference brackets, reference lines — the chart carries its own analysis)
 │   ├── design_system.md    ← dark_apple palette + corporate_fresh light consulting style + 10 traditional palettes
 │   ├── pyramid_principle.md ← pyramid-principle map across Phases 1/2/3
 │   ├── socratic_loop.md    ← Phase 1 question types + 11 scenario spines
 │   └── editable_mode.md    ← how Convert-to-Shape editing works in PowerPoint
-├── templates/              ← 40 SVG files (39 starting templates + `_base.svg`), viewBox 0 0 1280 720
+├── templates/              ← 42 SVG files (41 starting templates + `_base.svg`), viewBox 0 0 1280 720
 │   ├── _base.svg           ← shared filters / gradients / 44 Lucide icons
 │   ├── cover.svg / toc.svg
 │   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
@@ -129,6 +129,7 @@ DeckForge/
 │   ├── chart_bar.svg / chart_line.svg / chart_donut.svg
 │   ├── chart_hbar.svg / chart_stacked_bar.svg / chart_waterfall.svg /
 │   │   chart_combo.svg / chart_mekko.svg ← the consulting five: ranking / mix shift / bridge / volume+rate / market map
+│   ├── chart_radar.svg / chart_gantt.svg ← two specialized: assessment radar / project schedule
 │   ├── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
 │   │   quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← diagram primitives
 │   ├── fresh_cover.svg / fresh_compare.svg ← corporate_fresh cover & compare-table starters

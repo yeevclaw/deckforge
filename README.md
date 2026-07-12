@@ -116,12 +116,12 @@ DeckForge/
 ├── references/             ← 詳細知識庫
 │   ├── bento_grid.md       ← Bento Grid 8 種版型(預設;含 stat_hero / mini_grid)
 │   ├── diagrams.md         ← 9 種 diagram primitives(只在 Bento 會丟資訊時切換)
-│   ├── chart_anatomy.md    ← 8 種 SVG 圖表:基本三型 + 顧問五型(waterfall / stacked / hbar / combo / mekko)+ annotation 層(CAGR 箭頭、差異括號、基準線——圖表自帶分析)
+│   ├── chart_anatomy.md    ← 10 種 SVG 圖表:基本三型 + 顧問五型(waterfall / stacked / hbar / combo / mekko)+ 專門二型(radar 多維評估 / gantt 甘特排程)+ annotation 層(CAGR 箭頭、差異括號、基準線——圖表自帶分析)
 │   ├── design_system.md    ← dark_apple palette + corporate_fresh 淺色顧問風 + 10 種傳統 palette
 │   ├── pyramid_principle.md ← 金字塔原理跨 Phase 1/2/3 的對照表
 │   ├── socratic_loop.md     ← Phase 1 反詰問題類型 + 11 種情境 spine
 │   └── editable_mode.md    ← PowerPoint Convert to Shape 編輯
-├── templates/              ← 40 個 viewBox 1280×720 SVG(39 起始模板 + `_base.svg` 共用底稿)
+├── templates/              ← 42 個 viewBox 1280×720 SVG(41 起始模板 + `_base.svg` 共用底稿)
 │   ├── _base.svg           ← 共用 filter / 漸層 / 44 個 Lucide icon
 │   ├── cover.svg / toc.svg
 │   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg
@@ -129,6 +129,7 @@ DeckForge/
 │   ├── chart_bar.svg / chart_line.svg / chart_donut.svg
 │   ├── chart_hbar.svg / chart_stacked_bar.svg / chart_waterfall.svg /
 │   │   chart_combo.svg / chart_mekko.svg ← 顧問五型:排名 / 結構堆疊 / 瀑布橋 / 量率雙軸 / 市場地圖
+│   ├── chart_radar.svg / chart_gantt.svg ← 專門二型:多維評估雷達 / 甘特排程
 │   ├── flow.svg / timeline.svg / cycle.svg / funnel.svg / compare_table.svg /
 │   │   quadrant_2x2.svg / venn.svg / hierarchy_tree.svg / pyramid.svg ← Diagram primitives
 │   ├── fresh_cover.svg / fresh_compare.svg ← corporate_fresh 封面與對照表起始檔

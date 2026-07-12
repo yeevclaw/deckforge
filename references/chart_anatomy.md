@@ -1,9 +1,10 @@
 # Chart Anatomy — SVG charts for data-heavy slides
 
-Cards with numbers are great for hero stats. But when numbers **relate to each other** — a trend, a composition, a ranking, a bridge from A to B — a chart communicates the relationship faster than any grid of mini-cards. This reference shows how to draw the eight chart types DeckForge supports directly as SVG primitives — no external libraries, fully editable in PowerPoint after Convert to Shape:
+Cards with numbers are great for hero stats. But when numbers **relate to each other** — a trend, a composition, a ranking, a bridge from A to B — a chart communicates the relationship faster than any grid of mini-cards. This reference shows how to draw the ten chart types DeckForge supports directly as SVG primitives — no external libraries, fully editable in PowerPoint after Convert to Shape:
 
 - **Basic three**: `chart_bar` (category comparison), `chart_line` (trend), `chart_donut` (composition of a whole)
 - **Consulting five** (the think-cell-style vocabulary): `chart_hbar` (ranking), `chart_stacked_bar` (composition across categories/time), `chart_waterfall` (A→B bridge), `chart_combo` (volume + rate), `chart_mekko` (two-dimensional market map)
+- **Two specialized**: `chart_radar` (multi-axis assessment profile — one entity rated across 3–8 criteria), `chart_gantt` (project schedule / roadmap — task durations across a time grid)
 
 What separates a consulting-grade chart from a default chart is not prettier geometry — it's that **the chart carries its own analysis**. The page title states a claim; the chart visually asserts that claim with an analytical mark: a CAGR arrow, a difference bracket, a reference line, an emphasized segment. See [Annotation layer](#annotation-layer--圖表自帶分析) below. A bare data dump under an assertion title is a half-finished chart.
 
@@ -25,6 +26,8 @@ Ask of any group of numbers on a page: does the *relationship between them* carr
 | **Bridge / build-up** (what explains the change from A to B) | **`chart_waterfall`** |
 | **Two coupled metrics** (volume + rate: 營收+毛利率, users + churn) | **`chart_combo`** |
 | **Two-dimensional share map** (segment size × player share) | **`chart_mekko`** |
+| **Multi-axis assessment** — one entity rated across 3–8 criteria (or 2–3 profiles overlaid) | **`chart_radar`** |
+| **Project schedule** — task durations across a time grid (start/end per workstream) | **`chart_gantt`** |
 | Single proportion (1 vs total) | `stat_hero` with percent, or `chart_donut` with 1 segment |
 | 2 items contrasting | `two_col_50_50` cards |
 
@@ -39,7 +42,7 @@ The old heuristic "if you can fit it in cards, prefer cards" applies **only afte
 - **Background**: same dark gray card (`#1A1A1A`) or pure black slide bg.
 - **Axes / gridlines**: thin (1px) `#333333`. Subtle, not assertive. When every data point carries a direct value label, gridlines may be dropped entirely (keep the baseline) — labels beat grids.
 - **Labels**: `#A0A0A0` 12–14px. Axis labels in English, data labels in CN.
-- **`corporate_fresh` decks (the default style)**: same geometry, swap the neutrals and the data hue — white card on `#F4F4F4` canvas, gridlines `#DDE2DF`, labels `#6B7178` (values `#383838`), and the data series uses the family's **structure green `#3DB377`** with the same alpha tiers (donut segments: alphas of that green). Ink voice = `#383838`; decreases = `#AEB4BA`; totals = `#383838`. Orange `#E8872E` stays reserved for inline text emphasis — never as chart fill, and **not for chart annotation labels either**: orange on the white card is ≈2.65:1 and fails AA. On fresh charts every annotation label speaks ink `#383838` (bold for the claim-bearing one); orange keeps to its sanctioned role — bold inline runs inside body text.
+- **`corporate_fresh` decks (the default style)**: same geometry, swap the neutrals and the data hue — white card on `#F4F4F4` canvas, gridlines `#DDE2DF`, labels `#6B7178` (values `#383838`; **EN decorative sub-labels stay at `#6B7178` too — never a lighter tertiary gray, because on the white card anything lighter than ~`#757575` drops below WCAG AA 4.5:1; the 10px size + letter-spacing already makes the EN recede**), and the data series uses the family's **structure green `#3DB377`** with the same alpha tiers (donut segments: alphas of that green). Ink voice = `#383838`; decreases = `#AEB4BA`; totals = `#383838`. Orange `#E8872E` stays reserved for inline text emphasis — never as chart fill, and **not for chart annotation labels either**: orange on the white card is ≈2.65:1 and fails AA. On fresh charts every annotation label speaks ink `#383838` (bold for the claim-bearing one); orange keeps to its sanctioned role — bold inline runs inside body text.
 - **Title sits OUTSIDE the chart**, as the page title. The chart itself has no internal title — the page title carries it.
 - **Numbers on bars / points**: optional. If shown, render at 14–16px in highlight color, above each data point. Add `style="font-variant-numeric: tabular-nums"` so values align across bars/points and axis ticks.
 - **Labels sitting ON a full-hue fill flip to near-black ink `#111111`.** White text on the highlight color fails WCAG AA (~2.6:1 on `#FF6900`, worse on the fresh green) — so in-segment/in-bar labels on a full-saturation fill use `#111111`, while light grays (`#E8E8E8` / `#C8C8C8`) stay on the low-alpha and dark-neutral fills. AA contrast outranks the ink-is-white convention.
@@ -474,6 +477,84 @@ See `templates/chart_mekko.svg` for the starter.
 
 ---
 
+## `chart_radar` — multi-axis assessment profile
+
+Use when **one entity is rated across several criteria** and the *shape of the profile* is the message: a satisfaction survey (解決問題/回應速度/介面易用…), a capability assessment, a maturity model. 3–8 axes. Radar is hard to scan quickly, so it earns its place only when the multi-axis profile genuinely is the point — for a single ranking use `chart_bar`/`chart_hbar`, and beyond 8 axes the polygon turns to mush (split the criteria or rank them). Overlay **at most 3** profiles (us vs competitor vs benchmark); more is spaghetti.
+
+### Data → geometry
+
+A regular N-gon centered at `(640, 410)`, outer radius `R = 205`. Axis `k` points at angle `θ_k = −90° + k·(360°/N)` (first axis straight up, then clockwise). A value `v` on a `0…max` scale sits at radius `r = (v / max) · R` along its axis: `(640 + r·cosθ, 410 + r·sinθ)`. Draw 4–5 concentric grid N-gons at even fractions of R, plus one spoke per axis — all in gridline gray.
+
+### SVG anatomy (6 axes, single series, 0–5 scale)
+
+```xml
+<!-- Grid rings (concentric hexagons) + spokes: gridline gray #333333 -->
+<polygon points="640,205 817.5,307.5 817.5,512.5 640,615 462.5,512.5 462.5,307.5"
+         fill="none" stroke="#333333" stroke-width="1.5"/>   <!-- outer ring, +inner rings -->
+<line x1="640" y1="410" x2="640" y2="205" stroke="#333333" stroke-width="1"/>   <!-- one spoke per axis -->
+
+<!-- Data polygon: highlight stroke + 0.15 fill + vertex dots -->
+<polygon points="640,225.5 782,328 746.5,471.5 640,553.5 490.9,496.1 540.6,352.6"
+         fill="#FF6900" fill-opacity="0.15" stroke="#FF6900" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="640" cy="225.5" r="5" fill="#FF6900"/>   <!-- one per vertex -->
+
+<!-- Vertex value labels (highlight hue), axis names at perimeter (r+28, ink) -->
+<text x="640" y="213.5" font-size="13" font-weight="700" fill="#FF6900" text-anchor="middle">4.5</text>
+<text x="640" y="177"   font-size="15" fill="#FFFFFF" text-anchor="middle">解決問題</text>
+
+<!-- Optional center aggregate score (single series only) -->
+<text x="640" y="402" font-size="52" font-weight="900" fill="#FFFFFF" text-anchor="middle">3.7</text>
+<text x="640" y="430" font-size="14" fill="#A0A0A0" text-anchor="middle" letter-spacing="1">整體評分</text>
+```
+
+- **Single-hue discipline**: grid rings + spokes are gridline gray, never colored. The data polygon owns the highlight (stroke full hue, fill at 0.15). A second/third overlaid series drops its fill (stroke only at `stroke-opacity 0.45`, no dots) so the emphasis profile reads first — same emphasis logic as multi-series `chart_line`.
+- **Axis-name anchoring**: right axes `text-anchor="start"`, left axes `end`, top/bottom `middle`. Perimeter labels sit at `R + 28`.
+- **Center score** is a single-series affordance (the profile's average). Omit it when overlaying multiple series — the center would sit under two polygons.
+- **`corporate_fresh`**: grid/spokes `#DDE2DF`, axis names `#383838`, data green `#3DB377` (fill 0.15), value labels `#383838` (green fails AA as small text on white — the Common-rules AA discipline).
+
+See `templates/chart_radar.svg` for the starter.
+
+---
+
+## `chart_gantt` — project schedule across a time grid
+
+Use when the message is **when work happens and how phases overlap**: an implementation roadmap, a rollout schedule, a multi-workstream plan. Rows are workstreams/tasks (≤8), columns are time periods (months/quarters), bars are duration spans. This is distinct from the `timeline` primitive — **`timeline` anchors events to points in time (no duration); `chart_gantt` draws parallel rows of duration bars on a grid.** If tasks have no duration (just milestone dates), use `timeline` or cards.
+
+### Data → geometry
+
+Left gutter `x=88…300` holds right-aligned row labels. Time grid spans `x=310…1192` across `N` equal columns (`col_w = 882 / N`; here 12 months → `73.5`). Column `i` starts at `x = 310 + i·col_w`. A task on months `[a, b]` is a bar at `x = 310 + a·col_w`, `width = (b − a + 1)·col_w`. Rows start `y=210`, pitch 46, bar height 28.
+
+### SVG anatomy (6 workstreams × 12 months)
+
+```xml
+<!-- Vertical month gridlines (N+1) + a header line under the month labels: gridline gray -->
+<line x1="310" y1="200" x2="310" y2="478" stroke="#333333" stroke-width="1"/>   <!-- per boundary -->
+<line x1="88"  y1="200" x2="1192" y2="200" stroke="#333333" stroke-width="1.5"/>
+<text x="346.75" y="190" font-size="13" fill="#A0A0A0" text-anchor="middle">1</text>   <!-- month labels, centered -->
+
+<!-- Task bars: emphasis phase full hue, others 0.45. Row labels right-aligned in gutter -->
+<rect x="530.5" y="302" width="367.5" height="28" rx="6" fill="#FF6900"/>                    <!-- emphasis -->
+<rect x="310"   y="210" width="147"   height="28" rx="6" fill="#FF6900" fill-opacity="0.45"/>
+<text x="295" y="321" font-size="15" fill="#FFFFFF" text-anchor="end">開發實作</text>
+
+<!-- today / deadline reference line (value_line annotation, ink dashed) -->
+<line x1="824.5" y1="200" x2="824.5" y2="478" stroke="#CCCCCC" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="824.5" y="192" font-size="13" font-weight="600" fill="#CCCCCC" text-anchor="middle">現在</text>
+
+<!-- milestone diamond (callout annotation, ink) at a task's key date -->
+<polygon points="1045,354 1053,362 1045,370 1037,362" fill="#FFFFFF"/>
+<text x="1060" y="366" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="start">驗收</text>
+```
+
+- **Single-hue discipline**: every bar is the one highlight color; workstreams are **never** color-coded. Phase/status differentiation is by alpha — the current or critical-path phase at full hue, the rest at `0.45`. Colored-by-workstream is the classic Gantt anti-pattern that breaks the single-accent invariant.
+- **Data speaks color, analysis speaks ink**: bars are hue; the today/deadline line (a vertical `value_line`) and milestone diamonds are ink (`#CCCCCC`/`#FFFFFF` dark, `#383838` fresh) — never a second accent.
+- Keep it to ≤8 rows; more workstreams choke the row labels (split into phase pages). Month labels stay in the header; per-bar duration text is optional (the bar length already carries it).
+- **`corporate_fresh`**: gridlines `#DDE2DF`, month/row labels `#6B7178`/`#383838`, bars green `#3DB377` (+0.45 tier), today line + milestones ink `#383838`.
+
+See `templates/chart_gantt.svg` for the starter.
+
+---
+
 ## Annotation layer — 圖表自帶分析
 
 This is the heart of the consulting look. think-cell's charts read as *arguments* because the analysis is drawn on the chart: a CAGR arrow says "this grew this fast", a difference bracket says "the gap is this big", a reference line says "here is the bar to clear". DeckForge adopts the same vocabulary as an optional `annotations[]` array inside `chart_data`.
@@ -542,6 +623,8 @@ This is the heart of the consulting look. think-cell's charts read as *arguments
 | `chart_waterfall` | — | — | ✓ (start↔end, the classic) | — |
 | `chart_combo` | ✓ | ✓ (on bars) | ✓ | ✓ |
 | `chart_donut` / `chart_mekko` | — (their emphasis segment IS the assertion) | — | — | — |
+| `chart_radar` | — | — | — | ✓ (flag one axis) |
+| `chart_gantt` | ✓ (today / deadline line) | — | — | ✓ (milestone diamond) |
 
 Built-ins are not annotations: waterfall level-connectors, stacked-bar totals + segment connectors, and line-end series labels are part of their chart's base anatomy — always drawn, never requested.
 
@@ -558,7 +641,7 @@ Annotations speak **ink**, not hue (see "two voices" above): `#FFFFFF`/`#CCCCCC`
 - **Stacked bars with >4 segments**: unreadable. Merge the smallest into 其他, or split into two charts.
 - **Truncated value axes**: bars start at zero, no exceptions (axis-break squiggle for the one outlier bar — see Common rules).
 - **Dual-axis charts beyond `chart_combo`'s volume+rate pairing**: two arbitrary metrics sharing a canvas invite false correlation. If they're not a volume and its rate, they're two pages.
-- **Radar/spider charts**: only if absolutely necessary; the article's source material doesn't use them, and they're hard to scan quickly.
+- **Radar for a single ranking or comparison**: a radar is for a multi-axis *profile* (3–8 criteria, shape is the message); when you have one metric across items, that's `chart_bar`/`chart_hbar`. Radar is hard to scan — don't reach for it just to look sophisticated (bounds in the `chart_radar` section).
 
 ---
 
@@ -566,6 +649,6 @@ Annotations speak **ink**, not hue (see "two voices" above): `#FFFFFF`/`#CCCCCC`
 
 A line chart with 3 dots looks like a hand-drawn sketch. A bar chart with 2 bars is two cards. A waterfall with one delta is a before/after pair (`two_col_50_50` `before_after`). A stacked bar with one column is a donut. Don't force charts on small data — use `stat_hero` or `mini_grid` instead.
 
-Minimum shapes: `chart_line` 4+ points · `chart_bar`/`chart_hbar` 4+ items · `chart_donut` 2–5 segments · `chart_stacked_bar` 2+ columns × 2+ segments · `chart_waterfall` 2 totals + 2+ deltas · `chart_combo` 3+ periods · `chart_mekko` 2+ columns × 2+ series.
+Minimum shapes: `chart_line` 4+ points · `chart_bar`/`chart_hbar` 4+ items · `chart_donut` 2–5 segments · `chart_stacked_bar` 2+ columns × 2+ segments · `chart_waterfall` 2 totals + 2+ deltas · `chart_combo` 3+ periods · `chart_mekko` 2+ columns × 2+ series · `chart_radar` 3+ axes · `chart_gantt` 3+ tasks spanning multiple periods.
 
 The rule: **charts earn their visual cost only when data has shape** (a curve, a distribution, a clear ranking, a moving mix, a bridge). If you can show the data in 2–3 cards as fast as a chart — and no relationship is lost — choose cards.

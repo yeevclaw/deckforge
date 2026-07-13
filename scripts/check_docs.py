@@ -148,6 +148,9 @@ VARIANT_ENUMS = [
     ("motion",
      ["transit_rail", "orbit", "hub", "accent_bypass"],
      ["SKILL.md", "prompts/04_planning_draft.md", "prompts/05_designer_svg.md", "CLAUDE.md"]),
+    ("delivery_mode",
+     ["presenting", "reading"],
+     SPEC_FILES + ["prompts/01_needs_research.md", "prompts/02_outline_architect.md"]),
 ]
 
 
@@ -266,6 +269,10 @@ def check_evals_fixtures() -> list[str]:
         errors.append(f"evals/planning.json: design_brief missing {missing}.")
     if db.get("flow_variant") and db["flow_variant"] not in _enum_values("flow_variant"):
         errors.append(f"evals/planning.json: flow_variant '{db['flow_variant']}' not in enum.")
+    # delivery_mode is tolerant: absence = presenting (pre-v0.17.0 fixtures are frozen);
+    # when present it must be a legal value.
+    if db.get("delivery_mode") not in (None, "presenting", "reading"):
+        errors.append(f"evals/planning.json: delivery_mode '{db['delivery_mode']}' not in enum.")
 
     for page in pages:
         pid = page.get("page_id", "?")
@@ -360,6 +367,7 @@ TABLE_GUARD_FILES = [
     "references/chart_anatomy.md",
     "references/design_system.md",
     "references/rubric.md",
+    "references/socratic_loop.md",
 ]
 _SEP_RE = re.compile(r"^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$")
 

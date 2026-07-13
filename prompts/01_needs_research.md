@@ -80,7 +80,7 @@ D. What is the SINGLE highest-leverage gap that remains open after this round?
 **Exit branch** — three gates, in order. All three must pass before `brief.md` is written:
 
 1. **Round floor**: if this is Round 2's reflection (the user has answered only one round), the exit branch is **CLOSED** — even when C is all ✅ and B is "none". Go to the continue branch. The earliest legal exit is the reflection after the user's *second* answer (i.e. at the start of Round 3). The only single-question path is user-chosen Quick mode.
-2. **Coverage sweep**: take the locked scenario's "What MUST be surfaced" column (see "Scenario / occasion detection") and mark each item `asked` / `inferable-from-source` / `untouched`. Any `untouched` item: if you are not yet on round 4, the highest-leverage one becomes the continue branch's gap; if you are on round 4, write each into `open_assumptions` with a ⚠️ and proceed to gate 3.
+2. **Coverage sweep**: take the locked scenario's "What MUST be surfaced" column (see "Scenario / occasion detection") and mark each item `asked` / `inferable-from-source` / `untouched`. The sweep always includes one cross-scenario item on top of that column: **delivery mode confirmed or defaulted-with-⚠️** (see "Delivery mode — infer a default, confirm once"). Any `untouched` item: if you are not yet on round 4, the highest-leverage one becomes the continue branch's gap; if you are on round 4, write each into `open_assumptions` with a ⚠️ and proceed to gate 3.
 3. **MECE check** on `proof_pillars` (see "Stop conditions" → MECE check). If MECE passes, write `brief.md` and stop. If MECE fails AND you are not yet on round 4, go to the continue branch for one MECE-revision round. If MECE fails AND you are already on round 4, log the overlap in `open_assumptions` and enter Forced Assumption mode (see below).
 
 Like the MECE check, the coverage sweep is an **exit-branch verification, not a stop condition** — reflection (C) can't tick it without running it, and it only runs once reflection is otherwise all ✅.
@@ -209,6 +209,40 @@ If the user's actual scenario doesn't match any row, propose the closest two as 
 
 ---
 
+## Delivery mode — infer a default, confirm once
+
+Every deck is consumed one of two ways, and the two demand different page design:
+
+- **`presenting`** — a presenter talks over the deck. Pages run number-first, minimal text; supporting detail goes to `speaker_notes` and gets *said* by the presenter.
+- **`reading`** — the deck is sent out and read standalone (a pre-read, a leave-behind, an emailed briefing). There is no presenter: pages carry complete sentences, an explicit reading order, and everything the audience needs on the page itself — content parked in speaker notes is content the reader never sees. Reading decks also tolerate a higher page count for the same content: splitting is cheaper than cramming when nobody has to flip slides live.
+
+The answer lands in `brief.md → Constraints → Delivery mode` and changes Phase 3's density rules and — critically — where supporting evidence lives (`prompts/04_planning_draft.md` → "Delivery mode").
+
+How to set it:
+
+1. **Infer a default from the locked scenario** — the "Delivery-mode lean" column in `references/socratic_loop.md` §3 is the single source of truth. Reading-leaning scenarios: executive briefing, training/onboarding, crisis comms. Fundraising and sales decks are presented live but often *also* sent ahead or left behind — for these two, probe whether the deck's primary life is in the room or in the reader's inbox.
+2. **Confirm once, folded into a normal round** — like the four non-negotiable fields, an inferred delivery mode caps at ⚠️ `[inferred]` until played back. Never a standalone form question; fold it into a pop-up round with the trade-off visible (worked question below). One confirmation, once, is enough.
+3. **If it never got confirmed** (4 rounds passed, or Quick mode ran): write the scenario-lean default and log it in `open_assumptions` with a ⚠️.
+
+Worked confirmation question — the "(Recommended)" tag goes on whichever side the scenario leans:
+
+```
+Question: 這份簡報做完之後，是「有人現場講」還是「寄出去讓對方自己讀」？
+這會改變每一頁的密度設計，不是小事。
+
+  ○ 現場簡報（有講者） (Recommended)
+       → 頁面走大字少字、一卡一點；細節放講者備註，由你現場補充
+  ○ 寄出／獨立閱讀（沒有講者）
+       → 頁面走 slidedoc：文字更完整、層次更多；原本會放進講者備註的
+         支撐內容會收進頁面本身——否則讀者永遠看不到
+  ○ 現場講為主，但部分頁面要能獨立閱讀
+       → 整份用簡報密度，你指定的頁（通常是附錄／數據頁）單獨標成閱讀模式
+```
+
+The third option is how the per-page override gets elicited: the deck stays `presenting` and the pages the user names are recorded in the Delivery mode line so Phase 3 can mark them `delivery_mode: "reading"` individually.
+
+---
+
 ## Quick mode — opt-in only, never auto-switched
 
 > **NEVER auto-switch to Quick mode just because the user sounds impatient or supplied a lot of data.** The Socratic dialogue **is** the value DeckForge provides. Even when the user gives you a 200-page document plus a complete brief, the dialogue is what surfaces the *one judgment the audience must change* — which neither documents nor briefs typically articulate. Auto-switching bypasses the product.
@@ -231,7 +265,7 @@ Question: 你聽起來想快一點。我可以切到 Quick mode,但 DeckForge �
 ### What Quick mode does (after user opts in)
 
 1. Ask **one** pop-up question — about the single highest-leverage gap (usually scenario or core thesis).
-2. After the answer, write a brief.md filled with **explicit assumptions** for every field you didn't ask about. The exit-branch checks still run, just silently: the coverage sweep routes every `untouched` must-surface item into `open_assumptions` (no extra rounds), and every pillar still carries an evidence anchor or a `needs-research` tag.
+2. After the answer, write a brief.md filled with **explicit assumptions** for every field you didn't ask about. The exit-branch checks still run, just silently: the coverage sweep routes every `untouched` must-surface item into `open_assumptions` (no extra rounds), delivery mode takes the scenario-lean default with a ⚠️ entry, and every pillar still carries an evidence anchor or a `needs-research` tag.
 3. Tell the user: "I'm proceeding with these assumptions — interrupt if any are wrong, especially the first three."
 4. Continue to Phase 2 (still subject to the Phase 1 → Phase 2 handoff approval — including the brief digest playback before the pop-up; Quick mode does not skip either).
 
@@ -265,7 +299,9 @@ Stop the Socratic loop and produce `brief.md` when, **at the most recent Between
    (MECE is verified in the exit branch, not here.)
 ✅ The most likely objection is identified
 ✅ Desired audience action after the deck is named
-✅ Page count, tone, language, brand constraints are at least sketched
+✅ Page count, tone, language, brand constraints are at least sketched,
+   and delivery mode (presenting / reading) is confirmed or explicitly
+   defaulted from the scenario lean
 ```
 
 If a condition is ⚠️ partial in reflection, treat it as ❌ for stop purposes — partial means there's a clarification worth one more round.
@@ -378,6 +414,7 @@ a bare slogan.)
 - **Page count**: <approx, or a range>
 - **Tone**: <serious / playful / data-heavy / story-driven / hybrid>
 - **Language**: <zh-TW / en / bilingual / other>
+- **Delivery mode**: <presenting / reading> — <one-line rationale; if the user named specific pages as exceptions, list them here>
 - **Brand**: <colors, fonts, taboo items, must-mention items>
 - **Visual style hint**: <IT_prism (default when unspecified) / corporate_fresh / dark_apple / clean minimal / bold corporate / tech-futuristic / warm humanistic / academic>
 
@@ -388,7 +425,7 @@ a bare slogan.)
 <paths or URLs the user supplied; or "none">
 ```
 
-Once `brief.md` exists, **do not silently start Phase 2**. First play the brief back in the chat as a compact digest — scenario, the one-line thesis, each pillar with its evidence anchor, the top objection, the desired action — and mark every value whose source is still `[inferred]` (never confirmed by the user). The digest is prose *before* the handoff pop-up, not a second pop-up; it exists so the user can spot a shallow or wrong field at the cheapest moment, instead of discovering it at Phase 3/4. Then ask via `AskUserQuestion` whether to continue:
+Once `brief.md` exists, **do not silently start Phase 2**. First play the brief back in the chat as a compact digest — scenario, the delivery mode, the one-line thesis, each pillar with its evidence anchor, the top objection, the desired action — and mark every value whose source is still `[inferred]` (never confirmed by the user). The digest is prose *before* the handoff pop-up, not a second pop-up; it exists so the user can spot a shallow or wrong field at the cheapest moment, instead of discovering it at Phase 3/4. Then ask via `AskUserQuestion` whether to continue:
 
 ```
 Question: Phase 1 完成（已產出 brief.md）。要繼續進入 Phase 2 大綱規劃嗎？

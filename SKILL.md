@@ -163,6 +163,7 @@ Not a questionnaire. A loop that derives questions from the user's actual input,
 
 - **Use `AskUserQuestion` (pop-up choice) as the default question format.** 2–4 mutually-exclusive options per question. Each option label ≤ 5 words; description explains the *trade-off*, not the definition. Free-text inline only when no honest options exist.
 - **Detect the scenario early** (fundraising / sales / internal sync / executive briefing / educational / strategy review / annual review / product launch / keynote / training / crisis comms). Each scenario needs a different spine surfaced — pop-up question them on which one fits if it isn't obvious.
+- **Infer the delivery mode from the scenario, confirm once.** Every deck is either **presented live** (`presenting` — a presenter talks over it; the default) or **sent out to be read standalone** (`reading` — a slidedoc: fuller text, explicit reading order, supporting evidence on the page because there is no presenter to voice it). Default from the scenario's lean (`references/socratic_loop.md` §3, "Delivery-mode lean" column — executive briefing / training / crisis comms lean reading), confirm it folded into a normal pop-up round, and record it in `brief.md → Constraints → Delivery mode`. Never confirmed → scenario-lean default + a ⚠️ `open_assumptions` entry. See `prompts/01_needs_research.md` → "Delivery mode — infer a default, confirm once".
 - **Pick one question type per round** from: Definition / Consequence / Evidence / Objection / Tradeoff / Compression. Don't mix.
 - **Between every round (Round 2 onward), run the Between-round reflection** (see [prompts/01_needs_research.md](prompts/01_needs_research.md) → "The loop" → Round 2+ → Step 1) — silent notes naming what the user's answer newly clarified, what new ambiguity it surfaced, and which stop conditions remain ❌/⚠️ open, each tagged `[user]` (the user said it) or `[inferred]` (you derived it). The loop only exits when reflection confirms all 7 stop conditions are ✅ AND the latest answer surfaced no new ambiguity. Round 1 itself runs Initial triage (read input → triage → ask) with no reflection — there's no answer to reflect on yet. **Reflection runs AFTER each user answer, not just at the start of Phase 1** — collapsing the loop into a single round because "I got most of what I need" is the single most common Phase 1 failure mode, which is why the exit branch is structurally closed at Round 2's reflection and runs a **coverage sweep** (the scenario's must-surface list) plus the MECE check before `brief.md` can be written.
 - **The four non-negotiable fields must be user-confirmed, not merely inferred.** `audience.current_belief`, `belief_shift`, `core_thesis`, `desired_action` cap at ⚠️ while `[inferred]` — play the inferred value back as a pop-up option and get it confirmed. Each proof pillar carries a concrete evidence anchor (number / case / fact / named source) or an explicit `needs-research` tag; when the user doesn't have the evidence at hand, offer to look up that single fact via web search (if a search tool is available) or tag it `needs-research` for Phase 2.5.
@@ -175,7 +176,7 @@ Not a questionnaire. A loop that derives questions from the user's actual input,
 
 If the user has uploaded reference material, Phase 0 runs first and produces `analysis.md`; Phase 1 then runs with `analysis.md` as context (but `brief.md` is still produced — Phase 0 does **not** bypass Phase 1).
 
-**Handoff checkpoint**: after writing `brief.md`, first play back a compact brief digest in prose — scenario, one-line thesis, pillars with their evidence anchors, top objection, desired action, with `[inferred]` markers on any value the user never confirmed — then ask the user via `AskUserQuestion` whether to continue to Phase 2. The digest is prose before the pop-up, not a second pop-up, so the one-pop-up-per-boundary rule still holds. Do not begin Phase 2 until they approve. (See "Every phase handoff requires explicit user approval" above.)
+**Handoff checkpoint**: after writing `brief.md`, first play back a compact brief digest in prose — scenario, delivery mode, one-line thesis, pillars with their evidence anchors, top objection, desired action, with `[inferred]` markers on any value the user never confirmed — then ask the user via `AskUserQuestion` whether to continue to Phase 2. The digest is prose before the pop-up, not a second pop-up, so the one-pop-up-per-boundary rule still holds. Do not begin Phase 2 until they approve. (See "Every phase handoff requires explicit user approval" above.)
 
 ### Phase 2 — Outline architecture (大綱規劃)
 
@@ -188,7 +189,7 @@ The exact prompt to feed into your reasoning is in [prompts/02_outline_architect
 ```json
 {
   "ppt_outline": {
-    "meta": { "topic": "...", "target_pages": 15, "language": "zh-TW", "audience": "...", "tone": "..." },
+    "meta": { "topic": "...", "target_pages": 15, "language": "zh-TW", "audience": "...", "tone": "...", "delivery_mode": "presenting" },
     "cover": { "title": "...", "sub_title": "...", "content": [] },
     "table_of_contents": { "title": "目錄", "content": ["第一部分標題", "..."] },
     "parts": [

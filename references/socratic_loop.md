@@ -40,19 +40,21 @@ Why this matters: a question that is correctly chosen and well-framed can collap
 
 The Phase 1 agent must detect the scenario early. The detection itself can be a pop-up question if it's not obvious from input. Each scenario has a different **default spine** — the order and emphasis that the deck must reflect. If Phase 1 doesn't lock the scenario, Phase 2 will pick the wrong spine.
 
-| Scenario | Audience reality | Default spine | Surface in Phase 1 |
-|---|---|---|---|
-| **Fundraising / pitch** | Investors comparing 10+ decks/week | Problem → Solution → Why-now → Traction → Moat → Team → Ask → Use of funds | Stage, round size, traction stat, moat |
-| **Sales / proposal** | Buyer comparing 3 vendors | Pain → Cost of pain → Our approach → Proof → Pricing → Next step | Buyer's role, decision criterion, deal stage |
-| **Internal sync** | Colleagues with limited time | Status → What's blocking → What we need decided → Timeline | Decisions needed, blockers, owners |
-| **Executive briefing** | One exec, one screen, low patience | Verdict → 2–3 options → Recommendation → Risks → Resource ask | The one decision being asked |
-| **Educational** | Students or new hires | Prerequisite → Concept → Example → Practice → Recap | Learner level, learning outcome, time budget |
-| **Strategy review** | Leadership team | Status quo → Problem → Options → Criteria → Recommendation → Tradeoffs | Forcing function (why review now), criteria |
-| **Annual / quarterly review** | Internal or shareholders | Highlights → vs Prior → vs Plan → Anomalies → Outlook → Asks | Period, what's surprising, forward asks |
-| **Product launch** | External (media, customers) | Before/After → Hero feature → Demo → Availability → CTA | Launch date, hero feature, target customer |
-| **Keynote / conference talk** | Audience with phones in hand | One big idea → Story arc → Examples → Memorable line | The single big idea, the memorable line |
-| **Training / onboarding** | New employees | Roles → Steps → Checkpoints → Where to get help | Role being onboarded, knowledge they have |
-| **Crisis comms** | Internal or external during incident | What happened → Impact → What we're doing → Timeline → Contact | Audience (internal vs external), facts known |
+| Scenario | Audience reality | Default spine | Surface in Phase 1 | Delivery-mode lean |
+|---|---|---|---|---|
+| **Fundraising / pitch** | Investors comparing 10+ decks/week | Problem → Solution → Why-now → Traction → Moat → Team → Ask → Use of funds | Stage, round size, traction stat, moat | presenting — but investors read cold before any meeting; probe whether a send-ahead copy is the deck's primary life |
+| **Sales / proposal** | Buyer comparing 3 vendors | Pain → Cost of pain → Our approach → Proof → Pricing → Next step | Buyer's role, decision criterion, deal stage | presenting — but proposals get left behind / forwarded to the economic buyer who wasn't in the room; probe |
+| **Internal sync** | Colleagues with limited time | Status → What's blocking → What we need decided → Timeline | Decisions needed, blockers, owners | presenting (live meeting artifact) |
+| **Executive briefing** | One exec, one screen, low patience | Verdict → 2–3 options → Recommendation → Risks → Resource ask | The one decision being asked | **reading** — usually a pre-read consumed alone; confirm always |
+| **Educational** | Students or new hires | Prerequisite → Concept → Example → Practice → Recap | Learner level, learning outcome, time budget | presenting (a teacher voices it) |
+| **Strategy review** | Leadership team | Status quo → Problem → Options → Criteria → Recommendation → Tradeoffs | Forcing function (why review now), criteria | presenting (leadership meeting) |
+| **Annual / quarterly review** | Internal or shareholders | Highlights → vs Prior → vs Plan → Anomalies → Outlook → Asks | Period, what's surprising, forward asks | presenting (all-hands / live review) |
+| **Product launch** | External (media, customers) | Before/After → Hero feature → Demo → Availability → CTA | Launch date, hero feature, target customer | presenting (staged event) |
+| **Keynote / conference talk** | Audience with phones in hand | One big idea → Story arc → Examples → Memorable line | The single big idea, the memorable line | presenting — hard; the anti-slidedoc scenario, reading mode is almost never right here |
+| **Training / onboarding** | New employees | Roles → Steps → Checkpoints → Where to get help | Role being onboarded, knowledge they have | **reading** — self-serve reference consumed without a presenter |
+| **Crisis comms** | Internal or external during incident | What happened → Impact → What we're doing → Timeline → Contact | Audience (internal vs external), facts known | **reading** — distributed under time pressure, no presenter available |
+
+The **Delivery-mode lean** column is the single source of truth Phase 1's "Delivery mode — infer a default, confirm once" section (in `prompts/01_needs_research.md`) reads its defaults from. A lean is a starting inference, not a verdict — it caps at ⚠️ `[inferred]` until the user confirms it in a pop-up round.
 
 If the user's deck doesn't match any row exactly, **don't force a fit** — propose the two closest as a pop-up question and let them pick (or pick "Other" for free-text).
 

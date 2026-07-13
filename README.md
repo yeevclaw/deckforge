@@ -90,7 +90,7 @@ Claude 會自動觸發 DeckForge,跑完整流程:
 | 階段 | 產出 | 你做什麼 |
 |---|---|---|
 | 0. 文件分析(可選) | `analysis.md` | 丟文件就自動跑,沒丟就跳過 |
-| 1. **蘇格拉底反詰** | `brief.md` | **跳窗對話**挖出簡報真正要說服的判斷(thesis / belief shift / proof pillars / objection / desired action) |
+| 1. **蘇格拉底反詰** | `brief.md` | **跳窗對話**挖出簡報真正要說服的判斷(thesis / belief shift / proof pillars / objection / desired action),並確認交付模式——現場講(`presenting`)或寄出獨立閱讀(`reading`,slidedoc 密度,講者備註的內容收回頁面上) |
 | 2. 大綱架構 | `outline.json` | 用**金字塔原理**展開成大綱——每頁標題都是一個主張,與 proof pillars MECE 對齊;**檢視標題序列**改方向只要 30 秒 |
 | 3. 策劃稿 | `planning.json` | **檢視每頁內容**,改文案只要 1 分鐘 ← *多數 AI 工具跳過的一步* |
 | 4. SVG 設計 | `pages/page_NN.svg` | 自動產出每頁向量設計 |

@@ -59,7 +59,7 @@ mirror, not a replacement. Do not grade Phase 1 from this file alone.
 | P1-04 | 2–4 proof pillars, each with a concrete evidence anchor or `needs-research` tag | each pillar has anchor/tag | self |
 | P1-05 | Most likely objection identified | `likely_objections[]` non-empty | self |
 | P1-06 | Desired audience action named | `desired_action` filled | self |
-| P1-07 | Page count, tone, language, brand sketched | `constraints` filled | self |
+| P1-07 | Page count, tone, language, brand, delivery mode sketched | `constraints` filled (Delivery mode line: confirmed or scenario-lean default with ⚠️ in `open_assumptions`) | self |
 | P1-08 | The four non-negotiables are **user-confirmed**, not merely `[inferred]`: `audience.current_belief`, `belief_shift`, `core_thesis`, `desired_action` | no `[inferred]` left on these four | self |
 | P1-09 | `proof_pillars` are MECE (no overlap, collectively defend the thesis) | run the MECE check in `01_needs_research.md` | self |
 
@@ -78,6 +78,7 @@ Mirrors `prompts/02_outline_architect.md` → "Quality checklist".
 | P2-07 | Grounded in research, no invented facts | check claims vs `research.md`/source | self |
 | P2-08 | Each part has 2–6 pages | count pages per part | machine |
 | P2-09 | Strict JSON: no comments, no trailing commas | parse it | machine |
+| P2-10 | `meta.delivery_mode` copied from brief.md Constraints (`presenting` / `reading`; `presenting` when the brief has no Delivery mode line) | compare to brief | self |
 
 ## Phase 3 — `planning.json`
 

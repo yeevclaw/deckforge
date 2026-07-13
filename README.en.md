@@ -90,7 +90,7 @@ Claude triggers DeckForge automatically and runs the full workflow:
 | Phase | Output | What you do |
 |---|---|---|
 | 0. Source analysis (optional) | `analysis.md` | Runs automatically when you drop a document; skipped otherwise |
-| 1. **Socratic clarification** | `brief.md` | **Pop-up dialogue** surfaces the judgment the deck must actually change (thesis / belief shift / proof pillars / objection / desired action) |
+| 1. **Socratic clarification** | `brief.md` | **Pop-up dialogue** surfaces the judgment the deck must actually change (thesis / belief shift / proof pillars / objection / desired action), and confirms the delivery mode — presented live (`presenting`) or sent out to be read standalone (`reading`: slidedoc density, speaker-note content folded back onto the page) |
 | 2. Outline architecture | `outline.json` | Expanded with the **pyramid principle** — every page title is a claim, MECE-aligned with the proof pillars; **reviewing the title sequence** takes 30 seconds to change direction |
 | 3. Planning draft | `planning.json` | **Review each page's content**; rewording costs 1 minute ← *the step most AI tools skip* |
 | 4. SVG design | `pages/page_NN.svg` | One vector page per slide, generated automatically |

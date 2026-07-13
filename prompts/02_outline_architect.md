@@ -41,7 +41,8 @@ Output **only** the JSON block, wrapped in `[PPT_OUTLINE]` and `[/PPT_OUTLINE]` 
       "target_pages": 15,
       "language": "zh-TW",
       "audience": "investors",
-      "tone": "tech-futuristic"
+      "tone": "tech-futuristic",
+      "delivery_mode": "presenting"
     },
     "cover": {
       "title": "Eye-catching main title (6–14 chars zh / 4–8 words en)",
@@ -79,6 +80,7 @@ Output **only** the JSON block, wrapped in `[PPT_OUTLINE]` and `[/PPT_OUTLINE]` 
 5. **No content in `content` arrays at this phase** — keep them empty `[]`. Content gets filled in Phase 3 (Planning Draft).
 6. **The cover title must be punchy** — short, evocative, no sub-clauses.
 7. **Match the language** specified in `meta.language`.
+8. **Copy `delivery_mode` from `brief.md → Constraints → Delivery mode` into `meta.delivery_mode` verbatim** (`"presenting"` when the brief doesn't state one). Phase 3 re-reads brief.md too, but the outline must carry the mode so it never silently drops between phases. If the brief's Delivery mode line names per-page exceptions, keep them in the brief — the outline carries only the deck-level value.
 
 ## Quality checklist
 
@@ -91,8 +93,9 @@ Before outputting, silently check:
 - [ ] Does the page count match the target?
 - [ ] Is the TOC consistent with the part titles?
 - [ ] Did I use the research, or did I invent facts?
+- [ ] Is `meta.delivery_mode` copied from brief.md's Constraints (or `"presenting"` when the brief has no Delivery mode line)?
 
-> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 2" (ids P2-01..P2-09). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
+> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 2" (ids P2-01..P2-10). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
 
 If any check fails, revise before outputting.
 

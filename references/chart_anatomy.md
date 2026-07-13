@@ -42,7 +42,7 @@ The old heuristic "if you can fit it in cards, prefer cards" applies **only afte
 - **Background**: same dark gray card (`#1A1A1A`) or pure black slide bg.
 - **Axes / gridlines**: thin (1px) `#333333`. Subtle, not assertive. When every data point carries a direct value label, gridlines may be dropped entirely (keep the baseline) — labels beat grids.
 - **Labels**: `#A0A0A0` 12–14px. Axis labels in English, data labels in CN.
-- **`corporate_fresh` decks (the default style)**: same geometry, swap the neutrals and the data hue — white card on `#F4F4F4` canvas, gridlines `#DDE2DF`, labels `#6B7178` (values `#383838`; **EN decorative sub-labels stay at `#6B7178` too — never a lighter tertiary gray, because on the white card anything lighter than ~`#757575` drops below WCAG AA 4.5:1; the 10px size + letter-spacing already makes the EN recede**), and the data series uses the family's **structure green `#3DB377`** with the same alpha tiers (donut segments: alphas of that green). Ink voice = `#383838`; decreases = `#AEB4BA`; totals = `#383838`. Orange `#E8872E` stays reserved for inline text emphasis — never as chart fill, and **not for chart annotation labels either**: orange on the white card is ≈2.65:1 and fails AA. On fresh charts every annotation label speaks ink `#383838` (bold for the claim-bearing one); orange keeps to its sanctioned role — bold inline runs inside body text.
+- **`corporate_fresh` decks (on request)**: same geometry, swap the neutrals and the data hue — white card on `#F4F4F4` canvas, gridlines `#DDE2DF`, labels `#6B7178` (values `#383838`; **EN decorative sub-labels stay at `#6B7178` too — never a lighter tertiary gray, because on the white card anything lighter than ~`#757575` drops below WCAG AA 4.5:1; the 10px size + letter-spacing already makes the EN recede**), and the data series uses the family's **structure green `#3DB377`** with the same alpha tiers (donut segments: alphas of that green). Ink voice = `#383838`; decreases = `#AEB4BA`; totals = `#383838`. Orange `#E8872E` stays reserved for inline text emphasis — never as chart fill, and **not for chart annotation labels either**: orange on the white card is ≈2.65:1 and fails AA. On fresh charts every annotation label speaks ink `#383838` (bold for the claim-bearing one); orange keeps to its sanctioned role — bold inline runs inside body text.
 - **`IT_prism` decks (the default style)**: same geometry — white card on the `#EFF0F3` canvas, gridlines `#DFE2E9`, labels `#6B7686` (values `#344252`; EN decorative sub-labels stay `#6B7686` — the same AA floor as fresh), data series in the family's **accent green `#58D494`** with the standard alpha tiers. Ink voice = `#344252`; decreases = `#AEB4BA`; totals = `#344252`. Chart fills are the one sanctioned large-area use of the accent green (data IS the pointing); green still never appears as a text fill — every value/annotation label speaks ink `#344252`, and no cover hue (lavender/cyan/indigo/sky) ever enters a chart.
 - **Title sits OUTSIDE the chart**, as the page title. The chart itself has no internal title — the page title carries it.
 - **Numbers on bars / points**: optional. If shown, render at 14–16px in highlight color, above each data point. Add `style="font-variant-numeric: tabular-nums"` so values align across bars/points and axis ticks.
@@ -52,7 +52,7 @@ The old heuristic "if you can fit it in cards, prefer cards" applies **only afte
 
 ## Chart canvas
 
-A chart layout (any of the eight types) takes the full slide content area below the title:
+A chart layout (any of the ten types) takes the full slide content area below the title:
 - Chart area: `x=88, y=160, width=1104, height=480` (inside a 48-padding canvas)
 - Plot area (inside axes): leave ~64px gutter for axis labels on left & bottom
 
@@ -425,7 +425,7 @@ Use when two metrics **must be read together** to make the point: 營收 (bars) 
 </g>
 ```
 
-- **No right axis.** Two axes invite mis-reading; direct value labels on both series carry the scales. The bar unit lives in a small tag near the first bar or the y-axis suffix; the line is named at its right end — placed fully clear of the last bar (a name that straddles the bar edge splits across two backgrounds and one half vanishes).
+- **No right axis.** Two axes invite mis-reading; direct value labels on both series carry the scales. A small top-right legend names the two units (the combo exception from Common rules — the one case direct labels can't serve); the line is also named at its right end — placed fully clear of the last bar (a name that straddles the bar edge splits across two backgrounds and one half vanishes).
 - Line always in **ink** (`#FFFFFF` dark / `#383838` fresh), never a second hue. Bars own the color. Where the line's value labels (or its name) land on the full-hue bars, they flip to near-black `#111111` (the AA rule in Common rules).
 - The classic annotation here is a **`cagr_arrow`** over the bars — growth claim on the bars, margin trend told by the line.
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Hard-invariant lint for DeckForge page/template SVGs — stdlib only, read-only.
 
-Scripts the machine-checkable subset of the designer self-check
-(prompts/05_designer_svg.md → Quality checklist). Only zero-false-positive
+Scripts the machine-checkable subset of the designer rules
+(prompts/05_designer_svg.md → Hard constraints + Quality checklist). Only zero-false-positive
 rules gate (errors); judgment calls (margins, contrast, palette, whether an
 emoji is decorative or a functional icon) stay with the Phase 5 visual grader.
 

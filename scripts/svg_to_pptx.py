@@ -60,6 +60,16 @@ Flags:
   --no-decompose      Embed each slide as one picture (full render + svgBlip)
                       instead of the default background-image + editable-content
                       split.
+  --no-pdf            Skip the companion .pdf (by default one is written
+                      alongside the .pptx with the same stem).
+  --pdf-output PATH   Explicit PDF path. If omitted, derived from --output
+                      by swapping .pptx → .pdf.
+  --keep-notes        Embed speaker notes inside the .pptx (default OFF —
+                      makes Keynote refuse the file; notes always go to the
+                      sibling <stem>.notes.md regardless).
+  --workdir DIR       Directory for intermediate files
+                      (default: <pages-dir>/_renders).
+  --planning PATH     planning.json path (auto-detected if omitted).
 
 Examples:
   python svg_to_pptx.py --pages-dir pages/ --output deck.pptx

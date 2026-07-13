@@ -188,6 +188,7 @@ The exact prompt to feed into your reasoning is in [prompts/02_outline_architect
 ```json
 {
   "ppt_outline": {
+    "meta": { "topic": "...", "target_pages": 15, "language": "zh-TW", "audience": "...", "tone": "..." },
     "cover": { "title": "...", "sub_title": "...", "content": [] },
     "table_of_contents": { "title": "目錄", "content": ["第一部分標題", "..."] },
     "parts": [
@@ -396,7 +397,7 @@ python scripts/svg_to_pptx.py \
 
 This script:
 1. Renders each SVG to a high-DPI PNG via `resvg-py` (zero system deps).
-2. Creates a 16:9 PPTX with one slide per page; each slide embeds the original SVG via the PowerPoint 2016+ `svgBlip` extension plus the PNG fallback.
+2. Creates a 16:9 PPTX with one slide per page; by default each slide splits into a rasterized background image (atmosphere) plus a stripped content-layer SVG embedded via the PowerPoint 2016+ `svgBlip` extension; `--no-decompose` reverts to embedding the original SVG as one picture.
 3. Assembles the same PNGs into a companion `.pdf` (named after `--output` with the `.pdf` extension) via `img2pdf`.
 4. If any page in `planning.json` has `speaker_notes`, writes them to a `<stem>.notes.md` sibling file (notes are NOT embedded in the .pptx — that breaks Keynote — they live in this Markdown file).
 
@@ -556,7 +557,7 @@ deckforge/                            ← (or whatever you name the skill folder
 ├── references/
 │   ├── bento_grid.md                 ← Bento Grid layout system (8 layouts — the default)
 │   ├── diagrams.md                   ← 9 diagram primitives — used only when bento loses information
-│   ├── chart_anatomy.md              ← SVG bar / line / donut charts
+│   ├── chart_anatomy.md              ← SVG chart anatomy — all 10 chart types + annotation layer
 │   ├── design_system.md              ← palettes, typography, motifs
 │   ├── pyramid_principle.md          ← 金字塔原理 quick guide
 │   ├── socratic_loop.md              ← Phase 1 reference: question types + scenario taxonomy

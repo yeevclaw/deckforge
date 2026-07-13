@@ -47,7 +47,7 @@ This is the intentional trade: the premium look (shadows, glass, gradients) is p
 
 - **Fonts not installed on the viewer's machine**: PowerPoint substitutes the closest available system font, same as any other PPT.
 - **Want a single object instead of two?** Use `--no-decompose`. Then *Convert to Shape* still edits text but rasterizes the rest into the one picture (the old behavior).
-- **Animated (flow-anim) slides** — any page planning marked with a `motion` field, whether a throughput flow (`transit_rail` / `hub` / `accent_bypass`) or a true cycle (`orbit`) — are embedded as a looping GIF and are **not** Convert-to-Shape editable (the GIF is the whole slide).
+- **Animated (flow-anim) slides** — any page whose SVG carries `class="flow-anim"` + `stroke-dasharray` markers (how the designer renders a planning `motion` page, whether a throughput flow `transit_rail` / `hub` / `accent_bypass` or a true cycle `orbit`) — are embedded as a looping GIF and are **not** Convert-to-Shape editable (the GIF is the whole slide). The converter detects the SVG markers; it never reads planning.json.
 
 ## Verifying the embed worked
 

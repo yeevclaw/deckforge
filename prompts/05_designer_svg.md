@@ -29,6 +29,7 @@ Your aesthetic anchor depends on the deck's `palette_hint`:
 9. **Fonts**: use the canonical system-font stack via `font-family` attribute on the root `<svg>` — `font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif"`. Latin chars resolve to Helvetica (macOS) / Arial (Windows fallback); CJK chars resolve to PingFang TC (macOS) / 微軟正黑體 (Windows) / Noto Sans CJK TC (Linux). Both Latin and CJK use OS-preinstalled fonts — zero recipient install effort. Do not embed web fonts.
 10. **Editability**: every text string must live in a `<text>` element (not rasterized, not converted to paths). The converter splits each slide into a movable background image + an editable content layer, so text, solid-fill cards, lines and inline icons stay editable/movable after Convert to Shape; gradient/translucent/blurred decoration is kept (uneditable but movable) in the background image. Mark purely decorative groups `class="atmosphere"` to force them into the background image.
 11. **No emoji as functional icons.** Emoji are decorative only — never use them as the bullet-point or category indicator. For icons, use inline `<path>` data from a single icon family (Lucide stroke icons preferred). If unsure, omit the icon entirely.
+12. **Reading-mode pages — the 16px floor + the self-describing root.** On a page whose *effective delivery mode* is `reading` (`page.delivery_mode`, else `design_brief.delivery_mode`, else presenting — resolution rule in `prompts/04_planning_draft.md`): (a) **no `font-size` below 16px anywhere on the canvas** — 16px on the 1280×720 viewBox is 12pt on the exported 16:9 slide (1280px / 13.333in = 96px/in; 12pt = 16px), the minimum a standalone reader can comfortably read with no presenter to say the small print aloud; (b) the root `<svg>` element carries `data-delivery-mode="reading"` so `scripts/check_svg.py` can enforce (a) mechanically. Presenting pages: the size tables apply unchanged and the attribute is **not** added.
 
 ## Inputs
 
@@ -39,7 +40,8 @@ You will receive one element of `planning.json["pages"]` and the global `design_
   "design_brief": {
     "palette_hint": "midnight_executive",
     "motif_hint": "left_accent_bar",
-    "typography_hint": "sans_only_bold"
+    "typography_hint": "sans_only_bold",
+    "delivery_mode": "presenting"
   },
   "page": {
     "page_id": 7,
@@ -52,6 +54,8 @@ You will receive one element of `planning.json["pages"]` and the global `design_
   }
 }
 ```
+
+A page may also carry its own `delivery_mode` (per-page override) and, on reading pages, a `reading_notes` string — render the latter as the footer note strip (Step 6 → reading-mode overrides / `references/slidedoc.md`). Effective mode per Hard rule #12's resolution pointer.
 
 ## Output
 
@@ -144,6 +148,8 @@ Sizes (px, on the 1280×720 canvas). **Use dramatic differences — flat sizes f
 For light palettes, swap `#FFFFFF`/`#A0A0A0`/`#666666` to the equivalent text-on-light colors but **keep the SAME relative size structure** — that's what produces the visual hierarchy.
 
 For the light families, use each family's own size table in [references/design_system.md](../references/design_system.md) instead — their hierarchy is sentence-driven (assertion title 30–36px / body 18–19px lh 1.85; emphasis at body size — `IT_prism`: ink bold + green device, `corporate_fresh`: orange inline), not number-driven. `IT_prism` hinge numbers are slate `#344252`, never green.
+
+**Reading-mode pages** (effective mode `reading` — Hard rule #12) layer the slidedoc adjustments over the sentence-driven scale: every size below 16px rises to the floor (the delta table lives in design_system.md → "Delivery mode — reading (slidedoc)"), every ≥2-sentence body block opens with an **ink-bold lead-in** carrying the claim (never painted in the emphasis voice — that collapses the layers), and inline emphasis tightens to ≤1 run per block. Full architecture: `references/slidedoc.md`. The floor supersedes every smaller value in any size table.
 
 ### Step 5: render the cards
 
@@ -462,10 +468,11 @@ Silently run this before emitting:
 - [ ] Every text run lives in a real `<text>` element (not converted to path)?
 - [ ] Motion page only: `flow-anim` only on open `<line>`/`<path>` (never closed shapes), one dasharray, ≤3 animated paths or one closed system? (Step 5.7)
 - [ ] Chart page only: bars start at zero; decreases neutral gray, never red; annotations ≤2, ink strokes, labels pre-computed; the title's quantitative claim visually asserted on the chart (annotation or emphasized element — graded at P5-11)?
+- [ ] Reading-mode page only: no `font-size` below 16px anywhere; root `<svg>` carries `data-delivery-mode="reading"`; `reading_notes` (when present) rendered as the quiet footer strip, never as a takeaway line? (Hard rule #12 — graded at P4-13)
 
 If any fails → fix before output.
 
-> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 4" (ids P4-01..P4-12). The rendered-slide checks live in "Phase 5 — VISUAL" (P5-01..P5-08, P5-10, P5-11), graded after the converter runs. Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
+> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 4" (ids P4-01..P4-13). The rendered-slide checks live in "Phase 5 — VISUAL" (P5-01..P5-08, P5-10, P5-11), graded after the converter runs. Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
 
 ## Common mistakes to avoid
 
@@ -488,7 +495,7 @@ If any fails → fix before output.
 - **Soft typography contrast.** Number 32px / body 24px is barely a hierarchy. Push to number 80px / body 14px. Drama matters.
 - **Multi-color gradients.** Single-hue alpha gradients only (`rgba(highlight, 0.7) → rgba(highlight, 0.3)`). Never blue→pink, never warm→cool.
 - **Forgetting the EN line.** Bilingual structure adds the polish that separates a designed deck from an AI deck. Use `title_en` when provided, and add `stat_caption_en` on mini-cards selectively.
-- **Cards that hold multiple ideas.** One card, one core point. If two ideas live in one card, the planner failed; either fix the planning or split inside the designer (rare — usually go back to planner).
+- **Cards that hold multiple ideas.** One card, one core point (dark_apple is a presenting-mode language — reading decks resolve to a light family, where a reading card may develop one argument; see `references/slidedoc.md`). If two ideas live in one card, the planner failed; either fix the planning or split inside the designer (rare — usually go back to planner).
 - **Using emoji 🎯 or 🔥 as functional icons.** Never. Use Lucide inline `<path>` or no icon.
 
 ### IT_prism-specific mistakes

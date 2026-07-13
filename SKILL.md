@@ -484,7 +484,7 @@ This is a one-liner that strips the quarantine flag. PowerPoint typically handle
 This is a **closed verification loop**, not an optional eyeball pass: the converter renders, an **independent grader sub-agent** scores the rendered slides against a rubric, and any failing page is re-rendered and re-graded until the deck is clean. Run it **right after the converter succeeds and before the mandatory delivery checklist above**.
 
 1. **Render** — the converter already wrote one full-render PNG per slide to `<pages-dir>/_renders/page_NN.png`. No extra step.
-2. **Grade** — spawn a fresh grader sub-agent with [prompts/06_visual_grader.md](prompts/06_visual_grader.md). Give it the `_renders/page_NN.png` images, `planning.json`, and [references/rubric.md](references/rubric.md) (it scores the "Phase 5 — VISUAL" section, ids P5-01..P5-08, P5-10, and P5-11 on chart pages). It returns strict JSON:
+2. **Grade** — spawn a fresh grader sub-agent with [prompts/06_visual_grader.md](prompts/06_visual_grader.md). Give it the `_renders/page_NN.png` images, `planning.json`, and [references/rubric.md](references/rubric.md) (it scores the "Phase 5 — VISUAL" section, ids P5-01..P5-08, P5-10, and P5-11 on chart pages; it reads each page's effective delivery mode from `planning.json` — P5-08's bar is mode-aware, so a correct reading-mode slidedoc page is never failed for intended density). It returns strict JSON:
    ```json
    { "deck_pass": false, "slides": [ { "n": 2, "pass": false, "failures": [ { "rubric_id": "P5-01", "where": "card 3 body", "fix": "split into two <tspan> rows; clipped at card edge" } ] } ] }
    ```

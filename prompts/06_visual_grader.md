@@ -26,9 +26,15 @@ through.
   These are the full renders (background atmosphere + content), one per slide, produced
   by `scripts/svg_to_pptx.py`. **Grade these**, not the `*.content.png` files (those are
   the editable-layer renders and are intentionally missing the background).
-- **`planning.json`**: use it only to know each page's intended `title` / `title_en` and
+- **`planning.json`**: use it only to know each page's intended `title` / `title_en`,
   whether a page is a chart/diagram — so you can tell "this label is supposed to be here
-  but is clipped" from "this slide is fine".
+  but is clipped" from "this slide is fine" — and each page's **effective delivery mode**
+  (`page.delivery_mode`, else `design_brief.delivery_mode`, else `presenting`). The mode
+  changes what P5-08 means: on **reading** pages, layered density is the *intended*
+  slidedoc pattern — an assertion title over bold lead-in claims over supporting prose
+  passes; fail only an undifferentiated wall (no lead-ins, no visible reading order, no
+  hierarchy between claim and support). Do **not** flag a correct reading page as "too
+  much text" — the amount of text is a Phase-3 decision, not a visual defect.
 - **`references/rubric.md`**: grade against the "Phase 5 — VISUAL" section, ids
   **P5-01 through P5-08, plus P5-10 and P5-11**. (P5-09 is speaker notes — **not** a visual check;
   skip it, the caller verifies notes against metadata at delivery. P5-10 needs

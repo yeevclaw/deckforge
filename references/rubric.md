@@ -129,6 +129,7 @@ decidable from the SVG source — a grader or a small scan can assert them direc
 | P4-10 | Every text run lives in a real `<text>` element (not path-converted) | scan for `<text>`, no text-as-path | machine |
 | P4-11 | Motion page only: `flow-anim` on open `<line>`/`<path>` only, one `stroke-dasharray`, ≤3 animated paths (or one closed system) | `svg_to_pptx.py` flow-anim lint | machine |
 | P4-12 | Single highlight-color discipline (dark_apple: only highlight for emphasis; IT_prism: single green accent in shapes only — never a text fill — with slate as structure and cover hues never on content pages; corporate_fresh: role-locked green/blue/orange) | color-role scan | self |
+| P4-13 | Reading-mode pages (root `<svg data-delivery-mode="reading">`): every `font-size` ≥ 16px on the 1280×720 canvas (= 12pt on the exported 16:9 slide) | font-size scan (`scripts/check_svg.py`) | machine |
 
 ## Phase 5 — VISUAL (the rendered slide)
 
@@ -146,7 +147,7 @@ can only see *after* rasterization — they are invisible in the SVG source.
 | P5-05 | No accent underline beneath any page title (visual re-confirm of P4-03) | look at each slide | grader |
 | P5-06 | No emoji used as a functional icon | look at each slide | grader |
 | P5-07 | Chart / diagram labels are readable and not clipped | look at chart slides | grader |
-| P5-08 | Each slide has visible hierarchy (hero number / icon / motif) — not a text wall | look at each slide | grader |
+| P5-08 | Each slide has visible hierarchy — not an undifferentiated text wall. Presenting: hero number / icon / motif drama. Reading: the layered read is visible — assertion title + bold lead-ins + ≤1 emphasized run per block; dense prose *with* lead-ins is the intended slidedoc pattern and passes, prose *without* them is the reading-mode text wall and fails | look at each slide against its page's effective delivery mode | grader |
 | P5-09 | Speaker notes present where `planning.json` intended (not visual — confirmed against metadata at delivery, not by the image grader). Reading-mode pages instead confirm the fold-back: `reading_notes` content rendered on the page, not expected in `.notes.md` | compare `.notes.md` + rendered strips to planning | self |
 | P5-10 | No bottom takeaway line that restates the page title (a closing sentence paraphrasing the assertion title is the title said twice; most pages should have no bottom line) | look at each slide, compare to the title | grader |
 | P5-11 | Chart pages: the chart visually asserts the page title's quantitative claim — at least one analytical element (reference line / difference bracket / CAGR arrow / emphasized bar, segment, or series) marks the claim on the chart; a bare data dump under an assertion title fails. Ink-voice discipline: annotation strokes in neutral ink, ≤2 annotations, decreases gray never red | look at chart slides, compare to the rendered title | grader |

@@ -35,6 +35,7 @@ executive-briefing
 - **Page count**: 5（fixture 固定）
 - **Tone**: data-heavy
 - **Language**: zh-TW
+- **Delivery mode**: presenting — COO 簡報會議現場報告（fixture 固定為 presenting，保住既有基線行為）
 - **Brand**: 無特殊限制
 - **Visual style hint**: corporate_fresh
 

@@ -19,8 +19,8 @@ You do **not** style the page. That's the Designer's job in Phase 4.
 ## Input
 
 You will receive:
-- `outline.json` (from Phase 2) — **every page's `title` is a pyramid-principle claim** (e.g. "AIoT 戰略推動三年營收翻倍"), not a topic label
-- `brief.md` (from Phase 1) — `core_thesis` + `proof_pillars` define the pyramid's apex and layer 2
+- `outline.json` (from Phase 2) — **every page's `title` is a pyramid-principle claim** (e.g. "AIoT 戰略推動三年營收翻倍"), not a topic label; `meta.delivery_mode` carries the deck's delivery mode
+- `brief.md` (from Phase 1) — `core_thesis` + `proof_pillars` define the pyramid's apex and layer 2; `Constraints → Delivery mode` is the source `design_brief.delivery_mode` copies (including any per-page exceptions the user named)
 - `research.md` (optional, from Phase 2.5)
 
 ## Pyramid alignment — every card must defend its page's claim
@@ -52,7 +52,8 @@ Output **only** the JSON block, wrapped in `[PPT_PLANNING]` and `[/PPT_PLANNING]
     "highlight_color": "#FF6900",
     "motif_hint": "apple_dark_cards | fresh_pill_cards | rounded_cards_soft_shadow | left_accent_bar | icon_in_circle | gradient_mesh_bg",
     "typography_hint": "serif_header_sans_body | sans_only_bold | mono_accent",
-    "flow_variant": "terrace_ascent | river_ribbon | cascade_fall | dome_arcade"
+    "flow_variant": "terrace_ascent | river_ribbon | cascade_fall | dome_arcade",
+    "delivery_mode": "presenting | reading"
   },
   "pages": [
     {
@@ -126,6 +127,25 @@ Output **only** the JSON block, wrapped in `[PPT_PLANNING]` and `[/PPT_PLANNING]
 }
 [/PPT_PLANNING]
 ```
+
+## Delivery mode — presenting vs reading（簡報模式 vs 閱讀模式）
+
+`design_brief.delivery_mode` records how the deck will be consumed. It was decided in Phase 1 (`brief.md → Constraints → Delivery mode`) and carried through `outline.json meta.delivery_mode` — copy it, don't re-decide it:
+
+- **`"presenting"`** — a presenter talks over the deck. Every density rule in this prompt applies as written. **Absence = presenting** (backward compatible).
+- **`"reading"`** — the deck is sent out and read standalone (a slidedoc). There is no presenter: the page must carry everything the reader needs, in a deliberate reading order, with a layered skim path. Four rules fork — each is flagged inline at its home section: one-card-one-point (→ one card, one *argument*), the text-first `body` cap, the number-first default, and — critically — Tier-2 routing.
+
+**Resolution rule (canonical — every other file references this statement):** a page's **effective mode** = `page.delivery_mode` if present, else `design_brief.delivery_mode`, else `"presenting"`.
+
+**Per-page override.** A page object may carry its own `"delivery_mode"`. The typical legitimate use: an appendix / data-dump / leave-behind page inside a presenting deck (usually the pages the user named in the brief's Delivery mode line), or a live-presented summary page inside a reading deck. An override must be earned by *how that page will actually be consumed*, stated in one sentence in `visual_notes`. **Never flip a page's mode to manufacture density variety** — that's the P3-06 anti-pattern (variety for its own sake) in a new coat.
+
+**`reading_notes` (per-page, reading pages only)** — a string of ≤2 sentences carrying the quiet-voice content a presenter would have *said*: sources, methodology, denominators, historical baselines, caveats. Phase 4 renders it as a visually quiet footer note strip (geometry: `references/slidedoc.md`). It never carries a conclusion, a CTA, or anything that maps back to the page title — if a sentence in it feels like it deserves bold, it is Tier-1 content on the wrong layer; move it onto a card. Pages with nothing quiet to say omit the field.
+
+**Layout leanings on reading pages** (judgment, not law): layouts that absorb 2–4-sentence bodies become the workhorses — `two_col_50_50`, `two_col_2_1`, `single_focus`, `compare_table`, `hero_top`, `three_col` (`lead_plus_pair` / `axis_labeled`), `mini_grid` with `ribbon_row`, `flow` with `cascade_fall`, `timeline`. `stat_hero` becomes rare: a bare number with a one-line caption assumes a presenter to interpret it — when the number truly is the message, pair it with a 2–3 sentence interpretation block (or use `single_focus` + `sub_cards`). Bias away from 5-up `mini_grid` `even_grid` (200px-wide cards can't hold prose) and high-series `chart_mekko` / `chart_radar` (reading-floor-sized labels collide).
+
+Reading mode resolves to a light family (`IT_prism` / `corporate_fresh`) — their sentence-driven scale is the natural carrier. `dark_apple` is a presenting-mode language (number-driven drama, tiny captions); if the user explicitly insists on dark + reading, surface the tension at the handoff instead of silently complying.
+
+---
 
 ## Layout choices — bento-first, primitives on loss
 
@@ -395,7 +415,7 @@ A page may carry an optional `"motion"` field. When set, Phase 4 builds the page
 **This is a composition decision, not a decoration.** Decide it here in Phase 3, with three questions in order:
 
 1. **Does the page's story have continuous movement — either throughput or a true cycle?** Two shapes qualify: (a) **throughput** — data, money, traffic, or energy continuously passing *through* a system; (b) a **true cycle** — an iterative loop that returns to its start with no endpoint (描述→生成→明辨→修正…回到起點), where *the rotation itself is the message* even though it iterates rather than throughputs. What does **not** qualify: discrete steps, dated events/timelines, funnels, or one-off state changes. If none of these → no `motion`. (The `cycle` primitive's identity is exactly this loop — diagrams.md → "`cycle` — iterative process with no endpoint".)
-2. **Is it worth the deck's motion budget?** At most **2–3 motion pages per deck**, reserved for the 2–3 highest-leverage pages — a money slide, **or the deck's one core process/cycle diagram**. Every motion page pays a real price: that slide becomes a GIF — **not Convert-to-Shape editable**, animated only in slideshow mode, static in the PDF. If no → no `motion`.
+2. **Is it worth the deck's motion budget?** At most **2–3 motion pages per deck**, reserved for the 2–3 highest-leverage pages — a money slide, **or the deck's one core process/cycle diagram**. Every motion page pays a real price: that slide becomes a GIF — **not Convert-to-Shape editable**, animated only in slideshow mode, static in the PDF. If no → no `motion`. A **reading-mode deck** rarely earns motion at all — the reader may only ever see the PDF or the edit view, where the GIF is a static frame; treat a reading deck's motion budget as 0–1, spent only when slideshow viewing is actually expected.
 3. **Yes to both** → set `motion` and pair it with the matching layout:
 
 | `motion` value | Pairs with | Content shape |
@@ -460,6 +480,8 @@ Symptoms of bad extraction:
 
 When you spot these, **split that card into multiple mini-cards** and use the `mini_grid` layout.
 
+**Reading-mode fork — one card, one ARGUMENT.** On a page whose effective mode is `reading`, the unit of splitting stays one, but the unit is an *argument*, not a caption: a reading card may **develop** its claim — a claim line plus the 2–4 supporting sentences the presenter would otherwise have voiced — but it never bundles two arguments. The split test changes from "two sentences?" to "two claims?": sentences that develop one claim stay together; a second independent claim still splits into its own card. The symptoms move up a level accordingly: two claim lines in one card, a heading and a body arguing different things, 「另外」/「此外」 splicing a second argument on — split the card, not the sentence count. Hard invariant in **both** modes: no card glues unrelated parallel items with 、 or ;.
+
 ## AI Task — semantic extraction (this is the job)
 
 > **Read the source content and identify the logically independent, parallel core points inside each paragraph or claim.** Do not split sentences by punctuation. Do not preserve the source's prose structure. Restructure the *meaning* into discrete cards.
@@ -475,8 +497,12 @@ If `analysis.md` from Phase 0 exists, **every key data point in it must be addre
 **Tier 1 — Pyramid-load-bearing → goes on a card.**
 Numbers that defend one of the deck's `proof_pillars` (from `brief.md`) or directly support a page title's claim. Cluster 3–5 related ones per `mini_grid` page; promote the single most dramatic to a `stat_hero`; expand a parallel set (segments / regions / quarters) into one card per item.
 
-**Tier 2 — Supporting context → goes to `speaker_notes`.**
-Numbers that strengthen the narrative without being central evidence: historical comparisons, second-order metrics, methodology footnotes, denominators that contextualize a Tier-1 number. These belong in the relevant page's `speaker_notes` field, not on the slide itself. The audience hears them from the presenter when relevant; the slide stays focused.
+**Tier 2 — Supporting context → `speaker_notes` (presenting) / onto the page (reading).**
+Numbers that strengthen the narrative without being central evidence: historical comparisons, second-order metrics, methodology footnotes, denominators that contextualize a Tier-1 number.
+- **Presenting pages**: these belong in the relevant page's `speaker_notes` field, not on the slide itself. The audience hears them from the presenter when relevant; the slide stays focused.
+- **Reading pages**: these belong **on the page itself** — a supporting sentence in the card body, a `sub_cards[]` evidence row, or the page's `reading_notes` strip — because the reader never opens `.notes.md`. A Tier-2 fact routed to speaker notes on a reading page is *lost*: the Tier-3 outcome without the Tier-3 logging. **Hard invariant: on a reading-mode page, no load-bearing or supporting content lives only in `speaker_notes`.**
+
+Tier 1 and Tier 3 are mode-neutral.
 
 **Tier 3 — Out-of-scope → drop, but log the rationale.**
 Numbers that the source extracted but don't support any pyramid layer of *this particular deck*. Drop them from the page content. In `planning.json` add a top-level field `dropped_kpis: [{ value, source_section, reason }]` so the user can review what got left out and either accept the drop or push something back to Tier 1/2.
@@ -666,7 +692,7 @@ For **number-first** cards (`is_number_first: true`) — the dominant pattern fo
 
 For **text-first** cards (`is_number_first: false`):
 - `heading` — 3–5 char Chinese phrase, claim-like
-- `body` — **one** short sentence, ≤25 chars, with one concrete fact
+- `body` — presenting: **one** short sentence, ≤25 chars, with one concrete fact. Reading: 1–3 full sentences that let the card stand alone without a presenter — long enough to be self-sufficient, short enough to skim; the hard floor is Phase 4's 16px type minimum, not a character cap (if the body only fits by shrinking below 16px, the content belongs on another card or another page)
 - `stat_caption_en` (optional) — small English subtitle
 - `icon_hint` — Lucide icon name (`trending-up`, `users`, `shield`, etc.)
 - `size_hint` — same as above
@@ -738,6 +764,8 @@ Concrete defaults:
 
 When in doubt — especially for annual-report / KPI / financial / product-metric decks — **prefer number-first**. Numbers create the visceral "this matters" impression that text descriptions can't match. The single most reliable visual upgrade in DeckForge is taking a wall-of-text body and finding the number hidden inside it.
 
+**Reading-mode fork** — the question changes, not the pattern: "can a reader with no presenter understand this point from the card alone?" Number-first still wins when the number plus a full-sentence caption is self-explanatory; text-first with a developed body wins when the number needs narrative context the presenter would have supplied. Never strip a reading card's context to force the number-first pattern.
+
 ### Content authenticity — write like a human, not a model
 
 Two failure modes make a deck read "AI-generated" even when the pyramid is right:
@@ -793,7 +821,9 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 - [ ] Did I pick `stat_hero` or `mini_grid` for data-dense pages of **independent** numbers — and the matching `chart_*` layout wherever the numbers relate (the relationship test)?
 - [ ] **Chart trigger**: no page scatters related numbers (trend / mix shift / bridge / ranking / volume+rate / 2-D share) across cards; every chart clears its minimum shape (no 2-bar charts); where the page title makes a quantitative claim, `chart_data.annotations[]` carries it (≤2 per chart, labels pre-computed)?
 - [ ] Are layouts driven by content shape? (Avoid mechanical repetition like 5 `three_col` pages in a row — **but layout choice follows content, not visual variety. Never switch to a primitive layout just to break a streak of bento pages.** Repetition of bento is a feature: shared layout language across the deck. For a same-structure run of light-family (IT_prism / corporate_fresh) `three_col` pages, differentiate them the *right* way — a per-page `card_variant` driven by each page's sub-shape, not a layout switch; see the `card_variant` check below.)
-- [ ] Did I write actual speaker notes, not "TBD"?
+- [ ] Did I write actual speaker notes, not "TBD"? (presenting pages; reading pages may keep notes minimal — production/context notes only, never content the reader needs)
+- [ ] **Delivery mode**: does `design_brief.delivery_mode` match brief.md / outline meta? Does every per-page override carry a one-sentence consumption reason in `visual_notes` (typically appendix / leave-behind)? No override exists just to vary density?
+- [ ] **Reading-mode routing**: on every page whose effective mode is reading, does Tier-2 support live on the page (body lines / `sub_cards` / `reading_notes`), never only in `speaker_notes`? Does `reading_notes` stay in the quiet voice (sources / methodology / caveats — no conclusions, no title echo)?
 - [ ] Is the `design_brief` palette consistent with the tone in `brief.md`?
 - [ ] Is `design_brief.highlight_color` set to ONE concrete hex value?
 - [ ] Are there 0 placeholders ("Lorem", "xxxx", "TBD", "Insert here")?
@@ -807,13 +837,13 @@ Exception — `corporate_fresh`: this family uses a **fixed role palette** inste
 
 Fail any check → revise before emitting.
 
-> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 3" (ids P3-01..P3-18, including the title-only read P3-13 and the chart trigger P3-18). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
+> Gradeable mirror: [references/rubric.md](../references/rubric.md) → "Phase 3" (ids P3-01..P3-19, including the title-only read P3-13, the chart trigger P3-18, and the reading-mode routing P3-19). Graders and `scripts/check_docs.py` reference these by id — keep them in sync.
 
 ## Independent content grade — before the Phase 3→4 handoff
 
 The checklist above is a *self*-check: the same reasoning that wrote `planning.json` is grading it, so it tends to rationalize its own choices. So a **fresh** sub-agent grades the plan independently before any SVG is drawn — the content analogue of the Phase 5 visual grader, catching an off-claim card or an incoherent title-read here, where a fix is far cheaper than after Phase 4 has rendered 15 pages.
 
-You don't spawn it yourself — SKILL.md → "Phase 3 content grade" orchestrates it once you emit `planning.json`. The grader spec (role, inputs, the strict-JSON `{ plan_pass, title_read, pages[] }` shape) is [prompts/07_content_grader.md](07_content_grader.md); it scores the independence-sensitive content ids **P3-11 / P3-12 / P3-13** (AI filler · pyramid alignment · title-only read) against `brief.md`, and stays inside its boundary — it grades whether your plan *delivers* the approved thesis, never reopens the thesis itself.
+You don't spawn it yourself — SKILL.md → "Phase 3 content grade" orchestrates it once you emit `planning.json`. The grader spec (role, inputs, the strict-JSON `{ plan_pass, title_read, pages[] }` shape) is [prompts/07_content_grader.md](07_content_grader.md); it scores the independence-sensitive content ids **P3-11 / P3-12 / P3-13** (AI filler · pyramid alignment · title-only read) against `brief.md` — plus **P3-19** (reading-mode routing) on pages whose effective mode is reading — and stays inside its boundary: it grades whether your plan *delivers* the approved thesis, never reopens the thesis itself.
 
 It's **advisory to the human gate**, not a replacement: the title-only read below stays the primary, mandatory gate, and the grader's findings feed into the handoff pop-up. It runs by default on full, content-heavy decks; skip it in Quick mode or for a small, simple deck (a 5-page internal sync doesn't need it). If it flags pages, fix those entries in `planning.json` and re-grade before the handoff.
 

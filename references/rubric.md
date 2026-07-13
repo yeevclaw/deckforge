@@ -20,8 +20,8 @@ next free number; never recycle.
   did **not** produce the artifact scores it against the relevant section here and
   returns pass/fail + a fix per failure. Independent grading is what closes the
   verification loop — see `prompts/06_visual_grader.md` (Phase 5, the rendered slides)
-  and `prompts/07_content_grader.md` (Phase 3, the content plan: ids P3-11/P3-12/P3-13),
-  wired in SKILL.md "QA" and "Phase 3 content grade".
+  and `prompts/07_content_grader.md` (Phase 3, the content plan: ids P3-11/P3-12/P3-13,
+  plus P3-19 on reading-mode pages), wired in SKILL.md "QA" and "Phase 3 content grade".
 
 The **Checker** column says who can decide each criterion:
 - `self` — judgement call, run during the phase's own self-check.
@@ -84,18 +84,19 @@ Mirrors `prompts/02_outline_architect.md` → "Quality checklist".
 
 Mirrors `prompts/04_planning_draft.md` → "Quality checklist" + "Title-only read QA".
 **P3-11 / P3-12 / P3-13 are independently graded** at the Phase 3→4 handoff by
-`prompts/07_content_grader.md` (the content analogue of the Phase 5 visual grader); the
-rest stay self-checks.
+`prompts/07_content_grader.md` (the content analogue of the Phase 5 visual grader),
+**plus P3-19 on pages whose effective delivery mode is reading**; the rest stay
+self-checks.
 
 | id | Criterion | How to check | Checker |
 |---|---|---|---|
-| P3-01 | Each card holds exactly one core point | read each card | self |
-| P3-02 | Multi-point cards split into mini-cards | inspect cards | self |
+| P3-01 | Each card holds exactly one core point (presenting) / exactly one **argument** — a claim plus its own supporting sentences, never a second claim (reading) | read each card against its page's effective delivery mode | self |
+| P3-02 | Multi-point cards split into mini-cards; in reading mode "multi-point" means multiple independent claims, not multiple sentences developing one claim | inspect cards | self |
 | P3-03 | `is_number_first` set correctly on every card | inspect cards | self |
 | P3-04 | Number-first `stat_value` is a concrete number (not "many"/"several") | inspect values | self |
 | P3-05 | Data-dense pages use `stat_hero` / `mini_grid` (independent numbers) or the matching `chart_*` layout (related numbers) | inspect layouts | self |
 | P3-06 | Layout follows content shape, never switched to a primitive for visual variety | inspect layout choices | self |
-| P3-07 | Real speaker notes, not "TBD" | inspect `speaker_notes` | self |
+| P3-07 | Real speaker notes, not "TBD" (presenting pages; reading pages: notes optional, but never carry content the reader needs) | inspect `speaker_notes` | self |
 | P3-08 | `design_brief` palette consistent with `brief.md` tone | compare to brief | self |
 | P3-09 | `design_brief.highlight_color` is ONE concrete hex | parse field | machine |
 | P3-10 | Zero placeholders ("Lorem", "xxxx", "TBD", "Insert here") | regex scan | machine |
@@ -107,6 +108,7 @@ rest stay self-checks.
 | P3-16 | `flow_variant` set (light-family IT_prism / corporate_fresh static flow) with a one-sentence story-shape reason | inspect `design_brief.flow_variant` | self |
 | P3-17 | `card_variant` set per light-family (IT_prism / corporate_fresh) card-variant page (`three_col` / `mini_grid` / `two_col_50_50`) with a one-sentence content-substructure reason; a same-structure parallel series assigns variants by each page's substructure, never for variety | inspect `card_variant` choices | self |
 | P3-18 | Chart trigger (the relationship test): related numbers (trend / mix shift / A→B bridge / ranking / volume+rate / 2-D share) are planned as the matching `chart_*` layout, never scattered into cards; each chart clears its minimum shape; a quantitative page-title claim is carried by `chart_data.annotations[]` (≤2, labels pre-computed) | inspect data-bearing pages vs `prompts/04_planning_draft.md` → "The chart trigger" | self |
+| P3-19 | Reading-mode routing: on pages whose effective delivery mode is reading, Tier-2 support lives on the page (layered body / `sub_cards` / `reading_notes`), never only in `speaker_notes`; `reading_notes` stays in the quiet voice (no conclusions, no title echo); per-page mode overrides carry a one-sentence consumption reason | inspect reading pages | self + grader |
 
 ## Phase 4 — `pages/page_NN.svg`
 
@@ -145,7 +147,7 @@ can only see *after* rasterization — they are invisible in the SVG source.
 | P5-06 | No emoji used as a functional icon | look at each slide | grader |
 | P5-07 | Chart / diagram labels are readable and not clipped | look at chart slides | grader |
 | P5-08 | Each slide has visible hierarchy (hero number / icon / motif) — not a text wall | look at each slide | grader |
-| P5-09 | Speaker notes present where `planning.json` intended (not visual — confirmed against metadata at delivery, not by the image grader) | compare `.notes.md` to planning | self |
+| P5-09 | Speaker notes present where `planning.json` intended (not visual — confirmed against metadata at delivery, not by the image grader). Reading-mode pages instead confirm the fold-back: `reading_notes` content rendered on the page, not expected in `.notes.md` | compare `.notes.md` + rendered strips to planning | self |
 | P5-10 | No bottom takeaway line that restates the page title (a closing sentence paraphrasing the assertion title is the title said twice; most pages should have no bottom line) | look at each slide, compare to the title | grader |
 | P5-11 | Chart pages: the chart visually asserts the page title's quantitative claim — at least one analytical element (reference line / difference bracket / CAGR arrow / emphasized bar, segment, or series) marks the claim on the chart; a bare data dump under an assertion title fails. Ink-voice discipline: annotation strokes in neutral ink, ≤2 annotations, decreases gray never red | look at chart slides, compare to the rendered title | grader |
 
@@ -161,6 +163,7 @@ ship**: list the unresolved `rubric_id`s to the user in the delivery message. Ve
 costs latency + tokens; the cap bounds it. Apply it here because Phase 5 is the visible
 deliverable where quality outweighs speed.
 
-The Phase 3 content loop (`prompts/07_content_grader.md`, ids P3-11/P3-12/P3-13) uses the
-same shape — `plan_pass` + per-page `failures` + a deck-level `title_read` — and the same
-≤2-round cap, run before the Phase 3→4 handoff instead of before delivery.
+The Phase 3 content loop (`prompts/07_content_grader.md`, ids P3-11/P3-12/P3-13, plus
+P3-19 on reading-mode pages) uses the same shape — `plan_pass` + per-page `failures` + a
+deck-level `title_read` — and the same ≤2-round cap, run before the Phase 3→4 handoff
+instead of before delivery.

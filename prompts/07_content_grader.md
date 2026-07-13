@@ -4,7 +4,8 @@ This prompt drives a **fresh-eyes grader** that runs inside the Phase 3 content-
 step (SKILL.md → "Phase 3 content grade"). It is **not** a phase of the deck pipeline —
 it is a sub-agent spawned *after* `planning.json` is written and *before* the Phase 3→4
 handoff, to score the content plan against `references/rubric.md` → "Phase 3", ids
-**P3-11, P3-12, P3-13**. Its whole value is independence: it did **not** write this plan,
+**P3-11, P3-12, P3-13** — plus **P3-19** on pages whose effective delivery mode is
+reading. Its whole value is independence: it did **not** write this plan,
 so it does not rationalize its weak spots the way the planner's own self-check does —
 exactly the role `prompts/06_visual_grader.md` plays for the rendered visuals.
 
@@ -38,8 +39,15 @@ itself is not.
   only if it defends its page title, and a page earns its place only if it advances this
   thesis.
 - **`references/rubric.md`** — grade against the "Phase 3" section, ids **P3-11, P3-12,
-  P3-13** only. (The other P3 ids are machine-checked or are the planner's own
-  self-checks — not yours.)
+  P3-13**, plus **P3-19** on reading-mode pages only. (The other P3 ids are
+  machine-checked or are the planner's own self-checks — not yours.)
+
+**Delivery mode scopes your judgment, not your id set.** Read each page's *effective
+delivery mode* from `planning.json`: `page.delivery_mode` if present, else
+`design_brief.delivery_mode`, else `presenting`. On **reading** pages, supporting
+sentences that develop the card's claim are the intended slidedoc pattern — grade whether
+they defend the title (P3-12), never their length or count. On **presenting** pages the
+familiar one-point-per-card density is the bar.
 
 ## Task
 
@@ -58,8 +66,14 @@ fight — that is one `title_read` failure with a concrete `fix`.
 2. **P3-11 — content authenticity.** Flag AI filler (賦能 / 無縫 / 顛覆 · seamless /
    elevate / leverage), exclamation marks in claims, and any number or named entity that
    drifted from the source's precision.
-3. Record one `failure` per criterion missed:
-   - `rubric_id` — exactly one id (`"P3-11"` or `"P3-12"`).
+3. **P3-19 — reading-mode routing (reading pages only).** On each page whose effective
+   mode is reading: flag any supporting evidence that lives only in `speaker_notes` (the
+   reader never sees `.notes.md` — it must move into a card body, `sub_cards`, or
+   `reading_notes`); flag a `reading_notes` that carries a conclusion or restates the
+   title (it is the quiet voice: sources, methodology, caveats); flag a per-page mode
+   override with no consumption reason.
+4. Record one `failure` per criterion missed:
+   - `rubric_id` — exactly one id (`"P3-11"`, `"P3-12"`, or `"P3-19"`).
    - `where` — the page and card (e.g. "page 7, card 3").
    - `fix` — a concrete, planner-actionable instruction ("drop card 3; the hardware unit
      number is on-topic but does not defend 'services are the new engine' — replace with
@@ -91,7 +105,8 @@ Return **only** this JSON object, nothing before or after it:
 - `n` is the page number (matches `page_id` / `page_NN`).
 - `plan_pass` is `true` **only if** `title_read.pass` is true **and every** page has
   `pass: true`.
-- Every per-page `failure` carries exactly one `rubric_id` from P3-11 / P3-12.
+- Every per-page `failure` carries exactly one `rubric_id` from P3-11 / P3-12 / P3-19
+  (P3-19 only on pages whose effective delivery mode is reading).
 
 ## How the caller uses your output (context, not your job)
 

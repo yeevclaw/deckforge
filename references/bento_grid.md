@@ -215,7 +215,8 @@ A main card holds **3–5 mini-cards** in a horizontal grid. Each mini-card carr
 - Big element = either a huge number (80–96px, highlight color) OR a 3–5 character Chinese phrase (32–40px, white or highlight).
 - Caption = 16–18px gray-400, 1–2 short lines, no commas-breaking-sentences.
 - Optional bilingual subtitle: 12–14px gray-500 English phrase ("YoY Growth", "Total Revenue"). Apply selectively, not on every card.
-- **Never two long sentences on one mini-card.** If you can't fit it short, the content isn't extracted enough — go back to the planner.
+- **Never two long sentences on one mini-card** (presenting mode). If you can't fit it short, the content isn't extracted enough — go back to the planner.
+- **Reading mode** (page's effective `delivery_mode` is `reading`): a mini-card may carry one claim + up to two supporting sentences — but only if the geometry gives every line ≥16px (the reading floor) at a sane measure. A 200px-wide 5-up mini-card cannot; prefer 3–4 cards (wider), or the `ribbon_row` variant, whose full-width rows are the natural slidedoc shape for a metric + its explanation.
 
 ---
 
@@ -238,7 +239,7 @@ The same principle applies to `three_col`: don't force a 3rd column to fill spac
 
 Any **large** card on a whitelisted layout (`single_focus`, `two_col_2_1` wide slot, or `mixed_grid` big slot) may optionally contain a **2–3 mini-card sub-grid** via the planning schema's `sub_cards: []` field. This lets a hero claim carry quantitative evidence inline, without spending a separate page.
 
-**Excluded layouts**: `hero_top` (240px hero too short to fit heading + body + sub-cards without overflow), `mini_grid`, `three_col` (cards too narrow). On these, use a separate page or move the evidence to `speaker_notes`.
+**Excluded layouts**: `hero_top` (240px hero too short to fit heading + body + sub-cards without overflow), `mini_grid`, `three_col` (cards too narrow). On these, use a separate page or move the evidence to `speaker_notes` (presenting decks; on a reading page evidence never lives only in speaker notes — use a separate page or the `reading_notes` strip).
 
 ```
 +------------------------------------------+
@@ -306,14 +307,17 @@ The glow's max alpha is **0.10** — easily missed at a glance, which is the poi
 
 This rule applies to ALL layouts, but mini-cards in particular:
 
-> **One card, one core point.**
-> If the content can't fit in 1 short caption under a big element, the planner hasn't extracted it correctly. Don't cram. Split.
+> **One card, one point — mode-scaled.**
+> **Presenting**: one big element + one short caption. If it can't fit, the planner hasn't extracted it correctly. Don't cram. Split.
+> **Reading** (effective `delivery_mode: reading`): one card, one **argument** — one claim line plus the 2–4 sentences that complete it. The unit of splitting is still one: a card carrying *two claims* is exactly as broken as a presenting card carrying two points.
 
-Symptoms of bad extraction:
+Symptoms of bad extraction (presenting):
 - Card has 3+ bullets inside.
 - Card has 2 paragraphs.
 - Card heading and body talk about different things.
 - Card has commas like ", "、" or "、" breaking what should have been separate cards.
+
+In reading mode the symptoms move up a level: two claim lines in one card, a heading and a body that argue different things, 「另外」/「此外」 splicing a second argument on — split the card, not the sentence count.
 
 When you see these symptoms, **rewrite the planning** to split that one card into multiple mini-cards.
 
@@ -370,6 +374,8 @@ The starter templates in `templates/` already include this skeleton plus the mot
 | Card body | 14–18 | 400, dy 1.55em between lines |
 | Big stat (single number) | 56–96 | 800–900 |
 | Caption | 11–13 | 400, opacity 0.6 |
+
+Reading-mode pages floor every size at **16px** (the 12pt reading floor — captions rise to 16, the "quiet" is carried by color/opacity, not size); delta table in `references/design_system.md` → "Delivery mode — reading".
 
 ---
 

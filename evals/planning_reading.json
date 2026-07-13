@@ -1,0 +1,112 @@
+{
+  "meta": { "topic": "AI 客服中台導入提案（pre-read）", "page_count": 5, "language": "zh-TW" },
+  "design_brief": {
+    "palette_hint": "IT_prism",
+    "highlight_color": "#58D494",
+    "motif_hint": "prism_panel_cards",
+    "typography_hint": "sans_only_bold",
+    "flow_variant": "river_ribbon",
+    "delivery_mode": "reading"
+  },
+  "pages": [
+    {
+      "page_id": 1,
+      "page_type": "cover",
+      "layout": "single_focus",
+      "title": "讓客服品質與人力規模脫鉤",
+      "title_en": "Decouple Service Quality from Headcount",
+      "subtitle": "AI 客服中台導入提案 · 核准會議 pre-read",
+      "cards": [],
+      "visual_notes": "Reeded-glass prism cover; slate chip reads 決策前閱讀.",
+      "speaker_notes": "（製作註記）pre-read 封面，寄出版本，無現場口白。"
+    },
+    {
+      "page_id": 2,
+      "page_type": "content",
+      "layout": "two_col_50_50",
+      "card_variant": "balanced",
+      "title": "成本與品質不再互斥：pilot 三個月的兩個事實",
+      "title_en": "Cost Down, Quality Up — Two Facts from the Pilot",
+      "cards": [
+        {
+          "is_number_first": false,
+          "heading": "成本結構已被重寫",
+          "body": "單張工單處理成本由 NT$180 降至 NT$62，降幅 66%。以現行工單量推算，導入成本八個月回收；此後每月淨節省約 NT$140 萬。",
+          "icon_hint": "trending-down",
+          "size_hint": "medium"
+        },
+        {
+          "is_number_first": false,
+          "heading": "品質同步上升而非下降",
+          "body": "pilot A/B 對照中，五大管道首次解決率由 58% 升至 71–82%。平均首次回覆時間從 4.2 小時縮短到 11 分鐘，客訴率未上升。",
+          "icon_hint": "badge-check",
+          "size_hint": "medium"
+        }
+      ],
+      "reading_notes": "成本為 pilot 三個月實測口徑（含模型推論費與維運分攤）；解決率區間為五管道分別值，非平均。",
+      "visual_notes": "Reading page: each card opens with an ink-bold lead-in; one band emphasis per block.",
+      "speaker_notes": "（製作註記）讀者自讀頁；支撐口徑已收進 reading_notes。"
+    },
+    {
+      "page_id": 3,
+      "page_type": "content",
+      "layout": "two_col_2_1",
+      "title": "十二週落地：不動既有系統的四步導入",
+      "title_en": "Live in 12 Weeks, No Rip-and-Replace",
+      "cards": [
+        {
+          "is_number_first": false,
+          "heading": "既有 CRM 與工單系統原封不動",
+          "body": "中台以 API 掛接現行系統，四步導入：盤點知識庫、接入管道、雙軌試點、全面切換。每一步都有回退點，不存在不可逆的切換。",
+          "icon_hint": "layers",
+          "size_hint": "large",
+          "sub_cards": [
+            { "is_number_first": true, "stat_value": "12 週", "stat_caption": "導入時程（架構評估報告）" },
+            { "is_number_first": true, "stat_value": "0 套", "stat_caption": "需汰換的既有系統" },
+            { "is_number_first": true, "stat_value": "8 週", "stat_caption": "雙軌並行觀察期" }
+          ]
+        },
+        {
+          "is_number_first": false,
+          "heading": "資安已過審",
+          "body": "pilot 通過資安部門 DLP 審查，客戶資料不出私有雲；一線人力轉二線高價值案件，無裁員規劃。",
+          "icon_hint": "shield",
+          "size_hint": "small"
+        }
+      ],
+      "reading_notes": "四步導入的完整里程碑與回退條件見架構評估報告 v2.3 第 4 節；DLP 審查編號 SEC-2026-041。",
+      "visual_notes": "Reading page: hero claim + sub_cards evidence row; side card answers the two standing objections.",
+      "speaker_notes": "（製作註記）讀者自讀頁。"
+    },
+    {
+      "page_id": 4,
+      "page_type": "content",
+      "layout": "stat_hero",
+      "delivery_mode": "presenting",
+      "title": "核准後八個月，導入成本全數回收",
+      "title_en": "Payback in Eight Months",
+      "cards": [
+        {
+          "is_number_first": true,
+          "stat_value": "8 個月",
+          "stat_caption": "NT$1,200 萬導入成本的回收期",
+          "stat_caption_en": "PAYBACK PERIOD"
+        }
+      ],
+      "visual_notes": "Per-page override to presenting: 這一頁保留在核准會議現場由提案人開場展示並口頭詮釋，不隨 pre-read 自讀（brief Delivery mode 例外欄所指定）。",
+      "speaker_notes": "開場即亮出回收期：這不是成本，是一筆八個月回本的投資。之後再回到 pre-read 各頁答疑。"
+    },
+    {
+      "page_id": 5,
+      "page_type": "end",
+      "layout": "single_focus",
+      "title": "請核准 Q3 全面導入預算",
+      "title_en": "Approve the Q3 Rollout Budget",
+      "subtitle": "NT$1,200 萬 · 客服部與 IT 部共同立項",
+      "cards": [],
+      "reading_notes": "回覆窗口：會議前一日中午前，異議請標注頁碼與口徑問題，會議當日逐條回覆。",
+      "visual_notes": "Prism end page mirrors the cover; CTA in slate.",
+      "speaker_notes": "（製作註記）pre-read 結尾頁，行動呼籲與回覆窗口都在頁面上。"
+    }
+  ]
+}

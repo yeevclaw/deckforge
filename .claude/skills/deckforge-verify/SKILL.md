@@ -37,8 +37,8 @@ not its filename). Union when multiple classes match.
 | a script under `scripts/` | run the changed script itself green |
 | `templates/` or any page SVG | `python3 scripts/check_svg.py <changed files>` → `bash scripts/render_smoke.sh <out> <changed files>` → **one visual-grade pass** over the PNGs (fresh 06 sub-agent; P5-01..P5-08, plus P5-11 on chart pages, skip P5-10 — no plan) |
 | `scripts/svg_to_pptx.py` or `examples/` | `bash scripts/golden_check.sh`; **plus**, only if the change is to render/decompose logic AND the expected effect is pixel-visible: render 3 `examples/sample-deck` pages via render_smoke → one 06 pass |
-| `prompts/04_planning_draft.md`, `references/pyramid_principle.md`, SKILL.md Phase-3 rules | **Phase-3 eval**: fresh sub-agent runs the planner per 04 on `evals/brief.md` → fresh 07 sub-agent grades the produced plan against `evals/brief.md` + rubric (P3-11/12/13) |
-| `prompts/05_designer_svg.md`, design references (`design_system` / `bento_grid` / `diagrams` / `chart_anatomy`), template-family rules | **Phase-4 eval**: fresh sub-agent runs the designer per 05 on the **relevant subset** of `evals/planning.json` pages → render_smoke → fresh 06 pass. Subset map: flow/glass rules → flow page; chart_anatomy → chart_bar page; global card/typography rules → three_col + mini_grid; unmappable → three_col alone. **Never all 5 pages.** |
+| `prompts/04_planning_draft.md`, `references/pyramid_principle.md`, SKILL.md Phase-3 rules | **Phase-3 eval**: fresh sub-agent runs the planner per 04 on `evals/brief.md` → fresh 07 sub-agent grades the produced plan against `evals/brief.md` + rubric (P3-11/12/13). **Reading-path rules** (delivery_mode / reading_notes / Tier-2 routing): additionally run the planner on `evals/brief_reading.md` → 07 grades against it (+P3-19 on reading pages) |
+| `prompts/05_designer_svg.md`, design references (`design_system` / `bento_grid` / `diagrams` / `chart_anatomy` / `slidedoc`), template-family rules | **Phase-4 eval**: fresh sub-agent runs the designer per 05 on the **relevant subset** of `evals/planning.json` pages → render_smoke → fresh 06 pass. Subset map: flow/glass rules → flow page; chart_anatomy → chart_bar page; global card/typography rules → three_col + mini_grid; **reading-mode rules (slidedoc / reading overrides / 16px floor) → `evals/planning_reading.json` page 2 (two_col_50_50 reading) + page 4 (the presenting override), check_svg must pass the reading pages**; unmappable → three_col alone. **Never all 5 pages.** |
 | `prompts/06` / `prompts/07` / `references/rubric.md` (the measuring instruments) | **Calibration rung**: run the changed grader once on a known-good input (06 → render_smoke over 3 `examples/sample-deck` pages; 07 → the `evals/` fixtures) and assert (a) known-good still passes, (b) the output JSON has the exact schema keys |
 | `prompts/00–03` (Socratic / outline — no offline oracle) | check_docs + read-through; the report must state: **"direction deferred to Loop-4 traces"** — do not fake an eval |
 | docs / READMEs only | check_docs |
@@ -72,8 +72,9 @@ Anything else = report honestly and stop for the maintainer.
    `scripts/check_svg.py`. Fixes go into the change under verify, never into
    the instruments. If you believe a fixture or rubric line is itself wrong:
    stop, report `verify blocked: fixture dispute`, and let the maintainer
-   change it in a **separate commit** — fixture edits touch `evals/brief.md` +
-   `evals/planning.json` only together and re-baseline with one 07 pass
+   change it in a **separate commit** — fixture edits touch a pair together
+   (`evals/brief.md` + `evals/planning.json`, or `evals/brief_reading.md` +
+   `evals/planning_reading.json`) and re-baseline with one 07 pass
    (must pass) before anything else is verified against them.
 2. **Mechanical tooth**: the last action of every verify is
    `git diff HEAD --name-only` — if any measuring-set path is modified in the

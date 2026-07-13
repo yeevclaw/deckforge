@@ -242,23 +242,23 @@ def _enum_values(name: str) -> list[str]:
     return next(values for n, values, _ in VARIANT_ENUMS if n == name)
 
 
-def check_evals_fixtures() -> list[str]:
+def _check_plan_fixture(rel: str, expected_mode: str | None) -> list[str]:
     errors: list[str] = []
     try:
-        plan = json.loads(read("evals/planning.json"))
+        plan = json.loads(read(rel))
     except FileNotFoundError:
-        return ["evals/planning.json is missing."]
+        return [f"{rel} is missing."]
     except json.JSONDecodeError as e:
-        return [f"evals/planning.json: invalid JSON ({e})."]
+        return [f"{rel}: invalid JSON ({e})."]
 
     meta = plan.get("meta", {})
     missing = [k for k in ("topic", "page_count", "language") if k not in meta]
     if missing:
-        errors.append(f"evals/planning.json: meta missing {missing}.")
+        errors.append(f"{rel}: meta missing {missing}.")
     pages = plan.get("pages", [])
     if meta.get("page_count") != len(pages):
         errors.append(
-            f"evals/planning.json: meta.page_count={meta.get('page_count')} "
+            f"{rel}: meta.page_count={meta.get('page_count')} "
             f"but pages has {len(pages)} entries."
         )
 
@@ -266,61 +266,85 @@ def check_evals_fixtures() -> list[str]:
     missing = [k for k in ("palette_hint", "highlight_color", "motif_hint",
                            "typography_hint", "flow_variant") if k not in db]
     if missing:
-        errors.append(f"evals/planning.json: design_brief missing {missing}.")
+        errors.append(f"{rel}: design_brief missing {missing}.")
     if db.get("flow_variant") and db["flow_variant"] not in _enum_values("flow_variant"):
-        errors.append(f"evals/planning.json: flow_variant '{db['flow_variant']}' not in enum.")
+        errors.append(f"{rel}: flow_variant '{db['flow_variant']}' not in enum.")
     # delivery_mode is tolerant: absence = presenting (pre-v0.17.0 fixtures are frozen);
     # when present it must be a legal value.
     if db.get("delivery_mode") not in (None, "presenting", "reading"):
-        errors.append(f"evals/planning.json: delivery_mode '{db['delivery_mode']}' not in enum.")
+        errors.append(f"{rel}: delivery_mode '{db['delivery_mode']}' not in enum.")
+    if expected_mode and db.get("delivery_mode") != expected_mode:
+        errors.append(
+            f"{rel}: design_brief.delivery_mode must be '{expected_mode}' — "
+            f"this fixture exists to exercise that path."
+        )
 
     for page in pages:
         pid = page.get("page_id", "?")
         missing = [k for k in ("page_id", "page_type", "layout", "title", "speaker_notes")
                    if k not in page]
         if missing:
-            errors.append(f"evals/planning.json page {pid}: missing {missing}.")
+            errors.append(f"{rel} page {pid}: missing {missing}.")
         layout = page.get("layout")
         if layout not in CANONICAL_LAYOUTS:
-            errors.append(f"evals/planning.json page {pid}: layout '{layout}' not in CANONICAL_LAYOUTS.")
+            errors.append(f"{rel} page {pid}: layout '{layout}' not in CANONICAL_LAYOUTS.")
         elif layout in CHART_LAYOUTS:
             if "chart_data" not in page:
-                errors.append(f"evals/planning.json page {pid}: chart layout without chart_data.")
+                errors.append(f"{rel} page {pid}: chart layout without chart_data.")
         elif layout in PRIMITIVE_LAYOUTS:
             if f"{layout}_data" not in page:
-                errors.append(f"evals/planning.json page {pid}: primitive layout without {layout}_data.")
+                errors.append(f"{rel} page {pid}: primitive layout without {layout}_data.")
         elif not isinstance(page.get("cards"), list):
-            errors.append(f"evals/planning.json page {pid}: card layout without cards[].")
+            errors.append(f"{rel} page {pid}: card layout without cards[].")
+        if page.get("delivery_mode") not in (None, "presenting", "reading"):
+            errors.append(
+                f"{rel} page {pid}: delivery_mode '{page['delivery_mode']}' not in enum."
+            )
         cv = page.get("card_variant")
         if cv:
             try:
                 allowed = _enum_values(f"card_variant {layout}")
             except StopIteration:
                 errors.append(
-                    f"evals/planning.json page {pid}: card_variant set but layout "
+                    f"{rel} page {pid}: card_variant set but layout "
                     f"'{layout}' has no card_variant enum."
                 )
             else:
                 if cv not in allowed:
                     errors.append(
-                        f"evals/planning.json page {pid}: card_variant '{cv}' "
+                        f"{rel} page {pid}: card_variant '{cv}' "
                         f"not in the {layout} enum."
                     )
+    return errors
 
+
+def _check_brief_fixture(rel: str) -> list[str]:
+    errors: list[str] = []
     try:
-        brief = read("evals/brief.md")
+        brief = read(rel)
     except FileNotFoundError:
-        errors.append("evals/brief.md is missing.")
-        return errors
+        return [f"{rel} is missing."]
     for sec in BRIEF_SECTIONS:
         if sec not in brief:
-            errors.append(f"evals/brief.md: section '{sec}' missing.")
+            errors.append(f"{rel}: section '{sec}' missing.")
     if "## Proof pillars" in brief:
         section = brief.split("## Proof pillars", 1)[1].split("##", 1)[0]
         pillars = re.findall(r"(?m)^\d+\.", section)
         if len(pillars) != 3:
-            errors.append(f"evals/brief.md: expected exactly 3 proof pillars, found {len(pillars)}.")
+            errors.append(f"{rel}: expected exactly 3 proof pillars, found {len(pillars)}.")
     return errors
+
+
+def check_evals_fixtures() -> list[str]:
+    # Two frozen pairs: the original presenting pair, and (v0.17.0) the reading
+    # pair that exercises delivery_mode: reading + reading_notes + a per-page
+    # presenting override.
+    return (
+        _check_plan_fixture("evals/planning.json", expected_mode=None)
+        + _check_brief_fixture("evals/brief.md")
+        + _check_plan_fixture("evals/planning_reading.json", expected_mode="reading")
+        + _check_brief_fixture("evals/brief_reading.md")
+    )
 
 
 # --- Check 9: demo page count --------------------------------------------------

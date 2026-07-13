@@ -413,6 +413,15 @@ Animation speed and frame count are fixed in the converter (2 dash periods per l
 - **stat_hero / big numbers**: if a page hinges on one number, set it in ink `#383838` or teal `#1B8A82` — **never** the orange highlight (orange is inline-only; a giant orange number breaks the role palette). Skip the dark-mode radial glow behind it; let the white card and whitespace carry it.
 - **end**: same gradient + aurora ribbons as cover, single centered "Thanks" 52–60px white, weight 300–400. Nothing else.
 
+**Reading-mode overrides** (pages whose effective mode is `reading` — Hard rule #12; on top of the family overrides above, full language in [references/slidedoc.md](../references/slidedoc.md)):
+
+- **Every size below 16px rises to the floor** — delta table in design_system.md → "Delivery mode — reading (slidedoc) overlay". EN decorative captions are cut first, floored at 16px if kept.
+- **Body blocks ≥2 sentences open with an ink-bold lead-in** (`#344252` prism / `#383838` fresh) carrying the block's claim — never the emphasis voice; inline emphasis ≤1 run per block. Wrap math before writing: chars/line ≈ inner width ÷ font-size, pitch ≈ 35px at lh 1.85; if the block doesn't fit, promote the layout, never shrink the text.
+- **`reading_notes` → the footer note strip**: bento band shortens to `y=140..630`; hairline at `y≈648` x 48→1232 (`#DFE2E9` solid on prism / `#9FB9AE` round-dot dashed on fresh); note text from `y≈676`, 1–2 lines at **16px** lh ~1.5, ink label prefix (`註 ·` / `資料來源 ·`), color `#4C5A6B` (prism, wash-safe) / `#6B7178` (fresh). Quiet voice only — a conclusion or title echo in the strip is a P5-10 failure. Pages without `reading_notes` keep the full-height band.
+- **stat_hero is rare** — when a number truly carries a reading page, pair it with a 2–3-sentence interpretation block beside/beneath it; a bare number + 1-line caption assumes a presenter.
+- **Chart labels ≥16px** — if floored labels collide, reduce categories or switch to `chart_hbar`; never shrink below the floor.
+- **Root carries `data-delivery-mode="reading"`** (Hard rule #12) so the lint enforces all of the above's one hard rule.
+
 ## SVG patterns to remember
 
 ### Text wrapping (manual)

@@ -8,7 +8,7 @@ DeckForge ships four **palette families**: the IT-prism light style (**the defau
 
 ### Dark Apple family (on request — the dark, data-dense pick)
 
-Pure black background, dark gray cards, one bold highlight color drawn from the brand or topic. Single-color discipline: that highlight carries 100% of the emphasis (no secondary or accent colors). Inspired by Apple keynote slides and the linux.do "Xiaomi annual report" visualization methodology.
+Pure black background, dark gray cards, one bold highlight color drawn from the brand or topic. Single-color discipline: that highlight carries 100% of the emphasis (no secondary or accent colors). Inspired by Apple keynote slides and the linux.do "Xiaomi annual report" visualization methodology. A **presenting-mode language** — number-driven drama, tiny captions; `delivery_mode: "reading"` decks resolve to a light family instead (see [references/slidedoc.md](slidedoc.md) §8).
 
 | Hint key | Highlight | Best for |
 |---|---|---|
@@ -175,7 +175,7 @@ Same four macro silhouettes and pick-rules as the `glass_arch_flow` variants bel
 **Style traits** (what makes it read as this family):
 - **Full-sentence assertion titles** — slate `#344252`, 30–36px weight 700, left-aligned at x=48. No pill bar (that's fresh's mark), no accent underline (global invariant). The top-right `progress_ticks` + `corner_bloom` carry the page signature instead.
 - **Cover formula** — reeded glass right, clear left column: a small slate chip (`#344252` rect, white 14px label, e.g. 提案簡報), slate title 56–64px weight 700, a date/department line in `#4C5A6B` (on-canvas text — the lighter `#6B7686` fails AA on the wash), all on the near-white left side. **Slate text on light — never white-on-gradient, never green title text.** End page mirrors the cover with a centered short CTA.
-- **Text density is a feature** — body 18–19px / line-height 1.85, the highlight band carrying the skim path.
+- **Text density is a feature** — body 18–19px / line-height 1.85, the highlight band carrying the skim path. This family is a natural carrier of `delivery_mode: "reading"` (slidedoc) decks — see [references/slidedoc.md](slidedoc.md).
 - **Hinge numbers are slate** — a page that pivots on one number renders it 48–72px weight 800 in `#344252` (or white on a `slate_anchor` block). Never green (fails AA), never any cover hue.
 - **Tables** — slate header band (`#344252`, white text), white body rows, `#DFE2E9` hairlines, green tag pills for status marks.
 - **Diagram affinity** — primitives keep their geometry; connectors/strokes `#9BD9BE`, the single highlighted element `#58D494` fill or `slate_anchor`, node icons slate.
@@ -398,7 +398,7 @@ Construction recipes, marking rules, and all numeric baselines: [prompts/05_desi
 
 **Style traits** (what makes it read as this family):
 - **Full-sentence assertion titles** — page titles state the conclusion ("新架構兼具現代化與極致安全，無需重建安控"), not the topic ("架構介紹"). 30–36px, weight 700, charcoal, left-aligned after the pill bar. Because the title already *is* the page's conclusion, a page does not also need a closing so-what line at the bottom; a bottom line that paraphrases the title is the title said twice. Reserve any bottom line for a genuinely new point (consequence / hand-off) — see [prompts/05_designer_svg.md](../prompts/05_designer_svg.md) Step 6 → "content".
-- **Text density is a feature** — body runs 18–19px / line-height 1.85, 2–4 lines per block, with orange emphasis carrying the skim path. This family tolerates (and expects) more prose than `dark_apple`.
+- **Text density is a feature** — body runs 18–19px / line-height 1.85, 2–4 lines per block, with orange emphasis carrying the skim path. This family tolerates (and expects) more prose than `dark_apple`, and is a natural carrier of `delivery_mode: "reading"` (slidedoc) decks — see [references/slidedoc.md](slidedoc.md).
 - **Centered short blocks are allowed** — column/card paragraphs ≤4 lines under an icon may center; longer prose left-aligns. (Per-family exception to the global "never center body text" rule.)
 - **Icons are composed duotone illustrations** — 96–120px, built per the `duotone_icon` recipe (light-blue `#D8E4FB` panels + `#5E8FEF` Lucide skeleton + detail strokes). Icons never carry color variety.
 - **Cover/end formula** — full-bleed gradient, white title 64–72px weight 700 left at x≈120, a solid white bar beneath holding the subtitle in `#3E5BA8` bold, date/author line in white 0.92; end page is the same gradient with a single centered "Thanks".
@@ -684,6 +684,35 @@ This family argues in sentences, so its hierarchy is flatter than `dark_apple`'s
 | End-page "Thanks" | 52–60px | 300–400 | `#FFFFFF` |
 
 **No giant hero-number row here on purpose.** If a `corporate_fresh` page genuinely hinges on one number, render that number in ink `#383838` or teal `#1B8A82` — **never** the orange `highlight_color`. Orange is inline-emphasis only; a giant orange number is a large-area fill that breaks the role palette. (`dark_apple` is the family that speaks through giant highlight-color numbers; `corporate_fresh` argues in sentences.)
+
+### Delivery mode — reading (slidedoc) overlay
+
+When a page's effective `delivery_mode` is `reading` (resolution rule in
+`prompts/04_planning_draft.md`), the sentence-driven scale above gains one hard rule and
+a set of size deltas. Full design language: [references/slidedoc.md](slidedoc.md).
+
+> **The reading floor**: no text run below **16px** on the 1280×720 canvas (= 12pt on
+> the exported 16:9 slide). A standalone reader has no presenter to say the small print
+> aloud. This is the mode's single hard geometric rule — everything else is judgment.
+
+Deltas versus the presenting tables (only sizes below the floor move; the skim layer
+stays dramatic):
+
+| Element (presenting size) | Reading mode |
+|---|---|
+| Captions / footnotes 11–13px | **16px** — the "quiet" is carried by color/opacity, not size |
+| Primitive body (flow / cycle / pyramid / venn / tree) 14–15px | **16–17px** — and reduce node count before shrinking text (≤4 flow steps, ≤3 pyramid tiers with prose) |
+| EN decorative captions 12–14px | **cut first; 16px if kept** — at floor size English decoration competes with the CN core; bilingual polish is the first thing traded for prose room |
+| Small annotation / axis label 15–16px | **16px** |
+| Cover chip label 14–16px, tag-pill text 14px | **16px** |
+| Bottom line / footer voice 14–16px | **16px** |
+| Chart axis / value / legend labels below 16px | **16px** — if floored labels collide, reduce categories, switch `chart_bar` → `chart_hbar`, or drop the sub-label row; never shrink below the floor |
+| Body text 18–19px | unchanged (19–20px allowed on prose-heavy pages); line-height stays 1.85 |
+| Titles, card headings, hinge numbers | unchanged — the skim layer keeps its drama |
+
+Layer rules (see slidedoc.md §3): every ≥2-sentence body block opens with an **ink-bold
+lead-in** (`#344252` prism / `#383838` fresh — never the emphasis voice), and inline
+emphasis tightens to ≤1 run per block.
 
 ### Visual hierarchy rules
 

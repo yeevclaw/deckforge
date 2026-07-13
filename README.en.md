@@ -121,7 +121,7 @@ DeckForge/
 │   ├── pyramid_principle.md ← pyramid-principle map across Phases 1/2/3
 │   ├── socratic_loop.md    ← Phase 1 question types + 11 scenario spines
 │   └── editable_mode.md    ← how Convert-to-Shape editing works in PowerPoint
-├── templates/              ← 57 SVG files (56 starting templates + `_base.svg`), viewBox 0 0 1280 720
+├── templates/              ← 59 SVG files (58 starting templates + `_base.svg`), viewBox 0 0 1280 720
 │   ├── _base.svg           ← shared filters / gradients / 44 Lucide icons
 │   ├── cover.svg / toc.svg
 │   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg

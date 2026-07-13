@@ -121,7 +121,7 @@ DeckForge/
 │   ├── pyramid_principle.md ← 金字塔原理跨 Phase 1/2/3 的對照表
 │   ├── socratic_loop.md     ← Phase 1 反詰問題類型 + 11 種情境 spine
 │   └── editable_mode.md    ← PowerPoint Convert to Shape 編輯
-├── templates/              ← 57 個 viewBox 1280×720 SVG(56 起始模板 + `_base.svg` 共用底稿)
+├── templates/              ← 59 個 viewBox 1280×720 SVG(58 起始模板 + `_base.svg` 共用底稿)
 │   ├── _base.svg           ← 共用 filter / 漸層 / 44 個 Lucide icon
 │   ├── cover.svg / toc.svg
 │   ├── bento_2col.svg / bento_3col.svg / bento_hero.svg / bento_mixed.svg

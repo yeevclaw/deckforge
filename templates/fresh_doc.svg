@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+     data-delivery-mode="reading"
+     font-family="Helvetica, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', 'Hiragino Sans', 'Noto Sans CJK TC', 'Noto Sans TC', sans-serif">
+  <!-- Reading-mode (slidedoc) prose starter — corporate_fresh 版. The two_col_50_50 /
+       single_focus workhorse for delivery_mode: "reading" decks. Demonstrates the
+       three-layer read (assertion title → ink-bold lead-ins → ≤1 orange emphasis run
+       per block), the 16px reading floor (root carries data-delivery-mode="reading"
+       so check_svg enforces it), and the footer note strip carrying reading_notes
+       (quiet voice: sources/caveats, never a conclusion). Full language:
+       references/slidedoc.md. Lead-ins are ink #383838 bold — NEVER orange; orange
+       keeps its single inline-emphasis run per block. -->
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4EC487"/><stop offset="100%" stop-color="#7BD8A6"/>
+    </linearGradient>
+    <radialGradient id="washLav" cx="92%" cy="4%" r="48%">
+      <stop offset="0%" stop-color="#D9D4F0" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#D9D4F0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washGreen" cx="6%" cy="96%" r="52%">
+      <stop offset="0%" stop-color="#BFE5CC" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#BFE5CC" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#2A4A3A" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#F4F4F4"/>
+  <rect width="1280" height="720" fill="url(#washLav)"/>
+  <rect width="1280" height="720" fill="url(#washGreen)"/>
+
+  <!-- pill bar + assertion title -->
+  <rect x="48" y="44" width="80" height="9" rx="4.5" fill="url(#pillGrad)"/>
+  <text x="48" y="102" font-size="34" font-weight="700" fill="#383838">平台遷移的兩個判斷：時機已到，風險可控</text>
+
+  <!-- card A — one argument: claim heading + two lead-in blocks developing it -->
+  <rect x="48" y="150" width="568" height="460" rx="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <text x="104" y="216" font-size="16" font-weight="700" fill="#6B7178" letter-spacing="2">判斷一 · 時機</text>
+  <text x="104" y="256" font-size="26" font-weight="700" fill="#383838">自建維運成本已越過轉折點</text>
+  <!-- block 1: ink-bold lead-in, then body; one orange emphasis run -->
+  <text x="104" y="314" font-size="19" font-weight="700" fill="#383838">成本曲線已經反轉。</text>
+  <text x="104" y="347" font-size="19" fill="#4A5158">
+    <tspan x="104" dy="0">三年維運支出成長 2.1 倍，<tspan font-weight="700" fill="#E8872E">佔預算 38%</tspan>，</tspan>
+    <tspan x="104" dy="35">同期系統可用率持平，投入不再轉化為品質。</tspan>
+  </text>
+  <!-- block 2 -->
+  <text x="104" y="454" font-size="19" font-weight="700" fill="#383838">人力風險比帳面更大。</text>
+  <text x="104" y="489" font-size="19" fill="#4A5158">
+    <tspan x="104" dy="0">核心系統僅兩名工程師能維護，任一人離職</tspan>
+    <tspan x="104" dy="35">即成單點；補齊同技能人力平均需 5 個月。</tspan>
+  </text>
+
+  <!-- card B -->
+  <rect x="664" y="150" width="568" height="460" rx="16" fill="#FFFFFF" filter="url(#cardShadow)"/>
+  <text x="720" y="216" font-size="16" font-weight="700" fill="#6B7178" letter-spacing="2">判斷二 · 風險</text>
+  <text x="720" y="256" font-size="26" font-weight="700" fill="#383838">遷移風險有既定手段可壓低</text>
+  <!-- block 1 -->
+  <text x="720" y="314" font-size="19" font-weight="700" fill="#383838">灰度切換讓風險分期。</text>
+  <text x="720" y="347" font-size="19" fill="#4A5158">
+    <tspan x="720" dy="0">先遷非核心負載，雙軌並行 8 週後才切主系統；</tspan>
+    <tspan x="720" dy="35"><tspan font-weight="700" fill="#E8872E">每一步都有回退點</tspan>，不做不可逆的切換。</tspan>
+  </text>
+  <!-- block 2 -->
+  <text x="720" y="454" font-size="19" font-weight="700" fill="#383838">合規已有前例可循。</text>
+  <text x="720" y="489" font-size="19" fill="#4A5158">
+    <tspan x="720" dy="0">同業兩家已完成同架構遷移並通過年度稽核；</tspan>
+    <tspan x="720" dy="35">監理要求的條款均有現成控制項可對應。</tspan>
+  </text>
+
+  <!-- footer note strip — the quiet voice (reading_notes): sources / caveats, never a
+       conclusion, never a title echo. Round-dot hairline + 16px secondary. -->
+  <line x1="48" y1="648" x2="1232" y2="648" stroke="#9FB9AE" stroke-width="2"
+        stroke-dasharray="0.1 8" stroke-linecap="round"/>
+  <text x="48" y="680" font-size="16" fill="#6B7178"><tspan font-weight="700" fill="#383838">註 · </tspan>成本數據為 2023–2025 財務結算口徑；同業案例取自公開稽核報告，全文見附錄 A。</text>
+</svg>
